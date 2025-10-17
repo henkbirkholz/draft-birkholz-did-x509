@@ -41,10 +41,13 @@ normative:
   DIDV1:
     target: https://www.w3.org/TR/2022/REC-did-core-20220719/
     title: W3C DID v1.0 specification
-  
+
 
 informative:
-  I-D.ietf-scitt-architechture: scitt-arch
+  I-D.ietf-scitt-architecture: scitt-arch
+  REGO:
+    target: https://www.openpolicyagent.org/docs/latest/policy-language/
+    title: Rego
 
 entity:
   SELF: "RFCthis"
@@ -89,12 +92,12 @@ In this draft, version is `0`.
 
 `ca-fingerprint-alg` is one of `sha256`, `sha384`, or `sha512`.
 `ca-fingerprint` is `chain[i].fingerprint[ca-fingerprint-alg]` with i > 0, that is, either an intermediate or root CA certificate.
-`policy-name` is a policy name and `policy-value` is a policy-specific value. 
+`policy-name` is a policy name and `policy-value` is a policy-specific value.
 `::` is used to separate multiple policies from each other.
 
 The following sections define the policies and their policy-specific syntax.
 
-Validation of policies is formally defined using [Rego policies](https://www.openpolicyagent.org/docs/latest/policy-language/), though there is no expectation that implementations use Rego.
+Validation of policies is formally defined using {{REGO}} policies, though there is no expectation that implementations use Rego.
 
 The input to the Rego engine is the JSON document `{"did": "<DID>", "chain": <CertificateChain>}`.
 
@@ -133,7 +136,7 @@ The overall Rego policy is assembled by concatenating the core Rego policy with 
 
 ## Percent-encoding
 
-Some of the policies that are defined in subsequent sections require values to be percent-encoded. Percent-encoding is specified in [RFC 3986 Section 2.1](https://www.rfc-editor.org/rfc/rfc3986#section-2.1). All characters that are not in the allowed set defined below must be percent-encoded:
+Some of the policies that are defined in subsequent sections require values to be percent-encoded. Percent-encoding is specified in {{Section 2.1 of RFC3986}}. All characters that are not in the allowed set defined below must be percent-encoded:
 
 ```abnf
 allowed = ALPHA / DIGIT / "-" / "." / "_"
@@ -190,7 +193,7 @@ san-value       = 1*idchar
 
 The pair [`<san_type>`, `<san_value>`] is one of the items in `chain[0].extensions.san`.
 
-Example: 
+Example:
 
 `did:x509:0:sha256:WE4P5dd8DnLHSkyHaIjhp4udlkF9LqoKwCvu9gl38jk::san:email:bob%40example.com`
 
@@ -235,7 +238,7 @@ policy-value  = fulcio-issuer
 fulcio-issuer = 1*idchar
 ```
 
-`fulcio-issuer` is `chain[0].extensions.fulcio_issuer` without leading `https://`, percent-encoded. 
+`fulcio-issuer` is `chain[0].extensions.fulcio_issuer` without leading `https://`, percent-encoded.
 
 Example:
 
