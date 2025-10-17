@@ -41,6 +41,7 @@ normative:
 informative:
   I-D.ietf-scitt-architechture: scitt-arch
   RFC9360:
+  RFC9597:
 
 entity:
   SELF: "RFCthis"
