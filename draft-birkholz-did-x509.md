@@ -1,7 +1,7 @@
 ---
 v: 3
 
-title: "Decentralized Identifiers (DID) Method did:509"
+title: "x509 Decentralized Identifiers"
 abbrev: "did:x509"
 docname: draft-birkholz-did-x509-latest
 category: std
@@ -120,9 +120,79 @@ DirectoryName = ["dn", Name] ; Example: ["dn", {CN: "Microsoft"}]
 {: #fig-cddl-placeholder artwork-align="left"
    title="CDDL definition of did:x.509 JSON Data Model"}
 
+# Controller Document
+
+Example controller document:
+
+~~~ json
+{
+  "@context": [
+    "https://www.w3.org/ns/cid/v1",
+  ],
+  "alsoKnownAs": [
+    "urn:ietf:spice:glue:gln:4598765432106",
+    "urn:ietf:spice:glue:lei:5493000QQY3QQ6Y34326",
+    "urn:ietf:spice:glue:pen:12350"
+  ]
+  "id": "did:x509:...",
+  "verificationMethod": [
+    {
+      "id": "did:x509:...#sjCcIQefWYDejyZh0KvGVhGBP4UQ9tNgP2X5TrMuHa8",
+      "type": "JsonWebKey",
+      "controller": "did:x509:...",
+      "publicKeyJwk": {
+        "kid": "sjCcIQefWYDejyZh0KvGVhGBP4UQ9tNgP2X5TrMuHa8",
+        "kty": "EC",
+        "crv": "P-256",
+        "alg": "ES256",
+        "x": "q2cKSoqMo-OcsFHXiLaLd28Z0ybNObuE_Mv90G8ZZrM",
+        "y": "TugFHYIlH8_34sEJjGyMYeET86C3WQu_TTud0AUdBio",
+        "key_ops": [
+          "verify"
+        ]
+      }
+    },
+    {
+      "id": "did:x509:...#-XwVdLYzYfug9elJRgcSlQjawMW1RMEqfB4gG7hEL9A",
+      "type": "JsonWebKey",
+      "controller": "did:x509:...",
+      "publicKeyJwk": {
+        "kid": "-XwVdLYzYfug9elJRgcSlQjawMW1RMEqfB4gG7hEL9A",
+        "kty": "EC",
+        "crv": "P-256",
+        "alg": "ES256",
+        "x": "ppCimKcKdotlKXxfLrmAexBo1I3bhSh0XDffvPddRxg",
+        "y": "uggiLjSyenaBn1cZUUVm2Zj0OEwWLRgO9FwqqaILqtc",
+        "key_ops": [
+          "verify"
+        ]
+      }
+    }
+  ],
+  "assertionMethod": [
+    "did:x509:...#sjCcIQefWYDejyZh0KvGVhGBP4UQ9tNgP2X5TrMuHa8"
+  ],
+  "authentication": [
+    "did:x509:...#-XwVdLYzYfug9elJRgcSlQjawMW1RMEqfB4gG7hEL9A"
+  ],
+  
+}
+~~~
+{: #fig-controller-placeholder artwork-align="left"
+   title="Elided json controller document example"}
+   
+# Controller Resolution
+
+TODO 
+
+Describe resolution process to obtain the JSON data model, and what inputs are required to produce it.
+Describe which attributes (such as the alsoKnownAs) a trusted resolver may insert into the the controller document at the point of resolution.
+
 # Privacy Considerations {#privconsec}
 
 Some considerations
+
+Pervasive monitoring of controller document resolution requests.
 
 # Security Consideration {#secconsec}
 
