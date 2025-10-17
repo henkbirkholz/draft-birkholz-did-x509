@@ -22,7 +22,7 @@ author:
    email: henk.birkholz@ietf.contact
  - name: Amaury Chamayou
    organization: Microsoft
-   email: Amaury.Chamayou@microsoft.com 
+   email: Amaury.Chamayou@microsoft.com
 
 normative:
   RFC3986: uri
@@ -130,7 +130,7 @@ Some considerations
 
 [^rfced] Please replace "{{&SELF}}" with the RFC number assigned to this document.
 
-[^rfced] Some considerations 
+[^rfced] Some considerations
 
 --- back
 
