@@ -37,7 +37,7 @@ normative:
   BCP26:
     -: ianacons
     =: RFC8126
-  RFC5234:
+  RFC5234: abnf
   DIDV1:
     target: https://www.w3.org/TR/2022/REC-did-core-20220719/
     title: W3C DID v1.0 specification
@@ -64,14 +64,14 @@ Some intro
 {::boilerplate bcp14-tagged}
 
 In this document, CDDL {{-cddl}} {{-cddlplus}} is used to describe the
-data formats, and ABNF (defined in {{RFC5234}}) to describe identifiers.
+data formats, and ABNF (defined in {{-abnf}}) to describe identifiers.
 
 The reader is assumed to be familiar with the vocabulary and concepts
 defined in {{-scitt-arch}}.
 
 # Identifier Syntax
 
-The did:x509 ABNF definition can be found below, which uses the syntax defined in {{RFC 5234}} and the corresponding definitions for `ALPHA` and `DIGIT`. The {{DIDV1}} contains the definition for `idchar`.
+The did:x509 ABNF definition can be found below, which uses the syntax defined in {{-abnf}} and the corresponding definitions for `ALPHA` and `DIGIT`. The {{DIDV1}} contains the definition for `idchar`.
 
 ```abnf
 did-x509           = "did:" method-name ":" method-specific-id
