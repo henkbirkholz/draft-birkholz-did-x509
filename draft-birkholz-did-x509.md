@@ -17,6 +17,12 @@ smart_quotes: no
 pi: [toc, sortrefs, symrefs]
 
 author:
+ - name: Maik Riechert
+   organization: Microsoft
+   email: Maik.Riechert@microsoft.com
+ - name: Antoine Delignat-Lavaud
+   organization: Microsoft
+   email: antdl@microsoft.com
  - name: Henk Birkholz
    organization: Fraunhofer SIT
    email: henk.birkholz@ietf.contact
