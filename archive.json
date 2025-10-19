@@ -1,0 +1,247 @@
+{
+  "magic": "E!vIA5L86J2I",
+  "timestamp": "2025-10-19T02:00:02.005895+00:00",
+  "repo": "henkbirkholz/draft-birkholz-did-x509",
+  "labels": [
+    {
+      "name": "bug",
+      "description": "Something isn't working",
+      "color": "d73a4a"
+    },
+    {
+      "name": "documentation",
+      "description": "Improvements or additions to documentation",
+      "color": "0075ca"
+    },
+    {
+      "name": "duplicate",
+      "description": "This issue or pull request already exists",
+      "color": "cfd3d7"
+    },
+    {
+      "name": "enhancement",
+      "description": "New feature or request",
+      "color": "a2eeef"
+    },
+    {
+      "name": "good first issue",
+      "description": "Good for newcomers",
+      "color": "7057ff"
+    },
+    {
+      "name": "help wanted",
+      "description": "Extra attention is needed",
+      "color": "008672"
+    },
+    {
+      "name": "invalid",
+      "description": "This doesn't seem right",
+      "color": "e4e669"
+    },
+    {
+      "name": "question",
+      "description": "Further information is requested",
+      "color": "d876e3"
+    },
+    {
+      "name": "wontfix",
+      "description": "This will not be worked on",
+      "color": "ffffff"
+    }
+  ],
+  "issues": [],
+  "pulls": [
+    {
+      "number": 1,
+      "id": "PR_kwDOQEQBrM6uUYWM",
+      "title": "Add authors Maik Riechert and Antoine Delignat-Lavaud",
+      "url": "https://github.com/henkbirkholz/draft-birkholz-did-x509/pull/1",
+      "state": "OPEN",
+      "author": "achamayou",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Who wrote https://raw.githubusercontent.com/microsoft/did-x509/refs/heads/main/specification.md",
+      "createdAt": "2025-10-17T13:58:33Z",
+      "updatedAt": "2025-10-17T15:18:57Z",
+      "baseRepository": "henkbirkholz/draft-birkholz-did-x509",
+      "baseRefName": "main",
+      "baseRefOid": "c9934aa907b6bc222b168bff6e397265e28c05c0",
+      "headRepository": "henkbirkholz/draft-birkholz-did-x509",
+      "headRefName": "achamayou-patch-1",
+      "headRefOid": "aeb5695d29be62507947fbe54adc50db85a0492c",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 2,
+      "id": "PR_kwDOQEQBrM6uVCA4",
+      "title": "Update title and add controller document example",
+      "url": "https://github.com/henkbirkholz/draft-birkholz-did-x509/pull/2",
+      "state": "OPEN",
+      "author": "OR13",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Added example controller document and resolution details.",
+      "createdAt": "2025-10-17T14:57:21Z",
+      "updatedAt": "2025-10-17T17:16:58Z",
+      "baseRepository": "henkbirkholz/draft-birkholz-did-x509",
+      "baseRefName": "main",
+      "baseRefOid": "c9934aa907b6bc222b168bff6e397265e28c05c0",
+      "headRepository": "henkbirkholz/draft-birkholz-did-x509",
+      "headRefName": "OR13-patch-1",
+      "headRefOid": "388cfc8f5a4a57208901e2e09d6b39eea30967c8",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOQEQBrM7Hv0YU",
+          "commit": {
+            "abbreviatedOid": "388cfc8"
+          },
+          "author": "achamayou",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-10-17T17:15:20Z",
+          "updatedAt": "2025-10-17T17:15:20Z",
+          "comments": [
+            {
+              "originalPosition": 32,
+              "body": "I really want to avoid unnecessary dependencies on unrelated drafts.",
+              "createdAt": "2025-10-17T17:15:20Z",
+              "updatedAt": "2025-10-17T17:15:20Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOQEQBrM7Hv1ek",
+          "commit": {
+            "abbreviatedOid": "388cfc8"
+          },
+          "author": "achamayou",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-10-17T17:16:58Z",
+          "updatedAt": "2025-10-17T17:16:58Z",
+          "comments": [
+            {
+              "originalPosition": 94,
+              "body": "That is not applicable to did:x509 because the resolution algorithm never involves remote calls, the identifier and the cert chain are all that's needed for an RP.",
+              "createdAt": "2025-10-17T17:16:58Z",
+              "updatedAt": "2025-10-17T17:16:58Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 3,
+      "id": "PR_kwDOQEQBrM6uVDOE",
+      "title": "Revise introduction and add issuer identifier details",
+      "url": "https://github.com/henkbirkholz/draft-birkholz-did-x509/pull/3",
+      "state": "OPEN",
+      "author": "achamayou",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Draft introduction. Places less emphasis on DID than https://github.com/microsoft/did-x509/blob/main/specification.md#introduction, and more focus on the practical benefits in existing usage.",
+      "createdAt": "2025-10-17T14:59:21Z",
+      "updatedAt": "2025-10-17T15:26:24Z",
+      "baseRepository": "henkbirkholz/draft-birkholz-did-x509",
+      "baseRefName": "main",
+      "baseRefOid": "c9934aa907b6bc222b168bff6e397265e28c05c0",
+      "headRepository": "henkbirkholz/draft-birkholz-did-x509",
+      "headRefName": "achamayou-patch-2",
+      "headRefOid": "a95ec3081abc264e194544eb148932e712d96405",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOQEQBrM7HuH2o",
+          "commit": {
+            "abbreviatedOid": "7ee7ae6"
+          },
+          "author": "achamayou",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-10-17T15:04:27Z",
+          "updatedAt": "2025-10-17T15:04:28Z",
+          "comments": [
+            {
+              "originalPosition": 4,
+              "body": "```suggestion\r\n  RFC9360:\r\n  RFC9597:\r\n```",
+              "createdAt": "2025-10-17T15:04:27Z",
+              "updatedAt": "2025-10-17T15:04:28Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 4,
+      "id": "PR_kwDOQEQBrM6uVR6R",
+      "title": "Import identifier definition",
+      "url": "https://github.com/henkbirkholz/draft-birkholz-did-x509/pull/4",
+      "state": "OPEN",
+      "author": "achamayou",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Import from https://raw.githubusercontent.com/microsoft/did-x509/refs/heads/main/specification.md with tweaks to references and markdown.",
+      "createdAt": "2025-10-17T15:19:26Z",
+      "updatedAt": "2025-10-17T16:52:06Z",
+      "baseRepository": "henkbirkholz/draft-birkholz-did-x509",
+      "baseRefName": "main",
+      "baseRefOid": "c9934aa907b6bc222b168bff6e397265e28c05c0",
+      "headRepository": "henkbirkholz/draft-birkholz-did-x509",
+      "headRefName": "import_identifier_definition",
+      "headRefOid": "06c28fdca90ce6665c1d314b5da4c68c759340f9",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 5,
+      "id": "PR_kwDOQEQBrM6uWdAU",
+      "title": "Update draft-birkholz-did-x509.md",
+      "url": "https://github.com/henkbirkholz/draft-birkholz-did-x509/pull/5",
+      "state": "OPEN",
+      "author": "achamayou",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Add security considerations",
+      "createdAt": "2025-10-17T17:10:13Z",
+      "updatedAt": "2025-10-17T17:10:21Z",
+      "baseRepository": "henkbirkholz/draft-birkholz-did-x509",
+      "baseRefName": "main",
+      "baseRefOid": "c9934aa907b6bc222b168bff6e397265e28c05c0",
+      "headRepository": "henkbirkholz/draft-birkholz-did-x509",
+      "headRefName": "achamayou-patch-3",
+      "headRefOid": "44173d4221bb8f294282459cb476509e64119806",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    }
+  ]
+}
