@@ -2,11 +2,14 @@
 
 
 
-Network Working Group                                        H. Birkholz
-Internet-Draft                                            Fraunhofer SIT
-Intended status: Standards Track                             A. Chamayou
-Expires: 20 April 2026                                         Microsoft
-                                                         17 October 2025
+Network Working Group                                        M. Riechert
+Internet-Draft                                        A. Delignat-Lavaud
+Intended status: Standards Track                               Microsoft
+Expires: 23 April 2026                                       H. Birkholz
+                                                          Fraunhofer SIT
+                                                             A. Chamayou
+                                                               Microsoft
+                                                         20 October 2025
 
 
              Decentralized Identifiers (DID) Method did:509
@@ -38,7 +41,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 20 April 2026.
+   This Internet-Draft will expire on 23 April 2026.
 
 Copyright Notice
 
@@ -210,6 +213,16 @@ Acknowledgments
    suggestions.
 
 Authors' Addresses
+
+   Maik Riechert
+   Microsoft
+   Email: Maik.Riechert@microsoft.com
+
+
+   Antoine Delignat-Lavaud
+   Microsoft
+   Email: antdl@microsoft.com
+
 
    Henk Birkholz
    Fraunhofer SIT
