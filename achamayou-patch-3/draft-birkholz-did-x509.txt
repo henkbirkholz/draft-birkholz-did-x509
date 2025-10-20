@@ -9,7 +9,7 @@ Expires: 23 April 2026                                         Microsoft
                                                          20 October 2025
 
 
-            Decentralized Identifiers (DID) Method did:x509
+                     x509 Decentralized Identifier
                      draft-birkholz-did-x509-latest
 
 Abstract
