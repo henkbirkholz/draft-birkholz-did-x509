@@ -5,8 +5,8 @@
 Network Working Group                                        H. Birkholz
 Internet-Draft                                            Fraunhofer SIT
 Intended status: Standards Track                             A. Chamayou
-Expires: 20 April 2026                                         Microsoft
-                                                         17 October 2025
+Expires: 23 April 2026                                         Microsoft
+                                                         20 October 2025
 
 
              Decentralized Identifiers (DID) Method did:509
@@ -38,7 +38,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 20 April 2026.
+   This Internet-Draft will expire on 23 April 2026.
 
 Copyright Notice
 
@@ -87,7 +87,7 @@ Table of Contents
    BCP 14 [RFC2119] [RFC8174] when, and only when, they appear in all
    capitals, as shown here.
 
-   In this document, CDDL [RFC8610] [RFC9165] is used to describe the
+   In this document, CDDL ([RFC8610], [RFC9165]) is used to describe the
    data formats, and ABNF (defined in [RFC5234]) to describe
    identifiers.
 
