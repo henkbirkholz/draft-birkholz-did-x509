@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta content="Common,Latin" name="scripts">
 <meta content="initial-scale=1.0" name="viewport">
-<title>Decentralized Identifiers (DID) Method did:509</title>
+<title>x509 Decentralized Identifier</title>
 <meta content="Maik Riechert" name="author">
 <meta content="Antoine Delignat-Lavaud" name="author">
 <meta content="Henk Birkholz" name="author">
@@ -1091,7 +1091,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 </dd>
 </dl>
 </div>
-<h1 id="title">Decentralized Identifiers (DID) Method did:509</h1>
+<h1 id="title">x509 Decentralized Identifier</h1>
 <section id="section-abstract">
       <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
 <p id="section-abstract-1">Some abstract<a href="#section-abstract-1" class="pilcrow">¶</a></p>
@@ -1189,6 +1189,16 @@ svg :is([fill="white"], [fill^="#fff"]) {
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6">
             <p id="section-toc.1-1.6.1"><a href="#section-6" class="auto internal xref">6</a>.  <a href="#name-security-consideration" class="internal xref">Security Consideration</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.1">
+                <p id="section-toc.1-1.6.2.1.1"><a href="#section-6.1" class="auto internal xref">6.1</a>.  <a href="#name-identifier-ambiguity" class="internal xref">Identifier ambiguity</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.1.2.1">
+                    <p id="section-toc.1-1.6.2.1.2.1.1"><a href="#section-6.1.1" class="auto internal xref">6.1.1</a>.  <a href="#name-x509-trust-stores" class="internal xref">X.509 trust stores</a></p>
+</li>
+                </ul>
+</li>
+            </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7">
             <p id="section-toc.1-1.7.1"><a href="#section-7" class="auto internal xref">7</a>.  <a href="#name-iana-considerations" class="internal xref">IANA Considerations</a></p>
@@ -1538,7 +1548,26 @@ DirectoryName = ["dn", Name] ; Example: ["dn", {CN: "Microsoft"}]
 <section id="section-6">
       <h2 id="name-security-consideration">
 <a href="#section-6" class="section-number selfRef">6. </a><a href="#name-security-consideration" class="section-name selfRef">Security Consideration</a>
-    </h2>
+      </h2>
+<div id="identifier-ambiguity">
+<section id="section-6.1">
+        <h3 id="name-identifier-ambiguity">
+<a href="#section-6.1" class="section-number selfRef">6.1. </a><a href="#name-identifier-ambiguity" class="section-name selfRef">Identifier ambiguity</a>
+        </h3>
+<p id="section-6.1-1">This DID method maps characteristics of X.509 certificate chains to identifiers. It allows a single identifier to map to multiple certificate chains, giving the identifier stability across the expiry of individual chains. However, if the policies used in the identifier are chosen too loosely, the identifier may match too wide a set of certificate chains. This may have security implications as it may authorize an identity for actions it was not meant to be authorized for.<a href="#section-6.1-1" class="pilcrow">¶</a></p>
+<p id="section-6.1-2">To mitigate this issue, the certificate authority should publish their expected usage of certificate fields and indicate which ones constitute a unique identity, versus any additional fields that may be of an informational nature. This will help users create an appropriate did:x509 as well as consumers of signed content to decide whether it is appropriate to trust a given did:x509.<a href="#section-6.1-2" class="pilcrow">¶</a></p>
+<div id="x509-trust-stores">
+<section id="section-6.1.1">
+          <h4 id="name-x509-trust-stores">
+<a href="#section-6.1.1" class="section-number selfRef">6.1.1. </a><a href="#name-x509-trust-stores" class="section-name selfRef">X.509 trust stores</a>
+          </h4>
+<p id="section-6.1.1-1">Typically, a verifier trusts an X.509 certificate by applying chain validation defined in <span><a href="https://rfc-editor.org/rfc/rfc5280#section-6" class="relref">Section 6</a> of [<a href="#RFC5280" class="cite xref">RFC5280</a>]</span> using a set of certificate authority (CA) certificates as trust store, together with additional application-specific policies.<a href="#section-6.1.1-1" class="pilcrow">¶</a></p>
+<p id="section-6.1.1-2">This DID method does not require an X.509 trust anchor store but rather relies on verifiers either trusting an individual DID directly or using third-party endorsements for a given DID, like <span>[<a href="#VC" class="cite xref">VC</a>]</span>, to establish trust.<a href="#section-6.1.1-2" class="pilcrow">¶</a></p>
+<p id="section-6.1.1-3">By layering this DID method on top of X.509, verifiers are free to use traditional chain validation (for example, verifiers unaware of DID), or rely on DID as an ecosystem to establish trust.<a href="#section-6.1.1-3" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
 </section>
 </div>
 <div id="iana-considerations">
@@ -1581,6 +1610,10 @@ DirectoryName = ["dn", Name] ; Example: ["dn", {CN: "Microsoft"}]
         <dd>
 <span class="refAuthor">Crocker, D., Ed.</span> and <span class="refAuthor">P. Overell</span>, <span class="refTitle">"Augmented BNF for Syntax Specifications: ABNF"</span>, <span class="seriesInfo">STD 68</span>, <span class="seriesInfo">RFC 5234</span>, <span class="seriesInfo">DOI 10.17487/RFC5234</span>, <time datetime="2008-01" class="refDate">January 2008</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc5234">https://www.rfc-editor.org/rfc/rfc5234</a>&gt;</span>. </dd>
 <dd class="break"></dd>
+<dt id="RFC5280">[RFC5280]</dt>
+        <dd>
+<span class="refAuthor">Cooper, D.</span>, <span class="refAuthor">Santesson, S.</span>, <span class="refAuthor">Farrell, S.</span>, <span class="refAuthor">Boeyen, S.</span>, <span class="refAuthor">Housley, R.</span>, and <span class="refAuthor">W. Polk</span>, <span class="refTitle">"Internet X.509 Public Key Infrastructure Certificate and Certificate Revocation List (CRL) Profile"</span>, <span class="seriesInfo">RFC 5280</span>, <span class="seriesInfo">DOI 10.17487/RFC5280</span>, <time datetime="2008-05" class="refDate">May 2008</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc5280">https://www.rfc-editor.org/rfc/rfc5280</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="RFC8174">[RFC8174]</dt>
         <dd>
 <span class="refAuthor">Leiba, B.</span>, <span class="refTitle">"Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 8174</span>, <span class="seriesInfo">DOI 10.17487/RFC8174</span>, <time datetime="2017-05" class="refDate">May 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8174">https://www.rfc-editor.org/rfc/rfc8174</a>&gt;</span>. </dd>
@@ -1598,8 +1631,12 @@ DirectoryName = ["dn", Name] ; Example: ["dn", {CN: "Microsoft"}]
 <span class="refAuthor">Bray, T., Ed.</span>, <span class="refTitle">"The JavaScript Object Notation (JSON) Data Interchange Format"</span>, <span class="seriesInfo">STD 90</span>, <span class="seriesInfo">RFC 8259</span>, <span class="seriesInfo">DOI 10.17487/RFC8259</span>, <time datetime="2017-12" class="refDate">December 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8259">https://www.rfc-editor.org/rfc/rfc8259</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="STD94">[STD94]</dt>
-      <dd>
+        <dd>
 <span class="refAuthor">Bormann, C.</span> and <span class="refAuthor">P. Hoffman</span>, <span class="refTitle">"Concise Binary Object Representation (CBOR)"</span>, <span class="seriesInfo">STD 94</span>, <span class="seriesInfo">RFC 8949</span>, <span class="seriesInfo">DOI 10.17487/RFC8949</span>, <time datetime="2020-12" class="refDate">December 2020</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8949">https://www.rfc-editor.org/rfc/rfc8949</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="VC">[VC]</dt>
+      <dd>
+<span class="refTitle">"W3C Verifiable Credentials"</span>, <span>n.d.</span>, <span>&lt;<a href="https://www.w3.org/TR/vc-data-model/">https://www.w3.org/TR/vc-data-model/</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 </dl>
 </section>
