@@ -68,15 +68,16 @@ Table of Contents
      3.4.  "eku" policy
      3.5.  "fulcio-issuer" policy
      3.6.  DID resolution options
-   4.  CDDL for a JSON Data Model for X.509 Certification Paths
-   5.  Privacy Considerations
-   6.  Security Consideration
-     6.1.  Identifier ambiguity
-       6.1.1.  X.509 trust stores
-   7.  IANA Considerations
-   8.  References
-     8.1.  Normative References
-     8.2.  Informative References
+   4.  Example Controller Document
+   5.  CDDL for a JSON Data Model for X.509 Certification Paths
+   6.  Privacy Considerations
+   7.  Security Consideration
+     7.1.  Identifier ambiguity
+       7.1.1.  X.509 trust stores
+   8.  IANA Considerations
+   9.  References
+     9.1.  Normative References
+     9.2.  Informative References
    Acknowledgments
    Authors' Addresses
 
@@ -314,7 +315,37 @@ Table of Contents
    2.  Concatenate the resulting strings in order, separated by comma
        ",".
 
-4.  CDDL for a JSON Data Model for X.509 Certification Paths
+4.  Example Controller Document
+
+   The illustrates what a typical Controller document can look like once
+   resolved:
+
+{
+  "@context": "https://www.w3.org/ns/did/v1",
+  "id": "did:x509:0:sha256:hH32p4SXlD8n_HLrk_mmNzIKArVh0KkbCeh6eAftfGE::subject:CN:Microsoft%20Corporation",
+  "verificationMethod": [
+    {
+      "id": "did:x509:0:sha256:hH32p4SXlD8n_HLrk_mmNzIKArVh0KkbCeh6eAftfGE::subject:CN:Microsoft%20Corporation#key-1",
+      "type": "JsonWebKey2020",
+      "controller": "did:x509:0:sha256:hH32p4SXlD8n_HLrk_mmNzIKArVh0KkbCeh6eAftfGE::subject:CN:Microsoft%20Corporation",
+      "publicKeyJwk": {
+        "kty": "RSA",
+        "n": "s9HduD2rvmO-SGksB4HR-qvSK379St8NnUZBH8xBiQvt2zONOLUHWQibeBW4NLUfHfzMaOM77RhNlqPNiDRKhChlG1aHqEHSAaQBGrmr0ULGIzq-1YvqQufMGYBFfq0sc10UdvWqT0RjwkPQTu4bjg37zSYF9OcGxS9uGnPMdWRM0ThOsYUcDmMoCaJRebsLUBpMmYXkcUYXJrcSGAaUNd0wjhwIpEogOD-AbWW_7TPZOl-JciMj40a78EEXIc2p06lWHfe5hegQ7uGIlSAPG6zDzjhjNkzE63_-GoqJU-6QLazbL5_y27ZDUAEYJokbb305A-dOp930CjTar3BvWQ",
+        "e": "AQAB"
+      }
+    }
+  ],
+  "assertionMethod": [
+    "did:x509:0:sha256:hH32p4SXlD8n_HLrk_mmNzIKArVh0KkbCeh6eAftfGE::subject:CN:Microsoft%20Corporation#key-1"
+  ],
+  "keyAgreement": [
+    "did:x509:0:sha256:hH32p4SXlD8n_HLrk_mmNzIKArVh0KkbCeh6eAftfGE::subject:CN:Microsoft%20Corporation#key-1"
+  ]
+}
+
+              Figure 1: JSON controller document example
+
+5.  CDDL for a JSON Data Model for X.509 Certification Paths
 
 CertificateChain = [2*Certificate]  ; leaf is first
 
@@ -366,15 +397,15 @@ DNSName = ["dns", tstr]      ; Example: ["dns", "microsoft.com"]
 URI = ["uri", tstr]          ; Example: ["uri", "https://microsoft.com"]
 DirectoryName = ["dn", Name] ; Example: ["dn", {CN: "Microsoft"}]
 
-        Figure 1: CDDL definition of did:x.509 JSON Data Model
+        Figure 2: CDDL definition of did:x.509 JSON Data Model
 
-5.  Privacy Considerations
+6.  Privacy Considerations
 
    Some considerations
 
-6.  Security Consideration
+7.  Security Consideration
 
-6.1.  Identifier ambiguity
+7.1.  Identifier ambiguity
 
    This DID method maps characteristics of X.509 certificate chains to
    identifiers.  It allows a single identifier to map to multiple
@@ -392,7 +423,7 @@ DirectoryName = ["dn", Name] ; Example: ["dn", {CN: "Microsoft"}]
    appropriate did:x509 as well as consumers of signed content to decide
    whether it is appropriate to trust a given did:x509.
 
-6.1.1.  X.509 trust stores
+7.1.1.  X.509 trust stores
 
    Typically, a verifier trusts an X.509 certificate by applying chain
    validation defined in Section 6 of [RFC5280] using a set of
@@ -408,7 +439,7 @@ DirectoryName = ["dn", Name] ; Example: ["dn", {CN: "Microsoft"}]
    use traditional chain validation (for example, verifiers unaware of
    DID), or rely on DID as an ecosystem to establish trust.
 
-7.  IANA Considerations
+8.  IANA Considerations
 
 
    // RFC Editor: Please replace "RFCthis" with the RFC number assigned
@@ -417,9 +448,9 @@ DirectoryName = ["dn", Name] ; Example: ["dn", {CN: "Microsoft"}]
 
    // RFC Editor: Some considerations
 
-8.  References
+9.  References
 
-8.1.  Normative References
+9.1.  Normative References
 
    [BCP26]    Cotton, M., Leiba, B., and T. Narten, "Guidelines for
               Writing an IANA Considerations Section in RFCs", BCP 26,
@@ -478,7 +509,7 @@ DirectoryName = ["dn", Name] ; Example: ["dn", {CN: "Microsoft"}]
    [VC]       "W3C Verifiable Credentials", n.d.,
               <https://www.w3.org/TR/vc-data-model/>.
 
-8.2.  Informative References
+9.2.  Informative References
 
    [I-D.ietf-scitt-architecture]
               Birkholz, H., Delignat-Lavaud, A., Fournet, C., Deshpande,
