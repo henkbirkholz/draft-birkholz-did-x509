@@ -66,7 +66,7 @@ Some intro
 
 {::boilerplate bcp14-tagged}
 
-In this document, CDDL {{-cddl}} {{-cddlplus}} is used to describe the
+In this document, CDDL ({{-cddl}}, {{-cddlplus}}) is used to describe the
 data formats, and ABNF (defined in {{-abnf}}) to describe identifiers.
 
 The reader is assumed to be familiar with the vocabulary and concepts
