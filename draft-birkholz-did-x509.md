@@ -74,7 +74,8 @@ defined in {{-scitt-arch}}.
 
 # Identifier Syntax
 
-The did:x509 ABNF definition can be found below, which uses the syntax defined in {{-abnf}} and the corresponding definitions for `ALPHA` and `DIGIT`. The {{DIDV1}} contains the definition for `idchar`.
+The did:x509 ABNF definition defined below uses the syntax defined in {{-abnf}} and the corresponding definitions for `ALPHA` and `DIGIT`.
+The {{DIDV1}} contains the definition for `idchar`.
 
 ~~~abnf
 did-x509           = "did:" method-name ":" method-specific-id
