@@ -140,7 +140,7 @@ To mitigate this issue, the certificate authority should publish their expected 
 
 Typically, a verifier trusts an X.509 certificate by applying chain validation defined in {{Section 6 of RFC5280}} using a set of certificate authority (CA) certificates as trust store, together with additional application-specific policies.
 
-This DID method does not require an X.509 trust anchor store but rather relies on verifiers either trusting an individual DID directly or using third-party endorsements for a given DID, like {{-VC}}, to establish trust.
+This DID method does not require an X.509 trust anchor store but rather relies on verifiers either trusting an individual DID directly or using third-party endorsements for a given DID, like {{VC}}, to establish trust.
 
 By layering this DID method on top of X.509, verifiers are free to use traditional chain validation (for example, verifiers unaware of DID), or rely on DID as an ecosystem to establish trust.
 
