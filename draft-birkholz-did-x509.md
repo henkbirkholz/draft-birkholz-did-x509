@@ -289,6 +289,36 @@ The value is constructed as follows:
 1. Encode each certificate `C` that is part of the chain as the string `b64url(DER(C))`.
 2. Concatenate the resulting strings in order, separated by comma `","`.
 
+# Example Controller Document
+
+The illustrates what a typical Controller document can look like once resolved:
+
+~~~json
+{
+  "@context": "https://www.w3.org/ns/did/v1",
+  "id": "did:x509:0:sha256:hH32p4SXlD8n_HLrk_mmNzIKArVh0KkbCeh6eAftfGE::subject:CN:Microsoft%20Corporation",
+  "verificationMethod": [
+    {
+      "id": "did:x509:0:sha256:hH32p4SXlD8n_HLrk_mmNzIKArVh0KkbCeh6eAftfGE::subject:CN:Microsoft%20Corporation#key-1",
+      "type": "JsonWebKey2020",
+      "controller": "did:x509:0:sha256:hH32p4SXlD8n_HLrk_mmNzIKArVh0KkbCeh6eAftfGE::subject:CN:Microsoft%20Corporation",
+      "publicKeyJwk": {
+        "kty": "RSA",
+        "n": "s9HduD2rvmO-SGksB4HR-qvSK379St8NnUZBH8xBiQvt2zONOLUHWQibeBW4NLUfHfzMaOM77RhNlqPNiDRKhChlG1aHqEHSAaQBGrmr0ULGIzq-1YvqQufMGYBFfq0sc10UdvWqT0RjwkPQTu4bjg37zSYF9OcGxS9uGnPMdWRM0ThOsYUcDmMoCaJRebsLUBpMmYXkcUYXJrcSGAaUNd0wjhwIpEogOD-AbWW_7TPZOl-JciMj40a78EEXIc2p06lWHfe5hegQ7uGIlSAPG6zDzjhjNkzE63_-GoqJU-6QLazbL5_y27ZDUAEYJokbb305A-dOp930CjTar3BvWQ",
+        "e": "AQAB"
+      }
+    }
+  ],
+  "assertionMethod": [
+    "did:x509:0:sha256:hH32p4SXlD8n_HLrk_mmNzIKArVh0KkbCeh6eAftfGE::subject:CN:Microsoft%20Corporation#key-1"
+  ],
+  "keyAgreement": [
+    "did:x509:0:sha256:hH32p4SXlD8n_HLrk_mmNzIKArVh0KkbCeh6eAftfGE::subject:CN:Microsoft%20Corporation#key-1"
+  ]
+}
+~~~
+{: #fig-controller-placeholder artwork-align="left" title="JSON controller document example"}
+
 # CDDL for a JSON Data Model for X.509 Certification Paths
 
 ~~~ cddl
