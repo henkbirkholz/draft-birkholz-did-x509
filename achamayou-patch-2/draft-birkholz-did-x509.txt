@@ -5,8 +5,8 @@
 Network Working Group                                        H. Birkholz
 Internet-Draft                                            Fraunhofer SIT
 Intended status: Standards Track                             A. Chamayou
-Expires: 20 April 2026                                         Microsoft
-                                                         17 October 2025
+Expires: 23 April 2026                                         Microsoft
+                                                         20 October 2025
 
 
              Decentralized Identifiers (DID) Method did:509
@@ -38,7 +38,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 20 April 2026.
+   This Internet-Draft will expire on 23 April 2026.
 
 Copyright Notice
 
@@ -70,7 +70,7 @@ Table of Contents
 
 1.  Introduction
 
-   This draft aims to define an interoperable and flexible issuer
+   This document aims to define an interoperable and flexible issuer
    identifier format for COSE messages that transport or refer to X.509
    certificates using [RFC9360].  The did:x509 identifier format
    implements a direct, resolvable binding between a certificate chain
