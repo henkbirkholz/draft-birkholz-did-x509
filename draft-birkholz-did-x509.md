@@ -1,7 +1,7 @@
 ---
 v: 3
 
-title: "Decentralized Identifiers (DID) Method did:x509"
+title: "x509 Decentralized Identifier"
 abbrev: "did:x509"
 docname: draft-birkholz-did-x509-latest
 category: std
