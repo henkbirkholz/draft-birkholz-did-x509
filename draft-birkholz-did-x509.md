@@ -17,6 +17,12 @@ smart_quotes: no
 pi: [toc, sortrefs, symrefs]
 
 author:
+ - name: Maik Riechert
+   organization: Microsoft
+   email: Maik.Riechert@microsoft.com
+ - name: Antoine Delignat-Lavaud
+   organization: Microsoft
+   email: antdl@microsoft.com
  - name: Henk Birkholz
    organization: Fraunhofer SIT
    email: henk.birkholz@ietf.contact
@@ -48,6 +54,8 @@ informative:
   REGO:
     target: https://www.openpolicyagent.org/docs/latest/policy-language/
     title: Rego
+  RFC9360:
+  RFC9597:
 
 entity:
   SELF: "RFCthis"
@@ -60,7 +68,10 @@ Some abstract
 
 # Introduction
 
-Some intro
+This document aims to define an interoperable and flexible issuer identifier format for COSE messages that transport or refer to X.509 certificates using {{RFC9360}}.
+The did:x509 identifier format implements a direct, resolvable binding between a certificate chain and a compact issuer string.
+It can be used in a COSE Header CWT Claims map as defined in {{RFC9597}}.
+This issuer identifier is convenient for references and policy evaluation, for example in the context of transparency ledgers.
 
 # Conventions and Definitions
 
