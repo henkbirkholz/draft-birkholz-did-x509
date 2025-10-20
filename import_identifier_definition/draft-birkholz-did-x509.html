@@ -5,6 +5,8 @@
 <meta content="Common,Latin" name="scripts">
 <meta content="initial-scale=1.0" name="viewport">
 <title>Decentralized Identifiers (DID) Method did:509</title>
+<meta content="Maik Riechert" name="author">
+<meta content="Antoine Delignat-Lavaud" name="author">
 <meta content="Henk Birkholz" name="author">
 <meta content="Amaury Chamayou" name="author">
 <meta content="
@@ -1048,7 +1050,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <td class="right">October 2025</td>
 </tr></thead>
 <tfoot><tr>
-<td class="left">Birkholz &amp; Chamayou</td>
+<td class="left">Riechert, et al.</td>
 <td class="center">Expires 23 April 2026</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
@@ -1070,6 +1072,14 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="expires"><time datetime="2026-04-23">23 April 2026</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
+<div class="author">
+      <div class="author-name">M. Riechert</div>
+<div class="org">Microsoft</div>
+</div>
+<div class="author">
+      <div class="author-name">A. Delignat-Lavaud</div>
+<div class="org">Microsoft</div>
+</div>
 <div class="author">
       <div class="author-name">H. Birkholz</div>
 <div class="org">Fraunhofer SIT</div>
@@ -1209,7 +1219,10 @@ svg :is([fill="white"], [fill^="#fff"]) {
       <h2 id="name-introduction">
 <a href="#section-1" class="section-number selfRef">1. </a><a href="#name-introduction" class="section-name selfRef">Introduction</a>
       </h2>
-<p id="section-1-1">Some intro<a href="#section-1-1" class="pilcrow">¶</a></p>
+<p id="section-1-1">This document aims to define an interoperable and flexible issuer identifier format for COSE messages that transport or refer to X.509 certificates using <span>[<a href="#RFC9360" class="cite xref">RFC9360</a>]</span>.
+The did:x509 identifier format implements a direct, resolvable binding between a certificate chain and a compact issuer string.
+It can be used in a COSE Header CWT Claims map as defined in <span>[<a href="#RFC9597" class="cite xref">RFC9597</a>]</span>.
+This issuer identifier is convenient for references and policy evaluation, for example in the context of transparency ledgers.<a href="#section-1-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="conventions-and-definitions">
@@ -1602,8 +1615,16 @@ DirectoryName = ["dn", Name] ; Example: ["dn", {CN: "Microsoft"}]
 <span class="refAuthor">Birkholz, H.</span>, <span class="refAuthor">Delignat-Lavaud, A.</span>, <span class="refAuthor">Fournet, C.</span>, <span class="refAuthor">Deshpande, Y.</span>, and <span class="refAuthor">S. Lasker</span>, <span class="refTitle">"An Architecture for Trustworthy and Transparent Digital Supply Chains"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-scitt-architecture-22</span>, <time datetime="2025-10-10" class="refDate">10 October 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-scitt-architecture-22">https://datatracker.ietf.org/doc/html/draft-ietf-scitt-architecture-22</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="REGO">[REGO]</dt>
-      <dd>
+        <dd>
 <span class="refTitle">"Rego"</span>, <span>n.d.</span>, <span>&lt;<a href="https://www.openpolicyagent.org/docs/latest/policy-language/">https://www.openpolicyagent.org/docs/latest/policy-language/</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC9360">[RFC9360]</dt>
+        <dd>
+<span class="refAuthor">Schaad, J.</span>, <span class="refTitle">"CBOR Object Signing and Encryption (COSE): Header Parameters for Carrying and Referencing X.509 Certificates"</span>, <span class="seriesInfo">RFC 9360</span>, <span class="seriesInfo">DOI 10.17487/RFC9360</span>, <time datetime="2023-02" class="refDate">February 2023</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9360">https://www.rfc-editor.org/rfc/rfc9360</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC9597">[RFC9597]</dt>
+      <dd>
+<span class="refAuthor">Looker, T.</span> and <span class="refAuthor">M.B. Jones</span>, <span class="refTitle">"CBOR Web Token (CWT) Claims in COSE Headers"</span>, <span class="seriesInfo">RFC 9597</span>, <span class="seriesInfo">DOI 10.17487/RFC9597</span>, <time datetime="2024-06" class="refDate">June 2024</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9597">https://www.rfc-editor.org/rfc/rfc9597</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 </dl>
 </section>
@@ -1625,6 +1646,22 @@ for their reviews and suggestions.<a href="#appendix-A-1" class="pilcrow">¶</a>
       <h2 id="name-authors-addresses">
 <a href="#name-authors-addresses" class="section-name selfRef">Authors' Addresses</a>
       </h2>
+<address class="vcard">
+        <div dir="auto" class="left"><span class="fn nameRole">Maik Riechert</span></div>
+<div dir="auto" class="left"><span class="org">Microsoft</span></div>
+<div class="email">
+<span>Email:</span>
+<a href="mailto:Maik.Riechert@microsoft.com" class="email">Maik.Riechert@microsoft.com</a>
+</div>
+</address>
+<address class="vcard">
+        <div dir="auto" class="left"><span class="fn nameRole">Antoine Delignat-Lavaud</span></div>
+<div dir="auto" class="left"><span class="org">Microsoft</span></div>
+<div class="email">
+<span>Email:</span>
+<a href="mailto:antdl@microsoft.com" class="email">antdl@microsoft.com</a>
+</div>
+</address>
 <address class="vcard">
         <div dir="auto" class="left"><span class="fn nameRole">Henk Birkholz</span></div>
 <div dir="auto" class="left"><span class="org">Fraunhofer SIT</span></div>

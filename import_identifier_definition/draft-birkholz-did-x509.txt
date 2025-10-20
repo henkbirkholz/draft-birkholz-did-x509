@@ -2,10 +2,13 @@
 
 
 
-Network Working Group                                        H. Birkholz
-Internet-Draft                                            Fraunhofer SIT
-Intended status: Standards Track                             A. Chamayou
-Expires: 23 April 2026                                         Microsoft
+Network Working Group                                        M. Riechert
+Internet-Draft                                        A. Delignat-Lavaud
+Intended status: Standards Track                               Microsoft
+Expires: 23 April 2026                                       H. Birkholz
+                                                          Fraunhofer SIT
+                                                             A. Chamayou
+                                                               Microsoft
                                                          20 October 2025
 
 
@@ -77,7 +80,14 @@ Table of Contents
 
 1.  Introduction
 
-   Some intro
+   This document aims to define an interoperable and flexible issuer
+   identifier format for COSE messages that transport or refer to X.509
+   certificates using [RFC9360].  The did:x509 identifier format
+   implements a direct, resolvable binding between a certificate chain
+   and a compact issuer string.  It can be used in a COSE Header CWT
+   Claims map as defined in [RFC9597].  This issuer identifier is
+   convenient for references and policy evaluation, for example in the
+   context of transparency ledgers.
 
 2.  Conventions and Definitions
 
@@ -437,12 +447,31 @@ DirectoryName = ["dn", Name] ; Example: ["dn", {CN: "Microsoft"}]
               <https://www.openpolicyagent.org/docs/latest/policy-
               language/>.
 
+   [RFC9360]  Schaad, J., "CBOR Object Signing and Encryption (COSE):
+              Header Parameters for Carrying and Referencing X.509
+              Certificates", RFC 9360, DOI 10.17487/RFC9360, February
+              2023, <https://www.rfc-editor.org/rfc/rfc9360>.
+
+   [RFC9597]  Looker, T. and M.B. Jones, "CBOR Web Token (CWT) Claims in
+              COSE Headers", RFC 9597, DOI 10.17487/RFC9597, June 2024,
+              <https://www.rfc-editor.org/rfc/rfc9597>.
+
 Acknowledgments
 
    The authors would like to thank _list_ for their reviews and
    suggestions.
 
 Authors' Addresses
+
+   Maik Riechert
+   Microsoft
+   Email: Maik.Riechert@microsoft.com
+
+
+   Antoine Delignat-Lavaud
+   Microsoft
+   Email: antdl@microsoft.com
+
 
    Henk Birkholz
    Fraunhofer SIT
