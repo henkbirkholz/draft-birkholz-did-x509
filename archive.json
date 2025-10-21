@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-10-19T02:00:02.005895+00:00",
+  "timestamp": "2025-10-21T01:50:53.491596+00:00",
   "repo": "henkbirkholz/draft-birkholz-did-x509",
   "labels": [
     {
@@ -56,26 +56,42 @@
       "id": "PR_kwDOQEQBrM6uUYWM",
       "title": "Add authors Maik Riechert and Antoine Delignat-Lavaud",
       "url": "https://github.com/henkbirkholz/draft-birkholz-did-x509/pull/1",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "achamayou",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Who wrote https://raw.githubusercontent.com/microsoft/did-x509/refs/heads/main/specification.md",
       "createdAt": "2025-10-17T13:58:33Z",
-      "updatedAt": "2025-10-17T15:18:57Z",
+      "updatedAt": "2025-10-20T13:59:09Z",
       "baseRepository": "henkbirkholz/draft-birkholz-did-x509",
       "baseRefName": "main",
       "baseRefOid": "c9934aa907b6bc222b168bff6e397265e28c05c0",
       "headRepository": "henkbirkholz/draft-birkholz-did-x509",
       "headRefName": "achamayou-patch-1",
       "headRefOid": "aeb5695d29be62507947fbe54adc50db85a0492c",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2025-10-20T13:59:09Z",
+      "mergedAt": "2025-10-20T13:59:09Z",
+      "mergedBy": "achamayou",
+      "mergeCommit": {
+        "oid": "9c133bcf1f4541ddf56f3d47c8d0f6a286249576"
+      },
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOQEQBrM7IEHfZ",
+          "commit": {
+            "abbreviatedOid": "aeb5695"
+          },
+          "author": "henkbirkholz",
+          "authorAssociation": "OWNER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-10-20T13:41:39Z",
+          "updatedAt": "2025-10-20T13:41:39Z",
+          "comments": []
+        }
+      ]
     },
     {
       "number": 2,
@@ -89,7 +105,7 @@
       "labels": [],
       "body": "Added example controller document and resolution details.",
       "createdAt": "2025-10-17T14:57:21Z",
-      "updatedAt": "2025-10-17T17:16:58Z",
+      "updatedAt": "2025-10-20T17:09:10Z",
       "baseRepository": "henkbirkholz/draft-birkholz-did-x509",
       "baseRefName": "main",
       "baseRefOid": "c9934aa907b6bc222b168bff6e397265e28c05c0",
@@ -100,7 +116,29 @@
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
-      "comments": [],
+      "comments": [
+        {
+          "author": "achamayou",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@OR13 sorry, I accidentally merged https://github.com/henkbirkholz/draft-birkholz-did-x509/commit/485e68e6e8ea3801a1fbd3ea12702ce89f15d789 to main, because it's the unfortunate default in the dialog, there is no branch protection, and I have no permission to add branch protection.\r\n\r\nThis is a real example against https://github.com/microsoft/did-x509/blob/main/test-data/ms-code-signing.pem. Because the input to the resolution is an x509chain, it can only ever contain a single verificationMethod. Existing did:x509 resolvers do not support injecting alsoKnownAs, because there is no specified resolution mechanism for them.",
+          "createdAt": "2025-10-20T15:17:30Z",
+          "updatedAt": "2025-10-20T15:17:30Z"
+        },
+        {
+          "author": "OR13",
+          "authorAssociation": "COLLABORATOR",
+          "body": "That's fine, a middle resolver can always add stuff to the json though, if don't want to describe that in the spec its fine to leave the json from the method as is",
+          "createdAt": "2025-10-20T16:20:31Z",
+          "updatedAt": "2025-10-20T16:20:31Z"
+        },
+        {
+          "author": "achamayou",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@OR13 yes, middle resolvers can absolutely enrich/modify the document, but I would like to keep this scoped to x509.",
+          "createdAt": "2025-10-20T17:09:10Z",
+          "updatedAt": "2025-10-20T17:09:10Z"
+        }
+      ],
       "reviews": [
         {
           "id": "PRR_kwDOQEQBrM7Hv0YU",
@@ -149,24 +187,26 @@
       "id": "PR_kwDOQEQBrM6uVDOE",
       "title": "Revise introduction and add issuer identifier details",
       "url": "https://github.com/henkbirkholz/draft-birkholz-did-x509/pull/3",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "achamayou",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Draft introduction. Places less emphasis on DID than https://github.com/microsoft/did-x509/blob/main/specification.md#introduction, and more focus on the practical benefits in existing usage.",
       "createdAt": "2025-10-17T14:59:21Z",
-      "updatedAt": "2025-10-17T15:26:24Z",
+      "updatedAt": "2025-10-20T13:59:22Z",
       "baseRepository": "henkbirkholz/draft-birkholz-did-x509",
       "baseRefName": "main",
       "baseRefOid": "c9934aa907b6bc222b168bff6e397265e28c05c0",
       "headRepository": "henkbirkholz/draft-birkholz-did-x509",
       "headRefName": "achamayou-patch-2",
-      "headRefOid": "a95ec3081abc264e194544eb148932e712d96405",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "71d5ca4ba56fae795fc6bdc864392c7060a0fc40",
+      "closedAt": "2025-10-20T13:59:22Z",
+      "mergedAt": "2025-10-20T13:59:22Z",
+      "mergedBy": "achamayou",
+      "mergeCommit": {
+        "oid": "ca6467ba3ebfe0e5e71299b6e6dc0b03ce332426"
+      },
       "comments": [],
       "reviews": [
         {
@@ -188,6 +228,39 @@
               "updatedAt": "2025-10-17T15:04:28Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOQEQBrM7IEIKj",
+          "commit": {
+            "abbreviatedOid": "a95ec30"
+          },
+          "author": "henkbirkholz",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-10-20T13:42:27Z",
+          "updatedAt": "2025-10-20T13:42:27Z",
+          "comments": [
+            {
+              "originalPosition": 23,
+              "body": "```suggestion\r\nThis document aims to define an interoperable and flexible issuer identifier format for COSE messages that transport or refer to X.509 certificates using {{RFC9360}}.\r\n```",
+              "createdAt": "2025-10-20T13:42:27Z",
+              "updatedAt": "2025-10-20T13:42:28Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOQEQBrM7IEIyW",
+          "commit": {
+            "abbreviatedOid": "71d5ca4"
+          },
+          "author": "henkbirkholz",
+          "authorAssociation": "OWNER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-10-20T13:43:10Z",
+          "updatedAt": "2025-10-20T13:43:10Z",
+          "comments": []
         }
       ]
     },
@@ -196,52 +269,184 @@
       "id": "PR_kwDOQEQBrM6uVR6R",
       "title": "Import identifier definition",
       "url": "https://github.com/henkbirkholz/draft-birkholz-did-x509/pull/4",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "achamayou",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Import from https://raw.githubusercontent.com/microsoft/did-x509/refs/heads/main/specification.md with tweaks to references and markdown.",
       "createdAt": "2025-10-17T15:19:26Z",
-      "updatedAt": "2025-10-17T16:52:06Z",
+      "updatedAt": "2025-10-20T14:13:09Z",
       "baseRepository": "henkbirkholz/draft-birkholz-did-x509",
       "baseRefName": "main",
-      "baseRefOid": "c9934aa907b6bc222b168bff6e397265e28c05c0",
+      "baseRefOid": "54488888f99f817e13ede4d55930e40d48e61318",
       "headRepository": "henkbirkholz/draft-birkholz-did-x509",
       "headRefName": "import_identifier_definition",
-      "headRefOid": "06c28fdca90ce6665c1d314b5da4c68c759340f9",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "13aae71f5753efbe54b9c359ee433233ab4c4f4d",
+      "closedAt": "2025-10-20T14:13:09Z",
+      "mergedAt": "2025-10-20T14:13:09Z",
+      "mergedBy": "achamayou",
+      "mergeCommit": {
+        "oid": "505d76da89a7f5b7474f4f4ec95a8c31f93787ea"
+      },
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOQEQBrM7IEJwf",
+          "commit": {
+            "abbreviatedOid": "06c28fd"
+          },
+          "author": "henkbirkholz",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-10-20T13:44:19Z",
+          "updatedAt": "2025-10-20T13:44:20Z",
+          "comments": [
+            {
+              "originalPosition": 31,
+              "body": "```suggestion\r\nIn this document, CDDL ({{-cddl}}, {{-cddlplus}}) is used to describe the\r\n```",
+              "createdAt": "2025-10-20T13:44:19Z",
+              "updatedAt": "2025-10-20T13:44:20Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOQEQBrM7IEKnb",
+          "commit": {
+            "abbreviatedOid": "23b6e5a"
+          },
+          "author": "henkbirkholz",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-10-20T13:45:22Z",
+          "updatedAt": "2025-10-20T13:45:23Z",
+          "comments": [
+            {
+              "originalPosition": 42,
+              "body": "```suggestion\r\nThe did:x509 ABNF definition defined below uses the syntax defined in {{-abnf}} and the corresponding definitions for `ALPHA` and `DIGIT`.\r\nThe {{DIDV1}} contains the definition for `idchar`.\r\n```",
+              "createdAt": "2025-10-20T13:45:23Z",
+              "updatedAt": "2025-10-20T13:45:23Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOQEQBrM7IEMDb",
+          "commit": {
+            "abbreviatedOid": "dcb1bb8"
+          },
+          "author": "henkbirkholz",
+          "authorAssociation": "OWNER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-10-20T13:47:03Z",
+          "updatedAt": "2025-10-20T13:47:03Z",
+          "comments": []
+        }
+      ]
     },
     {
       "number": 5,
       "id": "PR_kwDOQEQBrM6uWdAU",
       "title": "Update draft-birkholz-did-x509.md",
       "url": "https://github.com/henkbirkholz/draft-birkholz-did-x509/pull/5",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "achamayou",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Add security considerations",
       "createdAt": "2025-10-17T17:10:13Z",
-      "updatedAt": "2025-10-17T17:10:21Z",
+      "updatedAt": "2025-10-20T14:03:51Z",
       "baseRepository": "henkbirkholz/draft-birkholz-did-x509",
       "baseRefName": "main",
       "baseRefOid": "c9934aa907b6bc222b168bff6e397265e28c05c0",
       "headRepository": "henkbirkholz/draft-birkholz-did-x509",
       "headRefName": "achamayou-patch-3",
-      "headRefOid": "44173d4221bb8f294282459cb476509e64119806",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "aaca21d402080c5d3a19f1ec5acc105de8ca1aad",
+      "closedAt": "2025-10-20T14:03:51Z",
+      "mergedAt": "2025-10-20T14:03:51Z",
+      "mergedBy": "achamayou",
+      "mergeCommit": {
+        "oid": "54488888f99f817e13ede4d55930e40d48e61318"
+      },
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOQEQBrM7IENxe",
+          "commit": {
+            "abbreviatedOid": "44173d4"
+          },
+          "author": "henkbirkholz",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-10-20T13:49:06Z",
+          "updatedAt": "2025-10-20T13:49:07Z",
+          "comments": [
+            {
+              "originalPosition": 34,
+              "body": "```suggestion\r\nThis DID method does not require an X.509 trust anchor store but rather relies on verifiers either trusting an individual DID directly or using third-party endorsements for a given DID, like {{-VC}}, to establish trust.\r\n```",
+              "createdAt": "2025-10-20T13:49:07Z",
+              "updatedAt": "2025-10-20T13:49:07Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOQEQBrM7IEYIy",
+          "commit": {
+            "abbreviatedOid": "2e6f084"
+          },
+          "author": "henkbirkholz",
+          "authorAssociation": "OWNER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-10-20T13:59:27Z",
+          "updatedAt": "2025-10-20T13:59:27Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOQEQBrM7IEZN3",
+          "commit": {
+            "abbreviatedOid": "2e6f084"
+          },
+          "author": "henkbirkholz",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-10-20T14:00:37Z",
+          "updatedAt": "2025-10-20T14:00:37Z",
+          "comments": [
+            {
+              "originalPosition": 34,
+              "body": "```suggestion\r\nThis DID method does not require an X.509 trust anchor store but rather relies on verifiers either trusting an individual DID directly or using third-party endorsements for a given DID, like {{VC}}, to establish trust.\r\n```",
+              "createdAt": "2025-10-20T14:00:37Z",
+              "updatedAt": "2025-10-20T14:00:38Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOQEQBrM7IEbLu",
+          "commit": {
+            "abbreviatedOid": "a24f503"
+          },
+          "author": "achamayou",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-10-20T14:02:20Z",
+          "updatedAt": "2025-10-20T14:02:20Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "```suggestion\r\ntitle: \"x509 Decentralized Identifier\"\r\n```",
+              "createdAt": "2025-10-20T14:02:20Z",
+              "updatedAt": "2025-10-20T14:02:21Z"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
