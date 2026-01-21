@@ -65,7 +65,7 @@ entity:
 
 --- abstract
 
-This document defines the did:x509 decentralized identifier method, which enables a direct, resolvable binding between X.509 certificate chains and compact issuer identifiers. The did:x509 identifier format is designed for use in COSE messages that transport or reference X.509 certificates, and can be incorporated into COSE Header CWT Claims maps. By combining a certificate chain fingerprint with optional policies for subject names, subject alternative names, extended key usage, and issuer information, did:x509 provides a flexible and interoperable mechanism for certificate-based identification. This identifier format is particularly useful for policy evaluation and reference in transparency ledgers and similar systems requiring cryptographic binding to certificate material.
+This document defines the did:x509 decentralized identifier method, which enables a direct, resolvable binding between X.509 certificate chains and compact issuer identifiers (DID identifier). In particular, the did:x509 identifier format in this documents comes with a CWT Claims defintion. In general, the specified DID identifier enables compact and interoperable mechanism for certificate-based identification by combining a certification path fingerprint with optional policies for subject names, subject alternative names, extended key usage, and issuer information, did:x509 provides a flexible. This identifier format is especially useful for policy evaluation and reference in transparency services and similar systems requiring cryptographic binding to certificate material.
 
 --- middle
 
