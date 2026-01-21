@@ -21,7 +21,7 @@ Abstract
    which enables a direct, resolvable binding between X.509 certificate
    chains and compact issuer identifiers (DID string).  In particular,
    the did:x509 identifier format in this documents comes with a CWT
-   Claims defintion.  In general, the specified DID identifier enables
+   Claims definition.  In general, the specified DID identifier enables
    compact and interoperable mechanism for certificate-based
    identification by combining a certification path fingerprint with
    optional policies for subject names, subject alternative names,
