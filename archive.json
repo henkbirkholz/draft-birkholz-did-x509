@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-01-20T02:06:57.448443+00:00",
+  "timestamp": "2026-01-22T02:11:13.913383+00:00",
   "repo": "henkbirkholz/draft-birkholz-did-x509",
   "labels": [
     {
@@ -447,6 +447,32 @@
           ]
         }
       ]
+    },
+    {
+      "number": 6,
+      "id": "PR_kwDOQEQBrM6-eQ14",
+      "title": "Add status warning to abstract matching RFC9783",
+      "url": "https://github.com/henkbirkholz/draft-birkholz-did-x509/pull/6",
+      "state": "OPEN",
+      "author": "achamayou",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Address ISE Editor comment:\r\n\r\n> Any independent submission should include text in the abstract that reminds the reader this this independent submission is NOT a standard, and does not enjoy community consensus.\r\n\r\nTaken from https://www.rfc-editor.org/rfc/rfc9783.html",
+      "createdAt": "2026-01-21T15:02:23Z",
+      "updatedAt": "2026-01-21T15:02:27Z",
+      "baseRepository": "henkbirkholz/draft-birkholz-did-x509",
+      "baseRefName": "main",
+      "baseRefOid": "a0e6f48f099c73b61c086756b5cc7c9b8bef2e30",
+      "headRepository": "henkbirkholz/draft-birkholz-did-x509",
+      "headRefName": "add_status_warning",
+      "headRefOid": "bc337d5a98f77eab7ea2226b29c54de065192ba6",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
     }
   ]
 }
