@@ -5,11 +5,11 @@
 Network Working Group                                        M. Riechert
 Internet-Draft                                        A. Delignat-Lavaud
 Intended status: Standards Track                               Microsoft
-Expires: 25 July 2026                                        H. Birkholz
+Expires: 1 August 2026                                       H. Birkholz
                                                           Fraunhofer SIT
                                                              A. Chamayou
                                                                Microsoft
-                                                         21 January 2026
+                                                         28 January 2026
 
 
                      x509 Decentralized Identifier
@@ -28,6 +28,10 @@ Abstract
    issuer information.  It is especially useful for policy evaluation
    and reference in transparency services and similar systems requiring
    cryptographic binding to certificate material.
+
+   This Informational document is published as an Independent Submission
+   to improve interoperability with Microsoft's architecture.  It is not
+   a standard nor a product of the IETF.
 
 Discussion Venues
 
@@ -51,7 +55,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 25 July 2026.
+   This Internet-Draft will expire on 1 August 2026.
 
 Copyright Notice
 
