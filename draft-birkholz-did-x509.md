@@ -105,7 +105,7 @@ policy-value       = *(1*idchar ":") 1*idchar
 base64url          = 1*(ALPHA / DIGIT / "-" / "_")
 ~~~
 
-In this draft, version is `0`.
+Implementations of this specification MUST indicate a version value of `0`.
 
 `ca-fingerprint-alg` is one of `sha256`, `sha384`, or `sha512`.
 `ca-fingerprint` is `chain[i].fingerprint[ca-fingerprint-alg]` with i > 0, that is, either an intermediate or root CA certificate.
