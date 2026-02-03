@@ -86,7 +86,7 @@ Table of Contents
    5.  CDDL for a JSON Data Model for X.509 Certification Paths
    6.  Privacy Considerations
    7.  Security Consideration
-     7.1.  Identifier ambiguity
+     7.1.  Identifier Ambiguity
      7.2.  X.509 trust stores
    8.  IANA Considerations
    9.  References
@@ -420,7 +420,7 @@ DirectoryName = ["dn", Name] ; Example: ["dn", {CN: "Microsoft"}]
 
 7.  Security Consideration
 
-7.1.  Identifier ambiguity
+7.1.  Identifier Ambiguity
 
    This DID method maps characteristics of X.509 certificate chains to
    identifiers.  It allows a single identifier to map to multiple
