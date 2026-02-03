@@ -392,7 +392,7 @@ This DID method maps characteristics of X.509 certificate chains to identifiers.
 
 To mitigate this issue, the certificate authority should publish their expected usage of certificate fields and indicate which ones constitute a unique identity, versus any additional fields that may be of an informational nature. This will help users create an appropriate did:x509 as well as consumers of signed content to decide whether it is appropriate to trust a given did:x509.
 
-## X.509 trust stores
+## X.509 Trust Stores
 
 Typically, a verifier trusts an X.509 certificate by applying chain validation defined in {{Section 6 of RFC5280}} using a set of certificate authority (CA) certificates as trust store, together with additional application-specific policies.
 
