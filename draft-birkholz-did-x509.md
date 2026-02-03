@@ -45,7 +45,7 @@ normative:
     =: RFC8126
   RFC5234: abnf
   DIDV1:
-    target: https://www.w3.org/TR/2022/REC-did-core-20220719/
+    target: https://www.w3.org/TR/did-1.0/
     title: W3C DID v1.0 specification
   RFC5280:
   VC:
@@ -59,6 +59,8 @@ informative:
     title: Rego
   RFC9360:
   RFC9597:
+  DID-DOCUMENT:
+    target: https://www.w3.org/TR/did-1.0/#dfn-did-documents
 
 entity:
   SELF: "RFCthis"
@@ -291,9 +293,9 @@ The value is constructed as follows:
 1. Encode each certificate `C` that is part of the chain as the string `b64url(DER(C))`.
 2. Concatenate the resulting strings in order, separated by comma `","`.
 
-# Example Controller Document
+# Example DID Document
 
-The illustrates what a typical Controller document can look like once resolved:
+This illustrates what a typical DID document ({{DID-DOCUMENT}}), describing the DID subject and the methods it can use to authenticate itself, can look like once resolved:
 
 ~~~json
 {
