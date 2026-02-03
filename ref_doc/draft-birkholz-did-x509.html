@@ -1200,7 +1200,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
                 <p id="section-toc.1-1.7.2.1.1"><a href="#section-7.1" class="auto internal xref">7.1</a>.  <a href="#name-identifier-ambiguity" class="internal xref">Identifier Ambiguity</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.2">
-                <p id="section-toc.1-1.7.2.2.1"><a href="#section-7.2" class="auto internal xref">7.2</a>.  <a href="#name-x509-trust-stores" class="internal xref">X.509 trust stores</a></p>
+                <p id="section-toc.1-1.7.2.2.1"><a href="#section-7.2" class="auto internal xref">7.2</a>.  <a href="#name-x509-trust-stores" class="internal xref">X.509 Trust Stores</a></p>
 </li>
             </ul>
 </li>
@@ -1605,7 +1605,7 @@ DirectoryName = ["dn", Name] ; Example: ["dn", {CN: "Microsoft"}]
 <div id="x509-trust-stores">
 <section id="section-7.2">
         <h3 id="name-x509-trust-stores">
-<a href="#section-7.2" class="section-number selfRef">7.2. </a><a href="#name-x509-trust-stores" class="section-name selfRef">X.509 trust stores</a>
+<a href="#section-7.2" class="section-number selfRef">7.2. </a><a href="#name-x509-trust-stores" class="section-name selfRef">X.509 Trust Stores</a>
         </h3>
 <p id="section-7.2-1">Typically, a verifier trusts an X.509 certificate by applying chain validation defined in <span><a href="https://rfc-editor.org/rfc/rfc5280#section-6" class="relref">Section 6</a> of [<a href="#RFC5280" class="cite xref">RFC5280</a>]</span> using a set of certificate authority (CA) certificates as trust store, together with additional application-specific policies.<a href="#section-7.2-1" class="pilcrow">¶</a></p>
 <p id="section-7.2-2">This DID method does not require an X.509 trust anchor store but rather relies on verifiers either trusting an individual DID directly or using third-party endorsements for a given DID, like <span>[<a href="#VC" class="cite xref">VC</a>]</span>, to establish trust.<a href="#section-7.2-2" class="pilcrow">¶</a></p>
