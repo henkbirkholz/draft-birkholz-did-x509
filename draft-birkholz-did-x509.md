@@ -386,7 +386,7 @@ Some considerations
 
 # Security Consideration {#secconsec}
 
-## Identifier ambiguity
+## Identifier Ambiguity
 
 This DID method maps characteristics of X.509 certificate chains to identifiers. It allows a single identifier to map to multiple certificate chains, giving the identifier stability across the expiry of individual chains. However, if the policies used in the identifier are chosen too loosely, the identifier may match too wide a set of certificate chains. This may have security implications as it may authorize an identity for actions it was not meant to be authorized for.
 
