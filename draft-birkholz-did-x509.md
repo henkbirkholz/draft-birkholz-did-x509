@@ -104,6 +104,8 @@ policy-name        = 1*ALPHA
 policy-value       = *(1*idchar ":") 1*idchar
 base64url          = 1*(ALPHA / DIGIT / "-" / "_")
 ~~~
+{: #fig-core-def artwork-align="left"
+   title="ABNF definition of core did-x509 syntax"}
 
 In this draft, version is `0`.
 
@@ -148,6 +150,8 @@ valid if {
     count(valid_policies) == count(policies)
 }
 ~~~
+{: #fig-validate-core artwork-align="left"
+   title="Core Rego validation rule"}
 
 The overall Rego policy is assembled by concatenating the core Rego policy with the Rego policy fragments in the following sections, each one defining a `validate_policy` function.
 
@@ -158,6 +162,8 @@ Some of the policies that are defined in subsequent sections require values to b
 ~~~abnf
 allowed = ALPHA / DIGIT / "-" / "." / "_"
 ~~~
+{: #fig-allowed-def artwork-align="left"
+   title="ABNF definition of characters that do not need to be percent-encoded"}
 
 Note that most libraries implement percent-encoding in the context of URLs and do NOT encode `~` (`%7E`).
 
@@ -171,6 +177,8 @@ value           = 1*idchar
 label           = "CN" / "L" / "ST" / "O" / "OU" / "C" / "STREET"
 oid             = 1*DIGIT *("." 1*DIGIT)
 ~~~
+{: #fig-subject-def artwork-align="left"
+   title="ABNF definition of Subject policy"}
 
 `<key>:<value>` are the subject name fields in `chain[0].subject` in any order. Field repetitions are not allowed. Values must be percent-encoded.
 
@@ -195,6 +203,8 @@ validate_policy(name, value) := true if {
     object.subset(input.chain[0].subject, subject) == true
 }
 ~~~
+{: #fig-validate-subject artwork-align="left"
+   title="Rego function validating Subject policy"}
 
 ## "san" policy
 
@@ -204,6 +214,8 @@ policy-value    = san-type ":" san-value
 san-type        = "email" / "dns" / "uri"
 san-value       = 1*idchar
 ~~~
+{: #fig-san-def artwork-align="left"
+   title="ABNF definition of SAN policy"}
 
 `san-type` is the SAN type and must be one of `email`, `dns`, or `uri`. Note that `dn` is not supported.
 
@@ -225,6 +237,8 @@ validate_policy(name, value) := true if {
     [san_type, san_value] == input.chain[0].extensions.san[_]
 }
 ~~~
+{: #fig-validate-san artwork-align="left"
+   title="Rego function validating SAN policy"}
 
 ## "eku" policy
 
@@ -234,6 +248,8 @@ policy-value = eku
 eku          = oid
 oid          = 1*DIGIT *("." 1*DIGIT)
 ~~~
+{: #fig-eku-def artwork-align="left"
+   title="ABNF definition of EKU policy"}
 
 `eku` is one of the OIDs within `chain[0].extensions.eku`.
 
@@ -249,6 +265,8 @@ validate_policy(name, value) := true if {
     value == input.chain[0].extensions.eku[_]
 }
 ~~~
+{: #fig-validate-eku artwork-align="left"
+   title="Rego function validating EKU policy"}
 
 ## "fulcio-issuer" policy
 
@@ -257,6 +275,8 @@ policy-name   = "fulcio-issuer"
 policy-value  = fulcio-issuer
 fulcio-issuer = 1*idchar
 ~~~
+{: #fig-fulcio-issuer-def artwork-align="left"
+   title="ABNF definition of fulcio-issuer policy"}
 
 `fulcio-issuer` is `chain[0].extensions.fulcio_issuer` without leading `https://`, percent-encoded.
 
@@ -277,6 +297,8 @@ validate_policy(name, value) := true if {
     concat("", ["https://", suffix]) == input.chain[0].extensions.fulcio_issuer
 }
 ~~~
+{: #fig-validate-fulcio-issuer artwork-align="left"
+   title="Rego function validating fulcio-issuer policy"}
 
 ## DID resolution options
 
@@ -375,7 +397,7 @@ URI = ["uri", tstr]          ; Example: ["uri", "https://microsoft.com"]
 DirectoryName = ["dn", Name] ; Example: ["dn", {CN: "Microsoft"}]
 ~~~
 {: #fig-cddl-placeholder artwork-align="left"
-   title="CDDL definition of did:x.509 JSON Data Model"}
+  title="CDDL definition of did:x509 JSON Data Model"}
 
 # Privacy Considerations {#privconsec}
 
