@@ -96,12 +96,12 @@ The {{DIDV1}} contains the definition for `idchar`.
 ~~~abnf
 did-x509           = "did:" method-name ":" method-specific-id
 method-name        = "x509"
-method-specific-id = version ":" ca-fingerprint-alg ":" ca-fingerprint 1*("::" policy-name ":" policy-value)
+method-specific-id = version ":" ca-fingerprint-alg ":" ca-fingerprint 1*("::" predicate-name ":" predicate-value)
 version            = 1*DIGIT
 ca-fingerprint-alg = "sha256" / "sha384" / "sha512"
 ca-fingerprint     = base64url
-policy-name        = 1*ALPHA
-policy-value       = *(1*idchar ":") 1*idchar
+predicate-name        = 1*ALPHA
+predicate-value       = *(1*idchar ":") 1*idchar
 base64url          = 1*(ALPHA / DIGIT / "-" / "_")
 ~~~
 
@@ -109,12 +109,12 @@ In this draft, version is `0`.
 
 `ca-fingerprint-alg` is one of `sha256`, `sha384`, or `sha512`.
 `ca-fingerprint` is `chain[i].fingerprint[ca-fingerprint-alg]` with i > 0, that is, either an intermediate or root CA certificate.
-`policy-name` is a policy name and `policy-value` is a policy-specific value.
-`::` is used to separate multiple policies from each other.
+`predicate-name` is a predicate name and `predicate-value` is a predicate-specific value.
+`::` is used to separate multiple predicates from each other.
 
-The following sections define the policies and their policy-specific syntax.
+The following sections define the predicates and their predicate-specific syntax.
 
-Validation of policies is formally defined using {{REGO}} policies, though there is no expectation that implementations use Rego.
+Validation of predicates is formally defined using {{REGO}} policies, though there is no expectation that implementations use Rego.
 
 The input to the Rego engine is the JSON document `{"did": "<DID>", "chain": <CertificateChain>}`.
 
@@ -143,17 +143,17 @@ valid if {
     valid_policies := [i |
         some i
         [name, value] := policies[i]
-        validate_policy(name, value)
+        validate_predicate(name, value)
     ]
     count(valid_policies) == count(policies)
 }
 ~~~
 
-The overall Rego policy is assembled by concatenating the core Rego policy with the Rego policy fragments in the following sections, each one defining a `validate_policy` function.
+The overall Rego policy is assembled by concatenating the core Rego policy with the Rego policy fragments in the following sections, each one defining a `validate_predicate` function.
 
 ## Percent-encoding
 
-Some of the policies that are defined in subsequent sections require values to be percent-encoded. Percent-encoding is specified in {{Section 2.1 of RFC3986}}. All characters that are not in the allowed set defined below must be percent-encoded:
+Some of the predicates that are defined in subsequent sections require values to be percent-encoded. Percent-encoding is specified in {{Section 2.1 of RFC3986}}. All characters that are not in the allowed set defined below must be percent-encoded:
 
 ~~~abnf
 allowed = ALPHA / DIGIT / "-" / "." / "_"
@@ -161,11 +161,11 @@ allowed = ALPHA / DIGIT / "-" / "." / "_"
 
 Note that most libraries implement percent-encoding in the context of URLs and do NOT encode `~` (`%7E`).
 
-## "subject" policy
+## "subject" predicate
 
 ~~~abnf
-policy-name     = "subject"
-policy-value    = key ":" value *(":" key ":" value)
+predicate-name     = "subject"
+predicate-value    = key ":" value *(":" key ":" value)
 key             = label / oid
 value           = 1*idchar
 label           = "CN" / "L" / "ST" / "O" / "OU" / "C" / "STREET"
@@ -181,7 +181,7 @@ Example:
 Rego policy:
 
 ~~~rego
-validate_policy(name, value) := true if {
+validate_predicate(name, value) := true if {
     name == "subject"
     items := split(value, ":")
     count(items) % 2 == 0
@@ -196,11 +196,11 @@ validate_policy(name, value) := true if {
 }
 ~~~
 
-## "san" policy
+## "san" predicate
 
 ~~~abnf
-policy-name     = "san"
-policy-value    = san-type ":" san-value
+predicate-name     = "san"
+predicate-value    = san-type ":" san-value
 san-type        = "email" / "dns" / "uri"
 san-value       = 1*idchar
 ~~~
@@ -218,7 +218,7 @@ Example:
 Rego policy:
 
 ~~~rego
-validate_policy(name, value) := true if {
+validate_predicate(name, value) := true if {
     name == "san"
     [san_type, san_value_encoded] := split(value, ":")
     san_value := urlquery.decode(san_value_encoded)
@@ -226,11 +226,11 @@ validate_policy(name, value) := true if {
 }
 ~~~
 
-## "eku" policy
+## "eku" predicate
 
 ~~~abnf
-policy-name  = "eku"
-policy-value = eku
+predicate-name  = "eku"
+predicate-value = eku
 eku          = oid
 oid          = 1*DIGIT *("." 1*DIGIT)
 ~~~
@@ -244,17 +244,17 @@ Example:
 Rego policy:
 
 ~~~rego
-validate_policy(name, value) := true if {
+validate_predicate(name, value) := true if {
     name == "eku"
     value == input.chain[0].extensions.eku[_]
 }
 ~~~
 
-## "fulcio-issuer" policy
+## "fulcio-issuer" predicate
 
 ~~~abnf
-policy-name   = "fulcio-issuer"
-policy-value  = fulcio-issuer
+predicate-name   = "fulcio-issuer"
+predicate-value  = fulcio-issuer
 fulcio-issuer = 1*idchar
 ~~~
 
@@ -271,7 +271,7 @@ Example 2:
 Rego policy:
 
 ~~~rego
-validate_policy(name, value) := true if {
+validate_predicate(name, value) := true if {
     name == "fulcio-issuer"
     suffix := urlquery.decode(value)
     concat("", ["https://", suffix]) == input.chain[0].extensions.fulcio_issuer
