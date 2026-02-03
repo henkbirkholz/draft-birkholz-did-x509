@@ -83,7 +83,7 @@ Relying on a partial chain (root and intermediaries) is similarly unwieldy.
 While stable, the level of granularity afforded by a partial chain may not be sufficient to distinguish several identities that are not equivalent for the purpose of policy.
 
 Combining authority pinning with attribute assertions is a precise and stable way of capturing identities as a constrained set of certificates.
-Their representation as compact and durable identifier strings enable the formulation of readable policy (e.g. "request.issuer == 'did:x509...'"), for example in the context of transparency ledger registration.
+Their representation as compact and durable identifier strings enables the formulation of readable policy (e.g. "request.issuer == 'did:x509...'"), for example in the context of transparency ledger registration.
 
 # Conventions and Definitions
 
