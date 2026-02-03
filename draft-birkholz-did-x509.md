@@ -61,6 +61,7 @@ informative:
   RFC9597:
   DID-DOCUMENT:
     target: https://www.w3.org/TR/did-1.0/#dfn-did-documents
+    title: DID Document Definition
 
 entity:
   SELF: "RFCthis"
