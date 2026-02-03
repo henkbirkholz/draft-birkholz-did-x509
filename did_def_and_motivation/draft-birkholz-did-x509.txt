@@ -115,7 +115,7 @@ Table of Contents
    Combining authority pinning with attribute assertions is a precise
    and stable way of capturing identities as a constrained set of
    certificates.  Their representation as compact and durable identifier
-   strings enable the formulation of readable policy (e.g.
+   strings enables the formulation of readable policy (e.g.
    "request.issuer == 'did:x509...'"), for example in the context of
    transparency ledger registration.
 
