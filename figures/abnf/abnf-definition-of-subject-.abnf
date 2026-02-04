@@ -1,0 +1,6 @@
+predicate-name  = "subject"
+predicate-value = key ":" value *(":" key ":" value)
+key             = label / oid
+value           = 1*idchar
+label           = "CN" / "L" / "ST" / "O" / "OU" / "C" / "STREET"
+oid             = 1*DIGIT *("." 1*DIGIT)

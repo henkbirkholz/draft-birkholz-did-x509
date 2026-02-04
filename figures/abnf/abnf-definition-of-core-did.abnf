@@ -1,0 +1,8 @@
+did-x509           = "did:x509:" method-specific-id
+method-specific-id = version ":" ca-fingerprint-alg ":" ca-fingerprint 1*("::" predicate-name ":" predicate-value)
+version            = 1*DIGIT
+ca-fingerprint-alg = "sha256" / "sha384" / "sha512"
+ca-fingerprint     = base64url
+predicate-name     = 1*ALPHA
+predicate-value    = *(1*idchar ":") 1*idchar
+base64url          = 1*(ALPHA / DIGIT / "-" / "_")

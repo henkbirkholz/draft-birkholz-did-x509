@@ -1,0 +1,3 @@
+predicate-name   = "fulcio-issuer"
+predicate-value  = fulcio-issuer
+fulcio-issuer    = 1*idchar
