@@ -1053,7 +1053,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Riechert, et al.</td>
-<td class="center">Expires 7 August 2026</td>
+<td class="center">Expires 8 August 2026</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1066,12 +1066,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-birkholz-did-x509-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2026-02-03" class="published">3 February 2026</time>
+<time datetime="2026-02-04" class="published">4 February 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2026-08-07">7 August 2026</time></dd>
+<dd class="expires"><time datetime="2026-08-08">8 August 2026</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1126,7 +1126,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 7 August 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 8 August 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1185,7 +1185,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
             </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4">
-            <p id="section-toc.1-1.4.1"><a href="#section-4" class="auto internal xref">4</a>.  <a href="#name-example-controller-document" class="internal xref">Example Controller Document</a></p>
+            <p id="section-toc.1-1.4.1"><a href="#section-4" class="auto internal xref">4</a>.  <a href="#name-example-did-document" class="internal xref">Example DID Document</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5">
             <p id="section-toc.1-1.5.1"><a href="#section-5" class="auto internal xref">5</a>.  <a href="#name-cddl-for-a-json-data-model-" class="internal xref">CDDL for a JSON Data Model for X.509 Certification Paths</a></p>
@@ -1197,12 +1197,10 @@ svg :is([fill="white"], [fill^="#fff"]) {
             <p id="section-toc.1-1.7.1"><a href="#section-7" class="auto internal xref">7</a>.  <a href="#name-security-consideration" class="internal xref">Security Consideration</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.1">
-                <p id="section-toc.1-1.7.2.1.1"><a href="#section-7.1" class="auto internal xref">7.1</a>.  <a href="#name-identifier-ambiguity" class="internal xref">Identifier ambiguity</a></p>
-<ul class="compact toc ulBare ulEmpty">
-<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.1.2.1">
-                    <p id="section-toc.1-1.7.2.1.2.1.1"><a href="#section-7.1.1" class="auto internal xref">7.1.1</a>.  <a href="#name-x509-trust-stores" class="internal xref">X.509 trust stores</a></p>
+                <p id="section-toc.1-1.7.2.1.1"><a href="#section-7.1" class="auto internal xref">7.1</a>.  <a href="#name-identifier-ambiguity" class="internal xref">Identifier Ambiguity</a></p>
 </li>
-                </ul>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.2">
+                <p id="section-toc.1-1.7.2.2.1"><a href="#section-7.2" class="auto internal xref">7.2</a>.  <a href="#name-x509-trust-stores" class="internal xref">X.509 Trust Stores</a></p>
 </li>
             </ul>
 </li>
@@ -1235,10 +1233,15 @@ svg :is([fill="white"], [fill^="#fff"]) {
       <h2 id="name-introduction">
 <a href="#section-1" class="section-number selfRef">1. </a><a href="#name-introduction" class="section-name selfRef">Introduction</a>
       </h2>
-<p id="section-1-1">This document aims to define an interoperable and flexible issuer identifier format for COSE messages that transport or refer to X.509 certificates using <span>[<a href="#RFC9360" class="cite xref">RFC9360</a>]</span>.
+<p id="section-1-1">This document aims to define an interoperable and flexible decentralized identifier (<span>[<a href="#DIDV1" class="cite xref">DIDV1</a>]</span>) format for COSE messages that transport or refer to X.509 certificates using <span>[<a href="#RFC9360" class="cite xref">RFC9360</a>]</span>.
 The did:x509 identifier format implements a direct, resolvable binding between a certificate chain and a compact issuer string.
-It can be used in a COSE Header CWT Claims map as defined in <span>[<a href="#RFC9597" class="cite xref">RFC9597</a>]</span>.
-This issuer identifier is convenient for references and policy evaluation, for example in the context of transparency ledgers.<a href="#section-1-1" class="pilcrow">¶</a></p>
+It can be used in a COSE Header CWT Claims map as defined in <span>[<a href="#RFC9597" class="cite xref">RFC9597</a>]</span>.<a href="#section-1-1" class="pilcrow">¶</a></p>
+<p id="section-1-2">Including a certification path directly in configuration or in policy is often impractical.
+This is due to its size, and to the frequency at which some elements, particularly the leaf, are refreshed.
+Relying on a partial certification path (e.g., a root certificate and some intermediary certificates) is similarly unwieldy.
+While stable, the level of granularity afforded by a partial certification path may not be sufficient to distinguish several identities that are not equivalent for the purpose of policy.<a href="#section-1-2" class="pilcrow">¶</a></p>
+<p id="section-1-3">Combining authority pinning with attribute assertions is a precise and stable way of capturing identities as a constrained set of certificates.
+Their representation as compact and durable identifier strings enables the formulation of readable policy (e.g. "request.issuer == 'did:x509...'"), for example in the context of transparency ledger registration.<a href="#section-1-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="conventions-and-definitions">
@@ -1263,29 +1266,38 @@ defined in <span>[<a href="#I-D.ietf-scitt-architecture" class="cite xref">I-D.i
       </h2>
 <p id="section-3-1">The did:x509 ABNF definition defined below uses the syntax defined in <span>[<a href="#RFC5234" class="cite xref">RFC5234</a>]</span> and the corresponding definitions for <code>ALPHA</code> and <code>DIGIT</code>.
 The <span>[<a href="#DIDV1" class="cite xref">DIDV1</a>]</span> contains the definition for <code>idchar</code>.<a href="#section-3-1" class="pilcrow">¶</a></p>
-<div class="lang-abnf sourcecode" id="section-3-2">
+<span id="name-abnf-definition-of-core-did"></span><div id="fig-core-def">
+<figure id="figure-1">
+        <div class="alignLeft art-abnf art-text artwork" id="section-3-2.1">
 <pre>
-did-x509           = "did:" method-name ":" method-specific-id
-method-name        = "x509"
-method-specific-id = version ":" ca-fingerprint-alg ":" ca-fingerprint 1*("::" predicate-name ":" predicate-value)
+did-x509           = "did:x509:" method-specific-id
+method-specific-id = version ":" ca-fingerprint-alg ":" ca-fingerprint 1*("::" policy-name ":" policy-value)
 version            = 1*DIGIT
 ca-fingerprint-alg = "sha256" / "sha384" / "sha512"
 ca-fingerprint     = base64url
 predicate-name        = 1*ALPHA
 predicate-value       = *(1*idchar ":") 1*idchar
 base64url          = 1*(ALPHA / DIGIT / "-" / "_")
-</pre><a href="#section-3-2" class="pilcrow">¶</a>
+</pre>
 </div>
-<p id="section-3-3">In this draft, version is <code>0</code>.<a href="#section-3-3" class="pilcrow">¶</a></p>
+<figcaption><a href="#figure-1" class="selfRef">Figure 1</a>:
+<a href="#name-abnf-definition-of-core-did" class="selfRef">ABNF Definition of Core did-x509 Syntax</a>
+        </figcaption></figure>
+</div>
+<p id="section-3-3">Implementations of this specification <span class="bcp14">MUST</span> indicate a version value of <code>0</code>.<a href="#section-3-3" class="pilcrow">¶</a></p>
 <p id="section-3-4"><code>ca-fingerprint-alg</code> is one of <code>sha256</code>, <code>sha384</code>, or <code>sha512</code>.
 <code>ca-fingerprint</code> is <code>chain[i].fingerprint[ca-fingerprint-alg]</code> with i &gt; 0, that is, either an intermediate or root CA certificate.
 <code>predicate-name</code> is a predicate name and <code>predicate-value</code> is a predicate-specific value.
 <code>::</code> is used to separate multiple predicates from each other.<a href="#section-3-4" class="pilcrow">¶</a></p>
 <p id="section-3-5">The following sections define the predicates and their predicate-specific syntax.<a href="#section-3-5" class="pilcrow">¶</a></p>
-<p id="section-3-6">Validation of predicates is formally defined using <span>[<a href="#REGO" class="cite xref">REGO</a>]</span> policies, though there is no expectation that implementations use Rego.<a href="#section-3-6" class="pilcrow">¶</a></p>
-<p id="section-3-7">The input to the Rego engine is the JSON document <code>{"did": "&lt;DID&gt;", "chain": &lt;CertificateChain&gt;}</code>.<a href="#section-3-7" class="pilcrow">¶</a></p>
+<p id="section-3-6">Validation of predicates is formally defined using policies written in the Rego language (<span>[<a href="#REGO" class="cite xref">REGO</a>]</span>), rather than pseudo-code.
+This is to avoid ambiguity and to make it possible for a reader to evaluate the logic automatically, but there is no expectation that implementations use the Rego language.<a href="#section-3-6" class="pilcrow">¶</a></p>
+<p id="section-3-7">The inputs to the resolution process are the DID string itself and the <code>x509chain</code> DID resolution option, which carries a comma-separated base64url-encoded X.509 certification path.
+To evaluate the reference Rego code shown below, the DID and certification path have to be passed to a Rego runtime as a JSON document: <code>{"did": "&lt;DID&gt;", "chain": &lt;CertificateChain&gt;}</code>, where <code>did</code> is the DID string and <code>chain</code> is the parsed representation of the certification path derived from the <code>x509chain</code> resolution option.<a href="#section-3-7" class="pilcrow">¶</a></p>
 <p id="section-3-8">Core Rego policy:<a href="#section-3-8" class="pilcrow">¶</a></p>
-<div class="lang-rego sourcecode" id="section-3-9">
+<span id="name-core-rego-validation-rule"></span><div id="fig-validate-core">
+<figure id="figure-2">
+        <div class="alignLeft art-rego art-text artwork" id="section-3-9.1">
 <pre>
 parse_did(did) := [ca_fingerprint_alg, ca_fingerprint, policies] if {
     prefix := "did:x509:0:"
@@ -1313,7 +1325,11 @@ valid if {
     ]
     count(valid_policies) == count(policies)
 }
-</pre><a href="#section-3-9" class="pilcrow">¶</a>
+</pre>
+</div>
+<figcaption><a href="#figure-2" class="selfRef">Figure 2</a>:
+<a href="#name-core-rego-validation-rule" class="selfRef">Core Rego Validation Rule</a>
+        </figcaption></figure>
 </div>
 <p id="section-3-10">The overall Rego policy is assembled by concatenating the core Rego policy with the Rego policy fragments in the following sections, each one defining a <code>validate_predicate</code> function.<a href="#section-3-10" class="pilcrow">¶</a></p>
 <div id="percent-encoding">
@@ -1322,10 +1338,16 @@ valid if {
 <a href="#section-3.1" class="section-number selfRef">3.1. </a><a href="#name-percent-encoding" class="section-name selfRef">Percent-encoding</a>
         </h3>
 <p id="section-3.1-1">Some of the predicates that are defined in subsequent sections require values to be percent-encoded. Percent-encoding is specified in <span><a href="https://rfc-editor.org/rfc/rfc3986#section-2.1" class="relref">Section 2.1</a> of [<a href="#RFC3986" class="cite xref">RFC3986</a>]</span>. All characters that are not in the allowed set defined below must be percent-encoded:<a href="#section-3.1-1" class="pilcrow">¶</a></p>
-<div class="lang-abnf sourcecode" id="section-3.1-2">
+<span id="name-abnf-definition-of-characte"></span><div id="fig-allowed-def">
+<figure id="figure-3">
+          <div class="alignLeft art-abnf art-text artwork" id="section-3.1-2.1">
 <pre>
 allowed = ALPHA / DIGIT / "-" / "." / "_"
-</pre><a href="#section-3.1-2" class="pilcrow">¶</a>
+</pre>
+</div>
+<figcaption><a href="#figure-3" class="selfRef">Figure 3</a>:
+<a href="#name-abnf-definition-of-characte" class="selfRef">ABNF Definition of Characters That Do Not Need to Be Percent-Encoded</a>
+          </figcaption></figure>
 </div>
 <p id="section-3.1-3">Note that most libraries implement percent-encoding in the context of URLs and do NOT encode <code>~</code> (<code>%7E</code>).<a href="#section-3.1-3" class="pilcrow">¶</a></p>
 </section>
@@ -1335,7 +1357,9 @@ allowed = ALPHA / DIGIT / "-" / "." / "_"
         <h3 id="name-subject-predicate">
 <a href="#section-3.2" class="section-number selfRef">3.2. </a><a href="#name-subject-predicate" class="section-name selfRef">"subject" predicate</a>
         </h3>
-<div class="lang-abnf sourcecode" id="section-3.2-1">
+<span id="name-abnf-definition-of-subject-"></span><div id="fig-subject-def">
+<figure id="figure-4">
+          <div class="alignLeft art-abnf art-text artwork" id="section-3.2-1.1">
 <pre>
 predicate-name     = "subject"
 predicate-value    = key ":" value *(":" key ":" value)
@@ -1343,13 +1367,19 @@ key             = label / oid
 value           = 1*idchar
 label           = "CN" / "L" / "ST" / "O" / "OU" / "C" / "STREET"
 oid             = 1*DIGIT *("." 1*DIGIT)
-</pre><a href="#section-3.2-1" class="pilcrow">¶</a>
+</pre>
+</div>
+<figcaption><a href="#figure-4" class="selfRef">Figure 4</a>:
+<a href="#name-abnf-definition-of-subject-" class="selfRef">ABNF Definition of Subject Policy</a>
+          </figcaption></figure>
 </div>
 <p id="section-3.2-2"><code>&lt;key&gt;:&lt;value&gt;</code> are the subject name fields in <code>chain[0].subject</code> in any order. Field repetitions are not allowed. Values must be percent-encoded.<a href="#section-3.2-2" class="pilcrow">¶</a></p>
 <p id="section-3.2-3">Example:<a href="#section-3.2-3" class="pilcrow">¶</a></p>
 <p id="section-3.2-4"><code>did:x509:0:sha256:WE4P5dd8DnLHSkyHaIjhp4udlkF9LqoKwCvu9gl38jk::subject:C:US:ST:California:L:San%20Francisco:O:GitHub%2C%20Inc.</code><a href="#section-3.2-4" class="pilcrow">¶</a></p>
 <p id="section-3.2-5">Rego policy:<a href="#section-3.2-5" class="pilcrow">¶</a></p>
-<div class="lang-rego sourcecode" id="section-3.2-6">
+<span id="name-rego-function-validating-su"></span><div id="fig-validate-subject">
+<figure id="figure-5">
+          <div class="alignLeft art-rego art-text artwork" id="section-3.2-6.1">
 <pre>
 validate_predicate(name, value) := true if {
     name == "subject"
@@ -1364,7 +1394,11 @@ validate_predicate(name, value) := true if {
     count(subject) &gt;= 1
     object.subset(input.chain[0].subject, subject) == true
 }
-</pre><a href="#section-3.2-6" class="pilcrow">¶</a>
+</pre>
+</div>
+<figcaption><a href="#figure-5" class="selfRef">Figure 5</a>:
+<a href="#name-rego-function-validating-su" class="selfRef">Rego Function Validating Subject Policy</a>
+          </figcaption></figure>
 </div>
 </section>
 </div>
@@ -1373,13 +1407,19 @@ validate_predicate(name, value) := true if {
         <h3 id="name-san-predicate">
 <a href="#section-3.3" class="section-number selfRef">3.3. </a><a href="#name-san-predicate" class="section-name selfRef">"san" predicate</a>
         </h3>
-<div class="lang-abnf sourcecode" id="section-3.3-1">
+<span id="name-abnf-definition-of-san-poli"></span><div id="fig-san-def">
+<figure id="figure-6">
+          <div class="alignLeft art-abnf art-text artwork" id="section-3.3-1.1">
 <pre>
 predicate-name     = "san"
 predicate-value    = san-type ":" san-value
 san-type        = "email" / "dns" / "uri"
 san-value       = 1*idchar
-</pre><a href="#section-3.3-1" class="pilcrow">¶</a>
+</pre>
+</div>
+<figcaption><a href="#figure-6" class="selfRef">Figure 6</a>:
+<a href="#name-abnf-definition-of-san-poli" class="selfRef">ABNF Definition of SAN Policy</a>
+          </figcaption></figure>
 </div>
 <p id="section-3.3-2"><code>san-type</code> is the SAN type and must be one of <code>email</code>, <code>dns</code>, or <code>uri</code>. Note that <code>dn</code> is not supported.<a href="#section-3.3-2" class="pilcrow">¶</a></p>
 <p id="section-3.3-3"><code>san-value</code> is the SAN value, percent-encoded.<a href="#section-3.3-3" class="pilcrow">¶</a></p>
@@ -1387,7 +1427,9 @@ san-value       = 1*idchar
 <p id="section-3.3-5">Example:<a href="#section-3.3-5" class="pilcrow">¶</a></p>
 <p id="section-3.3-6"><code>did:x509:0:sha256:WE4P5dd8DnLHSkyHaIjhp4udlkF9LqoKwCvu9gl38jk::san:email:bob%40example.com</code><a href="#section-3.3-6" class="pilcrow">¶</a></p>
 <p id="section-3.3-7">Rego policy:<a href="#section-3.3-7" class="pilcrow">¶</a></p>
-<div class="lang-rego sourcecode" id="section-3.3-8">
+<span id="name-rego-function-validating-sa"></span><div id="fig-validate-san">
+<figure id="figure-7">
+          <div class="alignLeft art-rego art-text artwork" id="section-3.3-8.1">
 <pre>
 validate_predicate(name, value) := true if {
     name == "san"
@@ -1395,7 +1437,11 @@ validate_predicate(name, value) := true if {
     san_value := urlquery.decode(san_value_encoded)
     [san_type, san_value] == input.chain[0].extensions.san[_]
 }
-</pre><a href="#section-3.3-8" class="pilcrow">¶</a>
+</pre>
+</div>
+<figcaption><a href="#figure-7" class="selfRef">Figure 7</a>:
+<a href="#name-rego-function-validating-sa" class="selfRef">Rego Function Validating SAN Policy</a>
+          </figcaption></figure>
 </div>
 </section>
 </div>
@@ -1404,25 +1450,37 @@ validate_predicate(name, value) := true if {
         <h3 id="name-eku-predicate">
 <a href="#section-3.4" class="section-number selfRef">3.4. </a><a href="#name-eku-predicate" class="section-name selfRef">"eku" predicate</a>
         </h3>
-<div class="lang-abnf sourcecode" id="section-3.4-1">
+<span id="name-abnf-definition-of-eku-poli"></span><div id="fig-eku-def">
+<figure id="figure-8">
+          <div class="alignLeft art-abnf art-text artwork" id="section-3.4-1.1">
 <pre>
 predicate-name  = "eku"
 predicate-value = eku
 eku          = oid
 oid          = 1*DIGIT *("." 1*DIGIT)
-</pre><a href="#section-3.4-1" class="pilcrow">¶</a>
+</pre>
+</div>
+<figcaption><a href="#figure-8" class="selfRef">Figure 8</a>:
+<a href="#name-abnf-definition-of-eku-poli" class="selfRef">ABNF Definition of EKU Policy</a>
+          </figcaption></figure>
 </div>
 <p id="section-3.4-2"><code>eku</code> is one of the OIDs within <code>chain[0].extensions.eku</code>.<a href="#section-3.4-2" class="pilcrow">¶</a></p>
 <p id="section-3.4-3">Example:<a href="#section-3.4-3" class="pilcrow">¶</a></p>
 <p id="section-3.4-4"><code>did:x509:0:sha256:WE4P5dd8DnLHSkyHaIjhp4udlkF9LqoKwCvu9gl38jk::eku:1.3.6.1.4.1.311.10.3.13</code><a href="#section-3.4-4" class="pilcrow">¶</a></p>
 <p id="section-3.4-5">Rego policy:<a href="#section-3.4-5" class="pilcrow">¶</a></p>
-<div class="lang-rego sourcecode" id="section-3.4-6">
+<span id="name-rego-function-validating-ek"></span><div id="fig-validate-eku">
+<figure id="figure-9">
+          <div class="alignLeft art-rego art-text artwork" id="section-3.4-6.1">
 <pre>
 validate_predicate(name, value) := true if {
     name == "eku"
     value == input.chain[0].extensions.eku[_]
 }
-</pre><a href="#section-3.4-6" class="pilcrow">¶</a>
+</pre>
+</div>
+<figcaption><a href="#figure-9" class="selfRef">Figure 9</a>:
+<a href="#name-rego-function-validating-ek" class="selfRef">Rego Function Validating EKU Policy</a>
+          </figcaption></figure>
 </div>
 </section>
 </div>
@@ -1431,12 +1489,18 @@ validate_predicate(name, value) := true if {
         <h3 id="name-fulcio-issuer-predicate">
 <a href="#section-3.5" class="section-number selfRef">3.5. </a><a href="#name-fulcio-issuer-predicate" class="section-name selfRef">"fulcio-issuer" predicate</a>
         </h3>
-<div class="lang-abnf sourcecode" id="section-3.5-1">
+<span id="name-abnf-definition-of-fulcio-i"></span><div id="fig-fulcio-issuer-def">
+<figure id="figure-10">
+          <div class="alignLeft art-abnf art-text artwork" id="section-3.5-1.1">
 <pre>
 predicate-name   = "fulcio-issuer"
 predicate-value  = fulcio-issuer
 fulcio-issuer = 1*idchar
-</pre><a href="#section-3.5-1" class="pilcrow">¶</a>
+</pre>
+</div>
+<figcaption><a href="#figure-10" class="selfRef">Figure 10</a>:
+<a href="#name-abnf-definition-of-fulcio-i" class="selfRef">ABNF Definition of Fulcio-Issuer Policy</a>
+          </figcaption></figure>
 </div>
 <p id="section-3.5-2"><code>fulcio-issuer</code> is <code>chain[0].extensions.fulcio_issuer</code> without leading <code>https://</code>, percent-encoded.<a href="#section-3.5-2" class="pilcrow">¶</a></p>
 <p id="section-3.5-3">Example:<a href="#section-3.5-3" class="pilcrow">¶</a></p>
@@ -1444,14 +1508,20 @@ fulcio-issuer = 1*idchar
 <p id="section-3.5-5">Example 2:<a href="#section-3.5-5" class="pilcrow">¶</a></p>
 <p id="section-3.5-6"><code>did:x509:0:sha256:WE4P5dd8DnLHSkyHaIjhp4udlkF9LqoKwCvu9gl38jk::fulcio-issuer:token.actions.githubusercontent.com::san:uri:https%3A%2F%2Fgithub.com%2Focto-org%2Focto-automation%2F.github%2Fworkflows%2Foidc.yml%40refs%2Fheads%2Fmain</code><a href="#section-3.5-6" class="pilcrow">¶</a></p>
 <p id="section-3.5-7">Rego policy:<a href="#section-3.5-7" class="pilcrow">¶</a></p>
-<div class="lang-rego sourcecode" id="section-3.5-8">
+<span id="name-rego-function-validating-fu"></span><div id="fig-validate-fulcio-issuer">
+<figure id="figure-11">
+          <div class="alignLeft art-rego art-text artwork" id="section-3.5-8.1">
 <pre>
 validate_predicate(name, value) := true if {
     name == "fulcio-issuer"
     suffix := urlquery.decode(value)
     concat("", ["https://", suffix]) == input.chain[0].extensions.fulcio_issuer
 }
-</pre><a href="#section-3.5-8" class="pilcrow">¶</a>
+</pre>
+</div>
+<figcaption><a href="#figure-11" class="selfRef">Figure 11</a>:
+<a href="#name-rego-function-validating-fu" class="selfRef">Rego Function Validating Fulcio-Issuer Policy</a>
+          </figcaption></figure>
 </div>
 </section>
 </div>
@@ -1476,24 +1546,24 @@ validate_predicate(name, value) := true if {
 </div>
 </section>
 </div>
-<div id="example-controller-document">
+<div id="example-did-document">
 <section id="section-4">
-      <h2 id="name-example-controller-document">
-<a href="#section-4" class="section-number selfRef">4. </a><a href="#name-example-controller-document" class="section-name selfRef">Example Controller Document</a>
+      <h2 id="name-example-did-document">
+<a href="#section-4" class="section-number selfRef">4. </a><a href="#name-example-did-document" class="section-name selfRef">Example DID Document</a>
       </h2>
-<p id="section-4-1">The illustrates what a typical Controller document can look like once resolved:<a href="#section-4-1" class="pilcrow">¶</a></p>
+<p id="section-4-1">This illustrates what a typical DID document (<span>[<a href="#DID-DOCUMENT" class="cite xref">DID-DOCUMENT</a>]</span>), describing the DID subject and the methods it can use to authenticate itself, can look like once resolved:<a href="#section-4-1" class="pilcrow">¶</a></p>
 <span id="name-json-controller-document-ex"></span><div id="fig-controller-placeholder">
-<figure id="figure-1">
+<figure id="figure-12">
         <div class="alignLeft art-json art-text artwork" id="section-4-2.1">
 <pre>
 {
   "@context": "https://www.w3.org/ns/did/v1",
-  "id": "did:x509:0:sha256:hH32p4SXlD8n_HLrk_mmNzIKArVh0KkbCeh6eAftfGE::subject:CN:Microsoft%20Corporation",
+  "id": "did:x509:0:sha256:hH32p4SXlD8n_HLrk_mmNzIKArVh0KkbCeh6eAftfGE::subject:CN:Example",
   "verificationMethod": [
     {
-      "id": "did:x509:0:sha256:hH32p4SXlD8n_HLrk_mmNzIKArVh0KkbCeh6eAftfGE::subject:CN:Microsoft%20Corporation#key-1",
+      "id": "did:x509:0:sha256:hH32p4SXlD8n_HLrk_mmNzIKArVh0KkbCeh6eAftfGE::subject:CN:Example#key-1",
       "type": "JsonWebKey2020",
-      "controller": "did:x509:0:sha256:hH32p4SXlD8n_HLrk_mmNzIKArVh0KkbCeh6eAftfGE::subject:CN:Microsoft%20Corporation",
+      "controller": "did:x509:0:sha256:hH32p4SXlD8n_HLrk_mmNzIKArVh0KkbCeh6eAftfGE::subject:CN:Example",
       "publicKeyJwk": {
         "kty": "RSA",
         "n": "s9HduD2rvmO-SGksB4HR-qvSK379St8NnUZBH8xBiQvt2zONOLUHWQibeBW4NLUfHfzMaOM77RhNlqPNiDRKhChlG1aHqEHSAaQBGrmr0ULGIzq-1YvqQufMGYBFfq0sc10UdvWqT0RjwkPQTu4bjg37zSYF9OcGxS9uGnPMdWRM0ThOsYUcDmMoCaJRebsLUBpMmYXkcUYXJrcSGAaUNd0wjhwIpEogOD-AbWW_7TPZOl-JciMj40a78EEXIc2p06lWHfe5hegQ7uGIlSAPG6zDzjhjNkzE63_-GoqJU-6QLazbL5_y27ZDUAEYJokbb305A-dOp930CjTar3BvWQ",
@@ -1502,16 +1572,16 @@ validate_predicate(name, value) := true if {
     }
   ],
   "assertionMethod": [
-    "did:x509:0:sha256:hH32p4SXlD8n_HLrk_mmNzIKArVh0KkbCeh6eAftfGE::subject:CN:Microsoft%20Corporation#key-1"
+    "did:x509:0:sha256:hH32p4SXlD8n_HLrk_mmNzIKArVh0KkbCeh6eAftfGE::subject:CN:Example#key-1"
   ],
   "keyAgreement": [
-    "did:x509:0:sha256:hH32p4SXlD8n_HLrk_mmNzIKArVh0KkbCeh6eAftfGE::subject:CN:Microsoft%20Corporation#key-1"
+    "did:x509:0:sha256:hH32p4SXlD8n_HLrk_mmNzIKArVh0KkbCeh6eAftfGE::subject:CN:Example#key-1"
   ]
 }
 </pre>
 </div>
-<figcaption><a href="#figure-1" class="selfRef">Figure 1</a>:
-<a href="#name-json-controller-document-ex" class="selfRef">JSON controller document example</a>
+<figcaption><a href="#figure-12" class="selfRef">Figure 12</a>:
+<a href="#name-json-controller-document-ex" class="selfRef">JSON Controller Document Example</a>
         </figcaption></figure>
 </div>
 </section>
@@ -1522,7 +1592,7 @@ validate_predicate(name, value) := true if {
 <a href="#section-5" class="section-number selfRef">5. </a><a href="#name-cddl-for-a-json-data-model-" class="section-name selfRef">CDDL for a JSON Data Model for X.509 Certification Paths</a>
       </h2>
 <span id="name-cddl-definition-of-didx509-"></span><div id="fig-cddl-placeholder">
-<figure id="figure-2">
+<figure id="figure-13">
         <div class="alignLeft art-cddl art-text artwork" id="section-5-1.1">
 <pre>
 CertificateChain = [2*Certificate]  ; leaf is first
@@ -1570,14 +1640,14 @@ OID = tstr
 ; X.509 Subject Alternative Name
 ; Strings are converted to UTF-8
 SAN = rfc822Name / DNSName / URI / DirectoryName
-rfc822Name = ["email", tstr] ; Example: ["email", "bill@microsoft.com"]
-DNSName = ["dns", tstr]      ; Example: ["dns", "microsoft.com"]
-URI = ["uri", tstr]          ; Example: ["uri", "https://microsoft.com"]
-DirectoryName = ["dn", Name] ; Example: ["dn", {CN: "Microsoft"}]
+rfc822Name = ["email", tstr] ; Example: ["email", "user@example.com"]
+DNSName = ["dns", tstr]      ; Example: ["dns", "example.com"]
+URI = ["uri", tstr]          ; Example: ["uri", "https://example.com"]
+DirectoryName = ["dn", Name] ; Example: ["dn", {CN: "Example"}]
 </pre>
 </div>
-<figcaption><a href="#figure-2" class="selfRef">Figure 2</a>:
-<a href="#name-cddl-definition-of-didx509-" class="selfRef">CDDL definition of did:x.509 JSON Data Model</a>
+<figcaption><a href="#figure-13" class="selfRef">Figure 13</a>:
+<a href="#name-cddl-definition-of-didx509-" class="selfRef">CDDL Definition of did:x509 JSON Data Model</a>
         </figcaption></figure>
 </div>
 </section>
@@ -1598,20 +1668,20 @@ DirectoryName = ["dn", Name] ; Example: ["dn", {CN: "Microsoft"}]
 <div id="identifier-ambiguity">
 <section id="section-7.1">
         <h3 id="name-identifier-ambiguity">
-<a href="#section-7.1" class="section-number selfRef">7.1. </a><a href="#name-identifier-ambiguity" class="section-name selfRef">Identifier ambiguity</a>
+<a href="#section-7.1" class="section-number selfRef">7.1. </a><a href="#name-identifier-ambiguity" class="section-name selfRef">Identifier Ambiguity</a>
         </h3>
 <p id="section-7.1-1">This DID method maps characteristics of X.509 certificate chains to identifiers. It allows a single identifier to map to multiple certificate chains, giving the identifier stability across the expiry of individual chains. However, if the policies used in the identifier are chosen too loosely, the identifier may match too wide a set of certificate chains. This may have security implications as it may authorize an identity for actions it was not meant to be authorized for.<a href="#section-7.1-1" class="pilcrow">¶</a></p>
 <p id="section-7.1-2">To mitigate this issue, the certificate authority should publish their expected usage of certificate fields and indicate which ones constitute a unique identity, versus any additional fields that may be of an informational nature. This will help users create an appropriate did:x509 as well as consumers of signed content to decide whether it is appropriate to trust a given did:x509.<a href="#section-7.1-2" class="pilcrow">¶</a></p>
-<div id="x509-trust-stores">
-<section id="section-7.1.1">
-          <h4 id="name-x509-trust-stores">
-<a href="#section-7.1.1" class="section-number selfRef">7.1.1. </a><a href="#name-x509-trust-stores" class="section-name selfRef">X.509 trust stores</a>
-          </h4>
-<p id="section-7.1.1-1">Typically, a verifier trusts an X.509 certificate by applying chain validation defined in <span><a href="https://rfc-editor.org/rfc/rfc5280#section-6" class="relref">Section 6</a> of [<a href="#RFC5280" class="cite xref">RFC5280</a>]</span> using a set of certificate authority (CA) certificates as trust store, together with additional application-specific policies.<a href="#section-7.1.1-1" class="pilcrow">¶</a></p>
-<p id="section-7.1.1-2">This DID method does not require an X.509 trust anchor store but rather relies on verifiers either trusting an individual DID directly or using third-party endorsements for a given DID, like <span>[<a href="#VC" class="cite xref">VC</a>]</span>, to establish trust.<a href="#section-7.1.1-2" class="pilcrow">¶</a></p>
-<p id="section-7.1.1-3">By layering this DID method on top of X.509, verifiers are free to use traditional chain validation (for example, verifiers unaware of DID), or rely on DID as an ecosystem to establish trust.<a href="#section-7.1.1-3" class="pilcrow">¶</a></p>
 </section>
 </div>
+<div id="x509-trust-stores">
+<section id="section-7.2">
+        <h3 id="name-x509-trust-stores">
+<a href="#section-7.2" class="section-number selfRef">7.2. </a><a href="#name-x509-trust-stores" class="section-name selfRef">X.509 Trust Stores</a>
+        </h3>
+<p id="section-7.2-1">Typically, a verifier trusts an X.509 certificate by applying chain validation defined in <span><a href="https://rfc-editor.org/rfc/rfc5280#section-6" class="relref">Section 6</a> of [<a href="#RFC5280" class="cite xref">RFC5280</a>]</span> using a set of certificate authority (CA) certificates as trust store, together with additional application-specific policies.<a href="#section-7.2-1" class="pilcrow">¶</a></p>
+<p id="section-7.2-2">This DID method does not require an X.509 trust anchor store but rather relies on verifiers either trusting an individual DID directly or using third-party endorsements for a given DID, like <span>[<a href="#VC" class="cite xref">VC</a>]</span>, to establish trust.<a href="#section-7.2-2" class="pilcrow">¶</a></p>
+<p id="section-7.2-3">By layering this DID method on top of X.509, verifiers are free to use traditional chain validation (for example, verifiers unaware of DID), or rely on DID as an ecosystem to establish trust.<a href="#section-7.2-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1642,7 +1712,7 @@ DirectoryName = ["dn", Name] ; Example: ["dn", {CN: "Microsoft"}]
 <dd class="break"></dd>
 <dt id="DIDV1">[DIDV1]</dt>
         <dd>
-<span class="refTitle">"W3C DID v1.0 specification"</span>, <span>n.d.</span>, <span>&lt;<a href="https://www.w3.org/TR/2022/REC-did-core-20220719/">https://www.w3.org/TR/2022/REC-did-core-20220719/</a>&gt;</span>. </dd>
+<span class="refTitle">"W3C DID v1.0 specification"</span>, <span>n.d.</span>, <span>&lt;<a href="https://www.w3.org/TR/did-1.0/">https://www.w3.org/TR/did-1.0/</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC2119">[RFC2119]</dt>
         <dd>
@@ -1693,6 +1763,10 @@ DirectoryName = ["dn", Name] ; Example: ["dn", {CN: "Microsoft"}]
 <a href="#section-9.2" class="section-number selfRef">9.2. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
         </h3>
 <dl class="references">
+<dt id="DID-DOCUMENT">[DID-DOCUMENT]</dt>
+        <dd>
+<span class="refTitle">"DID Document Definition"</span>, <span>n.d.</span>, <span>&lt;<a href="https://www.w3.org/TR/did-1.0/#dfn-did-documents">https://www.w3.org/TR/did-1.0/#dfn-did-documents</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="I-D.ietf-scitt-architecture">[I-D.ietf-scitt-architecture]</dt>
         <dd>
 <span class="refAuthor">Birkholz, H.</span>, <span class="refAuthor">Delignat-Lavaud, A.</span>, <span class="refAuthor">Fournet, C.</span>, <span class="refAuthor">Deshpande, Y.</span>, and <span class="refAuthor">S. Lasker</span>, <span class="refTitle">"An Architecture for Trustworthy and Transparent Digital Supply Chains"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-scitt-architecture-22</span>, <time datetime="2025-10-10" class="refDate">10 October 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-scitt-architecture-22">https://datatracker.ietf.org/doc/html/draft-ietf-scitt-architecture-22</a>&gt;</span>. </dd>
