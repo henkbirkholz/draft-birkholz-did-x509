@@ -105,7 +105,7 @@ policy-value       = *(1*idchar ":") 1*idchar
 base64url          = 1*(ALPHA / DIGIT / "-" / "_")
 ~~~
 {: #fig-core-def artwork-align="left"
-   title="ABNF definition of core did-x509 syntax"}
+   title="ABNF Definition of Core did-x509 Syntax"}
 
 In this draft, version is `0`.
 
@@ -151,7 +151,7 @@ valid if {
 }
 ~~~
 {: #fig-validate-core artwork-align="left"
-   title="Core Rego validation rule"}
+   title="Core Rego Validation Rule"}
 
 The overall Rego policy is assembled by concatenating the core Rego policy with the Rego policy fragments in the following sections, each one defining a `validate_policy` function.
 
@@ -163,7 +163,7 @@ Some of the policies that are defined in subsequent sections require values to b
 allowed = ALPHA / DIGIT / "-" / "." / "_"
 ~~~
 {: #fig-allowed-def artwork-align="left"
-   title="ABNF definition of characters that do not need to be percent-encoded"}
+   title="ABNF Definition of Characters That Do Not Need to Be Percent-Encoded"}
 
 Note that most libraries implement percent-encoding in the context of URLs and do NOT encode `~` (`%7E`).
 
@@ -178,7 +178,7 @@ label           = "CN" / "L" / "ST" / "O" / "OU" / "C" / "STREET"
 oid             = 1*DIGIT *("." 1*DIGIT)
 ~~~
 {: #fig-subject-def artwork-align="left"
-   title="ABNF definition of Subject policy"}
+   title="ABNF Definition of Subject Policy"}
 
 `<key>:<value>` are the subject name fields in `chain[0].subject` in any order. Field repetitions are not allowed. Values must be percent-encoded.
 
@@ -204,7 +204,7 @@ validate_policy(name, value) := true if {
 }
 ~~~
 {: #fig-validate-subject artwork-align="left"
-   title="Rego function validating Subject policy"}
+   title="Rego Function Validating Subject Policy"}
 
 ## "san" policy
 
@@ -215,7 +215,7 @@ san-type        = "email" / "dns" / "uri"
 san-value       = 1*idchar
 ~~~
 {: #fig-san-def artwork-align="left"
-   title="ABNF definition of SAN policy"}
+   title="ABNF Definition of SAN Policy"}
 
 `san-type` is the SAN type and must be one of `email`, `dns`, or `uri`. Note that `dn` is not supported.
 
@@ -238,7 +238,7 @@ validate_policy(name, value) := true if {
 }
 ~~~
 {: #fig-validate-san artwork-align="left"
-   title="Rego function validating SAN policy"}
+   title="Rego Function Validating SAN Policy"}
 
 ## "eku" policy
 
@@ -249,7 +249,7 @@ eku          = oid
 oid          = 1*DIGIT *("." 1*DIGIT)
 ~~~
 {: #fig-eku-def artwork-align="left"
-   title="ABNF definition of EKU policy"}
+   title="ABNF Definition of EKU Policy"}
 
 `eku` is one of the OIDs within `chain[0].extensions.eku`.
 
@@ -266,7 +266,7 @@ validate_policy(name, value) := true if {
 }
 ~~~
 {: #fig-validate-eku artwork-align="left"
-   title="Rego function validating EKU policy"}
+   title="Rego Function Validating EKU Policy"}
 
 ## "fulcio-issuer" policy
 
@@ -276,7 +276,7 @@ policy-value  = fulcio-issuer
 fulcio-issuer = 1*idchar
 ~~~
 {: #fig-fulcio-issuer-def artwork-align="left"
-   title="ABNF definition of fulcio-issuer policy"}
+   title="ABNF Definition of Fulcio-Issuer Policy"}
 
 `fulcio-issuer` is `chain[0].extensions.fulcio_issuer` without leading `https://`, percent-encoded.
 
@@ -298,7 +298,7 @@ validate_policy(name, value) := true if {
 }
 ~~~
 {: #fig-validate-fulcio-issuer artwork-align="left"
-   title="Rego function validating fulcio-issuer policy"}
+   title="Rego Function Validating Fulcio-Issuer Policy"}
 
 ## DID resolution options
 
@@ -341,7 +341,7 @@ The illustrates what a typical Controller document can look like once resolved:
   ]
 }
 ~~~
-{: #fig-controller-placeholder artwork-align="left" title="JSON controller document example"}
+{: #fig-controller-placeholder artwork-align="left" title="JSON Controller Document Example"}
 
 # CDDL for a JSON Data Model for X.509 Certification Paths
 
@@ -397,7 +397,7 @@ URI = ["uri", tstr]          ; Example: ["uri", "https://microsoft.com"]
 DirectoryName = ["dn", Name] ; Example: ["dn", {CN: "Microsoft"}]
 ~~~
 {: #fig-cddl-placeholder artwork-align="left"
-  title="CDDL definition of did:x509 JSON Data Model"}
+  title="CDDL Definition of did:x509 JSON Data Model"}
 
 # Privacy Considerations {#privconsec}
 
