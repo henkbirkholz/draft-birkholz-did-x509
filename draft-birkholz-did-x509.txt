@@ -141,14 +141,16 @@ Table of Contents
    [RFC5234] and the corresponding definitions for ALPHA and DIGIT.  The
    [DIDV1] contains the definition for idchar.
 
-   did-x509           = "did:x509:" method-specific-id
-   method-specific-id = version ":" ca-fingerprint-alg ":" ca-fingerprint 1*("::" policy-name ":" policy-value)
-   version            = 1*DIGIT
-   ca-fingerprint-alg = "sha256" / "sha384" / "sha512"
-   ca-fingerprint     = base64url
-   policy-name        = 1*ALPHA
-   policy-value       = *(1*idchar ":") 1*idchar
-   base64url          = 1*(ALPHA / DIGIT / "-" / "_")
+did-x509           = "did:x509:" method-specific-id
+method-specific-id = version ":" ca-fingerprint-alg ":" ca-fingerprint 1*("::" policy-name ":" policy-value)
+version            = 1*DIGIT
+ca-fingerprint-alg = "sha256" / "sha384" / "sha512"
+ca-fingerprint     = base64url
+policy-name        = 1*ALPHA
+policy-value       = *(1*idchar ":") 1*idchar
+base64url          = 1*(ALPHA / DIGIT / "-" / "_")
+
+          Figure 1: ABNF Definition of Core did-x509 Syntax
 
    Implementations of this specification MUST indicate a version value
    of 0.
@@ -179,32 +181,34 @@ Table of Contents
 
    Core Rego policy:
 
-   parse_did(did) := [ca_fingerprint_alg, ca_fingerprint, policies] if {
-       prefix := "did:x509:0:"
-       startswith(did, prefix) == true
-       rest := trim_prefix(did, prefix)
-       parts := split(rest, "::")
-       [ca_fingerprint_alg, ca_fingerprint] := split(parts[0], ":")
-       policies_raw := array.slice(parts, 1, count(parts))
-       policies := [y |
-           some i
-           s := policies_raw[i]
-           j := indexof(s, ":")
-           y := [substring(s, 0, j), substring(s, j+1, -1)]
-       ]
-   }
+parse_did(did) := [ca_fingerprint_alg, ca_fingerprint, policies] if {
+    prefix := "did:x509:0:"
+    startswith(did, prefix) == true
+    rest := trim_prefix(did, prefix)
+    parts := split(rest, "::")
+    [ca_fingerprint_alg, ca_fingerprint] := split(parts[0], ":")
+    policies_raw := array.slice(parts, 1, count(parts))
+    policies := [y |
+        some i
+        s := policies_raw[i]
+        j := indexof(s, ":")
+        y := [substring(s, 0, j), substring(s, j+1, -1)]
+    ]
+}
 
-   valid if {
-       [ca_fingerprint_alg, ca_fingerprint, policies] := parse_did(input.did)
-       ca := [c | some i; i != 0; c := input.chain[i]]
-       ca[_].fingerprint[ca_fingerprint_alg] == ca_fingerprint
-       valid_policies := [i |
-           some i
-           [name, value] := policies[i]
-           validate_policy(name, value)
-       ]
-       count(valid_policies) == count(policies)
-   }
+valid if {
+    [ca_fingerprint_alg, ca_fingerprint, policies] := parse_did(input.did)
+    ca := [c | some i; i != 0; c := input.chain[i]]
+    ca[_].fingerprint[ca_fingerprint_alg] == ca_fingerprint
+    valid_policies := [i |
+        some i
+        [name, value] := policies[i]
+        validate_policy(name, value)
+    ]
+    count(valid_policies) == count(policies)
+}
+
+                 Figure 2: Core Rego Validation Rule
 
    The overall Rego policy is assembled by concatenating the core Rego
    policy with the Rego policy fragments in the following sections, each
@@ -219,6 +223,9 @@ Table of Contents
 
    allowed = ALPHA / DIGIT / "-" / "." / "_"
 
+       Figure 3: ABNF Definition of Characters That Do Not Need to Be
+                              Percent-Encoded
+
    Note that most libraries implement percent-encoding in the context of
    URLs and do NOT encode ~ (%7E).
 
@@ -230,6 +237,8 @@ Table of Contents
    value           = 1*idchar
    label           = "CN" / "L" / "ST" / "O" / "OU" / "C" / "STREET"
    oid             = 1*DIGIT *("." 1*DIGIT)
+
+                Figure 4: ABNF Definition of Subject Policy
 
    <key>:<value> are the subject name fields in chain[0].subject in any
    order.  Field repetitions are not allowed.  Values must be percent-
@@ -256,12 +265,16 @@ Table of Contents
        object.subset(input.chain[0].subject, subject) == true
    }
 
+             Figure 5: Rego Function Validating Subject Policy
+
 3.3.  "san" policy
 
    policy-name     = "san"
    policy-value    = san-type ":" san-value
    san-type        = "email" / "dns" / "uri"
    san-value       = 1*idchar
+
+                  Figure 6: ABNF Definition of SAN Policy
 
    san-type is the SAN type and must be one of email, dns, or uri.  Note
    that dn is not supported.
@@ -285,12 +298,16 @@ Table of Contents
        [san_type, san_value] == input.chain[0].extensions.san[_]
    }
 
+               Figure 7: Rego Function Validating SAN Policy
+
 3.4.  "eku" policy
 
    policy-name  = "eku"
    policy-value = eku
    eku          = oid
    oid          = 1*DIGIT *("." 1*DIGIT)
+
+                  Figure 8: ABNF Definition of EKU Policy
 
    eku is one of the OIDs within chain[0].extensions.eku.
 
@@ -306,11 +323,15 @@ Table of Contents
        value == input.chain[0].extensions.eku[_]
    }
 
+               Figure 9: Rego Function Validating EKU Policy
+
 3.5.  "fulcio-issuer" policy
 
    policy-name   = "fulcio-issuer"
    policy-value  = fulcio-issuer
    fulcio-issuer = 1*idchar
+
+             Figure 10: ABNF Definition of Fulcio-Issuer Policy
 
    fulcio-issuer is chain[0].extensions.fulcio_issuer without leading
    https://, percent-encoded.
@@ -329,11 +350,13 @@ Table of Contents
 
    Rego policy:
 
-   validate_policy(name, value) := true if {
-       name == "fulcio-issuer"
-       suffix := urlquery.decode(value)
-       concat("", ["https://", suffix]) == input.chain[0].extensions.fulcio_issuer
-   }
+validate_policy(name, value) := true if {
+    name == "fulcio-issuer"
+    suffix := urlquery.decode(value)
+    concat("", ["https://", suffix]) == input.chain[0].extensions.fulcio_issuer
+}
+
+       Figure 11: Rego Function Validating Fulcio-Issuer Policy
 
 3.6.  DID resolution options
 
@@ -381,7 +404,7 @@ Table of Contents
   ]
 }
 
-              Figure 1: JSON controller document example
+             Figure 12: JSON Controller Document Example
 
 5.  CDDL for a JSON Data Model for X.509 Certification Paths
 
@@ -435,7 +458,7 @@ DNSName = ["dns", tstr]      ; Example: ["dns", "example.com"]
 URI = ["uri", tstr]          ; Example: ["uri", "https://example.com"]
 DirectoryName = ["dn", Name] ; Example: ["dn", {CN: "Example"}]
 
-        Figure 2: CDDL definition of did:x.509 JSON Data Model
+        Figure 13: CDDL Definition of did:x509 JSON Data Model
 
 6.  Privacy Considerations
 
