@@ -116,7 +116,7 @@ The following sections define the policies and their policy-specific syntax.
 
 Validation of policies is formally defined using {{REGO}} policies, though there is no expectation that implementations use Rego.
 
-The inputs to the resolution process are the DID string itself and the `x509chain` DID resolution option, which carries a comma-separated base64url-encoded X.509 certificate chain.
+The inputs to the resolution process are the DID string itself and the `x509chain` DID resolution option, which carries a comma-separated base64url-encoded X.509 certification path.
 To evaluate the reference Rego code shown below, the DID and certificate chain must be passed to a Rego runtime as a JSON document: `{"did": "<DID>", "chain": <CertificateChain>}`, where `did` is the DID string and `chain` is the parsed representation of the certificate chain derived from the `x509chain` resolution option.
 
 Core Rego policy:
