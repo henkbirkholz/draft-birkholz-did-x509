@@ -45,7 +45,7 @@ normative:
     =: RFC8126
   RFC5234: abnf
   DIDV1:
-    target: https://www.w3.org/TR/2022/REC-did-core-20220719/
+    target: https://www.w3.org/TR/did-1.0/
     title: W3C DID v1.0 specification
   RFC5280:
   VC:
@@ -59,6 +59,9 @@ informative:
     title: Rego
   RFC9360:
   RFC9597:
+  DID-DOCUMENT:
+    target: https://www.w3.org/TR/did-1.0/#dfn-did-documents
+    title: DID Document Definition
 
 entity:
   SELF: "RFCthis"
@@ -73,10 +76,17 @@ This Informational document is published as an Independent Submission to improve
 
 # Introduction
 
-This document aims to define an interoperable and flexible issuer identifier format for COSE messages that transport or refer to X.509 certificates using {{RFC9360}}.
+This document aims to define an interoperable and flexible decentralized identifier ({{DIDV1}}) format for COSE messages that transport or refer to X.509 certificates using {{RFC9360}}.
 The did:x509 identifier format implements a direct, resolvable binding between a certificate chain and a compact issuer string.
 It can be used in a COSE Header CWT Claims map as defined in {{RFC9597}}.
-This issuer identifier is convenient for references and policy evaluation, for example in the context of transparency ledgers.
+
+Including a certification path directly in configuration or in policy is often impractical.
+This is due to its size, and to the frequency at which some elements, particularly the leaf, are refreshed.
+Relying on a partial certification path (e.g., a root certificate and some intermediary certificates) is similarly unwieldy.
+While stable, the level of granularity afforded by a partial certification path may not be sufficient to distinguish several identities that are not equivalent for the purpose of policy.
+
+Combining authority pinning with attribute assertions is a precise and stable way of capturing identities as a constrained set of certificates.
+Their representation as compact and durable identifier strings enables the formulation of readable policy (e.g. "request.issuer == 'did:x509...'"), for example in the context of transparency ledger registration.
 
 # Conventions and Definitions
 
@@ -94,9 +104,8 @@ The did:x509 ABNF definition defined below uses the syntax defined in {{-abnf}} 
 The {{DIDV1}} contains the definition for `idchar`.
 
 ~~~abnf
-did-x509           = "did:" method-name ":" method-specific-id
-method-name        = "x509"
-method-specific-id = version ":" ca-fingerprint-alg ":" ca-fingerprint 1*("::" predicate-name ":" predicate-value)
+did-x509           = "did:x509:" method-specific-id
+method-specific-id = version ":" ca-fingerprint-alg ":" ca-fingerprint 1*("::" policy-name ":" policy-value)
 version            = 1*DIGIT
 ca-fingerprint-alg = "sha256" / "sha384" / "sha512"
 ca-fingerprint     = base64url
@@ -104,8 +113,10 @@ predicate-name        = 1*ALPHA
 predicate-value       = *(1*idchar ":") 1*idchar
 base64url          = 1*(ALPHA / DIGIT / "-" / "_")
 ~~~
+{: #fig-core-def artwork-align="left"
+   title="ABNF Definition of Core did-x509 Syntax"}
 
-In this draft, version is `0`.
+Implementations of this specification MUST indicate a version value of `0`.
 
 `ca-fingerprint-alg` is one of `sha256`, `sha384`, or `sha512`.
 `ca-fingerprint` is `chain[i].fingerprint[ca-fingerprint-alg]` with i > 0, that is, either an intermediate or root CA certificate.
@@ -114,9 +125,11 @@ In this draft, version is `0`.
 
 The following sections define the predicates and their predicate-specific syntax.
 
-Validation of predicates is formally defined using {{REGO}} policies, though there is no expectation that implementations use Rego.
+Validation of predicates is formally defined using policies written in the Rego language ({{REGO}}), rather than pseudo-code.
+This is to avoid ambiguity and to make it possible for a reader to evaluate the logic automatically, but there is no expectation that implementations use the Rego language.
 
-The input to the Rego engine is the JSON document `{"did": "<DID>", "chain": <CertificateChain>}`.
+The inputs to the resolution process are the DID string itself and the `x509chain` DID resolution option, which carries a comma-separated base64url-encoded X.509 certification path.
+To evaluate the reference Rego code shown below, the DID and certification path have to be passed to a Rego runtime as a JSON document: `{"did": "<DID>", "chain": <CertificateChain>}`, where `did` is the DID string and `chain` is the parsed representation of the certification path derived from the `x509chain` resolution option.
 
 Core Rego policy:
 
@@ -148,6 +161,8 @@ valid if {
     count(valid_policies) == count(policies)
 }
 ~~~
+{: #fig-validate-core artwork-align="left"
+   title="Core Rego Validation Rule"}
 
 The overall Rego policy is assembled by concatenating the core Rego policy with the Rego policy fragments in the following sections, each one defining a `validate_predicate` function.
 
@@ -158,6 +173,8 @@ Some of the predicates that are defined in subsequent sections require values to
 ~~~abnf
 allowed = ALPHA / DIGIT / "-" / "." / "_"
 ~~~
+{: #fig-allowed-def artwork-align="left"
+   title="ABNF Definition of Characters That Do Not Need to Be Percent-Encoded"}
 
 Note that most libraries implement percent-encoding in the context of URLs and do NOT encode `~` (`%7E`).
 
@@ -171,6 +188,8 @@ value           = 1*idchar
 label           = "CN" / "L" / "ST" / "O" / "OU" / "C" / "STREET"
 oid             = 1*DIGIT *("." 1*DIGIT)
 ~~~
+{: #fig-subject-def artwork-align="left"
+   title="ABNF Definition of Subject Policy"}
 
 `<key>:<value>` are the subject name fields in `chain[0].subject` in any order. Field repetitions are not allowed. Values must be percent-encoded.
 
@@ -195,6 +214,8 @@ validate_predicate(name, value) := true if {
     object.subset(input.chain[0].subject, subject) == true
 }
 ~~~
+{: #fig-validate-subject artwork-align="left"
+   title="Rego Function Validating Subject Policy"}
 
 ## "san" predicate
 
@@ -204,6 +225,8 @@ predicate-value    = san-type ":" san-value
 san-type        = "email" / "dns" / "uri"
 san-value       = 1*idchar
 ~~~
+{: #fig-san-def artwork-align="left"
+   title="ABNF Definition of SAN Policy"}
 
 `san-type` is the SAN type and must be one of `email`, `dns`, or `uri`. Note that `dn` is not supported.
 
@@ -225,6 +248,8 @@ validate_predicate(name, value) := true if {
     [san_type, san_value] == input.chain[0].extensions.san[_]
 }
 ~~~
+{: #fig-validate-san artwork-align="left"
+   title="Rego Function Validating SAN Policy"}
 
 ## "eku" predicate
 
@@ -234,6 +259,8 @@ predicate-value = eku
 eku          = oid
 oid          = 1*DIGIT *("." 1*DIGIT)
 ~~~
+{: #fig-eku-def artwork-align="left"
+   title="ABNF Definition of EKU Policy"}
 
 `eku` is one of the OIDs within `chain[0].extensions.eku`.
 
@@ -249,6 +276,8 @@ validate_predicate(name, value) := true if {
     value == input.chain[0].extensions.eku[_]
 }
 ~~~
+{: #fig-validate-eku artwork-align="left"
+   title="Rego Function Validating EKU Policy"}
 
 ## "fulcio-issuer" predicate
 
@@ -257,6 +286,8 @@ predicate-name   = "fulcio-issuer"
 predicate-value  = fulcio-issuer
 fulcio-issuer = 1*idchar
 ~~~
+{: #fig-fulcio-issuer-def artwork-align="left"
+   title="ABNF Definition of Fulcio-Issuer Policy"}
 
 `fulcio-issuer` is `chain[0].extensions.fulcio_issuer` without leading `https://`, percent-encoded.
 
@@ -277,6 +308,8 @@ validate_predicate(name, value) := true if {
     concat("", ["https://", suffix]) == input.chain[0].extensions.fulcio_issuer
 }
 ~~~
+{: #fig-validate-fulcio-issuer artwork-align="left"
+   title="Rego Function Validating Fulcio-Issuer Policy"}
 
 ## DID resolution options
 
@@ -291,19 +324,19 @@ The value is constructed as follows:
 1. Encode each certificate `C` that is part of the chain as the string `b64url(DER(C))`.
 2. Concatenate the resulting strings in order, separated by comma `","`.
 
-# Example Controller Document
+# Example DID Document
 
-The illustrates what a typical Controller document can look like once resolved:
+This illustrates what a typical DID document ({{DID-DOCUMENT}}), describing the DID subject and the methods it can use to authenticate itself, can look like once resolved:
 
 ~~~json
 {
   "@context": "https://www.w3.org/ns/did/v1",
-  "id": "did:x509:0:sha256:hH32p4SXlD8n_HLrk_mmNzIKArVh0KkbCeh6eAftfGE::subject:CN:Microsoft%20Corporation",
+  "id": "did:x509:0:sha256:hH32p4SXlD8n_HLrk_mmNzIKArVh0KkbCeh6eAftfGE::subject:CN:Example",
   "verificationMethod": [
     {
-      "id": "did:x509:0:sha256:hH32p4SXlD8n_HLrk_mmNzIKArVh0KkbCeh6eAftfGE::subject:CN:Microsoft%20Corporation#key-1",
+      "id": "did:x509:0:sha256:hH32p4SXlD8n_HLrk_mmNzIKArVh0KkbCeh6eAftfGE::subject:CN:Example#key-1",
       "type": "JsonWebKey2020",
-      "controller": "did:x509:0:sha256:hH32p4SXlD8n_HLrk_mmNzIKArVh0KkbCeh6eAftfGE::subject:CN:Microsoft%20Corporation",
+      "controller": "did:x509:0:sha256:hH32p4SXlD8n_HLrk_mmNzIKArVh0KkbCeh6eAftfGE::subject:CN:Example",
       "publicKeyJwk": {
         "kty": "RSA",
         "n": "s9HduD2rvmO-SGksB4HR-qvSK379St8NnUZBH8xBiQvt2zONOLUHWQibeBW4NLUfHfzMaOM77RhNlqPNiDRKhChlG1aHqEHSAaQBGrmr0ULGIzq-1YvqQufMGYBFfq0sc10UdvWqT0RjwkPQTu4bjg37zSYF9OcGxS9uGnPMdWRM0ThOsYUcDmMoCaJRebsLUBpMmYXkcUYXJrcSGAaUNd0wjhwIpEogOD-AbWW_7TPZOl-JciMj40a78EEXIc2p06lWHfe5hegQ7uGIlSAPG6zDzjhjNkzE63_-GoqJU-6QLazbL5_y27ZDUAEYJokbb305A-dOp930CjTar3BvWQ",
@@ -312,14 +345,14 @@ The illustrates what a typical Controller document can look like once resolved:
     }
   ],
   "assertionMethod": [
-    "did:x509:0:sha256:hH32p4SXlD8n_HLrk_mmNzIKArVh0KkbCeh6eAftfGE::subject:CN:Microsoft%20Corporation#key-1"
+    "did:x509:0:sha256:hH32p4SXlD8n_HLrk_mmNzIKArVh0KkbCeh6eAftfGE::subject:CN:Example#key-1"
   ],
   "keyAgreement": [
-    "did:x509:0:sha256:hH32p4SXlD8n_HLrk_mmNzIKArVh0KkbCeh6eAftfGE::subject:CN:Microsoft%20Corporation#key-1"
+    "did:x509:0:sha256:hH32p4SXlD8n_HLrk_mmNzIKArVh0KkbCeh6eAftfGE::subject:CN:Example#key-1"
   ]
 }
 ~~~
-{: #fig-controller-placeholder artwork-align="left" title="JSON controller document example"}
+{: #fig-controller-placeholder artwork-align="left" title="JSON Controller Document Example"}
 
 # CDDL for a JSON Data Model for X.509 Certification Paths
 
@@ -369,13 +402,13 @@ OID = tstr
 ; X.509 Subject Alternative Name
 ; Strings are converted to UTF-8
 SAN = rfc822Name / DNSName / URI / DirectoryName
-rfc822Name = ["email", tstr] ; Example: ["email", "bill@microsoft.com"]
-DNSName = ["dns", tstr]      ; Example: ["dns", "microsoft.com"]
-URI = ["uri", tstr]          ; Example: ["uri", "https://microsoft.com"]
-DirectoryName = ["dn", Name] ; Example: ["dn", {CN: "Microsoft"}]
+rfc822Name = ["email", tstr] ; Example: ["email", "user@example.com"]
+DNSName = ["dns", tstr]      ; Example: ["dns", "example.com"]
+URI = ["uri", tstr]          ; Example: ["uri", "https://example.com"]
+DirectoryName = ["dn", Name] ; Example: ["dn", {CN: "Example"}]
 ~~~
 {: #fig-cddl-placeholder artwork-align="left"
-   title="CDDL definition of did:x.509 JSON Data Model"}
+  title="CDDL Definition of did:x509 JSON Data Model"}
 
 # Privacy Considerations {#privconsec}
 
@@ -383,13 +416,13 @@ Some considerations
 
 # Security Consideration {#secconsec}
 
-### Identifier ambiguity
+## Identifier Ambiguity
 
 This DID method maps characteristics of X.509 certificate chains to identifiers. It allows a single identifier to map to multiple certificate chains, giving the identifier stability across the expiry of individual chains. However, if the policies used in the identifier are chosen too loosely, the identifier may match too wide a set of certificate chains. This may have security implications as it may authorize an identity for actions it was not meant to be authorized for.
 
 To mitigate this issue, the certificate authority should publish their expected usage of certificate fields and indicate which ones constitute a unique identity, versus any additional fields that may be of an informational nature. This will help users create an appropriate did:x509 as well as consumers of signed content to decide whether it is appropriate to trust a given did:x509.
 
-### X.509 trust stores
+## X.509 Trust Stores
 
 Typically, a verifier trusts an X.509 certificate by applying chain validation defined in {{Section 6 of RFC5280}} using a set of certificate authority (CA) certificates as trust store, together with additional application-specific policies.
 
