@@ -1,4 +1,0 @@
-predicate-name  = "eku"
-predicate-value = eku
-eku             = oid
-oid             = 1*DIGIT *("." 1*DIGIT)

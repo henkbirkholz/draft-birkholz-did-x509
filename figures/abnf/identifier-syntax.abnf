@@ -1,2 +1,0 @@
-idchar             = ALPHA / DIGIT / "." / "-" / "_" / pct-encoded
-pct-encoded        = "%" HEXDIG HEXDIG

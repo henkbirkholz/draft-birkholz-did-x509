@@ -1,4 +1,0 @@
-predicate-name  = "san"
-predicate-value = san-type ":" san-value
-san-type        = "email" / "dns" / "uri"
-san-value       = 1*idchar
