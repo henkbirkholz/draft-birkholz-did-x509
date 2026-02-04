@@ -1286,7 +1286,8 @@ base64url          = 1*(ALPHA / DIGIT / "-" / "_")
 <code>policy-name</code> is a policy name and <code>policy-value</code> is a policy-specific value.
 <code>::</code> is used to separate multiple policies from each other.<a href="#section-3-4" class="pilcrow">¶</a></p>
 <p id="section-3-5">The following sections define the policies and their policy-specific syntax.<a href="#section-3-5" class="pilcrow">¶</a></p>
-<p id="section-3-6">Validation of policies is formally defined using <span>[<a href="#REGO" class="cite xref">REGO</a>]</span> policies, though there is no expectation that implementations use Rego.<a href="#section-3-6" class="pilcrow">¶</a></p>
+<p id="section-3-6">Validation of policies is formally defined using policies written in the Rego language (<span>[<a href="#REGO" class="cite xref">REGO</a>]</span>), rather than pseudo-code.
+This is to avoid ambiguity and to make it possible for a reader to evaluate them automatically, but there is no expectation that implementations use Rego.<a href="#section-3-6" class="pilcrow">¶</a></p>
 <p id="section-3-7">The input to the Rego engine is the JSON document <code>{"did": "&lt;DID&gt;", "chain": &lt;CertificateChain&gt;}</code>.<a href="#section-3-7" class="pilcrow">¶</a></p>
 <p id="section-3-8">Core Rego policy:<a href="#section-3-8" class="pilcrow">¶</a></p>
 <div class="lang-rego sourcecode" id="section-3-9">
