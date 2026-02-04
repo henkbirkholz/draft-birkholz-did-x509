@@ -138,8 +138,12 @@ Table of Contents
 3.  Identifier Syntax
 
    The did:x509 ABNF definition defined below uses the syntax defined in
-   [RFC5234] and the corresponding definitions for ALPHA and DIGIT.  The
-   [DIDV1] contains the definition for idchar.
+   [RFC5234] and the corresponding definitions for ALPHA and DIGIT.
+   [DIDV1] contains the definitions for idchar and pct-encoded in
+   Section 3.1.
+
+   idchar             = ALPHA / DIGIT / "." / "-" / "_" / pct-encoded
+   pct-encoded        = "%" HEXDIG HEXDIG
 
 did-x509           = "did:x509:" method-specific-id
 method-specific-id = version ":" ca-fingerprint-alg ":" ca-fingerprint 1*("::" predicate-name ":" predicate-value)

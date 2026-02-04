@@ -1265,10 +1265,16 @@ defined in <span>[<a href="#I-D.ietf-scitt-architecture" class="cite xref">I-D.i
 <a href="#section-3" class="section-number selfRef">3. </a><a href="#name-identifier-syntax" class="section-name selfRef">Identifier Syntax</a>
       </h2>
 <p id="section-3-1">The did:x509 ABNF definition defined below uses the syntax defined in <span>[<a href="#RFC5234" class="cite xref">RFC5234</a>]</span> and the corresponding definitions for <code>ALPHA</code> and <code>DIGIT</code>.
-The <span>[<a href="#DIDV1" class="cite xref">DIDV1</a>]</span> contains the definition for <code>idchar</code>.<a href="#section-3-1" class="pilcrow">¶</a></p>
+<span>[<a href="#DIDV1" class="cite xref">DIDV1</a>]</span> contains the definitions for <code>idchar</code> and <code>pct-encoded</code> in Section 3.1.<a href="#section-3-1" class="pilcrow">¶</a></p>
+<div class="lang-abnf sourcecode" id="section-3-2">
+<pre>
+idchar             = ALPHA / DIGIT / "." / "-" / "_" / pct-encoded
+pct-encoded        = "%" HEXDIG HEXDIG
+</pre><a href="#section-3-2" class="pilcrow">¶</a>
+</div>
 <span id="name-abnf-definition-of-core-did"></span><div id="fig-core-def">
 <figure id="figure-1">
-        <div class="alignLeft art-abnf art-text artwork" id="section-3-2.1">
+        <div class="alignLeft art-abnf art-text artwork" id="section-3-3.1">
 <pre>
 did-x509           = "did:x509:" method-specific-id
 method-specific-id = version ":" ca-fingerprint-alg ":" ca-fingerprint 1*("::" predicate-name ":" predicate-value)
@@ -1284,20 +1290,20 @@ base64url          = 1*(ALPHA / DIGIT / "-" / "_")
 <a href="#name-abnf-definition-of-core-did" class="selfRef">ABNF Definition of Core did-x509 Syntax</a>
         </figcaption></figure>
 </div>
-<p id="section-3-3">Implementations of this specification <span class="bcp14">MUST</span> indicate a version value of <code>0</code>.<a href="#section-3-3" class="pilcrow">¶</a></p>
-<p id="section-3-4"><code>ca-fingerprint-alg</code> is one of <code>sha256</code>, <code>sha384</code>, or <code>sha512</code>.
+<p id="section-3-4">Implementations of this specification <span class="bcp14">MUST</span> indicate a version value of <code>0</code>.<a href="#section-3-4" class="pilcrow">¶</a></p>
+<p id="section-3-5"><code>ca-fingerprint-alg</code> is one of <code>sha256</code>, <code>sha384</code>, or <code>sha512</code>.
 <code>ca-fingerprint</code> is <code>chain[i].fingerprint[ca-fingerprint-alg]</code> with i &gt; 0, that is, either an intermediate or root CA certificate.
 <code>predicate-name</code> is a predicate name and <code>predicate-value</code> is a predicate-specific value.
-<code>::</code> is used to separate multiple predicates from each other.<a href="#section-3-4" class="pilcrow">¶</a></p>
-<p id="section-3-5">The following sections define the predicates and their predicate-specific syntax.<a href="#section-3-5" class="pilcrow">¶</a></p>
-<p id="section-3-6">Validation of predicates is formally defined using policies written in the Rego language (<span>[<a href="#REGO" class="cite xref">REGO</a>]</span>), rather than pseudo-code.
-This is to avoid ambiguity and to make it possible for a reader to evaluate the logic automatically, but there is no expectation that implementations use the Rego language.<a href="#section-3-6" class="pilcrow">¶</a></p>
-<p id="section-3-7">The inputs to the resolution process are the DID string itself and the <code>x509chain</code> DID resolution option, which carries a comma-separated base64url-encoded X.509 certification path.
-To evaluate the reference Rego code shown below, the DID and certification path have to be passed to a Rego runtime as a JSON document: <code>{"did": "&lt;DID&gt;", "chain": &lt;CertificateChain&gt;}</code>, where <code>did</code> is the DID string and <code>chain</code> is the parsed representation of the certification path derived from the <code>x509chain</code> resolution option.<a href="#section-3-7" class="pilcrow">¶</a></p>
-<p id="section-3-8">Core Rego policy:<a href="#section-3-8" class="pilcrow">¶</a></p>
+<code>::</code> is used to separate multiple predicates from each other.<a href="#section-3-5" class="pilcrow">¶</a></p>
+<p id="section-3-6">The following sections define the predicates and their predicate-specific syntax.<a href="#section-3-6" class="pilcrow">¶</a></p>
+<p id="section-3-7">Validation of predicates is formally defined using policies written in the Rego language (<span>[<a href="#REGO" class="cite xref">REGO</a>]</span>), rather than pseudo-code.
+This is to avoid ambiguity and to make it possible for a reader to evaluate the logic automatically, but there is no expectation that implementations use the Rego language.<a href="#section-3-7" class="pilcrow">¶</a></p>
+<p id="section-3-8">The inputs to the resolution process are the DID string itself and the <code>x509chain</code> DID resolution option, which carries a comma-separated base64url-encoded X.509 certification path.
+To evaluate the reference Rego code shown below, the DID and certification path have to be passed to a Rego runtime as a JSON document: <code>{"did": "&lt;DID&gt;", "chain": &lt;CertificateChain&gt;}</code>, where <code>did</code> is the DID string and <code>chain</code> is the parsed representation of the certification path derived from the <code>x509chain</code> resolution option.<a href="#section-3-8" class="pilcrow">¶</a></p>
+<p id="section-3-9">Core Rego policy:<a href="#section-3-9" class="pilcrow">¶</a></p>
 <span id="name-core-rego-validation-rule"></span><div id="fig-validate-core">
 <figure id="figure-2">
-        <div class="alignLeft art-rego art-text artwork" id="section-3-9.1">
+        <div class="alignLeft art-rego art-text artwork" id="section-3-10.1">
 <pre>
 parse_did(did) := [ca_fingerprint_alg, ca_fingerprint, policies] if {
     prefix := "did:x509:0:"
@@ -1331,7 +1337,7 @@ valid if {
 <a href="#name-core-rego-validation-rule" class="selfRef">Core Rego Validation Rule</a>
         </figcaption></figure>
 </div>
-<p id="section-3-10">The overall Rego policy is assembled by concatenating the core Rego policy with the Rego policy fragments in the following sections, each one defining a <code>validate_predicate</code> function.<a href="#section-3-10" class="pilcrow">¶</a></p>
+<p id="section-3-11">The overall Rego policy is assembled by concatenating the core Rego policy with the Rego policy fragments in the following sections, each one defining a <code>validate_predicate</code> function.<a href="#section-3-11" class="pilcrow">¶</a></p>
 <div id="percent-encoding">
 <section id="section-3.1">
         <h3 id="name-percent-encoding">
