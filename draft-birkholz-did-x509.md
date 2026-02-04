@@ -120,7 +120,8 @@ Implementations of this specification MUST indicate a version value of `0`.
 
 The following sections define the policies and their policy-specific syntax.
 
-Validation of policies is formally defined using {{REGO}} policies, though there is no expectation that implementations use Rego.
+Validation of policies is formally defined using policies written in the Rego language ({{REGO}}), rather than pseudo-code.
+This is to avoid ambiguity and to make it possible for a reader to evaluate them automatically, but there is no expectation that implementations use Rego.
 
 The input to the Rego engine is the JSON document `{"did": "<DID>", "chain": <CertificateChain>}`.
 
