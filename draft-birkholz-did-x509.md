@@ -79,8 +79,8 @@ It can be used in a COSE Header CWT Claims map as defined in {{RFC9597}}.
 
 Including a certification path directly in configuration or in policy is often impractical.
 This is due to its size, and to the frequency at which some elements, particularly the leaf, are refreshed.
-Relying on a partial chain (root and intermediaries) is similarly unwieldy.
-While stable, the level of granularity afforded by a partial chain may not be sufficient to distinguish several identities that are not equivalent for the purpose of policy.
+Relying on a partial certification path (e.g., a root certificate and some intermediary certificates) is similarly unwieldy.
+While stable, the level of granularity afforded by a partial certification path may not be sufficient to distinguish several identities that are not equivalent for the purpose of policy.
 
 Combining authority pinning with attribute assertions is a precise and stable way of capturing identities as a constrained set of certificates.
 Their representation as compact and durable identifier strings enables the formulation of readable policy (e.g. "request.issuer == 'did:x509...'"), for example in the context of transparency ledger registration.
