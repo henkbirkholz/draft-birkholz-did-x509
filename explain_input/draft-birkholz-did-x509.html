@@ -1284,7 +1284,7 @@ base64url          = 1*(ALPHA / DIGIT / "-" / "_")
 <p id="section-3-5">The following sections define the policies and their policy-specific syntax.<a href="#section-3-5" class="pilcrow">¶</a></p>
 <p id="section-3-6">Validation of policies is formally defined using <span>[<a href="#REGO" class="cite xref">REGO</a>]</span> policies, though there is no expectation that implementations use Rego.<a href="#section-3-6" class="pilcrow">¶</a></p>
 <p id="section-3-7">The inputs to the resolution process are the DID string itself and the <code>x509chain</code> DID resolution option, which carries a comma-separated base64url-encoded X.509 certification path.
-To evaluate the reference Rego code shown below, the DID and certificate chain must be passed to a Rego runtime as a JSON document: <code>{"did": "&lt;DID&gt;", "chain": &lt;CertificateChain&gt;}</code>, where <code>did</code> is the DID string and <code>chain</code> is the parsed representation of the certificate chain derived from the <code>x509chain</code> resolution option.<a href="#section-3-7" class="pilcrow">¶</a></p>
+To evaluate the reference Rego code shown below, the DID and certification path have to be passed to a Rego runtime as a JSON document: <code>{"did": "&lt;DID&gt;", "chain": &lt;CertificateChain&gt;}</code>, where <code>did</code> is the DID string and <code>chain</code> is the parsed representation of the certification path derived from the <code>x509chain</code> resolution option.<a href="#section-3-7" class="pilcrow">¶</a></p>
 <p id="section-3-8">Core Rego policy:<a href="#section-3-8" class="pilcrow">¶</a></p>
 <div class="lang-rego sourcecode" id="section-3-9">
 <pre>

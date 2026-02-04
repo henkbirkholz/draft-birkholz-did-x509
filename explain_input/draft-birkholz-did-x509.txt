@@ -154,10 +154,10 @@ Table of Contents
    The inputs to the resolution process are the DID string itself and
    the x509chain DID resolution option, which carries a comma-separated
    base64url-encoded X.509 certification path.  To evaluate the
-   reference Rego code shown below, the DID and certificate chain must
-   be passed to a Rego runtime as a JSON document: {"did": "<DID>",
+   reference Rego code shown below, the DID and certification path have
+   to be passed to a Rego runtime as a JSON document: {"did": "<DID>",
    "chain": <CertificateChain>}, where did is the DID string and chain
-   is the parsed representation of the certificate chain derived from
+   is the parsed representation of the certification path derived from
    the x509chain resolution option.
 
    Core Rego policy:
