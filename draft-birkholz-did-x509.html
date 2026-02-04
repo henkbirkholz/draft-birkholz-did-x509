@@ -1281,7 +1281,7 @@ policy-value       = *(1*idchar ":") 1*idchar
 base64url          = 1*(ALPHA / DIGIT / "-" / "_")
 </pre><a href="#section-3-2" class="pilcrow">¶</a>
 </div>
-<p id="section-3-3">In this draft, version is <code>0</code>.<a href="#section-3-3" class="pilcrow">¶</a></p>
+<p id="section-3-3">Implementations of this specification <span class="bcp14">MUST</span> indicate a version value of <code>0</code>.<a href="#section-3-3" class="pilcrow">¶</a></p>
 <p id="section-3-4"><code>ca-fingerprint-alg</code> is one of <code>sha256</code>, <code>sha384</code>, or <code>sha512</code>.
 <code>ca-fingerprint</code> is <code>chain[i].fingerprint[ca-fingerprint-alg]</code> with i &gt; 0, that is, either an intermediate or root CA certificate.
 <code>policy-name</code> is a policy name and <code>policy-value</code> is a policy-specific value.
