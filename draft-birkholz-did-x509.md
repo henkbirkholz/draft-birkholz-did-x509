@@ -113,6 +113,8 @@ policy-name        = 1*ALPHA
 policy-value       = *(1*idchar ":") 1*idchar
 base64url          = 1*(ALPHA / DIGIT / "-" / "_")
 ~~~
+{: #fig-core-def artwork-align="left"
+   title="ABNF Definition of Core did-x509 Syntax"}
 
 Implementations of this specification MUST indicate a version value of `0`.
 
@@ -159,6 +161,8 @@ valid if {
     count(valid_policies) == count(policies)
 }
 ~~~
+{: #fig-validate-core artwork-align="left"
+   title="Core Rego Validation Rule"}
 
 The overall Rego policy is assembled by concatenating the core Rego policy with the Rego policy fragments in the following sections, each one defining a `validate_policy` function.
 
@@ -169,6 +173,8 @@ Some of the policies that are defined in subsequent sections require values to b
 ~~~abnf
 allowed = ALPHA / DIGIT / "-" / "." / "_"
 ~~~
+{: #fig-allowed-def artwork-align="left"
+   title="ABNF Definition of Characters That Do Not Need to Be Percent-Encoded"}
 
 Note that most libraries implement percent-encoding in the context of URLs and do NOT encode `~` (`%7E`).
 
@@ -182,6 +188,8 @@ value           = 1*idchar
 label           = "CN" / "L" / "ST" / "O" / "OU" / "C" / "STREET"
 oid             = 1*DIGIT *("." 1*DIGIT)
 ~~~
+{: #fig-subject-def artwork-align="left"
+   title="ABNF Definition of Subject Policy"}
 
 `<key>:<value>` are the subject name fields in `chain[0].subject` in any order. Field repetitions are not allowed. Values must be percent-encoded.
 
@@ -206,6 +214,8 @@ validate_policy(name, value) := true if {
     object.subset(input.chain[0].subject, subject) == true
 }
 ~~~
+{: #fig-validate-subject artwork-align="left"
+   title="Rego Function Validating Subject Policy"}
 
 ## "san" policy
 
@@ -215,6 +225,8 @@ policy-value    = san-type ":" san-value
 san-type        = "email" / "dns" / "uri"
 san-value       = 1*idchar
 ~~~
+{: #fig-san-def artwork-align="left"
+   title="ABNF Definition of SAN Policy"}
 
 `san-type` is the SAN type and must be one of `email`, `dns`, or `uri`. Note that `dn` is not supported.
 
@@ -236,6 +248,8 @@ validate_policy(name, value) := true if {
     [san_type, san_value] == input.chain[0].extensions.san[_]
 }
 ~~~
+{: #fig-validate-san artwork-align="left"
+   title="Rego Function Validating SAN Policy"}
 
 ## "eku" policy
 
@@ -245,6 +259,8 @@ policy-value = eku
 eku          = oid
 oid          = 1*DIGIT *("." 1*DIGIT)
 ~~~
+{: #fig-eku-def artwork-align="left"
+   title="ABNF Definition of EKU Policy"}
 
 `eku` is one of the OIDs within `chain[0].extensions.eku`.
 
@@ -260,6 +276,8 @@ validate_policy(name, value) := true if {
     value == input.chain[0].extensions.eku[_]
 }
 ~~~
+{: #fig-validate-eku artwork-align="left"
+   title="Rego Function Validating EKU Policy"}
 
 ## "fulcio-issuer" policy
 
@@ -268,6 +286,8 @@ policy-name   = "fulcio-issuer"
 policy-value  = fulcio-issuer
 fulcio-issuer = 1*idchar
 ~~~
+{: #fig-fulcio-issuer-def artwork-align="left"
+   title="ABNF Definition of Fulcio-Issuer Policy"}
 
 `fulcio-issuer` is `chain[0].extensions.fulcio_issuer` without leading `https://`, percent-encoded.
 
@@ -288,6 +308,8 @@ validate_policy(name, value) := true if {
     concat("", ["https://", suffix]) == input.chain[0].extensions.fulcio_issuer
 }
 ~~~
+{: #fig-validate-fulcio-issuer artwork-align="left"
+   title="Rego Function Validating Fulcio-Issuer Policy"}
 
 ## DID resolution options
 
@@ -330,7 +352,7 @@ This illustrates what a typical DID document ({{DID-DOCUMENT}}), describing the 
   ]
 }
 ~~~
-{: #fig-controller-placeholder artwork-align="left" title="JSON controller document example"}
+{: #fig-controller-placeholder artwork-align="left" title="JSON Controller Document Example"}
 
 # CDDL for a JSON Data Model for X.509 Certification Paths
 
@@ -386,7 +408,7 @@ URI = ["uri", tstr]          ; Example: ["uri", "https://example.com"]
 DirectoryName = ["dn", Name] ; Example: ["dn", {CN: "Example"}]
 ~~~
 {: #fig-cddl-placeholder artwork-align="left"
-   title="CDDL definition of did:x.509 JSON Data Model"}
+  title="CDDL Definition of did:x509 JSON Data Model"}
 
 # Privacy Considerations {#privconsec}
 
