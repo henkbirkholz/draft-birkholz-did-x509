@@ -73,10 +73,17 @@ This Informational document is published as an Independent Submission to improve
 
 # Introduction
 
-This document aims to define an interoperable and flexible issuer identifier format for COSE messages that transport or refer to X.509 certificates using {{RFC9360}}.
+This document aims to define an interoperable and flexible decentralized identifier ({{DIDV1}}) format for COSE messages that transport or refer to X.509 certificates using {{RFC9360}}.
 The did:x509 identifier format implements a direct, resolvable binding between a certificate chain and a compact issuer string.
 It can be used in a COSE Header CWT Claims map as defined in {{RFC9597}}.
-This issuer identifier is convenient for references and policy evaluation, for example in the context of transparency ledgers.
+
+Including a certification path directly in configuration or in policy is often impractical.
+This is due to its size, and to the frequency at which some elements, particularly the leaf, are refreshed.
+Relying on a partial certification path (e.g., a root certificate and some intermediary certificates) is similarly unwieldy.
+While stable, the level of granularity afforded by a partial certification path may not be sufficient to distinguish several identities that are not equivalent for the purpose of policy.
+
+Combining authority pinning with attribute assertions is a precise and stable way of capturing identities as a constrained set of certificates.
+Their representation as compact and durable identifier strings enables the formulation of readable policy (e.g. "request.issuer == 'did:x509...'"), for example in the context of transparency ledger registration.
 
 # Conventions and Definitions
 
