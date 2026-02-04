@@ -123,7 +123,8 @@ The following sections define the policies and their policy-specific syntax.
 Validation of policies is formally defined using policies written in the Rego language ({{REGO}}), rather than pseudo-code.
 This is to avoid ambiguity and to make it possible for a reader to evaluate them automatically, but there is no expectation that implementations use Rego.
 
-The input to the Rego engine is the JSON document `{"did": "<DID>", "chain": <CertificateChain>}`.
+The inputs to the resolution process are the DID string itself and the `x509chain` DID resolution option, which carries a comma-separated base64url-encoded X.509 certification path.
+To evaluate the reference Rego code shown below, the DID and certification path have to be passed to a Rego runtime as a JSON document: `{"did": "<DID>", "chain": <CertificateChain>}`, where `did` is the DID string and `chain` is the parsed representation of the certification path derived from the `x509chain` resolution option.
 
 Core Rego policy:
 
