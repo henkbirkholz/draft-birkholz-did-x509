@@ -359,12 +359,12 @@ Table of Contents
 
 {
   "@context": "https://www.w3.org/ns/did/v1",
-  "id": "did:x509:0:sha256:hH32p4SXlD8n_HLrk_mmNzIKArVh0KkbCeh6eAftfGE::subject:CN:Microsoft%20Corporation",
+  "id": "did:x509:0:sha256:hH32p4SXlD8n_HLrk_mmNzIKArVh0KkbCeh6eAftfGE::subject:CN:Example",
   "verificationMethod": [
     {
-      "id": "did:x509:0:sha256:hH32p4SXlD8n_HLrk_mmNzIKArVh0KkbCeh6eAftfGE::subject:CN:Microsoft%20Corporation#key-1",
+      "id": "did:x509:0:sha256:hH32p4SXlD8n_HLrk_mmNzIKArVh0KkbCeh6eAftfGE::subject:CN:Example#key-1",
       "type": "JsonWebKey2020",
-      "controller": "did:x509:0:sha256:hH32p4SXlD8n_HLrk_mmNzIKArVh0KkbCeh6eAftfGE::subject:CN:Microsoft%20Corporation",
+      "controller": "did:x509:0:sha256:hH32p4SXlD8n_HLrk_mmNzIKArVh0KkbCeh6eAftfGE::subject:CN:Example",
       "publicKeyJwk": {
         "kty": "RSA",
         "n": "s9HduD2rvmO-SGksB4HR-qvSK379St8NnUZBH8xBiQvt2zONOLUHWQibeBW4NLUfHfzMaOM77RhNlqPNiDRKhChlG1aHqEHSAaQBGrmr0ULGIzq-1YvqQufMGYBFfq0sc10UdvWqT0RjwkPQTu4bjg37zSYF9OcGxS9uGnPMdWRM0ThOsYUcDmMoCaJRebsLUBpMmYXkcUYXJrcSGAaUNd0wjhwIpEogOD-AbWW_7TPZOl-JciMj40a78EEXIc2p06lWHfe5hegQ7uGIlSAPG6zDzjhjNkzE63_-GoqJU-6QLazbL5_y27ZDUAEYJokbb305A-dOp930CjTar3BvWQ",
@@ -373,10 +373,10 @@ Table of Contents
     }
   ],
   "assertionMethod": [
-    "did:x509:0:sha256:hH32p4SXlD8n_HLrk_mmNzIKArVh0KkbCeh6eAftfGE::subject:CN:Microsoft%20Corporation#key-1"
+    "did:x509:0:sha256:hH32p4SXlD8n_HLrk_mmNzIKArVh0KkbCeh6eAftfGE::subject:CN:Example#key-1"
   ],
   "keyAgreement": [
-    "did:x509:0:sha256:hH32p4SXlD8n_HLrk_mmNzIKArVh0KkbCeh6eAftfGE::subject:CN:Microsoft%20Corporation#key-1"
+    "did:x509:0:sha256:hH32p4SXlD8n_HLrk_mmNzIKArVh0KkbCeh6eAftfGE::subject:CN:Example#key-1"
   ]
 }
 
@@ -429,10 +429,10 @@ OID = tstr
 ; X.509 Subject Alternative Name
 ; Strings are converted to UTF-8
 SAN = rfc822Name / DNSName / URI / DirectoryName
-rfc822Name = ["email", tstr] ; Example: ["email", "bill@microsoft.com"]
-DNSName = ["dns", tstr]      ; Example: ["dns", "microsoft.com"]
-URI = ["uri", tstr]          ; Example: ["uri", "https://microsoft.com"]
-DirectoryName = ["dn", Name] ; Example: ["dn", {CN: "Microsoft"}]
+rfc822Name = ["email", tstr] ; Example: ["email", "user@example.com"]
+DNSName = ["dns", tstr]      ; Example: ["dns", "example.com"]
+URI = ["uri", tstr]          ; Example: ["uri", "https://example.com"]
+DirectoryName = ["dn", Name] ; Example: ["dn", {CN: "Example"}]
 
         Figure 2: CDDL definition of did:x.509 JSON Data Model
 
