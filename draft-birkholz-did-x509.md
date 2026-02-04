@@ -101,8 +101,7 @@ The did:x509 ABNF definition defined below uses the syntax defined in {{-abnf}} 
 The {{DIDV1}} contains the definition for `idchar`.
 
 ~~~abnf
-did-x509           = "did:" method-name ":" method-specific-id
-method-name        = "x509"
+did-x509           = "did:x509:" method-specific-id
 method-specific-id = version ":" ca-fingerprint-alg ":" ca-fingerprint 1*("::" policy-name ":" policy-value)
 version            = 1*DIGIT
 ca-fingerprint-alg = "sha256" / "sha384" / "sha512"
