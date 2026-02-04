@@ -18,8 +18,8 @@ jobs:
         run: |
             set -ex
             sudo apt update
-            sudo apt install -y gem
-            sudo gem install kramdown-rfc
+            sudo apt install -y gem jq
+            sudo gem install kramdown-rfc cddlc
             sudo pip install abnf-to-regexp xml2rfc
 
       - name: Extract Figures
@@ -33,4 +33,15 @@ jobs:
             set -ex
             cat figures/abnf/*.abnf > all.abnf
             abnf-to-regexp -i all.abnf --format python-nested
-            
+
+      - name: CDDL Compliance
+        run: |
+            set -ex
+            cddlc -r figures/cddl/*.cddl
+
+      - name: JSON Compliance
+        run: |
+            set -ex
+            for f in figures/json/*.json; do
+              jq . "$f"
+            done
