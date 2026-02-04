@@ -142,12 +142,12 @@ Table of Contents
    [DIDV1] contains the definition for idchar.
 
 did-x509           = "did:x509:" method-specific-id
-method-specific-id = version ":" ca-fingerprint-alg ":" ca-fingerprint 1*("::" policy-name ":" policy-value)
+method-specific-id = version ":" ca-fingerprint-alg ":" ca-fingerprint 1*("::" predicate-name ":" predicate-value)
 version            = 1*DIGIT
 ca-fingerprint-alg = "sha256" / "sha384" / "sha512"
 ca-fingerprint     = base64url
-predicate-name        = 1*ALPHA
-predicate-value       = *(1*idchar ":") 1*idchar
+predicate-name     = 1*ALPHA
+predicate-value    = *(1*idchar ":") 1*idchar
 base64url          = 1*(ALPHA / DIGIT / "-" / "_")
 
           Figure 1: ABNF Definition of Core did-x509 Syntax
@@ -231,8 +231,8 @@ valid if {
 
 3.2.  "subject" predicate
 
-   predicate-name     = "subject"
-   predicate-value    = key ":" value *(":" key ":" value)
+   predicate-name  = "subject"
+   predicate-value = key ":" value *(":" key ":" value)
    key             = label / oid
    value           = 1*idchar
    label           = "CN" / "L" / "ST" / "O" / "OU" / "C" / "STREET"
@@ -269,8 +269,8 @@ valid if {
 
 3.3.  "san" predicate
 
-   predicate-name     = "san"
-   predicate-value    = san-type ":" san-value
+   predicate-name  = "san"
+   predicate-value = san-type ":" san-value
    san-type        = "email" / "dns" / "uri"
    san-value       = 1*idchar
 
@@ -304,8 +304,8 @@ valid if {
 
    predicate-name  = "eku"
    predicate-value = eku
-   eku          = oid
-   oid          = 1*DIGIT *("." 1*DIGIT)
+   eku             = oid
+   oid             = 1*DIGIT *("." 1*DIGIT)
 
                   Figure 8: ABNF Definition of EKU Policy
 
@@ -329,7 +329,7 @@ valid if {
 
    predicate-name   = "fulcio-issuer"
    predicate-value  = fulcio-issuer
-   fulcio-issuer = 1*idchar
+   fulcio-issuer    = 1*idchar
 
              Figure 10: ABNF Definition of Fulcio-Issuer Policy
 

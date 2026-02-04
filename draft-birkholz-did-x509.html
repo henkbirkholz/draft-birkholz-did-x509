@@ -1271,12 +1271,12 @@ The <span>[<a href="#DIDV1" class="cite xref">DIDV1</a>]</span> contains the def
         <div class="alignLeft art-abnf art-text artwork" id="section-3-2.1">
 <pre>
 did-x509           = "did:x509:" method-specific-id
-method-specific-id = version ":" ca-fingerprint-alg ":" ca-fingerprint 1*("::" policy-name ":" policy-value)
+method-specific-id = version ":" ca-fingerprint-alg ":" ca-fingerprint 1*("::" predicate-name ":" predicate-value)
 version            = 1*DIGIT
 ca-fingerprint-alg = "sha256" / "sha384" / "sha512"
 ca-fingerprint     = base64url
-predicate-name        = 1*ALPHA
-predicate-value       = *(1*idchar ":") 1*idchar
+predicate-name     = 1*ALPHA
+predicate-value    = *(1*idchar ":") 1*idchar
 base64url          = 1*(ALPHA / DIGIT / "-" / "_")
 </pre>
 </div>
@@ -1361,8 +1361,8 @@ allowed = ALPHA / DIGIT / "-" / "." / "_"
 <figure id="figure-4">
           <div class="alignLeft art-abnf art-text artwork" id="section-3.2-1.1">
 <pre>
-predicate-name     = "subject"
-predicate-value    = key ":" value *(":" key ":" value)
+predicate-name  = "subject"
+predicate-value = key ":" value *(":" key ":" value)
 key             = label / oid
 value           = 1*idchar
 label           = "CN" / "L" / "ST" / "O" / "OU" / "C" / "STREET"
@@ -1411,8 +1411,8 @@ validate_predicate(name, value) := true if {
 <figure id="figure-6">
           <div class="alignLeft art-abnf art-text artwork" id="section-3.3-1.1">
 <pre>
-predicate-name     = "san"
-predicate-value    = san-type ":" san-value
+predicate-name  = "san"
+predicate-value = san-type ":" san-value
 san-type        = "email" / "dns" / "uri"
 san-value       = 1*idchar
 </pre>
@@ -1456,8 +1456,8 @@ validate_predicate(name, value) := true if {
 <pre>
 predicate-name  = "eku"
 predicate-value = eku
-eku          = oid
-oid          = 1*DIGIT *("." 1*DIGIT)
+eku             = oid
+oid             = 1*DIGIT *("." 1*DIGIT)
 </pre>
 </div>
 <figcaption><a href="#figure-8" class="selfRef">Figure 8</a>:
@@ -1495,7 +1495,7 @@ validate_predicate(name, value) := true if {
 <pre>
 predicate-name   = "fulcio-issuer"
 predicate-value  = fulcio-issuer
-fulcio-issuer = 1*idchar
+fulcio-issuer    = 1*idchar
 </pre>
 </div>
 <figcaption><a href="#figure-10" class="selfRef">Figure 10</a>:
