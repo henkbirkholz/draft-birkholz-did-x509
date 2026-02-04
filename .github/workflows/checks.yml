@@ -53,10 +53,6 @@ jobs:
       - name: Rego Compliance
         run: |
             set -ex
-            if ls figures/rego/*.rego 1> /dev/null 2>&1; then
-              echo "package didx509" > all.rego
-              cat figures/rego/*.rego >> all.rego
-              opa check all.rego
-            else
-              echo "No Rego files found, skipping Rego compliance check"
-            fi
+            echo "package didx509" > all.rego
+            cat figures/rego/*.rego >> all.rego
+            opa check all.rego
