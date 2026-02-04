@@ -1185,7 +1185,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
             </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4">
-            <p id="section-toc.1-1.4.1"><a href="#section-4" class="auto internal xref">4</a>.  <a href="#name-example-controller-document" class="internal xref">Example Controller Document</a></p>
+            <p id="section-toc.1-1.4.1"><a href="#section-4" class="auto internal xref">4</a>.  <a href="#name-example-did-document" class="internal xref">Example DID Document</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5">
             <p id="section-toc.1-1.5.1"><a href="#section-5" class="auto internal xref">5</a>.  <a href="#name-cddl-for-a-json-data-model-" class="internal xref">CDDL for a JSON Data Model for X.509 Certification Paths</a></p>
@@ -1197,12 +1197,10 @@ svg :is([fill="white"], [fill^="#fff"]) {
             <p id="section-toc.1-1.7.1"><a href="#section-7" class="auto internal xref">7</a>.  <a href="#name-security-consideration" class="internal xref">Security Consideration</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.1">
-                <p id="section-toc.1-1.7.2.1.1"><a href="#section-7.1" class="auto internal xref">7.1</a>.  <a href="#name-identifier-ambiguity" class="internal xref">Identifier ambiguity</a></p>
-<ul class="compact toc ulBare ulEmpty">
-<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.1.2.1">
-                    <p id="section-toc.1-1.7.2.1.2.1.1"><a href="#section-7.1.1" class="auto internal xref">7.1.1</a>.  <a href="#name-x509-trust-stores" class="internal xref">X.509 trust stores</a></p>
+                <p id="section-toc.1-1.7.2.1.1"><a href="#section-7.1" class="auto internal xref">7.1</a>.  <a href="#name-identifier-ambiguity" class="internal xref">Identifier Ambiguity</a></p>
 </li>
-                </ul>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.2">
+                <p id="section-toc.1-1.7.2.2.1"><a href="#section-7.2" class="auto internal xref">7.2</a>.  <a href="#name-x509-trust-stores" class="internal xref">X.509 Trust Stores</a></p>
 </li>
             </ul>
 </li>
@@ -1482,12 +1480,12 @@ validate_policy(name, value) := true if {
 </div>
 </section>
 </div>
-<div id="example-controller-document">
+<div id="example-did-document">
 <section id="section-4">
-      <h2 id="name-example-controller-document">
-<a href="#section-4" class="section-number selfRef">4. </a><a href="#name-example-controller-document" class="section-name selfRef">Example Controller Document</a>
+      <h2 id="name-example-did-document">
+<a href="#section-4" class="section-number selfRef">4. </a><a href="#name-example-did-document" class="section-name selfRef">Example DID Document</a>
       </h2>
-<p id="section-4-1">The illustrates what a typical Controller document can look like once resolved:<a href="#section-4-1" class="pilcrow">¶</a></p>
+<p id="section-4-1">This illustrates what a typical DID document (<span>[<a href="#DID-DOCUMENT" class="cite xref">DID-DOCUMENT</a>]</span>), describing the DID subject and the methods it can use to authenticate itself, can look like once resolved:<a href="#section-4-1" class="pilcrow">¶</a></p>
 <span id="name-json-controller-document-ex"></span><div id="fig-controller-placeholder">
 <figure id="figure-1">
         <div class="alignLeft art-json art-text artwork" id="section-4-2.1">
@@ -1604,20 +1602,20 @@ DirectoryName = ["dn", Name] ; Example: ["dn", {CN: "Example"}]
 <div id="identifier-ambiguity">
 <section id="section-7.1">
         <h3 id="name-identifier-ambiguity">
-<a href="#section-7.1" class="section-number selfRef">7.1. </a><a href="#name-identifier-ambiguity" class="section-name selfRef">Identifier ambiguity</a>
+<a href="#section-7.1" class="section-number selfRef">7.1. </a><a href="#name-identifier-ambiguity" class="section-name selfRef">Identifier Ambiguity</a>
         </h3>
 <p id="section-7.1-1">This DID method maps characteristics of X.509 certificate chains to identifiers. It allows a single identifier to map to multiple certificate chains, giving the identifier stability across the expiry of individual chains. However, if the policies used in the identifier are chosen too loosely, the identifier may match too wide a set of certificate chains. This may have security implications as it may authorize an identity for actions it was not meant to be authorized for.<a href="#section-7.1-1" class="pilcrow">¶</a></p>
 <p id="section-7.1-2">To mitigate this issue, the certificate authority should publish their expected usage of certificate fields and indicate which ones constitute a unique identity, versus any additional fields that may be of an informational nature. This will help users create an appropriate did:x509 as well as consumers of signed content to decide whether it is appropriate to trust a given did:x509.<a href="#section-7.1-2" class="pilcrow">¶</a></p>
-<div id="x509-trust-stores">
-<section id="section-7.1.1">
-          <h4 id="name-x509-trust-stores">
-<a href="#section-7.1.1" class="section-number selfRef">7.1.1. </a><a href="#name-x509-trust-stores" class="section-name selfRef">X.509 trust stores</a>
-          </h4>
-<p id="section-7.1.1-1">Typically, a verifier trusts an X.509 certificate by applying chain validation defined in <span><a href="https://rfc-editor.org/rfc/rfc5280#section-6" class="relref">Section 6</a> of [<a href="#RFC5280" class="cite xref">RFC5280</a>]</span> using a set of certificate authority (CA) certificates as trust store, together with additional application-specific policies.<a href="#section-7.1.1-1" class="pilcrow">¶</a></p>
-<p id="section-7.1.1-2">This DID method does not require an X.509 trust anchor store but rather relies on verifiers either trusting an individual DID directly or using third-party endorsements for a given DID, like <span>[<a href="#VC" class="cite xref">VC</a>]</span>, to establish trust.<a href="#section-7.1.1-2" class="pilcrow">¶</a></p>
-<p id="section-7.1.1-3">By layering this DID method on top of X.509, verifiers are free to use traditional chain validation (for example, verifiers unaware of DID), or rely on DID as an ecosystem to establish trust.<a href="#section-7.1.1-3" class="pilcrow">¶</a></p>
 </section>
 </div>
+<div id="x509-trust-stores">
+<section id="section-7.2">
+        <h3 id="name-x509-trust-stores">
+<a href="#section-7.2" class="section-number selfRef">7.2. </a><a href="#name-x509-trust-stores" class="section-name selfRef">X.509 Trust Stores</a>
+        </h3>
+<p id="section-7.2-1">Typically, a verifier trusts an X.509 certificate by applying chain validation defined in <span><a href="https://rfc-editor.org/rfc/rfc5280#section-6" class="relref">Section 6</a> of [<a href="#RFC5280" class="cite xref">RFC5280</a>]</span> using a set of certificate authority (CA) certificates as trust store, together with additional application-specific policies.<a href="#section-7.2-1" class="pilcrow">¶</a></p>
+<p id="section-7.2-2">This DID method does not require an X.509 trust anchor store but rather relies on verifiers either trusting an individual DID directly or using third-party endorsements for a given DID, like <span>[<a href="#VC" class="cite xref">VC</a>]</span>, to establish trust.<a href="#section-7.2-2" class="pilcrow">¶</a></p>
+<p id="section-7.2-3">By layering this DID method on top of X.509, verifiers are free to use traditional chain validation (for example, verifiers unaware of DID), or rely on DID as an ecosystem to establish trust.<a href="#section-7.2-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1648,7 +1646,7 @@ DirectoryName = ["dn", Name] ; Example: ["dn", {CN: "Example"}]
 <dd class="break"></dd>
 <dt id="DIDV1">[DIDV1]</dt>
         <dd>
-<span class="refTitle">"W3C DID v1.0 specification"</span>, <span>n.d.</span>, <span>&lt;<a href="https://www.w3.org/TR/2022/REC-did-core-20220719/">https://www.w3.org/TR/2022/REC-did-core-20220719/</a>&gt;</span>. </dd>
+<span class="refTitle">"W3C DID v1.0 specification"</span>, <span>n.d.</span>, <span>&lt;<a href="https://www.w3.org/TR/did-1.0/">https://www.w3.org/TR/did-1.0/</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC2119">[RFC2119]</dt>
         <dd>
@@ -1699,6 +1697,10 @@ DirectoryName = ["dn", Name] ; Example: ["dn", {CN: "Example"}]
 <a href="#section-9.2" class="section-number selfRef">9.2. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
         </h3>
 <dl class="references">
+<dt id="DID-DOCUMENT">[DID-DOCUMENT]</dt>
+        <dd>
+<span class="refTitle">"DID Document Definition"</span>, <span>n.d.</span>, <span>&lt;<a href="https://www.w3.org/TR/did-1.0/#dfn-did-documents">https://www.w3.org/TR/did-1.0/#dfn-did-documents</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="I-D.ietf-scitt-architecture">[I-D.ietf-scitt-architecture]</dt>
         <dd>
 <span class="refAuthor">Birkholz, H.</span>, <span class="refAuthor">Delignat-Lavaud, A.</span>, <span class="refAuthor">Fournet, C.</span>, <span class="refAuthor">Deshpande, Y.</span>, and <span class="refAuthor">S. Lasker</span>, <span class="refTitle">"An Architecture for Trustworthy and Transparent Digital Supply Chains"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-scitt-architecture-22</span>, <time datetime="2025-10-10" class="refDate">10 October 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-scitt-architecture-22">https://datatracker.ietf.org/doc/html/draft-ietf-scitt-architecture-22</a>&gt;</span>. </dd>

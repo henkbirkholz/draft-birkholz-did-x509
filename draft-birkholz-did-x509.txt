@@ -82,12 +82,12 @@ Table of Contents
      3.4.  "eku" policy
      3.5.  "fulcio-issuer" policy
      3.6.  DID resolution options
-   4.  Example Controller Document
+   4.  Example DID Document
    5.  CDDL for a JSON Data Model for X.509 Certification Paths
    6.  Privacy Considerations
    7.  Security Consideration
-     7.1.  Identifier ambiguity
-       7.1.1.  X.509 trust stores
+     7.1.  Identifier Ambiguity
+     7.2.  X.509 Trust Stores
    8.  IANA Considerations
    9.  References
      9.1.  Normative References
@@ -352,10 +352,11 @@ Table of Contents
    2.  Concatenate the resulting strings in order, separated by comma
        ",".
 
-4.  Example Controller Document
+4.  Example DID Document
 
-   The illustrates what a typical Controller document can look like once
-   resolved:
+   This illustrates what a typical DID document ([DID-DOCUMENT]),
+   describing the DID subject and the methods it can use to authenticate
+   itself, can look like once resolved:
 
 {
   "@context": "https://www.w3.org/ns/did/v1",
@@ -442,7 +443,7 @@ DirectoryName = ["dn", Name] ; Example: ["dn", {CN: "Example"}]
 
 7.  Security Consideration
 
-7.1.  Identifier ambiguity
+7.1.  Identifier Ambiguity
 
    This DID method maps characteristics of X.509 certificate chains to
    identifiers.  It allows a single identifier to map to multiple
@@ -460,7 +461,7 @@ DirectoryName = ["dn", Name] ; Example: ["dn", {CN: "Example"}]
    appropriate did:x509 as well as consumers of signed content to decide
    whether it is appropriate to trust a given did:x509.
 
-7.1.1.  X.509 trust stores
+7.2.  X.509 Trust Stores
 
    Typically, a verifier trusts an X.509 certificate by applying chain
    validation defined in Section 6 of [RFC5280] using a set of
@@ -495,7 +496,7 @@ DirectoryName = ["dn", Name] ; Example: ["dn", {CN: "Example"}]
               <https://www.rfc-editor.org/rfc/rfc8126>.
 
    [DIDV1]    "W3C DID v1.0 specification", n.d.,
-              <https://www.w3.org/TR/2022/REC-did-core-20220719/>.
+              <https://www.w3.org/TR/did-1.0/>.
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
@@ -547,6 +548,10 @@ DirectoryName = ["dn", Name] ; Example: ["dn", {CN: "Example"}]
               <https://www.w3.org/TR/vc-data-model/>.
 
 9.2.  Informative References
+
+   [DID-DOCUMENT]
+              "DID Document Definition", n.d.,
+              <https://www.w3.org/TR/did-1.0/#dfn-did-documents>.
 
    [I-D.ietf-scitt-architecture]
               Birkholz, H., Delignat-Lavaud, A., Fournet, C., Deshpande,
