@@ -5,11 +5,11 @@
 Network Working Group                                        M. Riechert
 Internet-Draft                                        A. Delignat-Lavaud
 Intended status: Standards Track                               Microsoft
-Expires: 7 August 2026                                       H. Birkholz
+Expires: 8 August 2026                                       H. Birkholz
                                                           Fraunhofer SIT
                                                              A. Chamayou
                                                                Microsoft
-                                                         3 February 2026
+                                                         4 February 2026
 
 
                      x509 Decentralized Identifier
@@ -55,7 +55,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 7 August 2026.
+   This Internet-Draft will expire on 8 August 2026.
 
 Copyright Notice
 
@@ -137,7 +137,7 @@ policy-name        = 1*ALPHA
 policy-value       = *(1*idchar ":") 1*idchar
 base64url          = 1*(ALPHA / DIGIT / "-" / "_")
 
-          Figure 1: ABNF definition of core did-x509 syntax
+          Figure 1: ABNF Definition of Core did-x509 Syntax
 
    In this draft, version is 0.
 
@@ -185,7 +185,7 @@ valid if {
     count(valid_policies) == count(policies)
 }
 
-                 Figure 2: Core Rego validation rule
+                 Figure 2: Core Rego Validation Rule
 
    The overall Rego policy is assembled by concatenating the core Rego
    policy with the Rego policy fragments in the following sections, each
@@ -200,8 +200,8 @@ valid if {
 
    allowed = ALPHA / DIGIT / "-" / "." / "_"
 
-       Figure 3: ABNF definition of characters that do not need to be
-                              percent-encoded
+       Figure 3: ABNF Definition of Characters That Do Not Need to Be
+                              Percent-Encoded
 
    Note that most libraries implement percent-encoding in the context of
    URLs and do NOT encode ~ (%7E).
@@ -215,7 +215,7 @@ valid if {
    label           = "CN" / "L" / "ST" / "O" / "OU" / "C" / "STREET"
    oid             = 1*DIGIT *("." 1*DIGIT)
 
-                Figure 4: ABNF definition of Subject policy
+                Figure 4: ABNF Definition of Subject Policy
 
    <key>:<value> are the subject name fields in chain[0].subject in any
    order.  Field repetitions are not allowed.  Values must be percent-
@@ -242,7 +242,7 @@ valid if {
        object.subset(input.chain[0].subject, subject) == true
    }
 
-             Figure 5: Rego function validating Subject policy
+             Figure 5: Rego Function Validating Subject Policy
 
 3.3.  "san" policy
 
@@ -251,7 +251,7 @@ valid if {
    san-type        = "email" / "dns" / "uri"
    san-value       = 1*idchar
 
-                  Figure 6: ABNF definition of SAN policy
+                  Figure 6: ABNF Definition of SAN Policy
 
    san-type is the SAN type and must be one of email, dns, or uri.  Note
    that dn is not supported.
@@ -275,7 +275,7 @@ valid if {
        [san_type, san_value] == input.chain[0].extensions.san[_]
    }
 
-               Figure 7: Rego function validating SAN policy
+               Figure 7: Rego Function Validating SAN Policy
 
 3.4.  "eku" policy
 
@@ -284,7 +284,7 @@ valid if {
    eku          = oid
    oid          = 1*DIGIT *("." 1*DIGIT)
 
-                  Figure 8: ABNF definition of EKU policy
+                  Figure 8: ABNF Definition of EKU Policy
 
    eku is one of the OIDs within chain[0].extensions.eku.
 
@@ -300,7 +300,7 @@ valid if {
        value == input.chain[0].extensions.eku[_]
    }
 
-               Figure 9: Rego function validating EKU policy
+               Figure 9: Rego Function Validating EKU Policy
 
 3.5.  "fulcio-issuer" policy
 
@@ -308,7 +308,7 @@ valid if {
    policy-value  = fulcio-issuer
    fulcio-issuer = 1*idchar
 
-             Figure 10: ABNF definition of fulcio-issuer policy
+             Figure 10: ABNF Definition of Fulcio-Issuer Policy
 
    fulcio-issuer is chain[0].extensions.fulcio_issuer without leading
    https://, percent-encoded.
@@ -333,7 +333,7 @@ validate_policy(name, value) := true if {
     concat("", ["https://", suffix]) == input.chain[0].extensions.fulcio_issuer
 }
 
-       Figure 11: Rego function validating fulcio-issuer policy
+       Figure 11: Rego Function Validating Fulcio-Issuer Policy
 
 3.6.  DID resolution options
 
@@ -380,7 +380,7 @@ validate_policy(name, value) := true if {
   ]
 }
 
-             Figure 12: JSON controller document example
+             Figure 12: JSON Controller Document Example
 
 5.  CDDL for a JSON Data Model for X.509 Certification Paths
 
@@ -434,7 +434,7 @@ DNSName = ["dns", tstr]      ; Example: ["dns", "microsoft.com"]
 URI = ["uri", tstr]          ; Example: ["uri", "https://microsoft.com"]
 DirectoryName = ["dn", Name] ; Example: ["dn", {CN: "Microsoft"}]
 
-        Figure 13: CDDL definition of did:x509 JSON Data Model
+        Figure 13: CDDL Definition of did:x509 JSON Data Model
 
 6.  Privacy Considerations
 

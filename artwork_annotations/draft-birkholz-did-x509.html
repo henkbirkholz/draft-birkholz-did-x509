@@ -1053,7 +1053,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Riechert, et al.</td>
-<td class="center">Expires 7 August 2026</td>
+<td class="center">Expires 8 August 2026</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1066,12 +1066,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-birkholz-did-x509-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2026-02-03" class="published">3 February 2026</time>
+<time datetime="2026-02-04" class="published">4 February 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2026-08-07">7 August 2026</time></dd>
+<dd class="expires"><time datetime="2026-08-08">8 August 2026</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1126,7 +1126,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 7 August 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 8 August 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1279,7 +1279,7 @@ base64url          = 1*(ALPHA / DIGIT / "-" / "_")
 </pre>
 </div>
 <figcaption><a href="#figure-1" class="selfRef">Figure 1</a>:
-<a href="#name-abnf-definition-of-core-did" class="selfRef">ABNF definition of core did-x509 syntax</a>
+<a href="#name-abnf-definition-of-core-did" class="selfRef">ABNF Definition of Core did-x509 Syntax</a>
         </figcaption></figure>
 </div>
 <p id="section-3-3">In this draft, version is <code>0</code>.<a href="#section-3-3" class="pilcrow">¶</a></p>
@@ -1324,7 +1324,7 @@ valid if {
 </pre>
 </div>
 <figcaption><a href="#figure-2" class="selfRef">Figure 2</a>:
-<a href="#name-core-rego-validation-rule" class="selfRef">Core Rego validation rule</a>
+<a href="#name-core-rego-validation-rule" class="selfRef">Core Rego Validation Rule</a>
         </figcaption></figure>
 </div>
 <p id="section-3-10">The overall Rego policy is assembled by concatenating the core Rego policy with the Rego policy fragments in the following sections, each one defining a <code>validate_policy</code> function.<a href="#section-3-10" class="pilcrow">¶</a></p>
@@ -1342,7 +1342,7 @@ allowed = ALPHA / DIGIT / "-" / "." / "_"
 </pre>
 </div>
 <figcaption><a href="#figure-3" class="selfRef">Figure 3</a>:
-<a href="#name-abnf-definition-of-characte" class="selfRef">ABNF definition of characters that do not need to be percent-encoded</a>
+<a href="#name-abnf-definition-of-characte" class="selfRef">ABNF Definition of Characters That Do Not Need to Be Percent-Encoded</a>
           </figcaption></figure>
 </div>
 <p id="section-3.1-3">Note that most libraries implement percent-encoding in the context of URLs and do NOT encode <code>~</code> (<code>%7E</code>).<a href="#section-3.1-3" class="pilcrow">¶</a></p>
@@ -1366,7 +1366,7 @@ oid             = 1*DIGIT *("." 1*DIGIT)
 </pre>
 </div>
 <figcaption><a href="#figure-4" class="selfRef">Figure 4</a>:
-<a href="#name-abnf-definition-of-subject-" class="selfRef">ABNF definition of Subject policy</a>
+<a href="#name-abnf-definition-of-subject-" class="selfRef">ABNF Definition of Subject Policy</a>
           </figcaption></figure>
 </div>
 <p id="section-3.2-2"><code>&lt;key&gt;:&lt;value&gt;</code> are the subject name fields in <code>chain[0].subject</code> in any order. Field repetitions are not allowed. Values must be percent-encoded.<a href="#section-3.2-2" class="pilcrow">¶</a></p>
@@ -1393,7 +1393,7 @@ validate_policy(name, value) := true if {
 </pre>
 </div>
 <figcaption><a href="#figure-5" class="selfRef">Figure 5</a>:
-<a href="#name-rego-function-validating-su" class="selfRef">Rego function validating Subject policy</a>
+<a href="#name-rego-function-validating-su" class="selfRef">Rego Function Validating Subject Policy</a>
           </figcaption></figure>
 </div>
 </section>
@@ -1414,7 +1414,7 @@ san-value       = 1*idchar
 </pre>
 </div>
 <figcaption><a href="#figure-6" class="selfRef">Figure 6</a>:
-<a href="#name-abnf-definition-of-san-poli" class="selfRef">ABNF definition of SAN policy</a>
+<a href="#name-abnf-definition-of-san-poli" class="selfRef">ABNF Definition of SAN Policy</a>
           </figcaption></figure>
 </div>
 <p id="section-3.3-2"><code>san-type</code> is the SAN type and must be one of <code>email</code>, <code>dns</code>, or <code>uri</code>. Note that <code>dn</code> is not supported.<a href="#section-3.3-2" class="pilcrow">¶</a></p>
@@ -1436,7 +1436,7 @@ validate_policy(name, value) := true if {
 </pre>
 </div>
 <figcaption><a href="#figure-7" class="selfRef">Figure 7</a>:
-<a href="#name-rego-function-validating-sa" class="selfRef">Rego function validating SAN policy</a>
+<a href="#name-rego-function-validating-sa" class="selfRef">Rego Function Validating SAN Policy</a>
           </figcaption></figure>
 </div>
 </section>
@@ -1457,7 +1457,7 @@ oid          = 1*DIGIT *("." 1*DIGIT)
 </pre>
 </div>
 <figcaption><a href="#figure-8" class="selfRef">Figure 8</a>:
-<a href="#name-abnf-definition-of-eku-poli" class="selfRef">ABNF definition of EKU policy</a>
+<a href="#name-abnf-definition-of-eku-poli" class="selfRef">ABNF Definition of EKU Policy</a>
           </figcaption></figure>
 </div>
 <p id="section-3.4-2"><code>eku</code> is one of the OIDs within <code>chain[0].extensions.eku</code>.<a href="#section-3.4-2" class="pilcrow">¶</a></p>
@@ -1475,7 +1475,7 @@ validate_policy(name, value) := true if {
 </pre>
 </div>
 <figcaption><a href="#figure-9" class="selfRef">Figure 9</a>:
-<a href="#name-rego-function-validating-ek" class="selfRef">Rego function validating EKU policy</a>
+<a href="#name-rego-function-validating-ek" class="selfRef">Rego Function Validating EKU Policy</a>
           </figcaption></figure>
 </div>
 </section>
@@ -1495,7 +1495,7 @@ fulcio-issuer = 1*idchar
 </pre>
 </div>
 <figcaption><a href="#figure-10" class="selfRef">Figure 10</a>:
-<a href="#name-abnf-definition-of-fulcio-i" class="selfRef">ABNF definition of fulcio-issuer policy</a>
+<a href="#name-abnf-definition-of-fulcio-i" class="selfRef">ABNF Definition of Fulcio-Issuer Policy</a>
           </figcaption></figure>
 </div>
 <p id="section-3.5-2"><code>fulcio-issuer</code> is <code>chain[0].extensions.fulcio_issuer</code> without leading <code>https://</code>, percent-encoded.<a href="#section-3.5-2" class="pilcrow">¶</a></p>
@@ -1516,7 +1516,7 @@ validate_policy(name, value) := true if {
 </pre>
 </div>
 <figcaption><a href="#figure-11" class="selfRef">Figure 11</a>:
-<a href="#name-rego-function-validating-fu" class="selfRef">Rego function validating fulcio-issuer policy</a>
+<a href="#name-rego-function-validating-fu" class="selfRef">Rego Function Validating Fulcio-Issuer Policy</a>
           </figcaption></figure>
 </div>
 </section>
@@ -1577,7 +1577,7 @@ validate_policy(name, value) := true if {
 </pre>
 </div>
 <figcaption><a href="#figure-12" class="selfRef">Figure 12</a>:
-<a href="#name-json-controller-document-ex" class="selfRef">JSON controller document example</a>
+<a href="#name-json-controller-document-ex" class="selfRef">JSON Controller Document Example</a>
         </figcaption></figure>
 </div>
 </section>
@@ -1643,7 +1643,7 @@ DirectoryName = ["dn", Name] ; Example: ["dn", {CN: "Microsoft"}]
 </pre>
 </div>
 <figcaption><a href="#figure-13" class="selfRef">Figure 13</a>:
-<a href="#name-cddl-definition-of-didx509-" class="selfRef">CDDL definition of did:x509 JSON Data Model</a>
+<a href="#name-cddl-definition-of-didx509-" class="selfRef">CDDL Definition of did:x509 JSON Data Model</a>
         </figcaption></figure>
 </div>
 </section>
