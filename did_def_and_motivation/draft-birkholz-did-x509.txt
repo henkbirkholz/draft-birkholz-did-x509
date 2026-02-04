@@ -5,11 +5,11 @@
 Network Working Group                                        M. Riechert
 Internet-Draft                                        A. Delignat-Lavaud
 Intended status: Standards Track                               Microsoft
-Expires: 7 August 2026                                       H. Birkholz
+Expires: 8 August 2026                                       H. Birkholz
                                                           Fraunhofer SIT
                                                              A. Chamayou
                                                                Microsoft
-                                                         3 February 2026
+                                                         4 February 2026
 
 
                      x509 Decentralized Identifier
@@ -55,7 +55,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 7 August 2026.
+   This Internet-Draft will expire on 8 August 2026.
 
 Copyright Notice
 
@@ -107,10 +107,11 @@ Table of Contents
    Including a certification path directly in configuration or in policy
    is often impractical.  This is due to its size, and to the frequency
    at which some elements, particularly the leaf, are refreshed.
-   Relying on a partial chain (root and intermediaries) is similarly
-   unwieldy.  While stable, the level of granularity afforded by a
-   partial chain may not be sufficient to distinguish several identities
-   that are not equivalent for the purpose of policy.
+   Relying on a partial certification path (e.g., a root certificate and
+   some intermediary certificates) is similarly unwieldy.  While stable,
+   the level of granularity afforded by a partial certification path may
+   not be sufficient to distinguish several identities that are not
+   equivalent for the purpose of policy.
 
    Combining authority pinning with attribute assertions is a precise
    and stable way of capturing identities as a constrained set of
