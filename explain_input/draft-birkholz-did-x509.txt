@@ -5,11 +5,11 @@
 Network Working Group                                        M. Riechert
 Internet-Draft                                        A. Delignat-Lavaud
 Intended status: Standards Track                               Microsoft
-Expires: 7 August 2026                                       H. Birkholz
+Expires: 8 August 2026                                       H. Birkholz
                                                           Fraunhofer SIT
                                                              A. Chamayou
                                                                Microsoft
-                                                         3 February 2026
+                                                         4 February 2026
 
 
                      x509 Decentralized Identifier
@@ -55,7 +55,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 7 August 2026.
+   This Internet-Draft will expire on 8 August 2026.
 
 Copyright Notice
 
@@ -153,12 +153,12 @@ Table of Contents
 
    The inputs to the resolution process are the DID string itself and
    the x509chain DID resolution option, which carries a comma-separated
-   base64url-encoded X.509 certificate chain.  To evaluate the reference
-   Rego code shown below, the DID and certificate chain must be passed
-   to a Rego runtime as a JSON document: {"did": "<DID>", "chain":
-   <CertificateChain>}, where did is the DID string and chain is the
-   parsed representation of the certificate chain derived from the
-   x509chain resolution option.
+   base64url-encoded X.509 certification path.  To evaluate the
+   reference Rego code shown below, the DID and certificate chain must
+   be passed to a Rego runtime as a JSON document: {"did": "<DID>",
+   "chain": <CertificateChain>}, where did is the DID string and chain
+   is the parsed representation of the certificate chain derived from
+   the x509chain resolution option.
 
    Core Rego policy:
 
