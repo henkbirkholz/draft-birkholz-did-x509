@@ -1270,8 +1270,7 @@ defined in <span>[<a href="#I-D.ietf-scitt-architecture" class="cite xref">I-D.i
 The <span>[<a href="#DIDV1" class="cite xref">DIDV1</a>]</span> contains the definition for <code>idchar</code>.<a href="#section-3-1" class="pilcrow">¶</a></p>
 <div class="lang-abnf sourcecode" id="section-3-2">
 <pre>
-did-x509           = "did:" method-name ":" method-specific-id
-method-name        = "x509"
+did-x509           = "did:x509:" method-specific-id
 method-specific-id = version ":" ca-fingerprint-alg ":" ca-fingerprint 1*("::" policy-name ":" policy-value)
 version            = 1*DIGIT
 ca-fingerprint-alg = "sha256" / "sha384" / "sha512"
