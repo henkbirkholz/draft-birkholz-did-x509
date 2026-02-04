@@ -1,0 +1,36 @@
+name: Checks
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+
+      - name: Install dependencies
+        run: |
+            set -ex
+            sudo apt update
+            sudo apt install -y gem
+            sudo gem install kramdown-rfc
+            sudo pip install abnf-to-regexp xml2rfc
+
+      - name: Extract Figures
+        run: |
+            set -ex
+            make draft-birkholz-did-x509.xml
+            kramdown-rfc-extract-sourcecode -t files -d figures draft-birkholz-did-x509.xml
+
+      - name: ABNF Compliance
+        run: |
+            set -ex
+            cat figures/abnf/*.abnf > all.abnf
+            abnf-to-regexp -i all.abnf --format python-nested
+            

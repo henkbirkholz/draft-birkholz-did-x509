@@ -101,16 +101,21 @@ defined in {{-scitt-arch}}.
 # Identifier Syntax
 
 The did:x509 ABNF definition defined below uses the syntax defined in {{-abnf}} and the corresponding definitions for `ALPHA` and `DIGIT`.
-The {{DIDV1}} contains the definition for `idchar`.
+{{DIDV1}} contains the definitions for `idchar` and `pct-encoded` in Section 3.1.
+
+~~~abnf
+idchar             = ALPHA / DIGIT / "." / "-" / "_" / pct-encoded
+pct-encoded        = "%" HEXDIG HEXDIG
+~~~
 
 ~~~abnf
 did-x509           = "did:x509:" method-specific-id
-method-specific-id = version ":" ca-fingerprint-alg ":" ca-fingerprint 1*("::" policy-name ":" policy-value)
+method-specific-id = version ":" ca-fingerprint-alg ":" ca-fingerprint 1*("::" predicate-name ":" predicate-value)
 version            = 1*DIGIT
 ca-fingerprint-alg = "sha256" / "sha384" / "sha512"
 ca-fingerprint     = base64url
-predicate-name        = 1*ALPHA
-predicate-value       = *(1*idchar ":") 1*idchar
+predicate-name     = 1*ALPHA
+predicate-value    = *(1*idchar ":") 1*idchar
 base64url          = 1*(ALPHA / DIGIT / "-" / "_")
 ~~~
 {: #fig-core-def artwork-align="left"
@@ -181,8 +186,8 @@ Note that most libraries implement percent-encoding in the context of URLs and d
 ## "subject" predicate
 
 ~~~abnf
-predicate-name     = "subject"
-predicate-value    = key ":" value *(":" key ":" value)
+predicate-name  = "subject"
+predicate-value = key ":" value *(":" key ":" value)
 key             = label / oid
 value           = 1*idchar
 label           = "CN" / "L" / "ST" / "O" / "OU" / "C" / "STREET"
@@ -220,8 +225,8 @@ validate_predicate(name, value) := true if {
 ## "san" predicate
 
 ~~~abnf
-predicate-name     = "san"
-predicate-value    = san-type ":" san-value
+predicate-name  = "san"
+predicate-value = san-type ":" san-value
 san-type        = "email" / "dns" / "uri"
 san-value       = 1*idchar
 ~~~
@@ -256,8 +261,8 @@ validate_predicate(name, value) := true if {
 ~~~abnf
 predicate-name  = "eku"
 predicate-value = eku
-eku          = oid
-oid          = 1*DIGIT *("." 1*DIGIT)
+eku             = oid
+oid             = 1*DIGIT *("." 1*DIGIT)
 ~~~
 {: #fig-eku-def artwork-align="left"
    title="ABNF Definition of EKU Policy"}
@@ -284,7 +289,7 @@ validate_predicate(name, value) := true if {
 ~~~abnf
 predicate-name   = "fulcio-issuer"
 predicate-value  = fulcio-issuer
-fulcio-issuer = 1*idchar
+fulcio-issuer    = 1*idchar
 ~~~
 {: #fig-fulcio-issuer-def artwork-align="left"
    title="ABNF Definition of Fulcio-Issuer Policy"}
