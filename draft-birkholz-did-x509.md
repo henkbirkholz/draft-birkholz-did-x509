@@ -68,7 +68,7 @@ entity:
 
 --- abstract
 
-This document defines the did:x509 decentralized identifier method, which enables a direct, resolvable binding between X.509 certificate chains and compact issuer identifiers (DID string). In particular, the did:x509 identifier format in this documents comes with a CWT Claims definition. In general, this identifier is a compact and interoperable mechanism for certificate-based identification by combining a certification path fingerprint with optional policies for subject names, subject alternative names, extended key usage, and issuer information. It is especially useful for policy evaluation and reference in transparency services and similar systems requiring cryptographic binding to certificate material.
+This document defines the did:x509 decentralized identifier method, which enables a direct, resolvable binding between X.509 certificate chains and compact issuer identifiers (DID string). In particular, the did:x509 identifier format in this documents comes with a CWT Claims definition. In general, this identifier is a compact and interoperable mechanism for certificate-based identification by combining a certificate fingerprint with optional policies for subject names, subject alternative names, extended key usage, and issuer information. It is especially useful for policy evaluation and reference in transparency services and similar systems requiring cryptographic binding to certificate material.
 
 This Informational document is published as an Independent Submission to improve interoperability with Microsoft's architecture. It is not a standard nor a product of the IETF.
 
@@ -80,10 +80,10 @@ This document aims to define an interoperable and flexible decentralized identif
 The did:x509 identifier format implements a direct, resolvable binding between a certificate chain and a compact issuer string.
 It can be used in a COSE Header CWT Claims map as defined in {{RFC9597}}.
 
-Including a certification path directly in configuration or in policy is often impractical.
+Including a certificate chain directly in configuration or in policy is often impractical.
 This is due to its size, and to the frequency at which some elements, particularly the leaf, are refreshed.
-Relying on a partial certification path (e.g., a root certificate and some intermediary certificates) is similarly unwieldy.
-While stable, the level of granularity afforded by a partial certification path may not be sufficient to distinguish several identities that are not equivalent for the purpose of policy.
+Relying on a partial certificate chain (e.g., a root certificate and some intermediary certificates) is similarly unwieldy.
+While stable, the level of granularity afforded by a partial certificate chain may not be sufficient to distinguish several identities that are not equivalent for the purpose of policy.
 
 Combining authority pinning with attribute assertions is a precise and stable way of capturing identities as a constrained set of certificates.
 Their representation as compact and durable identifier strings enables the formulation of readable policy (e.g. "request.issuer == 'did:x509...'"), for example in the context of transparency ledger registration.
@@ -133,8 +133,8 @@ The following sections define the predicates and their predicate-specific syntax
 Validation of predicates is formally defined using policies written in the Rego language ({{REGO}}), rather than pseudo-code.
 This is to avoid ambiguity and to make it possible for a reader to evaluate the logic automatically, but there is no expectation that implementations use the Rego language.
 
-The inputs to the resolution process are the DID string itself and the `x509chain` DID resolution option, which carries a comma-separated base64url-encoded X.509 certification path.
-To evaluate the reference Rego code shown below, the DID and certification path have to be passed to a Rego runtime as a JSON document: `{"did": "<DID>", "chain": <CertificateChain>}`, where `did` is the DID string and `chain` is the parsed representation of the certification path derived from the `x509chain` resolution option.
+The inputs to the resolution process are the DID string itself and the `x509chain` DID resolution option, which carries a comma-separated base64url-encoded X.509 certificate chain.
+To evaluate the reference Rego code shown below, the DID and certificate chain have to be passed to a Rego runtime as a JSON document: `{"did": "<DID>", "chain": <CertificateChain>}`, where `did` is the DID string and `chain` is the parsed representation of the certificate chain derived from the `x509chain` resolution option.
 
 Core Rego policy:
 
@@ -359,7 +359,7 @@ This illustrates what a typical DID document ({{DID-DOCUMENT}}), describing the 
 ~~~
 {: #fig-controller-placeholder artwork-align="left" title="JSON Controller Document Example"}
 
-# CDDL for a JSON Data Model for X.509 Certification Paths
+# CDDL for a JSON Data Model for X.509 Certificate Chains
 
 ~~~ cddl
 CertificateChain = [2*Certificate]  ; leaf is first
