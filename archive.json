@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-01-29T02:31:42.271645+00:00",
+  "timestamp": "2026-02-05T02:34:11.868216+00:00",
   "repo": "henkbirkholz/draft-birkholz-did-x509",
   "labels": [
     {
@@ -55,15 +55,15 @@
       "id": "I_kwDOQEQBrM7mWZZZ",
       "title": "Introduction should expand on why this method is important",
       "url": "https://github.com/henkbirkholz/draft-birkholz-did-x509/issues/7",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "achamayou",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Also define \"did\"",
       "createdAt": "2026-01-28T10:07:27Z",
-      "updatedAt": "2026-01-28T10:07:27Z",
-      "closedAt": null,
+      "updatedAt": "2026-02-04T07:38:33Z",
+      "closedAt": "2026-02-04T07:38:33Z",
       "comments": []
     },
     {
@@ -71,15 +71,15 @@
       "id": "I_kwDOQEQBrM7mWaQE",
       "title": "Do not use the word draft when defining version 0",
       "url": "https://github.com/henkbirkholz/draft-birkholz-did-x509/issues/8",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "achamayou",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Reframe the sentence \"In this draft, version is 0\" to be \"Implementations of this specification MUST indicate a version value of 0.'\u00a0 Or words to that effect.\u00a0 The key point is to not use the word \"draft\".",
       "createdAt": "2026-01-28T10:08:08Z",
-      "updatedAt": "2026-01-28T10:08:08Z",
-      "closedAt": null,
+      "updatedAt": "2026-02-04T07:38:46Z",
+      "closedAt": "2026-02-04T07:38:46Z",
       "comments": []
     },
     {
@@ -87,31 +87,39 @@
       "id": "I_kwDOQEQBrM7mWa3n",
       "title": "Do not use the word draft",
       "url": "https://github.com/henkbirkholz/draft-birkholz-did-x509/issues/9",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "achamayou",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Reframe the sentence \"In this draft, version is 0\" to be \"Implementations of this specification MUST indicate a version value of 0.'\u00a0 Or words to that effect.\u00a0 The key point is to not use the word \"draft\".",
       "createdAt": "2026-01-28T10:08:38Z",
-      "updatedAt": "2026-01-28T10:08:38Z",
-      "closedAt": null,
-      "comments": []
+      "updatedAt": "2026-02-03T14:28:11Z",
+      "closedAt": "2026-02-03T14:28:11Z",
+      "comments": [
+        {
+          "author": "achamayou",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Dupe #8 ",
+          "createdAt": "2026-02-03T14:28:11Z",
+          "updatedAt": "2026-02-03T14:28:11Z"
+        }
+      ]
     },
     {
       "number": 10,
       "id": "I_kwDOQEQBrM7mWbzV",
       "title": "Modify ABNF to use literals in the definition for x509",
       "url": "https://github.com/henkbirkholz/draft-birkholz-did-x509/issues/10",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "achamayou",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2026-01-28T10:09:24Z",
-      "updatedAt": "2026-01-28T10:09:24Z",
-      "closedAt": null,
+      "updatedAt": "2026-02-04T07:40:55Z",
+      "closedAt": "2026-02-04T07:40:55Z",
       "comments": []
     },
     {
@@ -119,31 +127,31 @@
       "id": "I_kwDOQEQBrM7mWhAX",
       "title": "The word policy is overloaded and needs to be replaced in at least one context",
       "url": "https://github.com/henkbirkholz/draft-birkholz-did-x509/issues/11",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "achamayou",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Policy is used ambiguously to describe:\n\n1. Policies that would use did:x509 strings\n2. Rego policies that implement did:x509 resolution\n3. Components of the did:x509 \"query\"\n\nA better term must be found for purpose 3.",
       "createdAt": "2026-01-28T10:14:12Z",
-      "updatedAt": "2026-01-28T10:14:12Z",
-      "closedAt": null,
+      "updatedAt": "2026-02-04T08:32:06Z",
+      "closedAt": "2026-02-04T08:32:06Z",
       "comments": []
     },
     {
       "number": 12,
       "id": "I_kwDOQEQBrM7mWiPb",
-      "title": "Defined and add references to Rego in the document",
+      "title": "Define and add references to Rego in the document",
       "url": "https://github.com/henkbirkholz/draft-birkholz-did-x509/issues/12",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "achamayou",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2026-01-28T10:15:31Z",
-      "updatedAt": "2026-01-28T10:15:31Z",
-      "closedAt": null,
+      "updatedAt": "2026-02-04T07:41:15Z",
+      "closedAt": "2026-02-04T07:41:15Z",
       "comments": []
     },
     {
@@ -151,15 +159,15 @@
       "id": "I_kwDOQEQBrM7mWjmM",
       "title": "Explain the significance of the input to the Rego engine in the resolution",
       "url": "https://github.com/henkbirkholz/draft-birkholz-did-x509/issues/13",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "achamayou",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2026-01-28T10:16:57Z",
-      "updatedAt": "2026-01-28T10:16:57Z",
-      "closedAt": null,
+      "updatedAt": "2026-02-04T07:42:31Z",
+      "closedAt": "2026-02-04T07:42:31Z",
       "comments": []
     },
     {
@@ -167,30 +175,30 @@
       "id": "I_kwDOQEQBrM7mWkht",
       "title": "Label all artwork",
       "url": "https://github.com/henkbirkholz/draft-birkholz-did-x509/issues/14",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "achamayou",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2026-01-28T10:17:57Z",
-      "updatedAt": "2026-01-28T10:17:57Z",
-      "closedAt": null,
+      "updatedAt": "2026-02-04T08:27:15Z",
+      "closedAt": "2026-02-04T08:27:15Z",
       "comments": []
     },
     {
       "number": 15,
       "id": "I_kwDOQEQBrM7mWlEH",
-      "title": "Validate ABNF and Rego snippets",
+      "title": "Validate ABNF, Rego, JSON, CDDL snippets",
       "url": "https://github.com/henkbirkholz/draft-birkholz-did-x509/issues/15",
       "state": "OPEN",
       "author": "achamayou",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
-      "body": "",
+      "body": "- [x] ABNF https://github.com/henkbirkholz/draft-birkholz-did-x509/commit/d23612e91d74833bda65a9a8d43b87a6bb11de37\n- [ ] Rego\n- [x] JSON https://github.com/henkbirkholz/draft-birkholz-did-x509/commit/9263438015b109cf21baa14caa89b41132924d24\n- [x] CDDL https://github.com/henkbirkholz/draft-birkholz-did-x509/commit/9263438015b109cf21baa14caa89b41132924d24",
       "createdAt": "2026-01-28T10:18:30Z",
-      "updatedAt": "2026-01-28T10:18:30Z",
+      "updatedAt": "2026-02-04T15:59:13Z",
       "closedAt": null,
       "comments": []
     },
@@ -206,9 +214,24 @@
       "labels": [],
       "body": "",
       "createdAt": "2026-01-28T10:18:57Z",
-      "updatedAt": "2026-01-28T10:18:57Z",
+      "updatedAt": "2026-02-04T19:57:32Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "achamayou",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@henkbirkholz I don't think I understand this item, the examples in the draft are JSON, Rego, ABNF and CDDL. At least the ABNF ones require line breaks, not just for formatting. I don't find any IETF document with references to line breaks, but many have snippets of code with line breaks in them.\n\nWhat is the ask?",
+          "createdAt": "2026-02-03T17:22:31Z",
+          "updatedAt": "2026-02-03T17:22:31Z"
+        },
+        {
+          "author": "achamayou",
+          "authorAssociation": "COLLABORATOR",
+          "body": "https://www.rfc-editor.org/rfc/rfc8792",
+          "createdAt": "2026-02-04T19:57:32Z",
+          "updatedAt": "2026-02-04T19:57:32Z"
+        }
+      ]
     },
     {
       "number": 17,
@@ -231,15 +254,15 @@
       "id": "I_kwDOQEQBrM7mWo-6",
       "title": "Make it clear that the validation procedure is written in Rego",
       "url": "https://github.com/henkbirkholz/draft-birkholz-did-x509/issues/18",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "achamayou",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2026-01-28T10:22:07Z",
-      "updatedAt": "2026-01-28T10:22:07Z",
-      "closedAt": null,
+      "updatedAt": "2026-02-04T07:41:15Z",
+      "closedAt": "2026-02-04T07:41:15Z",
       "comments": []
     },
     {
@@ -247,15 +270,15 @@
       "id": "I_kwDOQEQBrM7mWpcG",
       "title": "Define Controller Document and reference it from DID",
       "url": "https://github.com/henkbirkholz/draft-birkholz-did-x509/issues/19",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "achamayou",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2026-01-28T10:22:33Z",
-      "updatedAt": "2026-01-28T10:22:33Z",
-      "closedAt": null,
+      "updatedAt": "2026-02-04T07:43:37Z",
+      "closedAt": "2026-02-04T07:43:37Z",
       "comments": []
     },
     {
@@ -263,14 +286,46 @@
       "id": "I_kwDOQEQBrM7mWpxK",
       "title": "Use example.com consistently",
       "url": "https://github.com/henkbirkholz/draft-birkholz-did-x509/issues/20",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "achamayou",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2026-01-28T10:22:52Z",
-      "updatedAt": "2026-01-28T10:22:52Z",
+      "updatedAt": "2026-02-04T07:43:15Z",
+      "closedAt": "2026-02-04T07:43:15Z",
+      "comments": []
+    },
+    {
+      "number": 31,
+      "id": "I_kwDOQEQBrM7oK3UV",
+      "title": "Use example.com everywhere, really",
+      "url": "https://github.com/henkbirkholz/draft-birkholz-did-x509/issues/31",
+      "state": "OPEN",
+      "author": "achamayou",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Follow up to #20, references to Microsoft are gone, but GitHub remains in a couple of places.",
+      "createdAt": "2026-02-04T07:46:44Z",
+      "updatedAt": "2026-02-04T07:46:44Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 32,
+      "id": "I_kwDOQEQBrM7oMh4y",
+      "title": "Revert certification path to chain",
+      "url": "https://github.com/henkbirkholz/draft-birkholz-did-x509/issues/32",
+      "state": "OPEN",
+      "author": "achamayou",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Following discussion, examination of definition, and checking that using intermediates to resolve the fingerprint is allowed, we have confirmed that chain is the correct term here.",
+      "createdAt": "2026-02-04T09:38:54Z",
+      "updatedAt": "2026-02-04T20:11:20Z",
       "closedAt": null,
       "comments": []
     }
@@ -323,21 +378,21 @@
       "id": "PR_kwDOQEQBrM6uVCA4",
       "title": "Update title and add controller document example",
       "url": "https://github.com/henkbirkholz/draft-birkholz-did-x509/pull/2",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "OR13",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Added example controller document and resolution details.",
       "createdAt": "2025-10-17T14:57:21Z",
-      "updatedAt": "2025-10-20T17:09:10Z",
+      "updatedAt": "2026-02-03T17:10:15Z",
       "baseRepository": "henkbirkholz/draft-birkholz-did-x509",
       "baseRefName": "main",
       "baseRefOid": "c9934aa907b6bc222b168bff6e397265e28c05c0",
       "headRepository": "henkbirkholz/draft-birkholz-did-x509",
       "headRefName": "OR13-patch-1",
       "headRefOid": "388cfc8f5a4a57208901e2e09d6b39eea30967c8",
-      "closedAt": null,
+      "closedAt": "2026-02-03T17:10:15Z",
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
@@ -362,6 +417,13 @@
           "body": "@OR13 yes, middle resolvers can absolutely enrich/modify the document, but I would like to keep this scoped to x509.",
           "createdAt": "2025-10-20T17:09:10Z",
           "updatedAt": "2025-10-20T17:09:10Z"
+        },
+        {
+          "author": "achamayou",
+          "authorAssociation": "COLLABORATOR",
+          "body": "replaced by #27 ",
+          "createdAt": "2026-02-03T17:10:15Z",
+          "updatedAt": "2026-02-03T17:10:15Z"
         }
       ],
       "reviews": [
@@ -712,6 +774,997 @@
           "createdAt": "2026-01-28T10:04:52Z",
           "updatedAt": "2026-01-28T10:04:52Z",
           "comments": []
+        }
+      ]
+    },
+    {
+      "number": 21,
+      "id": "PR_kwDOQEQBrM7BNVOL",
+      "title": "Link to definition of DID and expand motivation",
+      "url": "https://github.com/henkbirkholz/draft-birkholz-did-x509/pull/21",
+      "state": "MERGED",
+      "author": "achamayou",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Closes #7",
+      "createdAt": "2026-02-03T14:26:28Z",
+      "updatedAt": "2026-02-04T07:38:32Z",
+      "baseRepository": "henkbirkholz/draft-birkholz-did-x509",
+      "baseRefName": "main",
+      "baseRefOid": "90ecefe881f97ed97334e72adf0810946b07edd1",
+      "headRepository": "henkbirkholz/draft-birkholz-did-x509",
+      "headRefName": "did_def_and_motivation",
+      "headRefOid": "7b7419b77efe5086b557b1100ec750fc1eaaf6b7",
+      "closedAt": "2026-02-04T07:38:32Z",
+      "mergedAt": "2026-02-04T07:38:32Z",
+      "mergedBy": "achamayou",
+      "mergeCommit": {
+        "oid": "7387950b1595e5b76ddf67d63b7c5b0296d5cd00"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOQEQBrM7fQXRU",
+          "commit": {
+            "abbreviatedOid": "26dd66f"
+          },
+          "author": "copilot-pull-request-reviewer",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "## Pull request overview\n\nThis PR addresses issue #7 by adding a reference to the definition of \"decentralized identifier\" (DID) and expanding the Introduction section to better explain why the did:x509 method is important.\n\n**Changes:**\n- Added a reference to the W3C DID v1.0 specification ({{DIDV1}}) to define \"decentralized identifier\"\n- Expanded the motivation section with two new paragraphs explaining the limitations of using certificate chains directly and how did:x509 addresses these challenges\n\n\n\n\n\n---\n\n\ud83d\udca1 <a href=\"/henkbirkholz/draft-birkholz-did-x509/new/main/.github/instructions?filename=*.instructions.md\" class=\"Link--inTextBlock\" target=\"_blank\" rel=\"noopener noreferrer\">Add Copilot custom instructions</a> for smarter, more guided reviews. <a href=\"https://docs.github.com/en/copilot/customizing-copilot/adding-repository-custom-instructions-for-github-copilot\" class=\"Link--inTextBlock\" target=\"_blank\" rel=\"noopener noreferrer\">Learn how to get started</a>.",
+          "createdAt": "2026-02-03T14:28:28Z",
+          "updatedAt": "2026-02-03T14:28:28Z",
+          "comments": [
+            {
+              "originalPosition": 16,
+              "body": "Grammar error: \"Their representation... enable\" should use \"enables\" instead of \"enable\". The subject \"Their representation\" is singular and requires a singular verb.\n```suggestion\nTheir representation as compact and durable identifier strings enables the formulation of readable policy (e.g. \"request.issuer == 'did:x509...'\"), for example in the context of transparency ledger registration.\n```",
+              "createdAt": "2026-02-03T14:28:28Z",
+              "updatedAt": "2026-02-03T14:28:29Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOQEQBrM7fX4vd",
+          "commit": {
+            "abbreviatedOid": "02fce0b"
+          },
+          "author": "henkbirkholz",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-02-03T21:03:04Z",
+          "updatedAt": "2026-02-03T21:03:04Z",
+          "comments": [
+            {
+              "originalPosition": 10,
+              "body": "```suggestion\nIncluding a certification path directly in configuration or in policy is often impractical.\n```",
+              "createdAt": "2026-02-03T21:03:04Z",
+              "updatedAt": "2026-02-03T21:03:04Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOQEQBrM7fX6_9",
+          "commit": {
+            "abbreviatedOid": "55b9280"
+          },
+          "author": "henkbirkholz",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-02-03T21:05:03Z",
+          "updatedAt": "2026-02-03T21:05:04Z",
+          "comments": [
+            {
+              "originalPosition": 13,
+              "body": "```suggestion\nRelying on a partial certification path (e.g., a root certificate and some intermediary certificates) is similarly unwieldy.\nWhile stable, the level of granularity afforded by a partial certification path may not be sufficient to distinguish several identities that are not equivalent for the purpose of policy.\n```",
+              "createdAt": "2026-02-03T21:05:04Z",
+              "updatedAt": "2026-02-03T21:05:04Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 22,
+      "id": "PR_kwDOQEQBrM7BNWit",
+      "title": "Do not mention the draft",
+      "url": "https://github.com/henkbirkholz/draft-birkholz-did-x509/pull/22",
+      "state": "MERGED",
+      "author": "achamayou",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Closes #8 ",
+      "createdAt": "2026-02-03T14:27:55Z",
+      "updatedAt": "2026-02-04T07:38:45Z",
+      "baseRepository": "henkbirkholz/draft-birkholz-did-x509",
+      "baseRefName": "main",
+      "baseRefOid": "90ecefe881f97ed97334e72adf0810946b07edd1",
+      "headRepository": "henkbirkholz/draft-birkholz-did-x509",
+      "headRefName": "version_0",
+      "headRefOid": "d4bd344039c2229b162a108790ec0de1639c2915",
+      "closedAt": "2026-02-04T07:38:45Z",
+      "mergedAt": "2026-02-04T07:38:45Z",
+      "mergedBy": "achamayou",
+      "mergeCommit": {
+        "oid": "4d3207d0a83d7e47fa4287d334be14408b1b5ea2"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOQEQBrM7fQX4d",
+          "commit": {
+            "abbreviatedOid": "d4bd344"
+          },
+          "author": "copilot-pull-request-reviewer",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "## Pull request overview\n\nUpdates the specification text to avoid referring to \u201cdraft\u201d when defining the required version value, aligning with Issue #8.\n\n**Changes:**\n- Rephrases the version requirement using normative language (MUST) and specifies version value `0` without using the word \u201cdraft\u201d.\n\n\n\n\n\n---\n\n\ud83d\udca1 <a href=\"/henkbirkholz/draft-birkholz-did-x509/new/main/.github/instructions?filename=*.instructions.md\" class=\"Link--inTextBlock\" target=\"_blank\" rel=\"noopener noreferrer\">Add Copilot custom instructions</a> for smarter, more guided reviews. <a href=\"https://docs.github.com/en/copilot/customizing-copilot/adding-repository-custom-instructions-for-github-copilot\" class=\"Link--inTextBlock\" target=\"_blank\" rel=\"noopener noreferrer\">Learn how to get started</a>.",
+          "createdAt": "2026-02-03T14:28:50Z",
+          "updatedAt": "2026-02-03T14:28:50Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOQEQBrM7fX8JP",
+          "commit": {
+            "abbreviatedOid": "d4bd344"
+          },
+          "author": "henkbirkholz",
+          "authorAssociation": "OWNER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-02-03T21:05:59Z",
+          "updatedAt": "2026-02-03T21:05:59Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 23,
+      "id": "PR_kwDOQEQBrM7BNYZZ",
+      "title": "Literal did:x509 in ABNF definition",
+      "url": "https://github.com/henkbirkholz/draft-birkholz-did-x509/pull/23",
+      "state": "MERGED",
+      "author": "achamayou",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Closes #10 ",
+      "createdAt": "2026-02-03T14:29:46Z",
+      "updatedAt": "2026-02-04T07:40:54Z",
+      "baseRepository": "henkbirkholz/draft-birkholz-did-x509",
+      "baseRefName": "main",
+      "baseRefOid": "90ecefe881f97ed97334e72adf0810946b07edd1",
+      "headRepository": "henkbirkholz/draft-birkholz-did-x509",
+      "headRefName": "literal_didx509",
+      "headRefOid": "4304de3394ff562da625ee984669e99aacb46fc6",
+      "closedAt": "2026-02-04T07:40:54Z",
+      "mergedAt": "2026-02-04T07:40:54Z",
+      "mergedBy": "achamayou",
+      "mergeCommit": {
+        "oid": "a255719483d5c17ef2f06ff25152f93fb70ead84"
+      },
+      "comments": [
+        {
+          "author": "achamayou",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> is this better?\r\n\r\nThe feedback was:\r\n\r\n> Since method-name is a constant value of \"x509\", why not simply your ABNF to include the literals in the did-x509 definition?\r\n\r\nI don't think it matters whether method-name is split or not in this definition, and so I have gone with the review feedback here.",
+          "createdAt": "2026-02-04T07:40:47Z",
+          "updatedAt": "2026-02-04T07:40:47Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOQEQBrM7fQcCn",
+          "commit": {
+            "abbreviatedOid": "4304de3"
+          },
+          "author": "copilot-pull-request-reviewer",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "## Pull request overview\n\nThis PR modifies the ABNF definition for the did:x509 identifier to use a literal string instead of a separate rule for the method name, addressing issue #10.\n\n**Changes:**\n- Consolidated the ABNF grammar by replacing separate `did-x509` and `method-name` rules with a single rule using the literal `\"did:x509:\"`\n\n\n\n\n\n---\n\n\ud83d\udca1 <a href=\"/henkbirkholz/draft-birkholz-did-x509/new/main/.github/instructions?filename=*.instructions.md\" class=\"Link--inTextBlock\" target=\"_blank\" rel=\"noopener noreferrer\">Add Copilot custom instructions</a> for smarter, more guided reviews. <a href=\"https://docs.github.com/en/copilot/customizing-copilot/adding-repository-custom-instructions-for-github-copilot\" class=\"Link--inTextBlock\" target=\"_blank\" rel=\"noopener noreferrer\">Learn how to get started</a>.",
+          "createdAt": "2026-02-03T14:31:30Z",
+          "updatedAt": "2026-02-03T14:31:30Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOQEQBrM7fX9RX",
+          "commit": {
+            "abbreviatedOid": "4304de3"
+          },
+          "author": "henkbirkholz",
+          "authorAssociation": "OWNER",
+          "state": "APPROVED",
+          "body": "is this better?",
+          "createdAt": "2026-02-03T21:06:52Z",
+          "updatedAt": "2026-02-03T21:06:52Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 24,
+      "id": "PR_kwDOQEQBrM7BNdfp",
+      "title": "Clarify why Rego",
+      "url": "https://github.com/henkbirkholz/draft-birkholz-did-x509/pull/24",
+      "state": "MERGED",
+      "author": "achamayou",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Closes #12, Rego had a reference already, but this is hopefully a useful clarification. Also closes #18.",
+      "createdAt": "2026-02-03T14:34:43Z",
+      "updatedAt": "2026-02-04T07:41:14Z",
+      "baseRepository": "henkbirkholz/draft-birkholz-did-x509",
+      "baseRefName": "main",
+      "baseRefOid": "90ecefe881f97ed97334e72adf0810946b07edd1",
+      "headRepository": "henkbirkholz/draft-birkholz-did-x509",
+      "headRefName": "why_rego",
+      "headRefOid": "3a25bb1a8cbf6ddffc52a1c97387023d9ea77a1d",
+      "closedAt": "2026-02-04T07:41:14Z",
+      "mergedAt": "2026-02-04T07:41:14Z",
+      "mergedBy": "achamayou",
+      "mergeCommit": {
+        "oid": "5cf9f990afb1a1a27acb948a481fe55cc1d7edb1"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOQEQBrM7fQibN",
+          "commit": {
+            "abbreviatedOid": "3a25bb1"
+          },
+          "author": "copilot-pull-request-reviewer",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "## Pull request overview\n\nClarifies the rationale for specifying policy validation using Rego by explaining that Rego is used to avoid ambiguity and enable automatic evaluation, while not requiring implementations to use Rego.\n\n**Changes:**\n- Rephrases the Rego reference to explicitly contrast it with pseudo-code.\n- Adds a brief explanation for why Rego is used in the specification (ambiguity avoidance + evaluability).\n\n\n\n\n\n---\n\n\ud83d\udca1 <a href=\"/henkbirkholz/draft-birkholz-did-x509/new/main/.github/instructions?filename=*.instructions.md\" class=\"Link--inTextBlock\" target=\"_blank\" rel=\"noopener noreferrer\">Add Copilot custom instructions</a> for smarter, more guided reviews. <a href=\"https://docs.github.com/en/copilot/customizing-copilot/adding-repository-custom-instructions-for-github-copilot\" class=\"Link--inTextBlock\" target=\"_blank\" rel=\"noopener noreferrer\">Learn how to get started</a>.",
+          "createdAt": "2026-02-03T14:36:07Z",
+          "updatedAt": "2026-02-03T14:36:07Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOQEQBrM7fX-H5",
+          "commit": {
+            "abbreviatedOid": "3a25bb1"
+          },
+          "author": "henkbirkholz",
+          "authorAssociation": "OWNER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-02-03T21:07:38Z",
+          "updatedAt": "2026-02-03T21:07:38Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 25,
+      "id": "PR_kwDOQEQBrM7BNyZn",
+      "title": "Explain JSON input",
+      "url": "https://github.com/henkbirkholz/draft-birkholz-did-x509/pull/25",
+      "state": "MERGED",
+      "author": "achamayou",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Closes #13",
+      "createdAt": "2026-02-03T14:55:32Z",
+      "updatedAt": "2026-02-04T07:42:30Z",
+      "baseRepository": "henkbirkholz/draft-birkholz-did-x509",
+      "baseRefName": "main",
+      "baseRefOid": "90ecefe881f97ed97334e72adf0810946b07edd1",
+      "headRepository": "henkbirkholz/draft-birkholz-did-x509",
+      "headRefName": "explain_input",
+      "headRefOid": "9c9805c499ce34fb022e938956fd2dfab3c1d517",
+      "closedAt": "2026-02-04T07:42:30Z",
+      "mergedAt": "2026-02-04T07:42:30Z",
+      "mergedBy": "achamayou",
+      "mergeCommit": {
+        "oid": "eaa7a283fccf890fab9433a2d5bcf58352d4e322"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOQEQBrM7fRBfg",
+          "commit": {
+            "abbreviatedOid": "9417cd6"
+          },
+          "author": "copilot-pull-request-reviewer",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "## Pull request overview\n\nClarifies what data is provided as input when evaluating the reference Rego policies during `did:x509` resolution (per Issue #13).\n\n**Changes:**\n- Adds explanatory text describing the resolution/policy-validation inputs (DID string and X.509 chain).\n- Rephrases how those inputs are represented as the JSON `input` document for the reference Rego code.\n\n\n\n\n\n---\n\n\ud83d\udca1 <a href=\"/henkbirkholz/draft-birkholz-did-x509/new/main/.github/instructions?filename=*.instructions.md\" class=\"Link--inTextBlock\" target=\"_blank\" rel=\"noopener noreferrer\">Add Copilot custom instructions</a> for smarter, more guided reviews. <a href=\"https://docs.github.com/en/copilot/customizing-copilot/adding-repository-custom-instructions-for-github-copilot\" class=\"Link--inTextBlock\" target=\"_blank\" rel=\"noopener noreferrer\">Learn how to get started</a>.",
+          "createdAt": "2026-02-03T14:57:37Z",
+          "updatedAt": "2026-02-03T14:57:38Z",
+          "comments": [
+            {
+              "originalPosition": 6,
+              "body": "The new wording calls the certificate chain an input to the DID resolution process, but later the document defines the chain as being provided via the `x509chain` DID resolution option (a comma-separated b64url string) and presumably decoded/parsed before policy evaluation. Please align this text with the later section by explicitly stating that `chain` in the Rego JSON input is the parsed chain derived from the `x509chain` resolution option (or otherwise clarify the actual API inputs). Also consider avoiding the ambiguous pronoun \u201cthey\u201d by naming the fields being passed (`did` and `chain`).\n```suggestion\nThe inputs to the resolution process are the DID string itself and the `x509chain` DID resolution option, which carries a comma-separated base64url-encoded X.509 certificate chain.\nTo evaluate the reference Rego code shown below, the DID and certificate chain must be passed to a Rego runtime as a JSON document: `{\"did\": \"<DID>\", \"chain\": <CertificateChain>}`, where `did` is the DID string and `chain` is the parsed representation of the certificate chain derived from the `x509chain` resolution option.\n```",
+              "createdAt": "2026-02-03T14:57:38Z",
+              "updatedAt": "2026-02-03T14:57:38Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOQEQBrM7fX_QT",
+          "commit": {
+            "abbreviatedOid": "9ec5c18"
+          },
+          "author": "henkbirkholz",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-02-03T21:08:45Z",
+          "updatedAt": "2026-02-03T21:08:46Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "```suggestion\nThe inputs to the resolution process are the DID string itself and the `x509chain` DID resolution option, which carries a comma-separated base64url-encoded X.509 certification path.\n```",
+              "createdAt": "2026-02-03T21:08:45Z",
+              "updatedAt": "2026-02-03T21:08:46Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOQEQBrM7fYAMS",
+          "commit": {
+            "abbreviatedOid": "9ec5c18"
+          },
+          "author": "henkbirkholz",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-02-03T21:09:42Z",
+          "updatedAt": "2026-02-03T21:09:42Z",
+          "comments": [
+            {
+              "originalPosition": 6,
+              "body": "```suggestion\nTo evaluate the reference Rego code shown below, the DID and certification path have to be passed to a Rego runtime as a JSON document: `{\"did\": \"<DID>\", \"chain\": <CertificateChain>}`, where `did` is the DID string and `chain` is the parsed representation of the certification path derived from the `x509chain` resolution option.\n```",
+              "createdAt": "2026-02-03T21:09:42Z",
+              "updatedAt": "2026-02-03T21:09:42Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 26,
+      "id": "PR_kwDOQEQBrM7BPnRy",
+      "title": "Use example.com at every opportunity",
+      "url": "https://github.com/henkbirkholz/draft-birkholz-did-x509/pull/26",
+      "state": "MERGED",
+      "author": "achamayou",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Closes #20",
+      "createdAt": "2026-02-03T16:59:36Z",
+      "updatedAt": "2026-02-04T07:43:14Z",
+      "baseRepository": "henkbirkholz/draft-birkholz-did-x509",
+      "baseRefName": "main",
+      "baseRefOid": "90ecefe881f97ed97334e72adf0810946b07edd1",
+      "headRepository": "henkbirkholz/draft-birkholz-did-x509",
+      "headRefName": "microsoft_example",
+      "headRefOid": "4b54aed3ed16d7ff9d4df9155feec8007fd2e6e9",
+      "closedAt": "2026-02-04T07:43:14Z",
+      "mergedAt": "2026-02-04T07:43:14Z",
+      "mergedBy": "achamayou",
+      "mergeCommit": {
+        "oid": "25510814d348cb0dd4ead40b7eb583d8d0126969"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOQEQBrM7fYAs8",
+          "commit": {
+            "abbreviatedOid": "4b54aed"
+          },
+          "author": "henkbirkholz",
+          "authorAssociation": "OWNER",
+          "state": "APPROVED",
+          "body": "yeah",
+          "createdAt": "2026-02-03T21:10:12Z",
+          "updatedAt": "2026-02-03T21:10:12Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 27,
+      "id": "PR_kwDOQEQBrM7BPv9S",
+      "title": "Reference document (not controller) definition",
+      "url": "https://github.com/henkbirkholz/draft-birkholz-did-x509/pull/27",
+      "state": "MERGED",
+      "author": "achamayou",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Closes #19, there is no such thing as a Controller document in 1.0, only a DID document.",
+      "createdAt": "2026-02-03T17:08:36Z",
+      "updatedAt": "2026-02-04T07:43:36Z",
+      "baseRepository": "henkbirkholz/draft-birkholz-did-x509",
+      "baseRefName": "main",
+      "baseRefOid": "90ecefe881f97ed97334e72adf0810946b07edd1",
+      "headRepository": "henkbirkholz/draft-birkholz-did-x509",
+      "headRefName": "ref_doc",
+      "headRefOid": "a1000942b4fc9ca1ede0ea6a92a9e7ad8dc5c6d9",
+      "closedAt": "2026-02-04T07:43:36Z",
+      "mergedAt": "2026-02-04T07:43:36Z",
+      "mergedBy": "achamayou",
+      "mergeCommit": {
+        "oid": "35a20ace9da0b059b194f04641f96b00bb9e55bf"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOQEQBrM7fYBm5",
+          "commit": {
+            "abbreviatedOid": "7446c7d"
+          },
+          "author": "henkbirkholz",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-02-03T21:11:06Z",
+          "updatedAt": "2026-02-03T21:11:06Z",
+          "comments": [
+            {
+              "originalPosition": 36,
+              "body": "```suggestion\n## Identifier Ambiguity\n```",
+              "createdAt": "2026-02-03T21:11:06Z",
+              "updatedAt": "2026-02-03T21:11:06Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOQEQBrM7fYB95",
+          "commit": {
+            "abbreviatedOid": "9ee0cd2"
+          },
+          "author": "henkbirkholz",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-02-03T21:11:28Z",
+          "updatedAt": "2026-02-03T21:11:29Z",
+          "comments": [
+            {
+              "originalPosition": 43,
+              "body": "```suggestion\n## X.509 Trust Stores\n```",
+              "createdAt": "2026-02-03T21:11:28Z",
+              "updatedAt": "2026-02-03T21:11:29Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 28,
+      "id": "PR_kwDOQEQBrM7BQJtD",
+      "title": "Label all the artwork",
+      "url": "https://github.com/henkbirkholz/draft-birkholz-did-x509/pull/28",
+      "state": "MERGED",
+      "author": "achamayou",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Closes #14",
+      "createdAt": "2026-02-03T17:38:38Z",
+      "updatedAt": "2026-02-04T08:27:14Z",
+      "baseRepository": "henkbirkholz/draft-birkholz-did-x509",
+      "baseRefName": "main",
+      "baseRefOid": "90ecefe881f97ed97334e72adf0810946b07edd1",
+      "headRepository": "henkbirkholz/draft-birkholz-did-x509",
+      "headRefName": "artwork_annotations",
+      "headRefOid": "8c256855c2cdf34856aa20a4b77f43a3993a952e",
+      "closedAt": "2026-02-04T08:27:14Z",
+      "mergedAt": "2026-02-04T08:27:14Z",
+      "mergedBy": "achamayou",
+      "mergeCommit": {
+        "oid": "b736beb41f42283db17acc5c42949a369465f37f"
+      },
+      "comments": [
+        {
+          "author": "achamayou",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@copilot can you capitalize all the titles that are added in this PR?",
+          "createdAt": "2026-02-04T07:44:50Z",
+          "updatedAt": "2026-02-04T07:44:50Z"
+        },
+        {
+          "author": "copilot-swe-agent",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "@achamayou I've opened a new pull request, #30, to work on those changes. Once the pull request is ready, I'll request review from you.",
+          "createdAt": "2026-02-04T07:44:59Z",
+          "updatedAt": "2026-02-04T07:44:59Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOQEQBrM7fYDME",
+          "commit": {
+            "abbreviatedOid": "24cc9ab"
+          },
+          "author": "henkbirkholz",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "Title Capitalization okay?",
+          "createdAt": "2026-02-03T21:12:44Z",
+          "updatedAt": "2026-02-03T21:12:44Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 29,
+      "id": "PR_kwDOQEQBrM7BQRSp",
+      "title": "De-conflict usage of the word policy",
+      "url": "https://github.com/henkbirkholz/draft-birkholz-did-x509/pull/29",
+      "state": "MERGED",
+      "author": "achamayou",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Closes #11 by replacing all usage of \"policy\" for its third meaning defined in #11 with \"predicate\".",
+      "createdAt": "2026-02-03T17:47:23Z",
+      "updatedAt": "2026-02-04T08:32:05Z",
+      "baseRepository": "henkbirkholz/draft-birkholz-did-x509",
+      "baseRefName": "main",
+      "baseRefOid": "b736beb41f42283db17acc5c42949a369465f37f",
+      "headRepository": "henkbirkholz/draft-birkholz-did-x509",
+      "headRefName": "less_policy",
+      "headRefOid": "16f2464743c9dc433f564154adaa6a358ea20581",
+      "closedAt": "2026-02-04T08:32:05Z",
+      "mergedAt": "2026-02-04T08:32:05Z",
+      "mergedBy": "achamayou",
+      "mergeCommit": {
+        "oid": "ad51d0c28dedb36f95fe85835238c2958c9c5028"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOQEQBrM7fYEEj",
+          "commit": {
+            "abbreviatedOid": "59c3653"
+          },
+          "author": "henkbirkholz",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-02-03T21:13:34Z",
+          "updatedAt": "2026-02-03T21:13:34Z",
+          "comments": [
+            {
+              "originalPosition": 22,
+              "body": "this might need an example :o)",
+              "createdAt": "2026-02-03T21:13:34Z",
+              "updatedAt": "2026-02-03T21:13:34Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOQEQBrM7ff0Nr",
+          "commit": {
+            "abbreviatedOid": "59c3653"
+          },
+          "author": "achamayou",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-02-04T08:29:38Z",
+          "updatedAt": "2026-02-04T08:29:38Z",
+          "comments": [
+            {
+              "originalPosition": 22,
+              "body": "This definition is followed by a detailed definition of all the predicates, announced two lines below. I think an example would break the flow here.",
+              "createdAt": "2026-02-04T08:29:38Z",
+              "updatedAt": "2026-02-04T08:29:38Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 30,
+      "id": "PR_kwDOQEQBrM7BZQnQ",
+      "title": "Capitalize all artwork titles",
+      "url": "https://github.com/henkbirkholz/draft-birkholz-did-x509/pull/30",
+      "state": "MERGED",
+      "author": "copilot-swe-agent",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [
+        "achamayou",
+        "Copilot"
+      ],
+      "labels": [],
+      "body": "Converted all artwork titles from sentence case to title case following feedback on PR #14.\n\n**Changes:**\n- Capitalized 13 artwork titles across ABNF definitions, Rego validation functions, and data model examples\n- Applied consistent title case formatting (major words capitalized, minor words lowercase except at start/end)\n\nExample changes:\n```markdown\n- title=\"ABNF definition of core did-x509 syntax\"\n+ title=\"ABNF Definition of Core did-x509 Syntax\"\n\n- title=\"Rego function validating Subject policy\"\n+ title=\"Rego Function Validating Subject Policy\"\n```\n\n<!-- START COPILOT CODING AGENT TIPS -->\n---\n\n\u2728 Let Copilot coding agent [set things up for you](https://github.com/henkbirkholz/draft-birkholz-did-x509/issues/new?title=\u2728+Set+up+Copilot+instructions&body=Configure%20instructions%20for%20this%20repository%20as%20documented%20in%20%5BBest%20practices%20for%20Copilot%20coding%20agent%20in%20your%20repository%5D%28https://gh.io/copilot-coding-agent-tips%29%2E%0A%0A%3COnboard%20this%20repo%3E&assignees=copilot) \u2014 coding agent works faster and does higher quality work when set up for your repo.\n",
+      "createdAt": "2026-02-04T07:44:57Z",
+      "updatedAt": "2026-02-04T08:25:49Z",
+      "baseRepository": "henkbirkholz/draft-birkholz-did-x509",
+      "baseRefName": "artwork_annotations",
+      "baseRefOid": "24cc9abc463ebf4d8ea8513908e40d33fdffbc11",
+      "headRepository": "henkbirkholz/draft-birkholz-did-x509",
+      "headRefName": "copilot/sub-pr-28",
+      "headRefOid": "13c55bc1bf438a0008167f6f08bdec023b08d00d",
+      "closedAt": "2026-02-04T08:25:49Z",
+      "mergedAt": "2026-02-04T08:25:49Z",
+      "mergedBy": "achamayou",
+      "mergeCommit": {
+        "oid": "8c256855c2cdf34856aa20a4b77f43a3993a952e"
+      },
+      "comments": [
+        {
+          "author": "copilot-swe-agent",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Just as a heads up, I was blocked by some firewall rules while working on your feedback. Expand below for details.\n\n> [!WARNING]\n>\n> <details>\n> <summary>Firewall rules blocked me from connecting to one or more addresses (expand for details)</summary>\n>\n> #### I tried to connect to the following addresses, but was blocked by firewall rules:\n>\n> - `https://api.github.com/repos/henkbirkholz/draft-birkholz-did-x509`\n>   - Triggering command: `/usr/bin/python3 python3 lib/default-branch.py henkbirkholz draft-birkholz-did-x509` (http block)\n>\n> If you need me to access, download, or install something from one of these locations, you can either:\n>\n> - Configure [Actions setup steps](https://gh.io/copilot/actions-setup-steps) to set up my environment, which run before the firewall is enabled\n> - Add the appropriate URLs or hosts to the custom allowlist in this repository's [Copilot coding agent settings](https://github.com/henkbirkholz/draft-birkholz-did-x509/settings/copilot/coding_agent) (admins only)\n>\n> </details>\n\n",
+          "createdAt": "2026-02-04T07:47:32Z",
+          "updatedAt": "2026-02-04T07:47:32Z"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "number": 33,
+      "id": "PR_kwDOQEQBrM7BjbSc",
+      "title": "Replace \"certification path\" with \"certificate chain\" terminology",
+      "url": "https://github.com/henkbirkholz/draft-birkholz-did-x509/pull/33",
+      "state": "OPEN",
+      "author": "copilot-swe-agent",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [
+        "achamayou",
+        "Copilot"
+      ],
+      "labels": [],
+      "body": "Standardizes terminology in the did:x509 specification by replacing \"certification path\" with \"certificate chain\" throughout the document.\n\n## Changes\n\nUpdated 7 occurrences across:\n- **Abstract**: certification path fingerprint \u2192 certificate chain fingerprint\n- **Introduction**: 4 instances in discussion of direct inclusion and partial chains\n- **Identifier Syntax**: 2 instances in resolution process description\n- **CDDL Section**: Header updated from \"X.509 Certification Paths\" to \"X.509 Certificate Chains\"\n\nAll instances now use consistent \"certificate chain\" terminology.\n\n> [!WARNING]\n>\n> <details>\n> <summary>Firewall rules blocked me from connecting to one or more addresses (expand for details)</summary>\n>\n> #### I tried to connect to the following addresses, but was blocked by firewall rules:\n>\n> - `https://api.github.com/repos/henkbirkholz/draft-birkholz-did-x509`\n>   - Triggering command: `/usr/bin/python3 python3 lib/default-branch.py henkbirkholz draft-birkholz-did-x509` (http block)\n>\n> If you need me to access, download, or install something from one of these locations, you can either:\n>\n> - Configure [Actions setup steps](https://gh.io/copilot/actions-setup-steps) to set up my environment, which run before the firewall is enabled\n> - Add the appropriate URLs or hosts to the custom allowlist in this repository's [Copilot coding agent settings](https://github.com/henkbirkholz/draft-birkholz-did-x509/settings/copilot/coding_agent) (admins only)\n>\n> </details>\n\n<!-- START COPILOT CODING AGENT TIPS -->\n---\n\n\u2728 Let Copilot coding agent [set things up for you](https://github.com/henkbirkholz/draft-birkholz-did-x509/issues/new?title=\u2728+Set+up+Copilot+instructions&body=Configure%20instructions%20for%20this%20repository%20as%20documented%20in%20%5BBest%20practices%20for%20Copilot%20coding%20agent%20in%20your%20repository%5D%28https://gh.io/copilot-coding-agent-tips%29%2E%0A%0A%3COnboard%20this%20repo%3E&assignees=copilot) \u2014 coding agent works faster and does higher quality work when set up for your repo.\n",
+      "createdAt": "2026-02-04T20:11:49Z",
+      "updatedAt": "2026-02-04T20:16:37Z",
+      "baseRepository": "henkbirkholz/draft-birkholz-did-x509",
+      "baseRefName": "main",
+      "baseRefOid": "9263438015b109cf21baa14caa89b41132924d24",
+      "headRepository": "henkbirkholz/draft-birkholz-did-x509",
+      "headRefName": "copilot/fix-certification-path-to-chain",
+      "headRefOid": "bd8b6ba2d9d74127bb268caaa851cef68fb54358",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOQEQBrM7ftEqk",
+          "commit": {
+            "abbreviatedOid": "9984611"
+          },
+          "author": "achamayou",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-02-04T20:15:59Z",
+          "updatedAt": "2026-02-04T20:15:59Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "```suggestion\nThis document defines the did:x509 decentralized identifier method, which enables a direct, resolvable binding between X.509 certificate chains and compact issuer identifiers (DID string). In particular, the did:x509 identifier format in this documents comes with a CWT Claims definition. In general, this identifier is a compact and interoperable mechanism for certificate-based identification by combining a certificate fingerprint with optional policies for subject names, subject alternative names, extended key usage, and issuer information. It is especially useful for policy evaluation and reference in transparency services and similar systems requiring cryptographic binding to certificate material.\n```",
+              "createdAt": "2026-02-04T20:15:59Z",
+              "updatedAt": "2026-02-04T20:15:59Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOQEQBrM7ftFBP",
+          "commit": {
+            "abbreviatedOid": "bd8b6ba"
+          },
+          "author": "achamayou",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-02-04T20:16:25Z",
+          "updatedAt": "2026-02-04T20:16:25Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 34,
+      "id": "PR_kwDOQEQBrM7Bjcam",
+      "title": "Replace GitHub references with example.com in draft-birkholz-did-x509.md",
+      "url": "https://github.com/henkbirkholz/draft-birkholz-did-x509/pull/34",
+      "state": "OPEN",
+      "author": "copilot-swe-agent",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [
+        "achamayou",
+        "Copilot"
+      ],
+      "labels": [],
+      "body": "Follow-up to #20: the document still contained GitHub-specific references in example DID strings that should use generic placeholders.\n\n### Changes\n\n- **Subject predicate example**: `O:GitHub%2C%20Inc.` \u2192 `O:Example%2C%20Inc.`\n- **Fulcio-issuer example**: `token.actions.githubusercontent.com` \u2192 `issuer.example.com`\n- **SAN URI example**: `github.com/.github/workflows/...` \u2192 `example.com/workflows/...`\n\nBefore:\n```\ndid:x509:0:sha256:...::subject:C:US:ST:California:L:San%20Francisco:O:GitHub%2C%20Inc.\n```\n\nAfter:\n```\ndid:x509:0:sha256:...::subject:C:US:ST:California:L:San%20Francisco:O:Example%2C%20Inc.\n```\n\n<!-- START COPILOT CODING AGENT TIPS -->\n---\n\n\u2728 Let Copilot coding agent [set things up for you](https://github.com/henkbirkholz/draft-birkholz-did-x509/issues/new?title=\u2728+Set+up+Copilot+instructions&body=Configure%20instructions%20for%20this%20repository%20as%20documented%20in%20%5BBest%20practices%20for%20Copilot%20coding%20agent%20in%20your%20repository%5D%28https://gh.io/copilot-coding-agent-tips%29%2E%0A%0A%3COnboard%20this%20repo%3E&assignees=copilot) \u2014 coding agent works faster and does higher quality work when set up for your repo.\n",
+      "createdAt": "2026-02-04T20:13:17Z",
+      "updatedAt": "2026-02-04T20:17:42Z",
+      "baseRepository": "henkbirkholz/draft-birkholz-did-x509",
+      "baseRefName": "main",
+      "baseRefOid": "9263438015b109cf21baa14caa89b41132924d24",
+      "headRepository": "henkbirkholz/draft-birkholz-did-x509",
+      "headRefName": "copilot/update-references-to-example",
+      "headRefOid": "2ee937660f8eb13100b78146ab1176235da0f2eb",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOQEQBrM7ftF52",
+          "commit": {
+            "abbreviatedOid": "2ee9376"
+          },
+          "author": "achamayou",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-02-04T20:17:29Z",
+          "updatedAt": "2026-02-04T20:17:29Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 35,
+      "id": "PR_kwDOQEQBrM7BjdqY",
+      "title": "Add RFC 8792 reference for line break indication in figures",
+      "url": "https://github.com/henkbirkholz/draft-birkholz-did-x509/pull/35",
+      "state": "OPEN",
+      "author": "copilot-swe-agent",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [
+        "achamayou",
+        "Copilot"
+      ],
+      "labels": [],
+      "body": "Issue #16 requests adding an indication that line breaks in ASCII figures are present for formatting purposes, consistent with RFC 8792 conventions.\n\n## Changes\n\n- Added `RFC8792` to informative references\n- Added note in \"Conventions and Definitions\" section referencing RFC 8792 for line break handling\n\n```markdown\nPer {{RFC8792}}, line breaks may be present in the figures of this document\nto stay within the line-length limits of this document's format.\n```\n\n> [!WARNING]\n>\n> <details>\n> <summary>Firewall rules blocked me from connecting to one or more addresses (expand for details)</summary>\n>\n> #### I tried to connect to the following addresses, but was blocked by firewall rules:\n>\n> - `www.rfc-editor.org`\n>   - Triggering command: `/home/REDACTED/work/_temp/ghcca-node/node/bin/node /home/REDACTED/work/_temp/ghcca-node/node/bin/node --enable-source-maps /home/REDACTED/work/_temp/copilot-developer-action-main/dist/index.js` (dns block)\n>\n> If you need me to access, download, or install something from one of these locations, you can either:\n>\n> - Configure [Actions setup steps](https://gh.io/copilot/actions-setup-steps) to set up my environment, which run before the firewall is enabled\n> - Add the appropriate URLs or hosts to the custom allowlist in this repository's [Copilot coding agent settings](https://github.com/henkbirkholz/draft-birkholz-did-x509/settings/copilot/coding_agent) (admins only)\n>\n> </details>\n\n<!-- START COPILOT CODING AGENT TIPS -->\n---\n\n\ud83d\udcac We'd love your input! Share your thoughts on Copilot coding agent in our [2 minute survey](https://gh.io/copilot-coding-agent-survey).\n",
+      "createdAt": "2026-02-04T20:15:07Z",
+      "updatedAt": "2026-02-04T20:26:01Z",
+      "baseRepository": "henkbirkholz/draft-birkholz-did-x509",
+      "baseRefName": "main",
+      "baseRefOid": "9263438015b109cf21baa14caa89b41132924d24",
+      "headRepository": "henkbirkholz/draft-birkholz-did-x509",
+      "headRefName": "copilot/update-draft-birkholz-did-x509",
+      "headRefOid": "98cf2907ffacb6a9529ad8fd7a324396c63a3b41",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOQEQBrM7ftNEu",
+          "commit": {
+            "abbreviatedOid": "98cf290"
+          },
+          "author": "achamayou",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-02-04T20:25:46Z",
+          "updatedAt": "2026-02-04T20:25:46Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 36,
+      "id": "PR_kwDOQEQBrM7BjlLs",
+      "title": "Add \"Use of Identifier Contents\" Security Consideration",
+      "url": "https://github.com/henkbirkholz/draft-birkholz-did-x509/pull/36",
+      "state": "OPEN",
+      "author": "copilot-swe-agent",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [
+        "achamayou",
+        "Copilot"
+      ],
+      "labels": [],
+      "body": "Addresses the need for guidance on safely handling did:x509 identifier strings that embed certificate chain elements.\n\n### Changes\n\n- Added new subsection to Security Considerations explaining:\n  - did:x509 identifiers encapsulate certificate chain elements (CA fingerprint, subject names, SANs, EKUs)\n  - Using identifiers as opaque handles when externally endorsed (e.g., via VC) is acceptable\n  - Parsing identifier components for authorization without resolution is insecure\n  - Attack vector: crafted identifiers with arbitrary values that don't correspond to legitimate chains\n\n### Key guidance\n\n> Implementers MUST NOT parse or interpret individual components of the identifier string for authorization decisions unless the identifier has been resolved against a verified certificate chain.\n\n> [!WARNING]\n>\n> <details>\n> <summary>Firewall rules blocked me from connecting to one or more addresses (expand for details)</summary>\n>\n> #### I tried to connect to the following addresses, but was blocked by firewall rules:\n>\n> - `https://api.github.com/repos/henkbirkholz/draft-birkholz-did-x509`\n>   - Triggering command: `/usr/bin/python3 python3 lib/default-branch.py henkbirkholz draft-birkholz-did-x509` (http block)\n>\n> If you need me to access, download, or install something from one of these locations, you can either:\n>\n> - Configure [Actions setup steps](https://gh.io/copilot/actions-setup-steps) to set up my environment, which run before the firewall is enabled\n> - Add the appropriate URLs or hosts to the custom allowlist in this repository's [Copilot coding agent settings](https://github.com/henkbirkholz/draft-birkholz-did-x509/settings/copilot/coding_agent) (admins only)\n>\n> </details>\n\n<!-- START COPILOT CODING AGENT TIPS -->\n---\n\n\ud83d\udcac We'd love your input! Share your thoughts on Copilot coding agent in our [2 minute survey](https://gh.io/copilot-coding-agent-survey).\n",
+      "createdAt": "2026-02-04T20:25:30Z",
+      "updatedAt": "2026-02-04T20:29:32Z",
+      "baseRepository": "henkbirkholz/draft-birkholz-did-x509",
+      "baseRefName": "main",
+      "baseRefOid": "9263438015b109cf21baa14caa89b41132924d24",
+      "headRepository": "henkbirkholz/draft-birkholz-did-x509",
+      "headRefName": "copilot/add-security-considerations-section",
+      "headRefOid": "3c65ccc9cb18971731763dbdb49e493346f47d8e",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOQEQBrM7ftPqj",
+          "commit": {
+            "abbreviatedOid": "e5b9a14"
+          },
+          "author": "achamayou",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-02-04T20:28:58Z",
+          "updatedAt": "2026-02-04T20:28:58Z",
+          "comments": [
+            {
+              "originalPosition": 6,
+              "body": "```suggestion\nWhile it is acceptable to use a did:x509 identifier as an opaque handle when it has been endorsed through an external trust mechanism, such as a verifiable credential or a trusted registry, implementers MUST NOT parse or interpret individual components of the identifier string for authorization decisions unless the identifier has been resolved against a verified certificate chain.\n```",
+              "createdAt": "2026-02-04T20:28:58Z",
+              "updatedAt": "2026-02-04T20:28:58Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 37,
+      "id": "PR_kwDOQEQBrM7Bjm5J",
+      "title": "Add Rego syntax validation to checks.yml pipeline",
+      "url": "https://github.com/henkbirkholz/draft-birkholz-did-x509/pull/37",
+      "state": "OPEN",
+      "author": "copilot-swe-agent",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [
+        "achamayou",
+        "Copilot"
+      ],
+      "labels": [],
+      "body": "Issue #15 tracks validation of code snippets embedded in the spec. ABNF, CDDL, and JSON were already covered\u2014this adds Rego.\n\n### Changes\n\n- **OPA installation**: Download latest OPA binary using the openpolicyagent.org latest link\n- **Rego Compliance step**: Concatenate extracted `figures/rego/*.rego` with package declaration, run `opa check`\n- **`.gitignore`**: Exclude generated artifacts (`figures/`, `all.abnf`, `all.rego`)\n\n### Rego validation logic\n\n```bash\necho \"package didx509\" > all.rego\ncat figures/rego/*.rego >> all.rego\nopa check all.rego\n```\n\nThe Rego fragments in the spec define `parse_did`, `valid`, and `validate_predicate` rules that must be concatenated to form a valid policy. The pipeline will fail if Rego files are missing from the extracted figures.\n\n<!-- START COPILOT CODING AGENT TIPS -->\n---\n\n\ud83d\udca1 You can make Copilot smarter by setting up custom instructions, customizing its development environment and configuring Model Context Protocol (MCP) servers. Learn more [Copilot coding agent tips](https://gh.io/copilot-coding-agent-tips) in the docs.",
+      "createdAt": "2026-02-04T20:27:48Z",
+      "updatedAt": "2026-02-04T20:41:52Z",
+      "baseRepository": "henkbirkholz/draft-birkholz-did-x509",
+      "baseRefName": "main",
+      "baseRefOid": "9263438015b109cf21baa14caa89b41132924d24",
+      "headRepository": "henkbirkholz/draft-birkholz-did-x509",
+      "headRefName": "copilot/extend-checks-yml-rego-validation",
+      "headRefOid": "e0da70b85ce2790b06014f7c8db2150a0c611d64",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "achamayou",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@copilot do not commit the contents of the figures directory, that needs to continue to be generated from the markdown on every run of checks.yml",
+          "createdAt": "2026-02-04T20:32:09Z",
+          "updatedAt": "2026-02-04T20:32:09Z"
+        },
+        {
+          "author": "copilot-swe-agent",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "\n> @copilot do not commit the contents of the figures directory, that needs to continue to be generated from the markdown on every run of checks.yml\n\nThe figures directory was already removed from git tracking and added to `.gitignore` in ef77906. It's generated fresh on each run.",
+          "createdAt": "2026-02-04T20:36:08Z",
+          "updatedAt": "2026-02-04T20:36:08Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOQEQBrM7ftU0L",
+          "commit": {
+            "abbreviatedOid": "b5f626b"
+          },
+          "author": "achamayou",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-02-04T20:34:51Z",
+          "updatedAt": "2026-02-04T20:34:51Z",
+          "comments": [
+            {
+              "originalPosition": 18,
+              "body": "@copilot there should not be an if/else, the files must always be there, we want the pipeline to fail noisily if they're not!",
+              "createdAt": "2026-02-04T20:34:51Z",
+              "updatedAt": "2026-02-04T20:34:51Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOQEQBrM7ftVHt",
+          "commit": {
+            "abbreviatedOid": "b5f626b"
+          },
+          "author": "achamayou",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-02-04T20:35:13Z",
+          "updatedAt": "2026-02-04T20:35:13Z",
+          "comments": [
+            {
+              "originalPosition": 6,
+              "body": "@copilot the digest check is overkill, please take it off",
+              "createdAt": "2026-02-04T20:35:13Z",
+              "updatedAt": "2026-02-04T20:35:13Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOQEQBrM7ftVep",
+          "commit": {
+            "abbreviatedOid": "b5f626b"
+          },
+          "author": "achamayou",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-02-04T20:35:39Z",
+          "updatedAt": "2026-02-04T20:35:39Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "@copilot use the \"latest\" link feature of GitHub, not a specific version",
+              "createdAt": "2026-02-04T20:35:39Z",
+              "updatedAt": "2026-02-04T20:35:39Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOQEQBrM7ftV2Z",
+          "commit": {
+            "abbreviatedOid": "fc1d5de"
+          },
+          "author": "copilot-swe-agent",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-02-04T20:36:05Z",
+          "updatedAt": "2026-02-04T20:36:05Z",
+          "comments": [
+            {
+              "originalPosition": 18,
+              "body": "Removed the if/else check in fc1d5de. The pipeline will now fail if Rego files are missing.",
+              "createdAt": "2026-02-04T20:36:05Z",
+              "updatedAt": "2026-02-04T20:36:05Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOQEQBrM7ftYEa",
+          "commit": {
+            "abbreviatedOid": "e0da70b"
+          },
+          "author": "copilot-swe-agent",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-02-04T20:38:24Z",
+          "updatedAt": "2026-02-04T20:38:24Z",
+          "comments": [
+            {
+              "originalPosition": 6,
+              "body": "Removed the checksum verification in e0da70b.",
+              "createdAt": "2026-02-04T20:38:24Z",
+              "updatedAt": "2026-02-04T20:38:24Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOQEQBrM7ftYHC",
+          "commit": {
+            "abbreviatedOid": "e0da70b"
+          },
+          "author": "copilot-swe-agent",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-02-04T20:38:27Z",
+          "updatedAt": "2026-02-04T20:38:27Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "Changed to use `https://openpolicyagent.org/downloads/latest/opa_linux_amd64_static` in e0da70b.",
+              "createdAt": "2026-02-04T20:38:27Z",
+              "updatedAt": "2026-02-04T20:38:27Z"
+            }
+          ]
         }
       ]
     }
