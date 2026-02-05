@@ -5,11 +5,11 @@
 Network Working Group                                        M. Riechert
 Internet-Draft                                        A. Delignat-Lavaud
 Intended status: Standards Track                               Microsoft
-Expires: 8 August 2026                                       H. Birkholz
+Expires: 9 August 2026                                       H. Birkholz
                                                           Fraunhofer SIT
                                                              A. Chamayou
                                                                Microsoft
-                                                         4 February 2026
+                                                         5 February 2026
 
 
                      x509 Decentralized Identifier
@@ -23,7 +23,7 @@ Abstract
    the did:x509 identifier format in this documents comes with a CWT
    Claims definition.  In general, this identifier is a compact and
    interoperable mechanism for certificate-based identification by
-   combining a certification path fingerprint with optional policies for
+   combining a certificate fingerprint with optional policies for
    subject names, subject alternative names, extended key usage, and
    issuer information.  It is especially useful for policy evaluation
    and reference in transparency services and similar systems requiring
@@ -55,7 +55,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 8 August 2026.
+   This Internet-Draft will expire on 9 August 2026.
 
 Copyright Notice
 
@@ -83,7 +83,7 @@ Table of Contents
      3.5.  "fulcio-issuer" predicate
      3.6.  DID resolution options
    4.  Example DID Document
-   5.  CDDL for a JSON Data Model for X.509 Certification Paths
+   5.  CDDL for a JSON Data Model for X.509 Certificate Chains
    6.  Privacy Considerations
    7.  Security Consideration
      7.1.  Identifier Ambiguity
@@ -104,12 +104,12 @@ Table of Contents
    between a certificate chain and a compact issuer string.  It can be
    used in a COSE Header CWT Claims map as defined in [RFC9597].
 
-   Including a certification path directly in configuration or in policy
+   Including a certificate chain directly in configuration or in policy
    is often impractical.  This is due to its size, and to the frequency
    at which some elements, particularly the leaf, are refreshed.
-   Relying on a partial certification path (e.g., a root certificate and
+   Relying on a partial certificate chain (e.g., a root certificate and
    some intermediary certificates) is similarly unwieldy.  While stable,
-   the level of granularity afforded by a partial certification path may
+   the level of granularity afforded by a partial certificate chain may
    not be sufficient to distinguish several identities that are not
    equivalent for the purpose of policy.
 
@@ -176,11 +176,11 @@ base64url          = 1*(ALPHA / DIGIT / "-" / "_")
 
    The inputs to the resolution process are the DID string itself and
    the x509chain DID resolution option, which carries a comma-separated
-   base64url-encoded X.509 certification path.  To evaluate the
-   reference Rego code shown below, the DID and certification path have
-   to be passed to a Rego runtime as a JSON document: {"did": "<DID>",
+   base64url-encoded X.509 certificate chain.  To evaluate the reference
+   Rego code shown below, the DID and certificate chain have to be
+   passed to a Rego runtime as a JSON document: {"did": "<DID>",
    "chain": <CertificateChain>}, where did is the DID string and chain
-   is the parsed representation of the certification path derived from
+   is the parsed representation of the certificate chain derived from
    the x509chain resolution option.
 
    Core Rego policy:
@@ -410,7 +410,7 @@ validate_predicate(name, value) := true if {
 
              Figure 12: JSON Controller Document Example
 
-5.  CDDL for a JSON Data Model for X.509 Certification Paths
+5.  CDDL for a JSON Data Model for X.509 Certificate Chains
 
 CertificateChain = [2*Certificate]  ; leaf is first
 
