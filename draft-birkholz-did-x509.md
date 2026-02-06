@@ -44,7 +44,7 @@ normative:
     -: ianacons
     =: RFC8126
   RFC5234: abnf
-  DIDV1:
+  DID:
     target: https://www.w3.org/TR/did-1.0/
     title: W3C DID v1.0 specification
   RFC5280:
@@ -77,7 +77,7 @@ This Informational document is published as an Independent Submission to improve
 
 # Introduction
 
-This document aims to define an interoperable and flexible decentralized identifier ({{DIDV1}}) format for COSE messages that transport or refer to X.509 certificates using {{RFC9360}}.
+This document aims to define an interoperable and flexible decentralized identifier ({{DID}}) format for COSE messages that transport or refer to X.509 certificates using {{RFC9360}}.
 The did:x509 identifier format implements a direct, resolvable binding between a certificate chain and a compact issuer string.
 It can be used in a COSE Header CWT Claims map as defined in {{RFC9597}}.
 
@@ -105,7 +105,7 @@ to stay within the line-length limits of this document's format.
 # Identifier Syntax
 
 The did:x509 ABNF definition defined below uses the syntax defined in {{-abnf}} and the corresponding definitions for `ALPHA` and `DIGIT`.
-{{DIDV1}} contains the definitions for `idchar` and `pct-encoded` in Section 3.1.
+{{DID}} contains the definitions for `idchar` and `pct-encoded` in Section 3.1.
 
 ~~~abnf
 idchar             = ALPHA / DIGIT / "." / "-" / "_" / pct-encoded
