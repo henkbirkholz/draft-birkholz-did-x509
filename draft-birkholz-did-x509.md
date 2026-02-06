@@ -124,7 +124,7 @@ predicate-value    = *(1*idchar ":") 1*idchar
 base64url          = 1*(ALPHA / DIGIT / "-" / "_")
 ~~~
 {: #fig-core-def artwork-align="left"
-   fold="true"
+   sourcecode-fold="true"
    title="ABNF Definition of Core did-x509 Syntax"}
 
 Implementations of this specification MUST indicate a version value of `0`.
