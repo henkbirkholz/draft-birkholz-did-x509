@@ -89,7 +89,7 @@ While stable, the level of granularity afforded by a partial certificate chain m
 Combining authority pinning with attribute assertions is a precise and stable way of capturing identities as a constrained set of certificates.
 Their representation as compact and durable identifier strings enables the formulation of readable policy (e.g. "request.issuer == 'did:x509...'"), for example in the context of transparency ledger registration.
 
-# Conventions and Definitions
+## Conventions and Definitions
 
 {::boilerplate bcp14-tagged}
 
@@ -98,6 +98,10 @@ data formats, and ABNF (defined in {{-abnf}}) to describe identifiers.
 
 The reader is assumed to be familiar with the vocabulary and concepts
 defined in {{-scitt-arch}}.
+
+Rego is a descriptive query language used to define policies in a precise and unambiguous way.
+This document uses Rego ({{REGO}}) to define the parsing and validation logic for did:x509 identifiers.
+The Rego code snippets provided in this document can be evaluated using any Rego v1 runtime, but there is no expectation that implementations use the Rego language.
 
 Per {{RFC8792}}, line breaks may be present in the figures of this document
 to stay within the line-length limits of this document's format.
@@ -135,8 +139,8 @@ Implementations of this specification MUST indicate a version value of `0`.
 
 The following sections define the predicates and their predicate-specific syntax.
 
-Validation of predicates is formally defined using policies written in the Rego language ({{REGO}}), rather than pseudo-code.
-This is to avoid ambiguity and to make it possible for a reader to evaluate the logic automatically, but there is no expectation that implementations use the Rego language.
+Validation of predicates is defined using policies written in the Rego language ({{REGO}}), rather than pseudo-code.
+This is to avoid ambiguity and to make it possible for a reader to evaluate the logic automatically.
 
 The inputs to the resolution process are the DID string itself and the `x509chain` DID resolution option, which carries a comma-separated base64url-encoded X.509 certificate chain.
 To evaluate the reference Rego code shown below, the DID and certificate chain have to be passed to a Rego runtime as a JSON document: `{"did": "<DID>", "chain": <CertificateChain>}`, where `did` is the DID string and `chain` is the parsed representation of the certificate chain derived from the `x509chain` resolution option.
