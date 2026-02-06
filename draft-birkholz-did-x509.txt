@@ -88,6 +88,7 @@ Table of Contents
    7.  Security Consideration
      7.1.  Identifier Ambiguity
      7.2.  X.509 Trust Stores
+     7.3.  Use of Identifier Contents
    8.  IANA Considerations
    9.  References
      9.1.  Normative References
@@ -503,6 +504,28 @@ DirectoryName = ["dn", Name] ; Example: ["dn", {CN: "Example"}]
    By layering this DID method on top of X.509, verifiers are free to
    use traditional chain validation (for example, verifiers unaware of
    DID), or rely on DID as an ecosystem to establish trust.
+
+7.3.  Use of Identifier Contents
+
+   While it is acceptable to use a did:x509 identifier as an opaque
+   handle when it has been endorsed through an external trust mechanism,
+   such as a verifiable credential or a trusted registry, implementers
+   MUST NOT parse or interpret individual components of the identifier
+   string for authorization decisions unless the identifier has been
+   resolved against a verified certificate chain.
+
+   Specifically, extracting and relying upon subject names,
+   organizational information, or other embedded values directly from
+   the identifier string, without performing full resolution and chain
+   validation, is insecure.  An attacker could craft a syntactically
+   valid did:x509 identifier containing arbitrary values that do not
+   correspond to any legitimate certificate chain.  Only after
+   successful resolution, which includes verification of the CA
+   fingerprint against the provided chain and validation of all policy
+   predicates, can the identifier be considered authentic.  Systems that
+   bypass this resolution process and instead parse identifier
+   components directly are vulnerable to impersonation and privilege
+   escalation attacks.
 
 8.  IANA Considerations
 
