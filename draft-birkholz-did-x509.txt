@@ -149,16 +149,19 @@ Table of Contents
    idchar             = ALPHA / DIGIT / "." / "-" / "_" / pct-encoded
    pct-encoded        = "%" HEXDIG HEXDIG
 
-did-x509           = "did:x509:" method-specific-id
-method-specific-id = version ":" ca-fingerprint-alg ":" ca-fingerprint 1*("::" predicate-name ":" predicate-value)
-version            = 1*DIGIT
-ca-fingerprint-alg = "sha256" / "sha384" / "sha512"
-ca-fingerprint     = base64url
-predicate-name     = 1*ALPHA
-predicate-value    = *(1*idchar ":") 1*idchar
-base64url          = 1*(ALPHA / DIGIT / "-" / "_")
+   =============== NOTE: '\' line wrapping per RFC 8792 ================
 
-          Figure 1: ABNF Definition of Core did-x509 Syntax
+   did-x509           = "did:x509:" method-specific-id
+   method-specific-id = version ":" ca-fingerprint-alg ":" ca-\
+                 fingerprint 1*("::" predicate-name ":" predicate-value)
+   version            = 1*DIGIT
+   ca-fingerprint-alg = "sha256" / "sha384" / "sha512"
+   ca-fingerprint     = base64url
+   predicate-name     = 1*ALPHA
+   predicate-value    = *(1*idchar ":") 1*idchar
+   base64url          = 1*(ALPHA / DIGIT / "-" / "_")
+
+             Figure 1: ABNF Definition of Core did-x509 Syntax
 
    Implementations of this specification MUST indicate a version value
    of 0.
@@ -189,34 +192,37 @@ base64url          = 1*(ALPHA / DIGIT / "-" / "_")
 
    Core Rego policy:
 
-parse_did(did) := [ca_fingerprint_alg, ca_fingerprint, policies] if {
-    prefix := "did:x509:0:"
-    startswith(did, prefix) == true
-    rest := trim_prefix(did, prefix)
-    parts := split(rest, "::")
-    [ca_fingerprint_alg, ca_fingerprint] := split(parts[0], ":")
-    policies_raw := array.slice(parts, 1, count(parts))
-    policies := [y |
-        some i
-        s := policies_raw[i]
-        j := indexof(s, ":")
-        y := [substring(s, 0, j), substring(s, j+1, -1)]
-    ]
-}
+   parse_did(did) :=
+     [ca_fingerprint_alg, ca_fingerprint, predicates] if {
+       prefix := "did:x509:0:"
+       startswith(did, prefix) == true
+       rest := trim_prefix(did, prefix)
+       parts := split(rest, "::")
+       [ca_fingerprint_alg, ca_fingerprint] := split(parts[0], ":")
+       predicates_raw := array.slice(parts, 1, count(parts))
+       predicates := [y |
+           some i
+           s := predicates_raw[i]
+           j := indexof(s, ":")
+           y := [substring(s, 0, j), substring(s, j+1, -1)]
+       ]
+   }
 
-valid if {
-    [ca_fingerprint_alg, ca_fingerprint, policies] := parse_did(input.did)
-    ca := [c | some i; i != 0; c := input.chain[i]]
-    ca[_].fingerprint[ca_fingerprint_alg] == ca_fingerprint
-    valid_policies := [i |
-        some i
-        [name, value] := policies[i]
-        validate_predicate(name, value)
-    ]
-    count(valid_policies) == count(policies)
-}
+   valid if {
+       [ca_fingerprint_alg,
+        ca_fingerprint,
+        predicates] := parse_did(input.did)
+       ca := [c | some i; i != 0; c := input.chain[i]]
+       ca[_].fingerprint[ca_fingerprint_alg] == ca_fingerprint
+       valid_predicates := [i |
+           some i
+           [name, value] := predicates[i]
+           validate_predicate(name, value)
+       ]
+       count(valid_predicates) == count(predicates)
+   }
 
-                 Figure 2: Core Rego Validation Rule
+                    Figure 2: Core Rego Validation Rule
 
    The overall Rego policy is assembled by concatenating the core Rego
    policy with the Rego policy fragments in the following sections, each
@@ -249,13 +255,12 @@ valid if {
                 Figure 4: ABNF Definition of Subject Policy
 
    <key>:<value> are the subject name fields in chain[0].subject in any
-   order.  Field repetitions are not allowed.  Values must be percent-
+   order.  Key repetitions are not allowed.  Values must be percent-
    encoded.
 
    Example:
 
-   did:x509:0:sha256:WE4P5dd8DnLHSkyHaIjhp4udlkF9LqoKwCvu9gl38jk::subjec
-   t:C:US:ST:California:L:San%20Francisco:O:Example%2C%20Inc.
+   did:x509:0:sha256:WE..jk::subject:C:US:ST:Texas:L:Austin:O:Example
 
    Rego policy:
 
@@ -294,8 +299,7 @@ valid if {
 
    Example:
 
-   did:x509:0:sha256:WE4P5dd8DnLHSkyHaIjhp4udlkF9LqoKwCvu9gl38jk::san:em
-   ail:bob%40example.com
+   did:x509:0:sha256:WE..jk::san:email:bob%40example.com
 
    Rego policy:
 
@@ -321,8 +325,7 @@ valid if {
 
    Example:
 
-   did:x509:0:sha256:WE4P5dd8DnLHSkyHaIjhp4udlkF9LqoKwCvu9gl38jk::eku:1.
-   3.6.1.4.1.311.10.3.13
+   did:x509:0:sha256:WE..jk::eku:1.3.6.1.4.1.311.10.3.13
 
    Rego policy:
 
@@ -341,18 +344,18 @@ valid if {
 
              Figure 10: ABNF Definition of Fulcio-Issuer Policy
 
-   fulcio-issuer is chain[0].extensions.fulcio_issuer without leading
+   fulcio-issuer is chain[0].extensions.fulcio_issuer, without leading
    https://, percent-encoded.
 
    Example:
 
-   did:x509:0:sha256:WE4P5dd8DnLHSkyHaIjhp4udlkF9LqoKwCvu9gl38jk::fulcio
-   -issuer:accounts.google.com::san:email:bob%40example.com
+   did:x509:0:sha256:WE..jk::fulcio-
+   issuer:accounts.google.com::san:email:bob%40example.com
 
    Example 2:
 
-   did:x509:0:sha256:WE4P5dd8DnLHSkyHaIjhp4udlkF9LqoKwCvu9gl38jk::fulcio
-   -issuer:issuer.example.com::san:uri:https%3A%2F%2Fexample.com%2Focto-
+   did:x509:0:sha256:WE..jk::fulcio-
+   issuer:issuer.example.com::san:uri:https%3A%2F%2Fexample.com%2Focto-
    org%2Focto-automation%2Fworkflows%2Foidc.yml%40refs%2Fheads%2Fmain
 
    Rego policy:
@@ -388,84 +391,85 @@ validate_predicate(name, value) := true if {
    describing the DID subject and the methods it can use to authenticate
    itself, can look like once resolved:
 
-{
-  "@context": "https://www.w3.org/ns/did/v1",
-  "id": "did:x509:0:sha256:hH32p4SXlD8n_HLrk_mmNzIKArVh0KkbCeh6eAftfGE::subject:CN:Example",
-  "verificationMethod": [
-    {
-      "id": "did:x509:0:sha256:hH32p4SXlD8n_HLrk_mmNzIKArVh0KkbCeh6eAftfGE::subject:CN:Example#key-1",
-      "type": "JsonWebKey2020",
-      "controller": "did:x509:0:sha256:hH32p4SXlD8n_HLrk_mmNzIKArVh0KkbCeh6eAftfGE::subject:CN:Example",
-      "publicKeyJwk": {
-        "kty": "RSA",
-        "n": "s9HduD2rvmO-SGksB4HR-qvSK379St8NnUZBH8xBiQvt2zONOLUHWQibeBW4NLUfHfzMaOM77RhNlqPNiDRKhChlG1aHqEHSAaQBGrmr0ULGIzq-1YvqQufMGYBFfq0sc10UdvWqT0RjwkPQTu4bjg37zSYF9OcGxS9uGnPMdWRM0ThOsYUcDmMoCaJRebsLUBpMmYXkcUYXJrcSGAaUNd0wjhwIpEogOD-AbWW_7TPZOl-JciMj40a78EEXIc2p06lWHfe5hegQ7uGIlSAPG6zDzjhjNkzE63_-GoqJU-6QLazbL5_y27ZDUAEYJokbb305A-dOp930CjTar3BvWQ",
-        "e": "AQAB"
-      }
-    }
-  ],
-  "assertionMethod": [
-    "did:x509:0:sha256:hH32p4SXlD8n_HLrk_mmNzIKArVh0KkbCeh6eAftfGE::subject:CN:Example#key-1"
-  ],
-  "keyAgreement": [
-    "did:x509:0:sha256:hH32p4SXlD8n_HLrk_mmNzIKArVh0KkbCeh6eAftfGE::subject:CN:Example#key-1"
-  ]
-}
+   {
+     "@context": "https://www.w3.org/ns/did/v1",
+     "id": "did:x509:0:sha256:hH..GE::subject:CN:Example",
+     "verificationMethod": [
+       {
+         "id": "did:x509:0:sha256:hH..GE::subject:CN:Example#key-1",
+         "type": "JsonWebKey2020",
+         "controller": "did:x509:0:sha256:hH..GE::subject:CN:Example",
+         "publicKeyJwk": {
+           "kty": "RSA",
+           "n": "s9..WQ",
+           "e": "AQAB"
+         }
+       }
+     ],
+     "assertionMethod": [
+       "did:x509:0:sha256:hH..GE::subject:CN:Example#key-1"
+     ],
+     "keyAgreement": [
+       "did:x509:0:sha256:hH..GE::subject:CN:Example#key-1"
+     ]
+   }
 
-             Figure 12: JSON Controller Document Example
+                Figure 12: JSON Controller Document Example
 
 5.  CDDL for a JSON Data Model for X.509 Certificate Chains
 
-CertificateChain = [2*Certificate]  ; leaf is first
+  CertificateChain = [2*Certificate]  ; leaf is first
 
-Certificate = {
-    fingerprint: {
-        ; base64url-encoded hashes of the DER-encoded certificate
-        sha256: base64url,     ; FIPS 180-4, SHA-256
-        sha384: base64url,     ; FIPS 180-4, SHA-384
-        sha512: base64url      ; FIPS 180-4, SHA-512
-    },
-    issuer: Name,              ; RFC 5280, Section 4.1.2.4
-    subject: Name,             ; RFC 5280, Section 4.1.2.6
-    extensions: {
-        ? eku: [+OID],         ; RFC 5280, Section 4.2.1.12
-        ? san: [+SAN],         ; RFC 5280, Section 4.2.1.6
-        ? fulcio_issuer: tstr  ; http://oid-info.com/get/1.3.6.1.4.1.57264.1.1
-    }
-}
+  Certificate = {
+      fingerprint: {
+          ; base64url-encoded hashes of the DER-encoded certificate
+          sha256: base64url,     ; FIPS 180-4, SHA-256
+          sha384: base64url,     ; FIPS 180-4, SHA-384
+          sha512: base64url      ; FIPS 180-4, SHA-512
+      },
+      issuer: Name,              ; RFC 5280, Section 4.1.2.4
+      subject: Name,             ; RFC 5280, Section 4.1.2.6
+      extensions: {
+          ? eku: [+OID],         ; RFC 5280, Section 4.2.1.12
+          ? san: [+SAN],         ; RFC 5280, Section 4.2.1.6
+          ? fulcio_issuer: tstr
+          ; http://oid-info.com/get/1.3.6.1.4.1.57264.1.1
+      }
+  }
 
-; X.509 Name as an object of attributes
-; Repeated attribute types are not supported
-; Common attribute types have human-readable labels (see below)
-; Other attribute types use dotted OIDs
-; Values are converted to UTF-8
-Name = {
-    ; See RFC 4514, Section 3, for meaning of common attribute types
-    ? CN: tstr,
-    ? L: tstr,
-    ? ST: tstr,
-    ? O: tstr,
-    ? OU: tstr,
-    ? C: tstr,
-    ? STREET: tstr,
-    * OID => tstr
-}
+  ; X.509 Name as an object of attributes
+  ; Repeated attribute types are not supported
+  ; Common attribute types have human-readable labels (see below)
+  ; Other attribute types use dotted OIDs
+  ; Values are converted to UTF-8
+  Name = {
+      ; See RFC 4514, Section 3, for meaning of common attribute types
+      ? CN: tstr,
+      ? L: tstr,
+      ? ST: tstr,
+      ? O: tstr,
+      ? OU: tstr,
+      ? C: tstr,
+      ? STREET: tstr,
+      * OID => tstr
+  }
 
-; base64url-encoded data, see RFC 4648, Section 5
-base64url = tstr
+  ; base64url-encoded data, see RFC 4648, Section 5
+  base64url = tstr
 
-; ASN.1 Object Identifier
-; Dotted string, for example "1.2.3"
-OID = tstr
+  ; ASN.1 Object Identifier
+  ; Dotted string, for example "1.2.3"
+  OID = tstr
 
-; X.509 Subject Alternative Name
-; Strings are converted to UTF-8
-SAN = rfc822Name / DNSName / URI / DirectoryName
-rfc822Name = ["email", tstr] ; Example: ["email", "user@example.com"]
-DNSName = ["dns", tstr]      ; Example: ["dns", "example.com"]
-URI = ["uri", tstr]          ; Example: ["uri", "https://example.com"]
-DirectoryName = ["dn", Name] ; Example: ["dn", {CN: "Example"}]
+  ; X.509 Subject Alternative Name
+  ; Strings are converted to UTF-8
+  SAN = rfc822Name / DNSName / URI / DirectoryName
+  rfc822Name = ["email", tstr] ; Example: ["email", "user@example.com"]
+  DNSName = ["dns", tstr]      ; Example: ["dns", "example.com"]
+  URI = ["uri", tstr]          ; Example: ["uri", "https://example.com"]
+  DirectoryName = ["dn", Name] ; Example: ["dn", {CN: "Example"}]
 
-        Figure 13: CDDL Definition of did:x509 JSON Data Model
+          Figure 13: CDDL Definition of did:x509 JSON Data Model
 
 6.  Security Consideration
 
