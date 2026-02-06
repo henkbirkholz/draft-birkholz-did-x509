@@ -1233,7 +1233,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
       <h2 id="name-introduction">
 <a href="#section-1" class="section-number selfRef">1. </a><a href="#name-introduction" class="section-name selfRef">Introduction</a>
       </h2>
-<p id="section-1-1">This document aims to define an interoperable and flexible decentralized identifier (<span>[<a href="#DIDV1" class="cite xref">DIDV1</a>]</span>) format for COSE messages that transport or refer to X.509 certificates using <span>[<a href="#RFC9360" class="cite xref">RFC9360</a>]</span>.
+<p id="section-1-1">This document aims to define an interoperable and flexible decentralized identifier (<span>[<a href="#DID" class="cite xref">DID</a>]</span>) format for COSE messages that transport or refer to X.509 certificates using <span>[<a href="#RFC9360" class="cite xref">RFC9360</a>]</span>.
 The did:x509 identifier format implements a direct, resolvable binding between a certificate chain and a compact issuer string.
 It can be used in a COSE Header CWT Claims map as defined in <span>[<a href="#RFC9597" class="cite xref">RFC9597</a>]</span>.<a href="#section-1-1" class="pilcrow">¶</a></p>
 <p id="section-1-2">Including a certificate chain directly in configuration or in policy is often impractical.
@@ -1267,7 +1267,7 @@ to stay within the line-length limits of this document's format.<a href="#sectio
 <a href="#section-3" class="section-number selfRef">3. </a><a href="#name-identifier-syntax" class="section-name selfRef">Identifier Syntax</a>
       </h2>
 <p id="section-3-1">The did:x509 ABNF definition defined below uses the syntax defined in <span>[<a href="#RFC5234" class="cite xref">RFC5234</a>]</span> and the corresponding definitions for <code>ALPHA</code> and <code>DIGIT</code>.
-<span>[<a href="#DIDV1" class="cite xref">DIDV1</a>]</span> contains the definitions for <code>idchar</code> and <code>pct-encoded</code> in Section 3.1.<a href="#section-3-1" class="pilcrow">¶</a></p>
+<span>[<a href="#DID" class="cite xref">DID</a>]</span> contains the definitions for <code>idchar</code> and <code>pct-encoded</code> in Section 3.1.<a href="#section-3-1" class="pilcrow">¶</a></p>
 <div class="lang-abnf sourcecode" id="section-3-2">
 <pre>
 idchar             = ALPHA / DIGIT / "." / "-" / "_" / pct-encoded
@@ -1719,7 +1719,7 @@ DirectoryName = ["dn", Name] ; Example: ["dn", {CN: "Example"}]
         <dd>
 <span class="refAuthor">Cotton, M.</span>, <span class="refAuthor">Leiba, B.</span>, and <span class="refAuthor">T. Narten</span>, <span class="refTitle">"Guidelines for Writing an IANA Considerations Section in RFCs"</span>, <span class="seriesInfo">BCP 26</span>, <span class="seriesInfo">RFC 8126</span>, <span class="seriesInfo">DOI 10.17487/RFC8126</span>, <time datetime="2017-06" class="refDate">June 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8126">https://www.rfc-editor.org/rfc/rfc8126</a>&gt;</span>. </dd>
 <dd class="break"></dd>
-<dt id="DIDV1">[DIDV1]</dt>
+<dt id="DID">[DID]</dt>
         <dd>
 <span class="refTitle">"W3C DID v1.0 specification"</span>, <span>n.d.</span>, <span>&lt;<a href="https://www.w3.org/TR/did-1.0/">https://www.w3.org/TR/did-1.0/</a>&gt;</span>. </dd>
 <dd class="break"></dd>
