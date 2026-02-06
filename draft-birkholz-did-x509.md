@@ -322,6 +322,7 @@ validate_predicate(name, value) := true if {
 }
 ~~~
 {: #fig-validate-fulcio-issuer artwork-align="left"
+   pre="fold"
    title="Rego Function Validating Fulcio-Issuer Policy"}
 
 ## DID resolution options
