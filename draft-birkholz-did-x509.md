@@ -298,7 +298,7 @@ fulcio-issuer    = 1*idchar
 {: #fig-fulcio-issuer-def artwork-align="left"
    title="ABNF Definition of Fulcio-Issuer Policy"}
 
-`fulcio-issuer` is `chain[0].extensions.fulcio_issuer` without leading `https://`, percent-encoded.
+`fulcio-issuer` is `chain[0].extensions.fulcio_issuer`, without leading `https://`, percent-encoded.
 
 Example:
 
