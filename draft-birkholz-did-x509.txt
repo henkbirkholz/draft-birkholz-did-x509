@@ -136,6 +136,10 @@ Table of Contents
    The reader is assumed to be familiar with the vocabulary and concepts
    defined in [I-D.ietf-scitt-architecture].
 
+   Per [RFC8792], line breaks may be present in the figures of this
+   document to stay within the line-length limits of this document's
+   format.
+
 3.  Identifier Syntax
 
    The did:x509 ABNF definition defined below uses the syntax defined in
@@ -613,6 +617,11 @@ DirectoryName = ["dn", Name] ; Example: ["dn", {CN: "Example"}]
    [REGO]     "Rego", n.d.,
               <https://www.openpolicyagent.org/docs/latest/policy-
               language/>.
+
+   [RFC8792]  Watsen, K., Auerswald, E., Farrel, A., and Q. Wu,
+              "Handling Long Lines in Content of Internet-Drafts and
+              RFCs", RFC 8792, DOI 10.17487/RFC8792, June 2020,
+              <https://www.rfc-editor.org/rfc/rfc8792>.
 
    [RFC9360]  Schaad, J., "CBOR Object Signing and Encryption (COSE):
               Header Parameters for Carrying and Referencing X.509
