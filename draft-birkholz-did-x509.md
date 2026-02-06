@@ -419,10 +419,6 @@ DirectoryName = ["dn", Name] ; Example: ["dn", {CN: "Example"}]
 {: #fig-cddl-placeholder artwork-align="left"
   title="CDDL Definition of did:x509 JSON Data Model"}
 
-# Privacy Considerations {#privconsec}
-
-Some considerations
-
 # Security Consideration {#secconsec}
 
 ## Identifier Ambiguity
