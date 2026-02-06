@@ -57,6 +57,7 @@ informative:
   REGO:
     target: https://www.openpolicyagent.org/docs/latest/policy-language/
     title: Rego
+  RFC8792:
   RFC9360:
   RFC9597:
   DID-DOCUMENT:
@@ -97,6 +98,9 @@ data formats, and ABNF (defined in {{-abnf}}) to describe identifiers.
 
 The reader is assumed to be familiar with the vocabulary and concepts
 defined in {{-scitt-arch}}.
+
+Per {{RFC8792}}, line breaks may be present in the figures of this document
+to stay within the line-length limits of this document's format.
 
 # Identifier Syntax
 
