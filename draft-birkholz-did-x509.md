@@ -123,6 +123,7 @@ predicate-value    = *(1*idchar ":") 1*idchar
 base64url          = 1*(ALPHA / DIGIT / "-" / "_")
 ~~~
 {: #fig-core-def artwork-align="left"
+   pre="fold"
    title="ABNF Definition of Core did-x509 Syntax"}
 
 Implementations of this specification MUST indicate a version value of `0`.
@@ -143,31 +144,34 @@ To evaluate the reference Rego code shown below, the DID and certificate chain h
 Core Rego policy:
 
 ~~~rego
-parse_did(did) := [ca_fingerprint_alg, ca_fingerprint, policies] if {
+parse_did(did) :=
+  [ca_fingerprint_alg, ca_fingerprint, predicates] if {
     prefix := "did:x509:0:"
     startswith(did, prefix) == true
     rest := trim_prefix(did, prefix)
     parts := split(rest, "::")
     [ca_fingerprint_alg, ca_fingerprint] := split(parts[0], ":")
-    policies_raw := array.slice(parts, 1, count(parts))
-    policies := [y |
+    predicates_raw := array.slice(parts, 1, count(parts))
+    predicates := [y |
         some i
-        s := policies_raw[i]
+        s := predicates_raw[i]
         j := indexof(s, ":")
         y := [substring(s, 0, j), substring(s, j+1, -1)]
     ]
 }
 
 valid if {
-    [ca_fingerprint_alg, ca_fingerprint, policies] := parse_did(input.did)
+    [ca_fingerprint_alg,
+     ca_fingerprint,
+     predicates] := parse_did(input.did)
     ca := [c | some i; i != 0; c := input.chain[i]]
     ca[_].fingerprint[ca_fingerprint_alg] == ca_fingerprint
-    valid_policies := [i |
+    valid_predicates := [i |
         some i
-        [name, value] := policies[i]
+        [name, value] := predicates[i]
         validate_predicate(name, value)
     ]
-    count(valid_policies) == count(policies)
+    count(valid_predicates) == count(predicates)
 }
 ~~~
 {: #fig-validate-core artwork-align="left"
@@ -200,11 +204,11 @@ oid             = 1*DIGIT *("." 1*DIGIT)
 {: #fig-subject-def artwork-align="left"
    title="ABNF Definition of Subject Policy"}
 
-`<key>:<value>` are the subject name fields in `chain[0].subject` in any order. Field repetitions are not allowed. Values must be percent-encoded.
+`<key>:<value>` are the subject name fields in `chain[0].subject` in any order. Key repetitions are not allowed. Values must be percent-encoded.
 
 Example:
 
-`did:x509:0:sha256:WE4P5dd8DnLHSkyHaIjhp4udlkF9LqoKwCvu9gl38jk::subject:C:US:ST:California:L:San%20Francisco:O:Example%2C%20Inc.`
+`did:x509:0:sha256:WE..jk::subject:C:US:ST:Texas:L:Austin:O:Example`
 
 Rego policy:
 
@@ -245,7 +249,7 @@ The pair `[<san_type>, <san_value>]` is one of the items in `chain[0].extensions
 
 Example:
 
-`did:x509:0:sha256:WE4P5dd8DnLHSkyHaIjhp4udlkF9LqoKwCvu9gl38jk::san:email:bob%40example.com`
+`did:x509:0:sha256:WE..jk::san:email:bob%40example.com`
 
 Rego policy:
 
@@ -275,7 +279,7 @@ oid             = 1*DIGIT *("." 1*DIGIT)
 
 Example:
 
-`did:x509:0:sha256:WE4P5dd8DnLHSkyHaIjhp4udlkF9LqoKwCvu9gl38jk::eku:1.3.6.1.4.1.311.10.3.13`
+`did:x509:0:sha256:WE..jk::eku:1.3.6.1.4.1.311.10.3.13`
 
 Rego policy:
 
@@ -298,15 +302,15 @@ fulcio-issuer    = 1*idchar
 {: #fig-fulcio-issuer-def artwork-align="left"
    title="ABNF Definition of Fulcio-Issuer Policy"}
 
-`fulcio-issuer` is `chain[0].extensions.fulcio_issuer` without leading `https://`, percent-encoded.
+`fulcio-issuer` is `chain[0].extensions.fulcio_issuer`, without leading `https://`, percent-encoded.
 
 Example:
 
-`did:x509:0:sha256:WE4P5dd8DnLHSkyHaIjhp4udlkF9LqoKwCvu9gl38jk::fulcio-issuer:accounts.google.com::san:email:bob%40example.com`
+`did:x509:0:sha256:WE..jk::fulcio-issuer:accounts.google.com::san:email:bob%40example.com`
 
 Example 2:
 
-`did:x509:0:sha256:WE4P5dd8DnLHSkyHaIjhp4udlkF9LqoKwCvu9gl38jk::fulcio-issuer:issuer.example.com::san:uri:https%3A%2F%2Fexample.com%2Focto-org%2Focto-automation%2Fworkflows%2Foidc.yml%40refs%2Fheads%2Fmain`
+`did:x509:0:sha256:WE..jk::fulcio-issuer:issuer.example.com::san:uri:https%3A%2F%2Fexample.com%2Focto-org%2Focto-automation%2Fworkflows%2Foidc.yml%40refs%2Fheads%2Fmain`
 
 Rego policy:
 
@@ -340,24 +344,24 @@ This illustrates what a typical DID document ({{DID-DOCUMENT}}), describing the 
 ~~~json
 {
   "@context": "https://www.w3.org/ns/did/v1",
-  "id": "did:x509:0:sha256:hH32p4SXlD8n_HLrk_mmNzIKArVh0KkbCeh6eAftfGE::subject:CN:Example",
+  "id": "did:x509:0:sha256:hH..GE::subject:CN:Example",
   "verificationMethod": [
     {
-      "id": "did:x509:0:sha256:hH32p4SXlD8n_HLrk_mmNzIKArVh0KkbCeh6eAftfGE::subject:CN:Example#key-1",
+      "id": "did:x509:0:sha256:hH..GE::subject:CN:Example#key-1",
       "type": "JsonWebKey2020",
-      "controller": "did:x509:0:sha256:hH32p4SXlD8n_HLrk_mmNzIKArVh0KkbCeh6eAftfGE::subject:CN:Example",
+      "controller": "did:x509:0:sha256:hH..GE::subject:CN:Example",
       "publicKeyJwk": {
         "kty": "RSA",
-        "n": "s9HduD2rvmO-SGksB4HR-qvSK379St8NnUZBH8xBiQvt2zONOLUHWQibeBW4NLUfHfzMaOM77RhNlqPNiDRKhChlG1aHqEHSAaQBGrmr0ULGIzq-1YvqQufMGYBFfq0sc10UdvWqT0RjwkPQTu4bjg37zSYF9OcGxS9uGnPMdWRM0ThOsYUcDmMoCaJRebsLUBpMmYXkcUYXJrcSGAaUNd0wjhwIpEogOD-AbWW_7TPZOl-JciMj40a78EEXIc2p06lWHfe5hegQ7uGIlSAPG6zDzjhjNkzE63_-GoqJU-6QLazbL5_y27ZDUAEYJokbb305A-dOp930CjTar3BvWQ",
+        "n": "s9..WQ",
         "e": "AQAB"
       }
     }
   ],
   "assertionMethod": [
-    "did:x509:0:sha256:hH32p4SXlD8n_HLrk_mmNzIKArVh0KkbCeh6eAftfGE::subject:CN:Example#key-1"
+    "did:x509:0:sha256:hH..GE::subject:CN:Example#key-1"
   ],
   "keyAgreement": [
-    "did:x509:0:sha256:hH32p4SXlD8n_HLrk_mmNzIKArVh0KkbCeh6eAftfGE::subject:CN:Example#key-1"
+    "did:x509:0:sha256:hH..GE::subject:CN:Example#key-1"
   ]
 }
 ~~~
@@ -380,7 +384,8 @@ Certificate = {
     extensions: {
         ? eku: [+OID],         ; RFC 5280, Section 4.2.1.12
         ? san: [+SAN],         ; RFC 5280, Section 4.2.1.6
-        ? fulcio_issuer: tstr  ; http://oid-info.com/get/1.3.6.1.4.1.57264.1.1
+        ? fulcio_issuer: tstr
+        ; http://oid-info.com/get/1.3.6.1.4.1.57264.1.1
     }
 }
 
