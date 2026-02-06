@@ -252,7 +252,7 @@ valid if {
    Example:
 
    did:x509:0:sha256:WE4P5dd8DnLHSkyHaIjhp4udlkF9LqoKwCvu9gl38jk::subjec
-   t:C:US:ST:California:L:San%20Francisco:O:GitHub%2C%20Inc.
+   t:C:US:ST:California:L:San%20Francisco:O:Example%2C%20Inc.
 
    Rego policy:
 
@@ -349,9 +349,8 @@ valid if {
    Example 2:
 
    did:x509:0:sha256:WE4P5dd8DnLHSkyHaIjhp4udlkF9LqoKwCvu9gl38jk::fulcio
-   -issuer:token.actions.githubusercontent.com::san:uri:https%3A%2F%2Fgi
-   thub.com%2Focto-org%2Focto-
-   automation%2F.github%2Fworkflows%2Foidc.yml%40refs%2Fheads%2Fmain
+   -issuer:issuer.example.com::san:uri:https%3A%2F%2Fexample.com%2Focto-
+   org%2Focto-automation%2Fworkflows%2Foidc.yml%40refs%2Fheads%2Fmain
 
    Rego policy:
 

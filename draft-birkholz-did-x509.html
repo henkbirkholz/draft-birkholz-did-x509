@@ -1384,7 +1384,7 @@ oid             = 1*DIGIT *("." 1*DIGIT)
 </div>
 <p id="section-3.2-2"><code>&lt;key&gt;:&lt;value&gt;</code> are the subject name fields in <code>chain[0].subject</code> in any order. Field repetitions are not allowed. Values must be percent-encoded.<a href="#section-3.2-2" class="pilcrow">¶</a></p>
 <p id="section-3.2-3">Example:<a href="#section-3.2-3" class="pilcrow">¶</a></p>
-<p id="section-3.2-4"><code>did:x509:0:sha256:WE4P5dd8DnLHSkyHaIjhp4udlkF9LqoKwCvu9gl38jk::subject:C:US:ST:California:L:San%20Francisco:O:GitHub%2C%20Inc.</code><a href="#section-3.2-4" class="pilcrow">¶</a></p>
+<p id="section-3.2-4"><code>did:x509:0:sha256:WE4P5dd8DnLHSkyHaIjhp4udlkF9LqoKwCvu9gl38jk::subject:C:US:ST:California:L:San%20Francisco:O:Example%2C%20Inc.</code><a href="#section-3.2-4" class="pilcrow">¶</a></p>
 <p id="section-3.2-5">Rego policy:<a href="#section-3.2-5" class="pilcrow">¶</a></p>
 <span id="name-rego-function-validating-su"></span><div id="fig-validate-subject">
 <figure id="figure-5">
@@ -1515,7 +1515,7 @@ fulcio-issuer    = 1*idchar
 <p id="section-3.5-3">Example:<a href="#section-3.5-3" class="pilcrow">¶</a></p>
 <p id="section-3.5-4"><code>did:x509:0:sha256:WE4P5dd8DnLHSkyHaIjhp4udlkF9LqoKwCvu9gl38jk::fulcio-issuer:accounts.google.com::san:email:bob%40example.com</code><a href="#section-3.5-4" class="pilcrow">¶</a></p>
 <p id="section-3.5-5">Example 2:<a href="#section-3.5-5" class="pilcrow">¶</a></p>
-<p id="section-3.5-6"><code>did:x509:0:sha256:WE4P5dd8DnLHSkyHaIjhp4udlkF9LqoKwCvu9gl38jk::fulcio-issuer:token.actions.githubusercontent.com::san:uri:https%3A%2F%2Fgithub.com%2Focto-org%2Focto-automation%2F.github%2Fworkflows%2Foidc.yml%40refs%2Fheads%2Fmain</code><a href="#section-3.5-6" class="pilcrow">¶</a></p>
+<p id="section-3.5-6"><code>did:x509:0:sha256:WE4P5dd8DnLHSkyHaIjhp4udlkF9LqoKwCvu9gl38jk::fulcio-issuer:issuer.example.com::san:uri:https%3A%2F%2Fexample.com%2Focto-org%2Focto-automation%2Fworkflows%2Foidc.yml%40refs%2Fheads%2Fmain</code><a href="#section-3.5-6" class="pilcrow">¶</a></p>
 <p id="section-3.5-7">Rego policy:<a href="#section-3.5-7" class="pilcrow">¶</a></p>
 <span id="name-rego-function-validating-fu"></span><div id="fig-validate-fulcio-issuer">
 <figure id="figure-11">
