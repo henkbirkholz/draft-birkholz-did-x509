@@ -114,8 +114,7 @@ pct-encoded        = "%" HEXDIG HEXDIG
 
 ~~~abnf
 did-x509           = "did:x509:" method-specific-id
-method-specific-id = version ":" ca-fingerprint-alg \
-  ":" ca-fingerprint 1*("::" predicate-name ":" predicate-value)
+method-specific-id = version ":" ca-fingerprint-alg ":" ca-fingerprint 1*("::" predicate-name ":" predicate-value)
 version            = 1*DIGIT
 ca-fingerprint-alg = "sha256" / "sha384" / "sha512"
 ca-fingerprint     = base64url
@@ -124,7 +123,7 @@ predicate-value    = *(1*idchar ":") 1*idchar
 base64url          = 1*(ALPHA / DIGIT / "-" / "_")
 ~~~
 {: #fig-core-def artwork-align="left"
-   sourcecode-fold="true"
+   pre="fold"
    title="ABNF Definition of Core did-x509 Syntax"}
 
 Implementations of this specification MUST indicate a version value of `0`.
