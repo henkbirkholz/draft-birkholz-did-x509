@@ -200,7 +200,7 @@ oid             = 1*DIGIT *("." 1*DIGIT)
 {: #fig-subject-def artwork-align="left"
    title="ABNF Definition of Subject Policy"}
 
-`<key>:<value>` are the subject name fields in `chain[0].subject` in any order. Field repetitions are not allowed. Values must be percent-encoded.
+`<key>:<value>` are the subject name fields in `chain[0].subject` in any order. Key repetitions are not allowed. Values must be percent-encoded.
 
 Example:
 
