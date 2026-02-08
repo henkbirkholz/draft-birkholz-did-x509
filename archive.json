@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-02-05T02:34:11.868216+00:00",
+  "timestamp": "2026-02-08T03:13:06.961882+00:00",
   "repo": "henkbirkholz/draft-birkholz-did-x509",
   "labels": [
     {
@@ -191,15 +191,15 @@
       "id": "I_kwDOQEQBrM7mWlEH",
       "title": "Validate ABNF, Rego, JSON, CDDL snippets",
       "url": "https://github.com/henkbirkholz/draft-birkholz-did-x509/issues/15",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "achamayou",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
-      "body": "- [x] ABNF https://github.com/henkbirkholz/draft-birkholz-did-x509/commit/d23612e91d74833bda65a9a8d43b87a6bb11de37\n- [ ] Rego\n- [x] JSON https://github.com/henkbirkholz/draft-birkholz-did-x509/commit/9263438015b109cf21baa14caa89b41132924d24\n- [x] CDDL https://github.com/henkbirkholz/draft-birkholz-did-x509/commit/9263438015b109cf21baa14caa89b41132924d24",
+      "body": "- [x] ABNF https://github.com/henkbirkholz/draft-birkholz-did-x509/commit/d23612e91d74833bda65a9a8d43b87a6bb11de37\n- [x] Rego\n- [x] JSON https://github.com/henkbirkholz/draft-birkholz-did-x509/commit/9263438015b109cf21baa14caa89b41132924d24\n- [x] CDDL https://github.com/henkbirkholz/draft-birkholz-did-x509/commit/9263438015b109cf21baa14caa89b41132924d24",
       "createdAt": "2026-01-28T10:18:30Z",
-      "updatedAt": "2026-02-04T15:59:13Z",
-      "closedAt": null,
+      "updatedAt": "2026-02-06T08:03:17Z",
+      "closedAt": "2026-02-06T08:03:17Z",
       "comments": []
     },
     {
@@ -207,15 +207,15 @@
       "id": "I_kwDOQEQBrM7mWlee",
       "title": "Indicate that line breaks in ASCII are present because of the draft format",
       "url": "https://github.com/henkbirkholz/draft-birkholz-did-x509/issues/16",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "achamayou",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2026-01-28T10:18:57Z",
-      "updatedAt": "2026-02-04T19:57:32Z",
-      "closedAt": null,
+      "updatedAt": "2026-02-06T08:03:01Z",
+      "closedAt": "2026-02-06T08:03:01Z",
       "comments": [
         {
           "author": "achamayou",
@@ -238,15 +238,15 @@
       "id": "I_kwDOQEQBrM7mWoGi",
       "title": "Write text clarifying why did:x509 is composed of authentic information extracted from cert",
       "url": "https://github.com/henkbirkholz/draft-birkholz-did-x509/issues/17",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "achamayou",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2026-01-28T10:21:23Z",
-      "updatedAt": "2026-01-28T10:21:23Z",
-      "closedAt": null,
+      "updatedAt": "2026-02-06T08:02:22Z",
+      "closedAt": "2026-02-06T08:02:22Z",
       "comments": []
     },
     {
@@ -302,15 +302,15 @@
       "id": "I_kwDOQEQBrM7oK3UV",
       "title": "Use example.com everywhere, really",
       "url": "https://github.com/henkbirkholz/draft-birkholz-did-x509/issues/31",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "achamayou",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Follow up to #20, references to Microsoft are gone, but GitHub remains in a couple of places.",
       "createdAt": "2026-02-04T07:46:44Z",
-      "updatedAt": "2026-02-04T07:46:44Z",
-      "closedAt": null,
+      "updatedAt": "2026-02-06T08:02:42Z",
+      "closedAt": "2026-02-06T08:02:42Z",
       "comments": []
     },
     {
@@ -318,15 +318,15 @@
       "id": "I_kwDOQEQBrM7oMh4y",
       "title": "Revert certification path to chain",
       "url": "https://github.com/henkbirkholz/draft-birkholz-did-x509/issues/32",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "achamayou",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Following discussion, examination of definition, and checking that using intermediates to resolve the fingerprint is allowed, we have confirmed that chain is the correct term here.",
       "createdAt": "2026-02-04T09:38:54Z",
-      "updatedAt": "2026-02-04T20:11:20Z",
-      "closedAt": null,
+      "updatedAt": "2026-02-06T08:03:29Z",
+      "closedAt": "2026-02-06T08:03:29Z",
       "comments": []
     }
   ],
@@ -1409,7 +1409,7 @@
       "id": "PR_kwDOQEQBrM7BjbSc",
       "title": "Replace \"certification path\" with \"certificate chain\" terminology",
       "url": "https://github.com/henkbirkholz/draft-birkholz-did-x509/pull/33",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "copilot-swe-agent",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [
@@ -1419,17 +1419,19 @@
       "labels": [],
       "body": "Standardizes terminology in the did:x509 specification by replacing \"certification path\" with \"certificate chain\" throughout the document.\n\n## Changes\n\nUpdated 7 occurrences across:\n- **Abstract**: certification path fingerprint \u2192 certificate chain fingerprint\n- **Introduction**: 4 instances in discussion of direct inclusion and partial chains\n- **Identifier Syntax**: 2 instances in resolution process description\n- **CDDL Section**: Header updated from \"X.509 Certification Paths\" to \"X.509 Certificate Chains\"\n\nAll instances now use consistent \"certificate chain\" terminology.\n\n> [!WARNING]\n>\n> <details>\n> <summary>Firewall rules blocked me from connecting to one or more addresses (expand for details)</summary>\n>\n> #### I tried to connect to the following addresses, but was blocked by firewall rules:\n>\n> - `https://api.github.com/repos/henkbirkholz/draft-birkholz-did-x509`\n>   - Triggering command: `/usr/bin/python3 python3 lib/default-branch.py henkbirkholz draft-birkholz-did-x509` (http block)\n>\n> If you need me to access, download, or install something from one of these locations, you can either:\n>\n> - Configure [Actions setup steps](https://gh.io/copilot/actions-setup-steps) to set up my environment, which run before the firewall is enabled\n> - Add the appropriate URLs or hosts to the custom allowlist in this repository's [Copilot coding agent settings](https://github.com/henkbirkholz/draft-birkholz-did-x509/settings/copilot/coding_agent) (admins only)\n>\n> </details>\n\n<!-- START COPILOT CODING AGENT TIPS -->\n---\n\n\u2728 Let Copilot coding agent [set things up for you](https://github.com/henkbirkholz/draft-birkholz-did-x509/issues/new?title=\u2728+Set+up+Copilot+instructions&body=Configure%20instructions%20for%20this%20repository%20as%20documented%20in%20%5BBest%20practices%20for%20Copilot%20coding%20agent%20in%20your%20repository%5D%28https://gh.io/copilot-coding-agent-tips%29%2E%0A%0A%3COnboard%20this%20repo%3E&assignees=copilot) \u2014 coding agent works faster and does higher quality work when set up for your repo.\n",
       "createdAt": "2026-02-04T20:11:49Z",
-      "updatedAt": "2026-02-04T20:16:37Z",
+      "updatedAt": "2026-02-05T17:22:57Z",
       "baseRepository": "henkbirkholz/draft-birkholz-did-x509",
       "baseRefName": "main",
       "baseRefOid": "9263438015b109cf21baa14caa89b41132924d24",
       "headRepository": "henkbirkholz/draft-birkholz-did-x509",
       "headRefName": "copilot/fix-certification-path-to-chain",
       "headRefOid": "bd8b6ba2d9d74127bb268caaa851cef68fb54358",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2026-02-05T17:22:57Z",
+      "mergedAt": "2026-02-05T17:22:57Z",
+      "mergedBy": "achamayou",
+      "mergeCommit": {
+        "oid": "15eaf612e7468e98693f35362bbc1c122d32c735"
+      },
       "comments": [],
       "reviews": [
         {
@@ -1464,6 +1466,19 @@
           "createdAt": "2026-02-04T20:16:25Z",
           "updatedAt": "2026-02-04T20:16:25Z",
           "comments": []
+        },
+        {
+          "id": "PRR_kwDOQEQBrM7f_uNj",
+          "commit": {
+            "abbreviatedOid": "bd8b6ba"
+          },
+          "author": "henkbirkholz",
+          "authorAssociation": "OWNER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-02-05T16:03:22Z",
+          "updatedAt": "2026-02-05T16:03:22Z",
+          "comments": []
         }
       ]
     },
@@ -1472,7 +1487,7 @@
       "id": "PR_kwDOQEQBrM7Bjcam",
       "title": "Replace GitHub references with example.com in draft-birkholz-did-x509.md",
       "url": "https://github.com/henkbirkholz/draft-birkholz-did-x509/pull/34",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "copilot-swe-agent",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [
@@ -1482,17 +1497,19 @@
       "labels": [],
       "body": "Follow-up to #20: the document still contained GitHub-specific references in example DID strings that should use generic placeholders.\n\n### Changes\n\n- **Subject predicate example**: `O:GitHub%2C%20Inc.` \u2192 `O:Example%2C%20Inc.`\n- **Fulcio-issuer example**: `token.actions.githubusercontent.com` \u2192 `issuer.example.com`\n- **SAN URI example**: `github.com/.github/workflows/...` \u2192 `example.com/workflows/...`\n\nBefore:\n```\ndid:x509:0:sha256:...::subject:C:US:ST:California:L:San%20Francisco:O:GitHub%2C%20Inc.\n```\n\nAfter:\n```\ndid:x509:0:sha256:...::subject:C:US:ST:California:L:San%20Francisco:O:Example%2C%20Inc.\n```\n\n<!-- START COPILOT CODING AGENT TIPS -->\n---\n\n\u2728 Let Copilot coding agent [set things up for you](https://github.com/henkbirkholz/draft-birkholz-did-x509/issues/new?title=\u2728+Set+up+Copilot+instructions&body=Configure%20instructions%20for%20this%20repository%20as%20documented%20in%20%5BBest%20practices%20for%20Copilot%20coding%20agent%20in%20your%20repository%5D%28https://gh.io/copilot-coding-agent-tips%29%2E%0A%0A%3COnboard%20this%20repo%3E&assignees=copilot) \u2014 coding agent works faster and does higher quality work when set up for your repo.\n",
       "createdAt": "2026-02-04T20:13:17Z",
-      "updatedAt": "2026-02-04T20:17:42Z",
+      "updatedAt": "2026-02-06T08:02:40Z",
       "baseRepository": "henkbirkholz/draft-birkholz-did-x509",
       "baseRefName": "main",
       "baseRefOid": "9263438015b109cf21baa14caa89b41132924d24",
       "headRepository": "henkbirkholz/draft-birkholz-did-x509",
       "headRefName": "copilot/update-references-to-example",
       "headRefOid": "2ee937660f8eb13100b78146ab1176235da0f2eb",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2026-02-06T08:02:40Z",
+      "mergedAt": "2026-02-06T08:02:40Z",
+      "mergedBy": "achamayou",
+      "mergeCommit": {
+        "oid": "e8707b2b8472ae2d4f3c58d692160467d1a051e0"
+      },
       "comments": [],
       "reviews": [
         {
@@ -1507,6 +1524,19 @@
           "createdAt": "2026-02-04T20:17:29Z",
           "updatedAt": "2026-02-04T20:17:29Z",
           "comments": []
+        },
+        {
+          "id": "PRR_kwDOQEQBrM7gMG0g",
+          "commit": {
+            "abbreviatedOid": "2ee9376"
+          },
+          "author": "henkbirkholz",
+          "authorAssociation": "OWNER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-02-06T07:21:15Z",
+          "updatedAt": "2026-02-06T07:21:15Z",
+          "comments": []
         }
       ]
     },
@@ -1515,7 +1545,7 @@
       "id": "PR_kwDOQEQBrM7BjdqY",
       "title": "Add RFC 8792 reference for line break indication in figures",
       "url": "https://github.com/henkbirkholz/draft-birkholz-did-x509/pull/35",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "copilot-swe-agent",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [
@@ -1525,17 +1555,19 @@
       "labels": [],
       "body": "Issue #16 requests adding an indication that line breaks in ASCII figures are present for formatting purposes, consistent with RFC 8792 conventions.\n\n## Changes\n\n- Added `RFC8792` to informative references\n- Added note in \"Conventions and Definitions\" section referencing RFC 8792 for line break handling\n\n```markdown\nPer {{RFC8792}}, line breaks may be present in the figures of this document\nto stay within the line-length limits of this document's format.\n```\n\n> [!WARNING]\n>\n> <details>\n> <summary>Firewall rules blocked me from connecting to one or more addresses (expand for details)</summary>\n>\n> #### I tried to connect to the following addresses, but was blocked by firewall rules:\n>\n> - `www.rfc-editor.org`\n>   - Triggering command: `/home/REDACTED/work/_temp/ghcca-node/node/bin/node /home/REDACTED/work/_temp/ghcca-node/node/bin/node --enable-source-maps /home/REDACTED/work/_temp/copilot-developer-action-main/dist/index.js` (dns block)\n>\n> If you need me to access, download, or install something from one of these locations, you can either:\n>\n> - Configure [Actions setup steps](https://gh.io/copilot/actions-setup-steps) to set up my environment, which run before the firewall is enabled\n> - Add the appropriate URLs or hosts to the custom allowlist in this repository's [Copilot coding agent settings](https://github.com/henkbirkholz/draft-birkholz-did-x509/settings/copilot/coding_agent) (admins only)\n>\n> </details>\n\n<!-- START COPILOT CODING AGENT TIPS -->\n---\n\n\ud83d\udcac We'd love your input! Share your thoughts on Copilot coding agent in our [2 minute survey](https://gh.io/copilot-coding-agent-survey).\n",
       "createdAt": "2026-02-04T20:15:07Z",
-      "updatedAt": "2026-02-04T20:26:01Z",
+      "updatedAt": "2026-02-06T08:02:59Z",
       "baseRepository": "henkbirkholz/draft-birkholz-did-x509",
       "baseRefName": "main",
       "baseRefOid": "9263438015b109cf21baa14caa89b41132924d24",
       "headRepository": "henkbirkholz/draft-birkholz-did-x509",
       "headRefName": "copilot/update-draft-birkholz-did-x509",
       "headRefOid": "98cf2907ffacb6a9529ad8fd7a324396c63a3b41",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2026-02-06T08:02:59Z",
+      "mergedAt": "2026-02-06T08:02:59Z",
+      "mergedBy": "achamayou",
+      "mergeCommit": {
+        "oid": "a7a15c569fbc18c616784bd4db9827da7e93e14d"
+      },
       "comments": [],
       "reviews": [
         {
@@ -1550,6 +1582,19 @@
           "createdAt": "2026-02-04T20:25:46Z",
           "updatedAt": "2026-02-04T20:25:46Z",
           "comments": []
+        },
+        {
+          "id": "PRR_kwDOQEQBrM7gMH-R",
+          "commit": {
+            "abbreviatedOid": "98cf290"
+          },
+          "author": "henkbirkholz",
+          "authorAssociation": "OWNER",
+          "state": "APPROVED",
+          "body": "thanks for taking the time to check out rfc8792",
+          "createdAt": "2026-02-06T07:22:53Z",
+          "updatedAt": "2026-02-06T07:22:53Z",
+          "comments": []
         }
       ]
     },
@@ -1558,7 +1603,7 @@
       "id": "PR_kwDOQEQBrM7BjlLs",
       "title": "Add \"Use of Identifier Contents\" Security Consideration",
       "url": "https://github.com/henkbirkholz/draft-birkholz-did-x509/pull/36",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "copilot-swe-agent",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [
@@ -1568,17 +1613,19 @@
       "labels": [],
       "body": "Addresses the need for guidance on safely handling did:x509 identifier strings that embed certificate chain elements.\n\n### Changes\n\n- Added new subsection to Security Considerations explaining:\n  - did:x509 identifiers encapsulate certificate chain elements (CA fingerprint, subject names, SANs, EKUs)\n  - Using identifiers as opaque handles when externally endorsed (e.g., via VC) is acceptable\n  - Parsing identifier components for authorization without resolution is insecure\n  - Attack vector: crafted identifiers with arbitrary values that don't correspond to legitimate chains\n\n### Key guidance\n\n> Implementers MUST NOT parse or interpret individual components of the identifier string for authorization decisions unless the identifier has been resolved against a verified certificate chain.\n\n> [!WARNING]\n>\n> <details>\n> <summary>Firewall rules blocked me from connecting to one or more addresses (expand for details)</summary>\n>\n> #### I tried to connect to the following addresses, but was blocked by firewall rules:\n>\n> - `https://api.github.com/repos/henkbirkholz/draft-birkholz-did-x509`\n>   - Triggering command: `/usr/bin/python3 python3 lib/default-branch.py henkbirkholz draft-birkholz-did-x509` (http block)\n>\n> If you need me to access, download, or install something from one of these locations, you can either:\n>\n> - Configure [Actions setup steps](https://gh.io/copilot/actions-setup-steps) to set up my environment, which run before the firewall is enabled\n> - Add the appropriate URLs or hosts to the custom allowlist in this repository's [Copilot coding agent settings](https://github.com/henkbirkholz/draft-birkholz-did-x509/settings/copilot/coding_agent) (admins only)\n>\n> </details>\n\n<!-- START COPILOT CODING AGENT TIPS -->\n---\n\n\ud83d\udcac We'd love your input! Share your thoughts on Copilot coding agent in our [2 minute survey](https://gh.io/copilot-coding-agent-survey).\n",
       "createdAt": "2026-02-04T20:25:30Z",
-      "updatedAt": "2026-02-04T20:29:32Z",
+      "updatedAt": "2026-02-06T08:02:21Z",
       "baseRepository": "henkbirkholz/draft-birkholz-did-x509",
       "baseRefName": "main",
       "baseRefOid": "9263438015b109cf21baa14caa89b41132924d24",
       "headRepository": "henkbirkholz/draft-birkholz-did-x509",
       "headRefName": "copilot/add-security-considerations-section",
       "headRefOid": "3c65ccc9cb18971731763dbdb49e493346f47d8e",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2026-02-06T08:02:21Z",
+      "mergedAt": "2026-02-06T08:02:21Z",
+      "mergedBy": "achamayou",
+      "mergeCommit": {
+        "oid": "d56c4bfb6df530fb92874f1f4227901d30ec8063"
+      },
       "comments": [],
       "reviews": [
         {
@@ -1600,6 +1647,19 @@
               "updatedAt": "2026-02-04T20:28:58Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOQEQBrM7gMKFh",
+          "commit": {
+            "abbreviatedOid": "3c65ccc"
+          },
+          "author": "henkbirkholz",
+          "authorAssociation": "OWNER",
+          "state": "APPROVED",
+          "body": "exactly",
+          "createdAt": "2026-02-06T07:25:37Z",
+          "updatedAt": "2026-02-06T07:25:37Z",
+          "comments": []
         }
       ]
     },
@@ -1608,7 +1668,7 @@
       "id": "PR_kwDOQEQBrM7Bjm5J",
       "title": "Add Rego syntax validation to checks.yml pipeline",
       "url": "https://github.com/henkbirkholz/draft-birkholz-did-x509/pull/37",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "copilot-swe-agent",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [
@@ -1618,17 +1678,19 @@
       "labels": [],
       "body": "Issue #15 tracks validation of code snippets embedded in the spec. ABNF, CDDL, and JSON were already covered\u2014this adds Rego.\n\n### Changes\n\n- **OPA installation**: Download latest OPA binary using the openpolicyagent.org latest link\n- **Rego Compliance step**: Concatenate extracted `figures/rego/*.rego` with package declaration, run `opa check`\n- **`.gitignore`**: Exclude generated artifacts (`figures/`, `all.abnf`, `all.rego`)\n\n### Rego validation logic\n\n```bash\necho \"package didx509\" > all.rego\ncat figures/rego/*.rego >> all.rego\nopa check all.rego\n```\n\nThe Rego fragments in the spec define `parse_did`, `valid`, and `validate_predicate` rules that must be concatenated to form a valid policy. The pipeline will fail if Rego files are missing from the extracted figures.\n\n<!-- START COPILOT CODING AGENT TIPS -->\n---\n\n\ud83d\udca1 You can make Copilot smarter by setting up custom instructions, customizing its development environment and configuring Model Context Protocol (MCP) servers. Learn more [Copilot coding agent tips](https://gh.io/copilot-coding-agent-tips) in the docs.",
       "createdAt": "2026-02-04T20:27:48Z",
-      "updatedAt": "2026-02-04T20:41:52Z",
+      "updatedAt": "2026-02-06T08:02:01Z",
       "baseRepository": "henkbirkholz/draft-birkholz-did-x509",
       "baseRefName": "main",
       "baseRefOid": "9263438015b109cf21baa14caa89b41132924d24",
       "headRepository": "henkbirkholz/draft-birkholz-did-x509",
       "headRefName": "copilot/extend-checks-yml-rego-validation",
       "headRefOid": "e0da70b85ce2790b06014f7c8db2150a0c611d64",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2026-02-06T08:02:01Z",
+      "mergedAt": "2026-02-06T08:02:01Z",
+      "mergedBy": "achamayou",
+      "mergeCommit": {
+        "oid": "ea68d8f011cf4cb04e0590825559e838e694c433"
+      },
       "comments": [
         {
           "author": "achamayou",
@@ -1765,8 +1827,189 @@
               "updatedAt": "2026-02-04T20:38:27Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOQEQBrM7gMKt3",
+          "commit": {
+            "abbreviatedOid": "e0da70b"
+          },
+          "author": "henkbirkholz",
+          "authorAssociation": "OWNER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-02-06T07:26:23Z",
+          "updatedAt": "2026-02-06T07:26:23Z",
+          "comments": []
         }
       ]
+    },
+    {
+      "number": 38,
+      "id": "PR_kwDOQEQBrM7B_gk8",
+      "title": "There are no privacy considerations for did:x509",
+      "url": "https://github.com/henkbirkholz/draft-birkholz-did-x509/pull/38",
+      "state": "MERGED",
+      "author": "achamayou",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2026-02-06T13:04:05Z",
+      "updatedAt": "2026-02-06T13:32:57Z",
+      "baseRepository": "henkbirkholz/draft-birkholz-did-x509",
+      "baseRefName": "main",
+      "baseRefOid": "a7a15c569fbc18c616784bd4db9827da7e93e14d",
+      "headRepository": "henkbirkholz/draft-birkholz-did-x509",
+      "headRefName": "drop_empty_privacy_consideration",
+      "headRefOid": "4d8e962d6e4595397de7640b446522b6d5dffa18",
+      "closedAt": "2026-02-06T13:32:56Z",
+      "mergedAt": "2026-02-06T13:32:56Z",
+      "mergedBy": "achamayou",
+      "mergeCommit": {
+        "oid": "2466e0130a76427fb1103ef59c4b7066703f24bc"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOQEQBrM7gTGtP",
+          "commit": {
+            "abbreviatedOid": "4d8e962"
+          },
+          "author": "henkbirkholz",
+          "authorAssociation": "OWNER",
+          "state": "APPROVED",
+          "body": "I also fail to see any relevant privacy consideration that apply here. Maybe Eliot has a good idea, otherwise the reviews will provide more insight",
+          "createdAt": "2026-02-06T13:27:10Z",
+          "updatedAt": "2026-02-06T13:27:10Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 39,
+      "id": "PR_kwDOQEQBrM7B_ibN",
+      "title": "Replace DIDV1 with DID",
+      "url": "https://github.com/henkbirkholz/draft-birkholz-did-x509/pull/39",
+      "state": "MERGED",
+      "author": "achamayou",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "We never mention other versions, there is no need for this.",
+      "createdAt": "2026-02-06T13:06:05Z",
+      "updatedAt": "2026-02-06T14:18:23Z",
+      "baseRepository": "henkbirkholz/draft-birkholz-did-x509",
+      "baseRefName": "main",
+      "baseRefOid": "a7a15c569fbc18c616784bd4db9827da7e93e14d",
+      "headRepository": "henkbirkholz/draft-birkholz-did-x509",
+      "headRefName": "didv1_to_did",
+      "headRefOid": "a842ef312e80099215dd8ab7ffd1595dc5cd0084",
+      "closedAt": "2026-02-06T14:18:23Z",
+      "mergedAt": "2026-02-06T14:18:23Z",
+      "mergedBy": "achamayou",
+      "mergeCommit": {
+        "oid": "7a0e58fe10ea4e644bc5c8788fe5cedd227bdd80"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOQEQBrM7gTHqQ",
+          "commit": {
+            "abbreviatedOid": "a842ef3"
+          },
+          "author": "henkbirkholz",
+          "authorAssociation": "OWNER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-02-06T13:27:47Z",
+          "updatedAt": "2026-02-06T13:27:47Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 40,
+      "id": "PR_kwDOQEQBrM7CBCEV",
+      "title": "Review nits",
+      "url": "https://github.com/henkbirkholz/draft-birkholz-did-x509/pull/40",
+      "state": "MERGED",
+      "author": "achamayou",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2026-02-06T14:48:29Z",
+      "updatedAt": "2026-02-06T14:54:07Z",
+      "baseRepository": "henkbirkholz/draft-birkholz-did-x509",
+      "baseRefName": "main",
+      "baseRefOid": "7a0e58fe10ea4e644bc5c8788fe5cedd227bdd80",
+      "headRepository": "henkbirkholz/draft-birkholz-did-x509",
+      "headRefName": "review_nits",
+      "headRefOid": "7ecc2fafd1692c8abd49598c8304d4f26bb96760",
+      "closedAt": "2026-02-06T14:54:07Z",
+      "mergedAt": "2026-02-06T14:54:07Z",
+      "mergedBy": "achamayou",
+      "mergeCommit": {
+        "oid": "454decf611993e7b0272d3450b49e010509eae57"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 41,
+      "id": "PR_kwDOQEQBrM7CBLmj",
+      "title": "Add missing fold",
+      "url": "https://github.com/henkbirkholz/draft-birkholz-did-x509/pull/41",
+      "state": "MERGED",
+      "author": "achamayou",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2026-02-06T14:59:06Z",
+      "updatedAt": "2026-02-06T15:00:22Z",
+      "baseRepository": "henkbirkholz/draft-birkholz-did-x509",
+      "baseRefName": "main",
+      "baseRefOid": "454decf611993e7b0272d3450b49e010509eae57",
+      "headRepository": "henkbirkholz/draft-birkholz-did-x509",
+      "headRefName": "add_fold",
+      "headRefOid": "ca05958c27b853f4613e29f41cd7df7ba00d280e",
+      "closedAt": "2026-02-06T15:00:22Z",
+      "mergedAt": "2026-02-06T15:00:22Z",
+      "mergedBy": "achamayou",
+      "mergeCommit": {
+        "oid": "2e49c699bd96ae356a5379c2d1e1c1fc12469c52"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 42,
+      "id": "PR_kwDOQEQBrM7CBUAr",
+      "title": "Introduce and clarify why Rego is used early on",
+      "url": "https://github.com/henkbirkholz/draft-birkholz-did-x509/pull/42",
+      "state": "MERGED",
+      "author": "achamayou",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2026-02-06T15:09:41Z",
+      "updatedAt": "2026-02-06T15:10:52Z",
+      "baseRepository": "henkbirkholz/draft-birkholz-did-x509",
+      "baseRefName": "main",
+      "baseRefOid": "2e49c699bd96ae356a5379c2d1e1c1fc12469c52",
+      "headRepository": "henkbirkholz/draft-birkholz-did-x509",
+      "headRefName": "rego_definitions_in_introduction",
+      "headRefOid": "f0d1b0fc6e95782dc615c5f00e60ef5b970bd756",
+      "closedAt": "2026-02-06T15:10:52Z",
+      "mergedAt": "2026-02-06T15:10:52Z",
+      "mergedBy": "achamayou",
+      "mergeCommit": {
+        "oid": "e59960b4eee2a5e79825b0dcbe082738cf679f1b"
+      },
+      "comments": [],
+      "reviews": []
     }
   ]
 }
