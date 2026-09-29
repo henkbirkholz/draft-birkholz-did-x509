@@ -1156,7 +1156,10 @@ svg {
             <p id="section-toc.1-1.1.1" class="keepWithNext"><a href="#section-1" class="auto internal xref">1</a>.  <a href="#name-introduction" class="internal xref">Introduction</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1.2.1">
-                <p id="section-toc.1-1.1.2.1.1" class="keepWithNext"><a href="#section-1.1" class="auto internal xref">1.1</a>.  <a href="#name-conventions-and-definitions" class="internal xref">Conventions and Definitions</a></p>
+                <p id="section-toc.1-1.1.2.1.1" class="keepWithNext"><a href="#section-1.1" class="auto internal xref">1.1</a>.  <a href="#name-relationship-to-the-didx509" class="internal xref">Relationship to the did:x509 Method Specification</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1.2.2">
+                <p id="section-toc.1-1.1.2.2.1" class="keepWithNext"><a href="#section-1.2" class="auto internal xref">1.2</a>.  <a href="#name-conventions-and-definitions" class="internal xref">Conventions and Definitions</a></p>
 </li>
             </ul>
 </li>
@@ -1164,7 +1167,7 @@ svg {
             <p id="section-toc.1-1.2.1"><a href="#section-2" class="auto internal xref">2</a>.  <a href="#name-identifier-syntax" class="internal xref">Identifier Syntax</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.1">
-                <p id="section-toc.1-1.2.2.1.1" class="keepWithNext"><a href="#section-2.1" class="auto internal xref">2.1</a>.  <a href="#name-percent-encoding" class="internal xref">Percent-encoding</a></p>
+                <p id="section-toc.1-1.2.2.1.1"><a href="#section-2.1" class="auto internal xref">2.1</a>.  <a href="#name-percent-encoding" class="internal xref">Percent-encoding</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.2">
                 <p id="section-toc.1-1.2.2.2.1"><a href="#section-2.2" class="auto internal xref">2.2</a>.  <a href="#name-subject-predicate" class="internal xref">"subject" predicate</a></p>
@@ -1276,24 +1279,34 @@ Relying on a partial certificate chain (e.g., a root certificate and some interm
 While stable, the level of granularity afforded by a partial certificate chain may not be sufficient to distinguish several identities that are not equivalent for the purpose of policy.<a href="#section-1-4" class="pilcrow">¶</a></p>
 <p id="section-1-5">Combining authority pinning with certificate predicates is a precise and stable way of capturing identities as a constrained set of certificates.
 Their representation as compact and durable identifier strings enables the formulation of readable policy (e.g. "request.issuer == 'did:x509...'"), for example in the context of transparency ledger registration.<a href="#section-1-5" class="pilcrow">¶</a></p>
-<div id="conventions-and-definitions">
+<div id="relationship-to-the-didx509-method-specification">
 <section id="section-1.1">
-        <h3 id="name-conventions-and-definitions">
-<a href="#section-1.1" class="section-number selfRef">1.1. </a><a href="#name-conventions-and-definitions" class="section-name selfRef">Conventions and Definitions</a>
+        <h3 id="name-relationship-to-the-didx509">
+<a href="#section-1.1" class="section-number selfRef">1.1. </a><a href="#name-relationship-to-the-didx509" class="section-name selfRef">Relationship to the did:x509 Method Specification</a>
         </h3>
-<p id="section-1.1-1">The key words "<span class="bcp14">MUST</span>", "<span class="bcp14">MUST NOT</span>", "<span class="bcp14">REQUIRED</span>", "<span class="bcp14">SHALL</span>", "<span class="bcp14">SHALL NOT</span>", "<span class="bcp14">SHOULD</span>", "<span class="bcp14">SHOULD NOT</span>", "<span class="bcp14">RECOMMENDED</span>", "<span class="bcp14">NOT RECOMMENDED</span>",
+<p id="section-1.1-1">The did:x509 method is registered in the W3C DID Methods registry (<span>[<a href="#DID-METHODS" class="cite xref">DID-METHODS</a>]</span>), whose entry points to the did:x509 Method Specification maintained in the microsoft/did-x509 repository (<span>[<a href="#DID-X509-SPEC" class="cite xref">DID-X509-SPEC</a>]</span>).
+This document is aligned with <span>[<a href="#DID-X509-SPEC" class="cite xref">DID-X509-SPEC</a>]</span>, and much of its text, including the ABNF, the Rego policy, and the DID resolution procedure, is adapted from it; the authors of <span>[<a href="#DID-X509-SPEC" class="cite xref">DID-X509-SPEC</a>]</span> are also authors of this document.
+The authors intend to keep this document and <span>[<a href="#DID-X509-SPEC" class="cite xref">DID-X509-SPEC</a>]</span> synchronized as both evolve.<a href="#section-1.1-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="conventions-and-definitions">
+<section id="section-1.2">
+        <h3 id="name-conventions-and-definitions">
+<a href="#section-1.2" class="section-number selfRef">1.2. </a><a href="#name-conventions-and-definitions" class="section-name selfRef">Conventions and Definitions</a>
+        </h3>
+<p id="section-1.2-1">The key words "<span class="bcp14">MUST</span>", "<span class="bcp14">MUST NOT</span>", "<span class="bcp14">REQUIRED</span>", "<span class="bcp14">SHALL</span>", "<span class="bcp14">SHALL NOT</span>", "<span class="bcp14">SHOULD</span>", "<span class="bcp14">SHOULD NOT</span>", "<span class="bcp14">RECOMMENDED</span>", "<span class="bcp14">NOT RECOMMENDED</span>",
 "<span class="bcp14">MAY</span>", and "<span class="bcp14">OPTIONAL</span>" in this document are to be interpreted as
 described in BCP 14 <span>[<a href="#RFC2119" class="cite xref">RFC2119</a>]</span> <span>[<a href="#RFC8174" class="cite xref">RFC8174</a>]</span> when, and only when, they
-appear in all capitals, as shown here.<a href="#section-1.1-1" class="pilcrow">¶</a></p>
-<p id="section-1.1-2">In this document, CDDL (<span>[<a href="#RFC8610" class="cite xref">RFC8610</a>]</span>, <span>[<a href="#RFC9165" class="cite xref">RFC9165</a>]</span>) is used to describe the
-data formats, and ABNF (<span>[<a href="#RFC5234" class="cite xref">RFC5234</a>]</span>, <span>[<a href="#RFC7405" class="cite xref">RFC7405</a>]</span>) to describe identifiers.<a href="#section-1.1-2" class="pilcrow">¶</a></p>
-<p id="section-1.1-3">The reader is assumed to be familiar with the vocabulary and concepts
-defined in <span>[<a href="#I-D.ietf-scitt-architecture" class="cite xref">I-D.ietf-scitt-architecture</a>]</span>.<a href="#section-1.1-3" class="pilcrow">¶</a></p>
-<p id="section-1.1-4">Rego is a descriptive query language used to define policies in a precise and unambiguous way.
+appear in all capitals, as shown here.<a href="#section-1.2-1" class="pilcrow">¶</a></p>
+<p id="section-1.2-2">In this document, CDDL (<span>[<a href="#RFC8610" class="cite xref">RFC8610</a>]</span>, <span>[<a href="#RFC9165" class="cite xref">RFC9165</a>]</span>) is used to describe the
+data formats, and ABNF (<span>[<a href="#RFC5234" class="cite xref">RFC5234</a>]</span>, <span>[<a href="#RFC7405" class="cite xref">RFC7405</a>]</span>) to describe identifiers.<a href="#section-1.2-2" class="pilcrow">¶</a></p>
+<p id="section-1.2-3">The reader is assumed to be familiar with the vocabulary and concepts
+defined in <span>[<a href="#I-D.ietf-scitt-architecture" class="cite xref">I-D.ietf-scitt-architecture</a>]</span>.<a href="#section-1.2-3" class="pilcrow">¶</a></p>
+<p id="section-1.2-4">Rego is a descriptive query language used to define policies in a precise and unambiguous way.
 This document uses Rego (<span>[<a href="#REGO" class="cite xref">REGO</a>]</span>) to define the parsing and validation logic for did:x509 identifiers.
-The Rego code snippets provided in this document can be evaluated using any Rego v1 runtime, but there is no expectation that implementations use the Rego language.<a href="#section-1.1-4" class="pilcrow">¶</a></p>
-<p id="section-1.1-5">Per <span>[<a href="#RFC8792" class="cite xref">RFC8792</a>]</span>, line breaks may be present in the figures of this document
-to stay within the line-length limits of this document's format.<a href="#section-1.1-5" class="pilcrow">¶</a></p>
+The Rego code snippets provided in this document can be evaluated using any Rego v1 runtime, but there is no expectation that implementations use the Rego language.<a href="#section-1.2-4" class="pilcrow">¶</a></p>
+<p id="section-1.2-5">Per <span>[<a href="#RFC8792" class="cite xref">RFC8792</a>]</span>, line breaks may be present in the figures of this document
+to stay within the line-length limits of this document's format.<a href="#section-1.2-5" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -2155,6 +2168,14 @@ If unlinkability is required, relying parties should avoid reusing the same did:
         <dd>
 <span class="refTitle">"DID Document Definition"</span>, <span>n.d.</span>, <span>&lt;<a href="https://www.w3.org/TR/did-1.0/#dfn-did-documents">https://www.w3.org/TR/did-1.0/#dfn-did-documents</a>&gt;</span>. </dd>
 <dd class="break"></dd>
+<dt id="DID-METHODS">[DID-METHODS]</dt>
+        <dd>
+<span class="refTitle">"DID Methods"</span>, <time datetime="2026-09-26" class="refDate">26 September 2026</time>, <span>&lt;<a href="https://www.w3.org/TR/2026/NOTE-did-extensions-methods-20260926/">https://www.w3.org/TR/2026/NOTE-did-extensions-methods-20260926/</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="DID-X509-SPEC">[DID-X509-SPEC]</dt>
+        <dd>
+<span class="refAuthor">Riechert, M.</span> and <span class="refAuthor">A. Delignat-Lavaud</span>, <span class="refTitle">"did:x509 Method Specification"</span>, <time datetime="2026-09-29" class="refDate">29 September 2026</time>, <span>&lt;<a href="https://github.com/microsoft/did-x509/blob/d065856f18d7e1d426bf6b8e1f169132b7ed1891/specification.md">https://github.com/microsoft/did-x509/blob/d065856f18d7e1d426bf6b8e1f169132b7ed1891/specification.md</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="FULCIO">[FULCIO]</dt>
         <dd>
 <span class="refTitle">"Fulcio"</span>, <span>n.d.</span>, <span>&lt;<a href="https://github.com/sigstore/fulcio">https://github.com/sigstore/fulcio</a>&gt;</span>. </dd>
@@ -2197,7 +2218,7 @@ If unlinkability is required, relying parties should avoid reusing the same did:
 <dd class="break"></dd>
 <dt id="TEST-VECTORS">[TEST-VECTORS]</dt>
         <dd>
-<span class="refTitle">"did:x509 Test Vectors"</span>, <span>n.d.</span>, <span>&lt;<a href="https://github.com/microsoft/did-x509/blob/main/test-vectors.json">https://github.com/microsoft/did-x509/blob/main/test-vectors.json</a>&gt;</span>. </dd>
+<span class="refTitle">"did:x509 Test Vectors"</span>, <span>n.d.</span>, <span>&lt;<a href="https://github.com/microsoft/did-x509/blob/d065856f18d7e1d426bf6b8e1f169132b7ed1891/test-vectors.json">https://github.com/microsoft/did-x509/blob/d065856f18d7e1d426bf6b8e1f169132b7ed1891/test-vectors.json</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="VC">[VC]</dt>
       <dd>
