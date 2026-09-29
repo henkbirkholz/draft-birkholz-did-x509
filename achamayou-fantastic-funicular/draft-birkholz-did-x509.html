@@ -1,0 +1,2281 @@
+<!DOCTYPE html>
+<html lang="en" class="Internet-Draft">
+<head>
+<meta charset="utf-8">
+<meta content="Common,Latin" name="scripts">
+<meta content="initial-scale=1.0" name="viewport">
+<title>x509 Decentralized Identifier</title>
+<meta content="Maik Riechert" name="author">
+<meta content="Antoine Delignat-Lavaud" name="author">
+<meta content="Henk Birkholz" name="author">
+<meta content="Amaury Chamayou" name="author">
+<meta content="
+       This document defines the did:x509 decentralized identifier (DID) method, an interoperable and flexible issuer identifier format for messages that transport or refer to X.509 certificates, including COSE messages using RFC 9360. The did:x509 identifier format implements a direct, resolvable binding between a certificate chain and a compact issuer string (DID string). It combines the fingerprint of a certificate authority (CA) certificate in the chain with one or more predicates on the leaf certificate's subject name, subject alternative names, extended key usage, or Fulcio issuer. The identifier can be conveyed as an issuer value in a COSE Header CWT Claims map as defined in RFC 9597, in JOSE/JWT messages such as the &quot;iss&quot; claim defined in RFC 7519, or through other protocol-specific mechanisms that associate the identifier with the certificate chain. This issuer identifier is convenient for references and policy evaluation, for example in the context of transparency ledgers. 
+       This Informational document is published as an Independent Submission to improve interoperability with Microsoft's architecture. It is not a standard nor a product of the IETF. 
+    " name="description">
+<meta content="xml2rfc 3.34.1" name="generator">
+<meta content="DID" name="keyword">
+<meta content="X.509" name="keyword">
+<meta content="draft-birkholz-did-x509-latest" name="ietf.draft">
+<!-- Generator version information:
+  xml2rfc 3.34.1
+    Python 3.14.7
+    ConfigArgParse 1.7.7
+    google-i18n-address 3.1.1
+    intervaltree 3.2.1
+    Jinja2 3.1.6
+    lxml 6.1.1
+    natsort 8.4.0
+    platformdirs 4.11.10
+    pycountry 24.6.1
+    PyYAML 6.0.3
+    requests 2.33.1
+    wcwidth 0.8.4
+-->
+<link href="draft-birkholz-did-x509.xml" rel="alternate" type="application/rfc+xml">
+<link href="#copyright" rel="license">
+<style type="text/css">@font-face {
+  font-family: 'Lora';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Italic'), local('Lora-Italic'), url('https://martinthomson.github.io/rfc-css/fonts/lora-italic-cyrillic-ext.woff2') format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Italic'), local('Lora-Italic'), url('https://martinthomson.github.io/rfc-css/fonts/lora-italic-cyrillic-ext.woff2') format('woff2');
+  unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Italic'), local('Lora-Italic'), url('https://martinthomson.github.io/rfc-css/fonts/lora-italic-vietnamese.woff2') format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+1EA0-1EF9, U+20AB;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Italic'), local('Lora-Italic'), url('https://martinthomson.github.io/rfc-css/fonts/lora-italic-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Italic'), local('Lora-Italic'), url('https://martinthomson.github.io/rfc-css/fonts/lora-italic-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Regular'), local('Lora-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/lora-regular-cyrillic-ext.woff2') format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Regular'), local('Lora-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/lora-regular-cyrillic.woff2') format('woff2');
+  unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Regular'), local('Lora-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/lora-regular-vietnamese.woff2') format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+1EA0-1EF9, U+20AB;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Regular'), local('Lora-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/lora-regular-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Regular'), local('Lora-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/lora-regular-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local('Lora Bold'), local('Lora-Bold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-bold-cyrillic-ext.woff2') format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local('Lora Bold'), local('Lora-Bold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-bold-cyrillic.woff2') format('woff2');
+  unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local('Lora Bold'), local('Lora-Bold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-bold-vietnamese.woff2') format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+1EA0-1EF9, U+20AB;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local('Lora Bold'), local('Lora-Bold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-bold-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local('Lora Bold'), local('Lora-Bold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-bold-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: local('Lora SemiBold'), local('Lora-SemiBold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-semibold-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Oxygen Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Oxygen Mono'), local('OxygenMono-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/oxygenmono-regular-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Oxygen Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Oxygen Mono'), local('OxygenMono-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/oxygenmono-regular-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: italic;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-italic-cyrillic-ext.woff2') format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: italic;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-italic-cyrillic.woff2') format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: italic;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-italic-greek.woff2') format('woff2');
+  unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
+}
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: italic;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-italic-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: italic;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-italic-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: normal;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-regular-cyrillic-ext.woff2') format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: normal;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-regular-cyrillic.woff2') format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: normal;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-regular-greek.woff2') format('woff2');
+  unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
+}
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: normal;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-regular-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: normal;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-regular-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+:root {
+  color-scheme: light dark;
+  --background-color: #fff;
+  --text-color: #222;
+  --title-color: #191919;
+  --link-color: #2a6496;
+  --highlight-color: #f9f9f9;
+  --line-color: #eee;
+  --pilcrow-weak: #ddd;
+  --pilcrow-strong: #bbb;
+  --small-font-size: 14.5px;
+  --font-mono: 'Oxygen Mono', monospace;
+  --font-title: "Sofia Sans Semi Condensed", sans-serif;
+  scrollbar-color: #bbb #eee;
+}
+body {
+  max-width: 600px;
+  margin: 75px auto;
+  padding: 0 5px;
+  color: var(--text-color);
+  background-color: var(--background-color);
+  font: 16px/22px "Lora", serif;
+  scroll-behavior: smooth;
+}
+
+.ears {
+  display: none;
+}
+
+/* headings */
+section {
+  clear: both;
+}
+.section-number {
+  padding-right: 0.5em;
+}
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-title);
+  font-weight: 680;
+  margin: 0.8em 0 0.3em;
+  font-size-adjust: 0.5;
+  color: var(--title-color);
+}
+h1 {
+  &#title {
+    font-size: 32px;
+    line-height: 40px;
+    clear: both;
+    margin: 1.5em 0 0.2em;
+  }
+  &#rfcnum {
+    margin: 1.5em 0 0.2em;
+    & + h1#title {
+      margin: 0.2em 0;
+    }
+  }
+}
+
+h1, h2, h3 {
+  font-size: 22px;
+  line-height: 27px;
+}
+h4, h5, h6 {
+  font-size: 20px;
+  line-height: 24px;
+}
+
+/* general structure */
+.author {
+  padding-bottom: 0.3em;
+  vertical-align: top;
+}
+#abstract+p {
+  font-size: 18px;
+  line-height: 24px;
+  & code, & samp, & tt {
+    font-size: 16px;
+    line-height: 0;
+  }
+}
+
+p {
+  padding: 0;
+  margin: 0.5em 0;
+  text-align: left;
+}
+div {
+  margin: 0;
+}
+.alignRight {
+  margin: 1em 0;
+  &.art-text {
+    background-color: var(--highlight-color);
+    border: 1px solid var(--line-color);
+    border-radius: 3px;
+    padding: 0.5em 1em 0;
+    margin-bottom: 0.5em;
+    & pre {
+      padding: 0;
+      width: auto;
+    }
+  }
+  & > *:first-child {
+    border: none;
+    margin: 0;
+    float: right;
+    clear: both;
+  }
+  & > *:nth-child(2) {
+    clear: both;
+    display: block;
+    border: none;
+  }
+}
+svg {
+  display: block;
+  /* font-family isn't space-separated, but =~ will have to do */
+  &[font-family~="monospace" i], & [font-family~="monospace" i] {
+    font-family: var(--font-mono);
+  }
+}
+.alignCenter {
+  margin: 1em 0;
+  &.art-text {
+    background-color: var(--highlight-color);
+    border: 1px solid var(--line-color);
+    border-radius: 3px;
+    padding: 0.5em 1em 0;
+    margin-bottom: 0.5em;
+    & pre {
+      padding: 0;
+      width: auto;
+    }
+  }
+  & > *:first-child {
+    border: none;
+    /* this isn't optimal, but it's an existence proof.  PrinceXML doesn't
+       support flexbox yet.
+    */
+    display: table;
+    margin: 0 auto;
+  }
+}
+
+/* lists */
+ol, ul {
+  padding: 0;
+  margin: 0 0 0.5em 2em;
+  & :is(ol, ul) {
+    margin-left: 1em;
+  }
+}
+li {
+  margin: 0 0 0.25em 0;
+}
+ul.empty, .ulEmpty {
+  list-style-type: none;
+  & li {
+    margin-top: 0.5em;
+  }
+}
+:is(ul, ol).compact, .ulCompact, .olCompact {
+  margin: 0 0 0 2em;
+  & li {
+    margin: 0;
+    & :first-child { margin-top: 0; }
+    & :last-child { margin-bottom: 0; }
+  }
+}
+
+/* definition lists */
+dl {
+  clear: left;
+  --indent: 3ch;
+  /* --indent: attr(indent ch); not supported in any browser, but we can dream */
+  &.olPercent {
+    --indent: 5ch;
+    & > dt {
+      min-width: calc(var(--indent) - 2ch);
+      float: none;
+    }
+  }
+
+  dl > dd > & {
+    margin-top: 0.5em;
+    margin-bottom: 0;
+  }
+
+  &:not(.dlNewline) > dt {
+    float: left;
+    margin-right: 2ch;
+    min-width: 8ch;
+  }
+  & > dd {
+    margin-bottom: .8em;
+    margin-left: var(--indent) !important; /* stupid element overrides */
+    min-height: 2ex;
+  }
+}
+:is(dl.compact, .dlCompact) > dd {
+  margin-bottom: 0;
+  & > :is(:first-child, .break:first-child + *) {
+    margin-top: 0;
+  }
+  & > :is(:last-child) {
+    margin-bottom: 0;
+  }
+}
+:is(dd, span).break {
+  display: none;
+}
+
+/* links */
+a {
+  text-decoration: none;
+  &[href] {
+    color: var(--link-color);
+    &:hover { text-decoration: underline; }
+    &.selfRef {
+      color: var(--text-color);
+      &:hover {
+        text-decoration: none;
+        background-color: var(--highlight-color);
+      }
+    }
+  }
+}
+.iref + a[href].internal {
+  color: var(--text-color);
+}
+a.xref:is(.cite, .auto), :is(#status-of-memo, #copyright) a {
+  white-space: nowrap;
+}
+
+/* Figures */
+tt, code, pre {
+  background-color: var(--highlight-color);
+  font: 14px/22px var(--font-mono);
+}
+tt, code {
+  /* changing the font for inline elements leads to different ascender
+     and descender heights; as we want to retain baseline alignment,
+     remove leading to avoid altering the final height of lines
+     note: this fails if these blocks take an entire line,
+     a different solution would be great */
+  line-height: 0;
+}
+:is(h1, h2, h3, h4, h5, h6) :is(tt, code) {
+  font-size: 84%;
+}
+pre {
+  border: 1px solid var(--line-color);
+  font-size: 13.5px;
+  line-height: 16px;
+  letter-spacing: -0.2px;
+  margin: 5px;
+  padding: 5px;
+}
+img {
+  max-width: 100%;
+}
+figure {
+  margin: 0.5em 0;
+  padding: 0;
+  & blockquote {
+    margin: 0.8em 0.4em 0.4em;
+  }
+}
+figcaption, caption {
+  font-style: italic;
+  margin: 0.5em 1.5em;
+  text-align: left;
+  caption-side: bottom;
+}
+@media screen {
+  /* Auto-collapse boilerplate. */
+  :is(#status-of-memo, #copyright) {
+    & p {
+      margin: -2px 0;
+      max-height: 0;
+      transition: max-height 2s ease, margin 0.5s ease 0.5s;
+      overflow: hidden;
+    }
+    &:hover p,
+    & h2:target ~ p {
+      margin: 0.5em 0;
+      max-height: 500px;
+      overflow: auto;
+    }
+  }
+  pre, svg {
+    display: inline-block;
+    /* In the horizontal direction, sometimes people make over-sized figures.
+       Scrollbars for those is therefore necessary: auto adds them as necessary..
+       In the vertical direction, the line-height can combine with the font
+       asender/descender height to produce scrollbars: hidden avoids that. */
+    overflow: auto hidden;
+  }
+  pre {
+    max-width: 100%;
+    width: calc(100% - 22px - 1em);
+  }
+  svg {
+    max-width: calc(100% - 22px - 1em);
+  }
+  figure pre {
+    display: block;
+    width: calc(100% - 25px);
+  }
+  :is(pre, svg) + .pilcrow {
+    display: inline-block;
+    vertical-align: text-bottom;
+    padding-bottom: 8px;
+  }
+}
+
+/* aside, blockquote */
+aside, blockquote {
+  margin-left: 0;
+  padding: 0 2em;
+  font-style: italic;
+}
+blockquote {
+  margin: 1em 0;
+  border-left: 2px var(--pilcrow-strong) solid;
+}
+cite {
+  display: block;
+  text-align: right;
+  font-style: italic;
+}
+
+/* tables */
+table {
+  width: auto;
+  max-width: 100%;
+  margin: 0 0 1em;
+  border-collapse: collapse;
+  &.right { margin-left: auto; }
+  &.center { margin-left: auto; margin-right: auto; }
+  &.left { margin-right: auto; }
+  & .text-left { text-align: left; }
+  & .text-center { text-align: center; }
+  & .text-right { text-align: right; }
+  & caption {
+    margin: 0;
+    padding: 3px 0 3px 1em;
+  }
+  & p { margin: 0; }
+}
+
+thead, tbody {
+  border: 1px solid var(--line-color);
+}
+th, td {
+  text-align: left;
+  vertical-align: top;
+  padding: 5px 10px;
+}
+th {
+  background-color: var(--line-color);
+}
+:is(tr:nth-child(2n), thead+tbody > tr:nth-child(2n+1)) > td {
+  background-color: var(--background-color);
+}
+:is(tr:nth-child(2n+1), thead+tbody > tr:nth-child(2n)) > td {
+  background-color: var(--highlight-color);
+}
+
+/* pilcrow */
+a.pilcrow {
+  margin-left: 3px;
+  opacity: 0.2;
+  user-select: none;
+  &[href] {
+    color: var(--pilcrow-weak);
+    &:hover { text-decoration: none; }
+  }
+  @media not print {
+    :hover > &, &:focus {
+      opacity: 1;
+    }
+    &[href]:hover {
+      color: var(--pilcrow-strong);
+      background-color: transparent;
+    }
+  }
+  @media print {
+    display: none;
+  }
+}
+
+/* misc */
+hr {
+  border: 0;
+  border-top: 1px solid var(--line-color);
+}
+.bcp14 {
+  font-variant: small-caps;
+  font-weight: 600;
+  font-size: var(--small-font-size);
+}
+.role {
+  font-variant: all-small-caps;
+}
+sub, sup {
+  line-height: 1;
+  font-size: 80%;
+}
+
+/* info block */
+#identifiers {
+  margin: 0;
+  font-size: var(--small-font-size);
+  line-height: 18px;
+  --identifier-width: 15ch;
+  & dt {
+    width: var(--identifier-width);
+    min-width: var(--identifier-width);
+    clear: left;
+    float: left;
+    text-align: right;
+    margin-right: 1ch;
+  }
+  & dd {
+    margin: 0;
+    margin-left: calc(1em + var(--identifier-width)) !important;
+    min-width: 5em;
+  }
+  & .authors {
+    & .author {
+      display: inline-block;
+      margin-right: 1.5em;
+    }
+    & .org {
+      font-style: italic;
+    }
+  }
+}
+
+/* The prepared/rendered info at the very bottom of the page */
+.docInfo {
+  color: #999;
+  font-size: 0.9em;
+  font-style: italic;
+  margin-top: 2em;
+  & .prepared {
+    float: right;
+  }
+}
+
+/* table of contents */
+#toc {
+  padding: 0.75em 0 2em 0;
+  margin-bottom: 1em;
+
+  & nav {
+    & ul {
+      margin: 0 0.5em 0 0;
+      padding: 0;
+      list-style: none;
+    }
+    & li {
+      line-height: 1.3em;
+      margin: 2px 0;
+      padding-left: 1.2em;
+      text-indent: -1.2em;
+    }
+  }
+  & a.xref {
+    white-space: normal;
+  }
+}
+
+.references {
+  & > dt {
+    text-align: right;
+    font-weight: bold;
+    min-width: 10ch;
+    margin-right: 1.5ch;
+    &:target::before {
+      content: "⇒";
+      margin: 0 10px 0 -25px;
+    }
+  }
+  & > dd {
+    margin-left: 12ch !important;
+    overflow: visible;
+    & .refInstance {
+      margin-bottom: 0.8em;
+    }
+    & .ascii {
+      margin-bottom: 0.25em;
+    }
+  }
+}
+
+#rfc\.index\.index + ul {
+  margin-left: 0;
+}
+
+/* authors */
+address.vcard {
+  font-style: normal;
+  max-width: 20em;
+  margin: 1em auto 1em 0;
+
+  & .nameRole {
+    font-weight: 700;
+    margin-left: 0;
+  }
+  & .label {
+    margin: 0.5em 0;
+  }
+  & .type {
+    display: none;
+  }
+  & .alternative-contact {
+    margin: 0.5em 0 0.25em 0;
+  }
+  & .non-ascii {
+    margin: 0 0 0 2em;
+  }
+  & div.left {
+    text-align: left;
+  }
+  & div.right {
+    text-align: right;
+  }
+}
+
+hr.addr {
+  border-top: 1px dashed;
+  margin: 0;
+  color: #ddd;
+  max-width: calc(100% - 16px);
+}
+@media (min-width: 500px) {
+  #authors-addresses {
+    & > section {
+      column-count: 2;
+      column-gap: 20px;
+    }
+    & > section > h2 {
+      column-span: all;
+    }
+    /* hack for break-inside: avoid-column */
+    & address {
+      display: inline-block;
+      break-inside: avoid-column;
+    }
+  }
+}
+
+/* Comments */
+.rfcEditorRemove {
+  & p:first-of-type {
+    font-style: italic;
+  }
+}
+.cref {
+  background-color: rgba(249, 232, 105, 0.3);
+  padding: 2px 4px;
+}
+.crefSource {
+  font-style: italic;
+}
+
+@media screen {
+  #toc {
+    & nav {
+      font-family: var(--font-title);
+      font-weight: 360;
+      & > ul { margin-bottom: 2em; }
+      & ul {
+        margin: 0 0 0 4px;
+        & :is(p, li) {
+          margin: 2px 0;
+        }
+      }
+    }
+    & a.toplink {
+      float: right;
+    }
+  }
+}
+@media not screen {
+  #toc a.toplink {
+    display: none;
+  }
+}
+
+
+/* TOC layout for smaller screens */
+@media screen and (max-width: 929px) {
+  #toc {
+    position: fixed;
+    z-index: 2;
+    top: 0;
+    right: 0;
+    padding: 1px 0 0 0;
+    margin: 0;
+    border-bottom: 1px solid #ccc;
+    opacity: 0.6;
+    & h2 {
+      margin: 0;
+      padding: 2px 0 2px 6px;
+      padding-right: 1em;
+      font-size: 18px;
+      line-height: 24px;
+      min-width: 190px;
+      text-align: right;
+      background-color: #444;
+      color: white;
+      cursor: pointer;
+      &::before { /* css hamburger */
+        float: right;
+        position: relative;
+        width: 1em;
+        height: 1px;
+        left: -164px;
+        margin: 8px 0 0 0;
+        background: white none repeat scroll 0 0;
+        box-shadow: 0 4px 0 0 white, 0 8px 0 0 white;
+        content: "";
+      }
+    }
+    & nav {
+      display: none;
+      background-color: var(--background-color);
+      padding: 0.5em 1em 1em;
+      overflow: auto;
+      overscroll-behavior: contain;
+      height: calc(100vh - 48px);
+      border-left: 1px solid #ddd;
+    }
+    &.active {
+      opacity: 1;
+      & nav { display: block; }
+    }
+    /* Make the collapsed ToC header render white on gray also when it's a link */
+    & h2 a,
+    & h2 a:is(:link, :focus, :hover),
+    & a.toplink,
+    & a.toplink:hover {
+      color: white;
+      background-color: #444;
+      text-decoration: none;
+    }
+    & a.toplink {
+      margin: 2px 0.5em 0;
+    }
+  }
+}
+
+/* TOC layout for wide screens */
+@media screen and (min-width: 930px) {
+  body {
+    padding-right: 360px;
+    padding-right: calc(min(180px + 20%, 500px));
+  }
+  #toc {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    right: calc(50vw - 480px);
+    width: 312px;
+    margin: 0;
+    padding: 0;
+    z-index: 1;
+    & h2 {
+      margin: 0;
+      padding: 0.25em 1em 1em 0;
+    }
+    & nav {
+      display: block;
+      height: calc(90vh - 84px);
+      bottom: 0;
+      padding: 0.5em 0 2em;
+      overflow: auto;
+      overscroll-behavior: contain;
+      scrollbar-width: thin;
+    }
+    & a.toplink {
+      margin: 8px 0.5em 0;
+    }
+  }
+  img { /* future proofing */
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+/* pagination */
+@media print {
+  body {
+    width: 100%;
+  }
+  p {
+    orphans: 3;
+    widows: 3;
+  }
+  #n-copyright-notice {
+    border-bottom: none;
+  }
+  #toc {
+    page-break-before: always;
+    border-top: none;
+    padding-top: 0;
+  }
+  #n-introduction {
+    page-break-before: always;
+  }
+  figure, pre, .vcard {
+    page-break-inside: avoid;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    page-break-after: avoid;
+  }
+  :is(h2, h3, h4, h5, h6)+*, dd {
+    page-break-before: avoid;
+  }
+  pre {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    font-size: 10pt;
+  }
+  table {
+    border: 1px solid #ddd;
+  }
+  td {
+    border-top: 1px solid #ddd;
+  }
+}
+
+@page :first {
+  padding-top: 0;
+  @top-left {
+    content: normal;
+    border: none;
+  }
+  @top-center {
+    content: normal;
+    border: none;
+  }
+  @top-right {
+    content: normal;
+    border: none;
+  }
+}
+
+@page {
+  size: A4;
+  margin-bottom: 45mm;
+  padding-top: 20px;
+}
+
+/* Dark mode. */
+@media (prefers-color-scheme: dark) {
+:root {
+  --background-color: #121212;
+  --text-color: #f0f0f0;
+  --title-color: #fff;
+  --link-color: #4da4f0;
+  --highlight-color: #282828;
+  --line-color: #444;
+  --pilcrow-weak: #444;
+  --pilcrow-strong: #666;
+  scrollbar-color: #777 #333;
+}
+}
+
+/* SVG Trick: a prefix match works because only black and white are allowed */
+svg {
+  & :is([stroke="black"], [stroke^="#000"]) {
+    stroke: var(--text-color);
+  }
+  & :is([stroke="white"], [stroke^="#fff"]) {
+    stroke: var(--background-color);
+  }
+  & :is([fill="black"], [fill^="#000"], :not([fill])) {
+    fill: var(--text-color);
+  }
+  & :is([fill="white"], [fill^="#fff"]) {
+    fill: var(--background-color);
+  }
+}
+</style>
+
+</head>
+<body class="xml2rfc">
+<table class="ears">
+<thead><tr>
+<td class="left">Internet-Draft</td>
+<td class="center">did:x509</td>
+<td class="right">September 2026</td>
+</tr></thead>
+<tfoot><tr>
+<td class="left">Riechert, et al.</td>
+<td class="center">Expires 2 April 2027</td>
+<td class="right">[Page]</td>
+</tr></tfoot>
+</table>
+<div id="external-metadata" class="document-information"></div>
+<div id="internal-metadata" class="document-information">
+<dl id="identifiers">
+<dt class="label-workgroup">Workgroup:</dt>
+<dd class="workgroup">Network Working Group</dd>
+<dt class="label-internet-draft">Internet-Draft:</dt>
+<dd class="internet-draft">draft-birkholz-did-x509-latest</dd>
+<dt class="label-published">Published:</dt>
+<dd class="published">
+<time datetime="2026-09-29" class="published">29 September 2026</time>
+    </dd>
+<dt class="label-intended-status">Intended Status:</dt>
+<dd class="intended-status">Standards Track</dd>
+<dt class="label-expires">Expires:</dt>
+<dd class="expires"><time datetime="2027-04-02">2 April 2027</time></dd>
+<dt class="label-authors">Authors:</dt>
+<dd class="authors">
+<div class="author">
+      <div class="author-name">M. Riechert</div>
+<div class="org">Microsoft</div>
+</div>
+<div class="author">
+      <div class="author-name">A. Delignat-Lavaud</div>
+<div class="org">Microsoft</div>
+</div>
+<div class="author">
+      <div class="author-name">H. Birkholz</div>
+<div class="org">Fraunhofer SIT</div>
+</div>
+<div class="author">
+      <div class="author-name">A. Chamayou</div>
+<div class="org">Microsoft</div>
+</div>
+</dd>
+</dl>
+</div>
+<h1 id="title">x509 Decentralized Identifier</h1>
+<section id="section-abstract">
+      <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
+<p id="section-abstract-1">This document defines the did:x509 decentralized identifier (DID) method, an interoperable and flexible issuer identifier format for messages that transport or refer to X.509 certificates, including COSE messages using RFC 9360. The did:x509 identifier format implements a direct, resolvable binding between a certificate chain and a compact issuer string (DID string). It combines the fingerprint of a certificate authority (CA) certificate in the chain with one or more predicates on the leaf certificate's subject name, subject alternative names, extended key usage, or Fulcio issuer. The identifier can be conveyed as an issuer value in a COSE Header CWT Claims map as defined in RFC 9597, in JOSE/JWT messages such as the "iss" claim defined in RFC 7519, or through other protocol-specific mechanisms that associate the identifier with the certificate chain. This issuer identifier is convenient for references and policy evaluation, for example in the context of transparency ledgers.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
+<p id="section-abstract-2">This Informational document is published as an Independent Submission to improve interoperability with Microsoft's architecture. It is not a standard nor a product of the IETF.<a href="#section-abstract-2" class="pilcrow">¶</a></p>
+</section>
+<section class="note rfcEditorRemove" id="section-note.1">
+      <h2 id="name-discussion-venues">
+<a href="#name-discussion-venues" class="section-name selfRef">Discussion Venues</a>
+      </h2>
+<p id="section-note.1-1">This note is to be removed before publishing as an RFC.<a href="#section-note.1-1" class="pilcrow">¶</a></p>
+<p id="section-note.1-2">Source for this draft and an issue tracker can be found at
+    <span><a href="https://github.com/henkbirkholz/draft-birkholz-did-x509">https://github.com/henkbirkholz/draft-birkholz-did-x509</a></span>.<a href="#section-note.1-2" class="pilcrow">¶</a></p>
+</section>
+<div id="status-of-memo">
+<section id="section-boilerplate.1">
+        <h2 id="name-status-of-this-memo">
+<a href="#name-status-of-this-memo" class="section-name selfRef">Status of This Memo</a>
+        </h2>
+<p id="section-boilerplate.1-1">
+        This Internet-Draft is submitted in full conformance with the
+        provisions of BCP 78 and BCP 79.<a href="#section-boilerplate.1-1" class="pilcrow">¶</a></p>
+<p id="section-boilerplate.1-2">
+        Internet-Drafts are working documents of the Internet Engineering Task
+        Force (IETF). Note that other groups may also distribute working
+        documents as Internet-Drafts. The list of current Internet-Drafts is
+        at <span><a href="https://datatracker.ietf.org/drafts/current/">https://datatracker.ietf.org/drafts/current/</a></span>.<a href="#section-boilerplate.1-2" class="pilcrow">¶</a></p>
+<p id="section-boilerplate.1-3">
+        Internet-Drafts are draft documents valid for a maximum of six months
+        and may be updated, replaced, or obsoleted by other documents at any
+        time. It is inappropriate to use Internet-Drafts as reference
+        material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
+<p id="section-boilerplate.1-4">
+        This Internet-Draft will expire on 2 April 2027.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="copyright">
+<section id="section-boilerplate.2">
+        <h2 id="name-copyright-notice">
+<a href="#name-copyright-notice" class="section-name selfRef">Copyright Notice</a>
+        </h2>
+<p id="section-boilerplate.2-1">
+            Copyright (c) 2026 IETF Trust and the persons identified as the
+            document authors. All rights reserved.<a href="#section-boilerplate.2-1" class="pilcrow">¶</a></p>
+<p id="section-boilerplate.2-2">
+            This document is subject to BCP 78 and the IETF Trust's Legal
+            Provisions Relating to IETF Documents
+            (<span><a href="https://trustee.ietf.org/license-info">https://trustee.ietf.org/license-info</a></span>) in effect on the date of
+            publication of this document. Please review these documents
+            carefully, as they describe your rights and restrictions with
+            respect to this document. Code Components extracted from this
+            document must include Revised BSD License text as described in
+            Section 4.e of the Trust Legal Provisions and are provided without
+            warranty as described in the Revised BSD License.<a href="#section-boilerplate.2-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="toc">
+<section id="section-toc.1">
+        <a href="#" onclick="scroll(0,0)" class="toplink">▲</a><h2 id="name-table-of-contents">
+<a href="#name-table-of-contents" class="section-name selfRef">Table of Contents</a>
+        </h2>
+<nav class="toc"><ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1">
+            <p id="section-toc.1-1.1.1" class="keepWithNext"><a href="#section-1" class="auto internal xref">1</a>.  <a href="#name-introduction" class="internal xref">Introduction</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1.2.1">
+                <p id="section-toc.1-1.1.2.1.1" class="keepWithNext"><a href="#section-1.1" class="auto internal xref">1.1</a>.  <a href="#name-conventions-and-definitions" class="internal xref">Conventions and Definitions</a></p>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2">
+            <p id="section-toc.1-1.2.1"><a href="#section-2" class="auto internal xref">2</a>.  <a href="#name-identifier-syntax" class="internal xref">Identifier Syntax</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.1">
+                <p id="section-toc.1-1.2.2.1.1" class="keepWithNext"><a href="#section-2.1" class="auto internal xref">2.1</a>.  <a href="#name-percent-encoding" class="internal xref">Percent-encoding</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.2">
+                <p id="section-toc.1-1.2.2.2.1"><a href="#section-2.2" class="auto internal xref">2.2</a>.  <a href="#name-subject-predicate" class="internal xref">"subject" predicate</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.3">
+                <p id="section-toc.1-1.2.2.3.1"><a href="#section-2.3" class="auto internal xref">2.3</a>.  <a href="#name-san-predicate" class="internal xref">"san" predicate</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.4">
+                <p id="section-toc.1-1.2.2.4.1"><a href="#section-2.4" class="auto internal xref">2.4</a>.  <a href="#name-eku-predicate" class="internal xref">"eku" predicate</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.5">
+                <p id="section-toc.1-1.2.2.5.1"><a href="#section-2.5" class="auto internal xref">2.5</a>.  <a href="#name-fulcio-issuer-predicate" class="internal xref">"fulcio-issuer" predicate</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.6">
+                <p id="section-toc.1-1.2.2.6.1"><a href="#section-2.6" class="auto internal xref">2.6</a>.  <a href="#name-did-resolution-options" class="internal xref">DID resolution options</a></p>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3">
+            <p id="section-toc.1-1.3.1"><a href="#section-3" class="auto internal xref">3</a>.  <a href="#name-verifiable-data-registry-an" class="internal xref">Verifiable Data Registry and Trust Model</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4">
+            <p id="section-toc.1-1.4.1"><a href="#section-4" class="auto internal xref">4</a>.  <a href="#name-did-document" class="internal xref">DID Document</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5">
+            <p id="section-toc.1-1.5.1"><a href="#section-5" class="auto internal xref">5</a>.  <a href="#name-cddl-for-a-json-data-model-" class="internal xref">CDDL for a JSON Data Model for X.509 Certificate Chains</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6">
+            <p id="section-toc.1-1.6.1"><a href="#section-6" class="auto internal xref">6</a>.  <a href="#name-method-operations" class="internal xref">Method Operations</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.1">
+                <p id="section-toc.1-1.6.2.1.1"><a href="#section-6.1" class="auto internal xref">6.1</a>.  <a href="#name-create" class="internal xref">Create</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.2">
+                <p id="section-toc.1-1.6.2.2.1"><a href="#section-6.2" class="auto internal xref">6.2</a>.  <a href="#name-read-resolve" class="internal xref">Read / Resolve</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.3">
+                <p id="section-toc.1-1.6.2.3.1"><a href="#section-6.3" class="auto internal xref">6.3</a>.  <a href="#name-update" class="internal xref">Update</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.4">
+                <p id="section-toc.1-1.6.2.4.1"><a href="#section-6.4" class="auto internal xref">6.4</a>.  <a href="#name-deactivate" class="internal xref">Deactivate</a></p>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7">
+            <p id="section-toc.1-1.7.1"><a href="#section-7" class="auto internal xref">7</a>.  <a href="#name-did-resolution" class="internal xref">DID Resolution</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8">
+            <p id="section-toc.1-1.8.1"><a href="#section-8" class="auto internal xref">8</a>.  <a href="#name-security-considerations" class="internal xref">Security Considerations</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.1">
+                <p id="section-toc.1-1.8.2.1.1"><a href="#section-8.1" class="auto internal xref">8.1</a>.  <a href="#name-identifier-ambiguity" class="internal xref">Identifier Ambiguity</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.2">
+                <p id="section-toc.1-1.8.2.2.1"><a href="#section-8.2" class="auto internal xref">8.2</a>.  <a href="#name-x509-trust-stores" class="internal xref">X.509 Trust Stores</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.3">
+                <p id="section-toc.1-1.8.2.3.1"><a href="#section-8.3" class="auto internal xref">8.3</a>.  <a href="#name-use-of-identifier-contents" class="internal xref">Use of Identifier Contents</a></p>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9">
+            <p id="section-toc.1-1.9.1"><a href="#section-9" class="auto internal xref">9</a>.  <a href="#name-privacy-considerations" class="internal xref">Privacy Considerations</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10">
+            <p id="section-toc.1-1.10.1"><a href="#section-10" class="auto internal xref">10</a>. <a href="#name-iana-considerations" class="internal xref">IANA Considerations</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11">
+            <p id="section-toc.1-1.11.1"><a href="#section-11" class="auto internal xref">11</a>. <a href="#name-references" class="internal xref">References</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.1">
+                <p id="section-toc.1-1.11.2.1.1"><a href="#section-11.1" class="auto internal xref">11.1</a>.  <a href="#name-normative-references" class="internal xref">Normative References</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.2">
+                <p id="section-toc.1-1.11.2.2.1"><a href="#section-11.2" class="auto internal xref">11.2</a>.  <a href="#name-informative-references" class="internal xref">Informative References</a></p>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.12">
+            <p id="section-toc.1-1.12.1"><a href="#appendix-A" class="auto internal xref">Appendix A</a>.  <a href="#name-test-vectors" class="internal xref">Test Vectors</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.13">
+            <p id="section-toc.1-1.13.1"><a href="#appendix-B" class="auto internal xref"></a><a href="#name-acknowledgments" class="internal xref">Acknowledgments</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.14">
+            <p id="section-toc.1-1.14.1"><a href="#appendix-C" class="auto internal xref"></a><a href="#name-authors-addresses" class="internal xref">Authors' Addresses</a></p>
+</li>
+        </ul>
+</nav>
+</section>
+</div>
+<div id="introduction">
+<section id="section-1">
+      <h2 id="name-introduction">
+<a href="#section-1" class="section-number selfRef">1. </a><a href="#name-introduction" class="section-name selfRef">Introduction</a>
+      </h2>
+<p id="section-1-1">This document aims to define an interoperable and flexible issuer identifier format, based on decentralized identifiers (<span>[<a href="#DID" class="cite xref">DID</a>]</span>), for messages that transport or refer to X.509 certificates (<span>[<a href="#RFC5280" class="cite xref">RFC5280</a>]</span>), including COSE messages using <span>[<a href="#RFC9360" class="cite xref">RFC9360</a>]</span>.
+The did:x509 identifier format implements a direct, resolvable binding between a certificate chain and a compact issuer string.
+It can be conveyed as an issuer value in a COSE Header CWT Claims map as defined in <span>[<a href="#RFC9597" class="cite xref">RFC9597</a>]</span>, in JOSE/JWT messages such as the <code>iss</code> claim defined in <span>[<a href="#RFC7519" class="cite xref">RFC7519</a>]</span>, or through other protocol-specific mechanisms that associate the identifier with the certificate chain.<a href="#section-1-1" class="pilcrow">¶</a></p>
+<p id="section-1-2">The RWOT11 workshop outlined the need for hybrid solutions that combine X.509 certificates with DIDs (<span>[<a href="#RWOT11" class="cite xref">RWOT11</a>]</span>).
+The did:x509 method takes a simple approach that does not introduce additional infrastructure.
+Creating and resolving a did:x509 is a local operation.
+It relies on X.509 chain validation and matches elements contained in the DID to certificate properties within the chain.<a href="#section-1-2" class="pilcrow">¶</a></p>
+<p id="section-1-3">The main difference to other DID methods is that did:x509 requires a certificate chain to be passed using a new DID resolution option (<span>[<a href="#DID" class="cite xref">DID</a>]</span>), <code>x509chain</code>, while resolving a DID.
+This certificate chain is typically embedded in the signing envelope, for example within the <code>x5c</code> header parameter of JWS/JWT documents.<a href="#section-1-3" class="pilcrow">¶</a></p>
+<p id="section-1-4">Including a certificate chain directly in configuration or in policy is often impractical.
+This is due to its size, and to the frequency at which some elements, particularly the leaf, are refreshed.
+Relying on a partial certificate chain (e.g., a root certificate and some intermediary certificates) is similarly unwieldy.
+While stable, the level of granularity afforded by a partial certificate chain may not be sufficient to distinguish several identities that are not equivalent for the purpose of policy.<a href="#section-1-4" class="pilcrow">¶</a></p>
+<p id="section-1-5">Combining authority pinning with certificate predicates is a precise and stable way of capturing identities as a constrained set of certificates.
+Their representation as compact and durable identifier strings enables the formulation of readable policy (e.g. "request.issuer == 'did:x509...'"), for example in the context of transparency ledger registration.<a href="#section-1-5" class="pilcrow">¶</a></p>
+<div id="conventions-and-definitions">
+<section id="section-1.1">
+        <h3 id="name-conventions-and-definitions">
+<a href="#section-1.1" class="section-number selfRef">1.1. </a><a href="#name-conventions-and-definitions" class="section-name selfRef">Conventions and Definitions</a>
+        </h3>
+<p id="section-1.1-1">The key words "<span class="bcp14">MUST</span>", "<span class="bcp14">MUST NOT</span>", "<span class="bcp14">REQUIRED</span>", "<span class="bcp14">SHALL</span>", "<span class="bcp14">SHALL NOT</span>", "<span class="bcp14">SHOULD</span>", "<span class="bcp14">SHOULD NOT</span>", "<span class="bcp14">RECOMMENDED</span>", "<span class="bcp14">NOT RECOMMENDED</span>",
+"<span class="bcp14">MAY</span>", and "<span class="bcp14">OPTIONAL</span>" in this document are to be interpreted as
+described in BCP 14 <span>[<a href="#RFC2119" class="cite xref">RFC2119</a>]</span> <span>[<a href="#RFC8174" class="cite xref">RFC8174</a>]</span> when, and only when, they
+appear in all capitals, as shown here.<a href="#section-1.1-1" class="pilcrow">¶</a></p>
+<p id="section-1.1-2">In this document, CDDL (<span>[<a href="#RFC8610" class="cite xref">RFC8610</a>]</span>, <span>[<a href="#RFC9165" class="cite xref">RFC9165</a>]</span>) is used to describe the
+data formats, and ABNF (<span>[<a href="#RFC5234" class="cite xref">RFC5234</a>]</span>, <span>[<a href="#RFC7405" class="cite xref">RFC7405</a>]</span>) to describe identifiers.<a href="#section-1.1-2" class="pilcrow">¶</a></p>
+<p id="section-1.1-3">The reader is assumed to be familiar with the vocabulary and concepts
+defined in <span>[<a href="#I-D.ietf-scitt-architecture" class="cite xref">I-D.ietf-scitt-architecture</a>]</span>.<a href="#section-1.1-3" class="pilcrow">¶</a></p>
+<p id="section-1.1-4">Rego is a descriptive query language used to define policies in a precise and unambiguous way.
+This document uses Rego (<span>[<a href="#REGO" class="cite xref">REGO</a>]</span>) to define the parsing and validation logic for did:x509 identifiers.
+The Rego code snippets provided in this document can be evaluated using any Rego v1 runtime, but there is no expectation that implementations use the Rego language.<a href="#section-1.1-4" class="pilcrow">¶</a></p>
+<p id="section-1.1-5">Per <span>[<a href="#RFC8792" class="cite xref">RFC8792</a>]</span>, line breaks may be present in the figures of this document
+to stay within the line-length limits of this document's format.<a href="#section-1.1-5" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+<div id="identifier-syntax">
+<section id="section-2">
+      <h2 id="name-identifier-syntax">
+<a href="#section-2" class="section-number selfRef">2. </a><a href="#name-identifier-syntax" class="section-name selfRef">Identifier Syntax</a>
+      </h2>
+<p id="section-2-1">The DID method name is <code>x509</code>.
+A did:x509 DID starts with <code>did:x509:</code> and binds a CA fingerprint to one or more certificate predicates.<a href="#section-2-1" class="pilcrow">¶</a></p>
+<p id="section-2-2">The did:x509 ABNF definition defined below uses the syntax defined in <span>[<a href="#RFC5234" class="cite xref">RFC5234</a>]</span>, with case-sensitive string literals written as <code>%s"..."</code> per <span>[<a href="#RFC7405" class="cite xref">RFC7405</a>]</span>, and the corresponding definitions for <code>ALPHA</code> and <code>DIGIT</code>.
+<span>[<a href="#DID" class="cite xref">DID</a>]</span> contains the definitions for <code>idchar</code> and <code>pct-encoded</code> in Section 3.1.<a href="#section-2-2" class="pilcrow">¶</a></p>
+<div class="lang-abnf sourcecode" id="section-2-3">
+<pre>
+idchar             = ALPHA / DIGIT / "." / "-" / "_" / pct-encoded
+pct-encoded        = "%" HEXDIG HEXDIG
+</pre><a href="#section-2-3" class="pilcrow">¶</a>
+</div>
+<span id="name-abnf-definition-of-core-did"></span><div id="fig-core-def">
+<figure id="figure-1">
+        <div class="alignLeft art-abnf art-text artwork" id="section-2-4.1">
+<pre>=============== NOTE: '\' line wrapping per RFC 8792 ================
+
+did-x509           = %s"did:x509:" method-specific-id
+method-specific-id = version ":" ca-fingerprint-alg ":" ca-\
+              fingerprint 1*("::" predicate-name ":" predicate-value)
+version            = 1*DIGIT
+ca-fingerprint-alg = %s"sha256" / %s"sha384" / %s"sha512"
+ca-fingerprint     = base64url
+predicate-name     = %s"subject" / %s"san" / %s"eku" /
+                     %s"fulcio-issuer"
+predicate-value    = *(1*idchar ":") 1*idchar
+base64url          = 1*(ALPHA / DIGIT / "-" / "_")
+</pre>
+</div>
+<figcaption><a href="#figure-1" class="selfRef">Figure 1</a>:
+<a href="#name-abnf-definition-of-core-did" class="selfRef">ABNF Definition of Core did-x509 Syntax</a>
+        </figcaption></figure>
+</div>
+<p id="section-2-5">Implementations of this specification <span class="bcp14">MUST</span> indicate a version value of <code>0</code>.<a href="#section-2-5" class="pilcrow">¶</a></p>
+<p id="section-2-6"><code>ca-fingerprint-alg</code> is one of <code>sha256</code>, <code>sha384</code>, or <code>sha512</code>.
+<code>ca-fingerprint</code> is a base64url-encoded digest of a non-leaf certificate in the certificate chain, that is, <code>chain[i].fingerprint[ca-fingerprint-alg]</code> with i &gt; 0: either an intermediate or root CA certificate.
+In this document, <code>chain</code> refers to the certificate chain mapped to the JSON data model defined in <a href="#json-model" class="auto internal xref">Section 5</a>.
+The <code>::</code> separator introduces each predicate.
+Each predicate has a <code>predicate-name</code> and a predicate-specific <code>predicate-value</code>.<a href="#section-2-6" class="pilcrow">¶</a></p>
+<p id="section-2-7">The method-specific identifier has three parts:<a href="#section-2-7" class="pilcrow">¶</a></p>
+<ol start="1" type="1" class="normal type-1" id="section-2-8">
+<li id="section-2-8.1">
+          <p id="section-2-8.1.1">A version number.<a href="#section-2-8.1.1" class="pilcrow">¶</a></p>
+</li>
+        <li id="section-2-8.2">
+          <p id="section-2-8.2.1">A certificate authority fingerprint algorithm and value.<a href="#section-2-8.2.1" class="pilcrow">¶</a></p>
+</li>
+        <li id="section-2-8.3">
+          <p id="section-2-8.3.1">One or more predicates that match fields in the leaf certificate.<a href="#section-2-8.3.1" class="pilcrow">¶</a></p>
+</li>
+      </ol>
+<p id="section-2-9">The DID subject is the logical identity selected by the CA fingerprint and sequence of predicates.
+It is not necessarily the X.509 subject name; <code>subject</code> is only one predicate type.<a href="#section-2-9" class="pilcrow">¶</a></p>
+<p id="section-2-10">did:x509 does not define any DID URL path or query semantics.
+A did:x509 DID URL <span class="bcp14">MUST NOT</span> include a path or query component.
+Fragment identifiers remain valid for identifying resources within a resolved DID document, for example <code>&lt;DID&gt;#0</code>.<a href="#section-2-10" class="pilcrow">¶</a></p>
+<p id="section-2-11">Example:<a href="#section-2-11" class="pilcrow">¶</a></p>
+<p id="section-2-12"><code>did:x509:0:sha256:WE..jk::subject:C:US:ST:Texas:L:Austin:O:Example</code><a href="#section-2-12" class="pilcrow">¶</a></p>
+<p id="section-2-13">In this example, the identifier pins to a certificate authority using a SHA-256 certificate hash and uses the <code>subject</code> predicate to express criteria that a leaf certificate subject must fulfil.
+This identifier will match certificate chains with matching leaf certificate subject fields and a matching intermediate or root CA certificate.<a href="#section-2-13" class="pilcrow">¶</a></p>
+<p id="section-2-14">The following sections define the predicates and their predicate-specific syntax.<a href="#section-2-14" class="pilcrow">¶</a></p>
+<p id="section-2-15">DID syntax validation and predicate validation are defined using policies written in the Rego language (<span>[<a href="#REGO" class="cite xref">REGO</a>]</span>), rather than pseudo-code.
+This is to avoid ambiguity and to make it possible for a reader to evaluate the logic automatically.<a href="#section-2-15" class="pilcrow">¶</a></p>
+<p id="section-2-16">The inputs to the resolution process are the DID string itself and the <code>x509chain</code> DID resolution option, which carries a comma-separated base64url-encoded X.509 certificate chain.
+To evaluate the reference Rego code shown below, the DID and certificate chain have to be passed to a Rego runtime as a JSON document: <code>{"did": "&lt;DID&gt;", "chain": &lt;CertificateChain&gt;}</code>, where <code>did</code> is the DID string and <code>chain</code> is the parsed representation of the certificate chain derived from the <code>x509chain</code> resolution option.<a href="#section-2-16" class="pilcrow">¶</a></p>
+<p id="section-2-17">Core Rego policy:<a href="#section-2-17" class="pilcrow">¶</a></p>
+<span id="name-core-rego-validation-rule"></span><div id="fig-validate-core">
+<figure id="figure-2">
+        <div class="alignLeft art-rego art-text artwork" id="section-2-18.1">
+<pre>
+package did_x509
+
+import future.keywords.if
+import future.keywords.in
+
+idchars := `([A-Za-z0-9._-]|%[0-9A-Fa-f]{2})+`
+
+predicate_pattern := sprintf(
+    `::(subject|san|eku|fulcio-issuer):%s(:%s)*`,
+    [idchars, idchars])
+
+did_pattern := sprintf(
+    `^did:x509:0:(sha256|sha384|sha512):[A-Za-z0-9_-]+(%s)+$`,
+    [predicate_pattern])
+
+parse_did(did) :=
+  [ca_fingerprint_alg, ca_fingerprint, predicates] if {
+    prefix := "did:x509:0:"
+    regex.match(did_pattern, did)
+    rest := trim_prefix(did, prefix)
+    parts := split(rest, "::")
+    [ca_fingerprint_alg, ca_fingerprint] := split(parts[0], ":")
+    predicates_raw := array.slice(parts, 1, count(parts))
+    predicates := [y |
+        some i
+        s := predicates_raw[i]
+        j := indexof(s, ":")
+        y := [substring(s, 0, j), substring(s, j+1, -1)]
+    ]
+}
+
+valid if {
+    [ca_fingerprint_alg,
+     ca_fingerprint,
+     predicates] := parse_did(input.did)
+    count(predicates) &gt; 0
+    ca := [c | some i; i != 0; c := input.chain[i]]
+    ca[_].fingerprint[ca_fingerprint_alg] == ca_fingerprint
+    valid_predicates := [i |
+        some i
+        [name, value] := predicates[i]
+        validate_predicate(name, value)
+    ]
+    count(valid_predicates) == count(predicates)
+}
+</pre>
+</div>
+<figcaption><a href="#figure-2" class="selfRef">Figure 2</a>:
+<a href="#name-core-rego-validation-rule" class="selfRef">Core Rego Validation Rule</a>
+        </figcaption></figure>
+</div>
+<p id="section-2-19">The overall Rego policy is assembled by concatenating the core Rego policy with the Rego policy fragments in the following sections, each one defining a <code>validate_predicate</code> function.<a href="#section-2-19" class="pilcrow">¶</a></p>
+<div id="percent-encoding">
+<section id="section-2.1">
+        <h3 id="name-percent-encoding">
+<a href="#section-2.1" class="section-number selfRef">2.1. </a><a href="#name-percent-encoding" class="section-name selfRef">Percent-encoding</a>
+        </h3>
+<p id="section-2.1-1">Some of the predicates that are defined in subsequent sections require values to be percent-encoded. Percent-encoding is specified in <span><a href="https://rfc-editor.org/rfc/rfc3986#section-2.1" class="relref">Section 2.1</a> of [<a href="#RFC3986" class="cite xref">RFC3986</a>]</span>. Characters are encoded as UTF-8 before percent-encoding. All characters that are not in the allowed set defined below must be percent-encoded:<a href="#section-2.1-1" class="pilcrow">¶</a></p>
+<span id="name-abnf-definition-of-characte"></span><div id="fig-allowed-def">
+<figure id="figure-3">
+          <div class="alignLeft art-abnf art-text artwork" id="section-2.1-2.1">
+<pre>
+allowed = ALPHA / DIGIT / "-" / "." / "_"
+</pre>
+</div>
+<figcaption><a href="#figure-3" class="selfRef">Figure 3</a>:
+<a href="#name-abnf-definition-of-characte" class="selfRef">ABNF Definition of Characters That Do Not Need to Be Percent-Encoded</a>
+          </figcaption></figure>
+</div>
+<p id="section-2.1-3">Note that most libraries implement percent-encoding in the context of URLs and do NOT encode <code>~</code> (<code>%7E</code>).<a href="#section-2.1-3" class="pilcrow">¶</a></p>
+<p id="section-2.1-4">Resolution fails if a percent-decoded value is not valid UTF-8.<a href="#section-2.1-4" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="subject-predicate">
+<section id="section-2.2">
+        <h3 id="name-subject-predicate">
+<a href="#section-2.2" class="section-number selfRef">2.2. </a><a href="#name-subject-predicate" class="section-name selfRef">"subject" predicate</a>
+        </h3>
+<span id="name-abnf-definition-of-subject-"></span><div id="fig-subject-def">
+<figure id="figure-4">
+          <div class="alignLeft art-abnf art-text artwork" id="section-2.2-1.1">
+<pre>
+predicate-name  = %s"subject"
+predicate-value = key ":" value *(":" key ":" value)
+key             = label / oid
+value           = 1*idchar
+label           = %s"CN" / %s"L" / %s"ST" / %s"O" / %s"OU" /
+                  %s"C" / %s"STREET"
+oid             = 1*DIGIT *("." 1*DIGIT)
+</pre>
+</div>
+<figcaption><a href="#figure-4" class="selfRef">Figure 4</a>:
+<a href="#name-abnf-definition-of-subject-" class="selfRef">ABNF Definition of Subject Predicate</a>
+          </figcaption></figure>
+</div>
+<p id="section-2.2-2"><code>&lt;key&gt;:&lt;value&gt;</code> are the subject name fields in <code>chain[0].subject</code> in any order. Key repetitions are not allowed. Values must be percent-encoded.<a href="#section-2.2-2" class="pilcrow">¶</a></p>
+<p id="section-2.2-3">Example:<a href="#section-2.2-3" class="pilcrow">¶</a></p>
+<p id="section-2.2-4"><code>did:x509:0:sha256:WE..jk::subject:C:US:ST:Texas:L:Austin:O:Example</code><a href="#section-2.2-4" class="pilcrow">¶</a></p>
+<p id="section-2.2-5">Rego policy:<a href="#section-2.2-5" class="pilcrow">¶</a></p>
+<span id="name-rego-function-validating-su"></span><div id="fig-validate-subject">
+<figure id="figure-5">
+          <div class="alignLeft art-rego art-text artwork" id="section-2.2-6.1">
+<pre>
+validate_predicate(name, value) := true if {
+    name == "subject"
+    items := split(value, ":")
+    count(items) % 2 == 0
+    keys := {k | some i; i % 2 == 0; k := items[i]}
+    count(keys) == count(items) / 2
+    subject := {k: v |
+        some i
+        i % 2 == 0
+        k := items[i]
+        v := urlquery.decode(items[i+1])
+    }
+    count(subject) &gt;= 1
+    object.subset(input.chain[0].subject, subject) == true
+}
+</pre>
+</div>
+<figcaption><a href="#figure-5" class="selfRef">Figure 5</a>:
+<a href="#name-rego-function-validating-su" class="selfRef">Rego Function Validating Subject Predicate</a>
+          </figcaption></figure>
+</div>
+</section>
+</div>
+<div id="san-predicate">
+<section id="section-2.3">
+        <h3 id="name-san-predicate">
+<a href="#section-2.3" class="section-number selfRef">2.3. </a><a href="#name-san-predicate" class="section-name selfRef">"san" predicate</a>
+        </h3>
+<span id="name-abnf-definition-of-san-pred"></span><div id="fig-san-def">
+<figure id="figure-6">
+          <div class="alignLeft art-abnf art-text artwork" id="section-2.3-1.1">
+<pre>
+predicate-name  = %s"san"
+predicate-value = san-type ":" san-value
+san-type        = %s"email" / %s"dns" / %s"uri"
+san-value       = 1*idchar
+</pre>
+</div>
+<figcaption><a href="#figure-6" class="selfRef">Figure 6</a>:
+<a href="#name-abnf-definition-of-san-pred" class="selfRef">ABNF Definition of SAN Predicate</a>
+          </figcaption></figure>
+</div>
+<p id="section-2.3-2"><code>san-type</code> is the SAN type and must be one of <code>email</code>, <code>dns</code>, or <code>uri</code>. Note that <code>dn</code> is not supported.<a href="#section-2.3-2" class="pilcrow">¶</a></p>
+<p id="section-2.3-3"><code>san-value</code> is the SAN value, percent-encoded.<a href="#section-2.3-3" class="pilcrow">¶</a></p>
+<p id="section-2.3-4">The pair <code>[&lt;san_type&gt;, &lt;san_value&gt;]</code> is one of the items in <code>chain[0].extensions.san</code>.<a href="#section-2.3-4" class="pilcrow">¶</a></p>
+<p id="section-2.3-5">Example:<a href="#section-2.3-5" class="pilcrow">¶</a></p>
+<p id="section-2.3-6"><code>did:x509:0:sha256:WE..jk::san:email:bob%40example.com</code><a href="#section-2.3-6" class="pilcrow">¶</a></p>
+<p id="section-2.3-7">Rego policy:<a href="#section-2.3-7" class="pilcrow">¶</a></p>
+<span id="name-rego-function-validating-sa"></span><div id="fig-validate-san">
+<figure id="figure-7">
+          <div class="alignLeft art-rego art-text artwork" id="section-2.3-8.1">
+<pre>
+validate_predicate(name, value) := true if {
+    name == "san"
+    [san_type, san_value_encoded] := split(value, ":")
+    san_value := urlquery.decode(san_value_encoded)
+    [san_type, san_value] == input.chain[0].extensions.san[_]
+}
+</pre>
+</div>
+<figcaption><a href="#figure-7" class="selfRef">Figure 7</a>:
+<a href="#name-rego-function-validating-sa" class="selfRef">Rego Function Validating SAN Predicate</a>
+          </figcaption></figure>
+</div>
+</section>
+</div>
+<div id="eku-predicate">
+<section id="section-2.4">
+        <h3 id="name-eku-predicate">
+<a href="#section-2.4" class="section-number selfRef">2.4. </a><a href="#name-eku-predicate" class="section-name selfRef">"eku" predicate</a>
+        </h3>
+<span id="name-abnf-definition-of-eku-pred"></span><div id="fig-eku-def">
+<figure id="figure-8">
+          <div class="alignLeft art-abnf art-text artwork" id="section-2.4-1.1">
+<pre>
+predicate-name  = %s"eku"
+predicate-value = eku
+eku             = oid
+oid             = 1*DIGIT *("." 1*DIGIT)
+</pre>
+</div>
+<figcaption><a href="#figure-8" class="selfRef">Figure 8</a>:
+<a href="#name-abnf-definition-of-eku-pred" class="selfRef">ABNF Definition of EKU Predicate</a>
+          </figcaption></figure>
+</div>
+<p id="section-2.4-2"><code>eku</code> is one of the OIDs within <code>chain[0].extensions.eku</code>.<a href="#section-2.4-2" class="pilcrow">¶</a></p>
+<p id="section-2.4-3">Example:<a href="#section-2.4-3" class="pilcrow">¶</a></p>
+<p id="section-2.4-4"><code>did:x509:0:sha256:WE..jk::eku:1.3.6.1.4.1.311.10.3.13</code><a href="#section-2.4-4" class="pilcrow">¶</a></p>
+<p id="section-2.4-5">Rego policy:<a href="#section-2.4-5" class="pilcrow">¶</a></p>
+<span id="name-rego-function-validating-ek"></span><div id="fig-validate-eku">
+<figure id="figure-9">
+          <div class="alignLeft art-rego art-text artwork" id="section-2.4-6.1">
+<pre>
+validate_predicate(name, value) := true if {
+    name == "eku"
+    value == input.chain[0].extensions.eku[_]
+}
+</pre>
+</div>
+<figcaption><a href="#figure-9" class="selfRef">Figure 9</a>:
+<a href="#name-rego-function-validating-ek" class="selfRef">Rego Function Validating EKU Predicate</a>
+          </figcaption></figure>
+</div>
+</section>
+</div>
+<div id="fulcio-issuer-predicate">
+<section id="section-2.5">
+        <h3 id="name-fulcio-issuer-predicate">
+<a href="#section-2.5" class="section-number selfRef">2.5. </a><a href="#name-fulcio-issuer-predicate" class="section-name selfRef">"fulcio-issuer" predicate</a>
+        </h3>
+<span id="name-abnf-definition-of-fulcio-i"></span><div id="fig-fulcio-issuer-def">
+<figure id="figure-10">
+          <div class="alignLeft art-abnf art-text artwork" id="section-2.5-1.1">
+<pre>
+predicate-name   = %s"fulcio-issuer"
+predicate-value  = fulcio-issuer
+fulcio-issuer    = 1*idchar
+</pre>
+</div>
+<figcaption><a href="#figure-10" class="selfRef">Figure 10</a>:
+<a href="#name-abnf-definition-of-fulcio-i" class="selfRef">ABNF Definition of Fulcio-Issuer Predicate</a>
+          </figcaption></figure>
+</div>
+<p id="section-2.5-2"><code>fulcio-issuer</code> is <code>chain[0].extensions.fulcio_issuer</code>, without leading <code>https://</code>, percent-encoded.<a href="#section-2.5-2" class="pilcrow">¶</a></p>
+<p id="section-2.5-3">The <code>fulcio_issuer</code> extension <span class="bcp14">MUST</span> be present on <code>chain[0]</code> when this predicate is used; resolution fails if it is absent.
+The extension <span class="bcp14">MUST NOT</span> be marked critical.<a href="#section-2.5-3" class="pilcrow">¶</a></p>
+<p id="section-2.5-4">Example:<a href="#section-2.5-4" class="pilcrow">¶</a></p>
+<p id="section-2.5-5"><code>did:x509:0:sha256:WE..jk::fulcio-issuer:accounts.google.com::san:email:bob%40example.com</code><a href="#section-2.5-5" class="pilcrow">¶</a></p>
+<p id="section-2.5-6">Example 2:<a href="#section-2.5-6" class="pilcrow">¶</a></p>
+<p id="section-2.5-7"><code>did:x509:0:sha256:WE..jk::fulcio-issuer:issuer.example.com::san:uri:https%3A%2F%2Fexample.com%2Focto-org%2Focto-automation%2Fworkflows%2Foidc.yml%40refs%2Fheads%2Fmain</code><a href="#section-2.5-7" class="pilcrow">¶</a></p>
+<p id="section-2.5-8">Rego policy:<a href="#section-2.5-8" class="pilcrow">¶</a></p>
+<span id="name-rego-function-validating-fu"></span><div id="fig-validate-fulcio-issuer">
+<figure id="figure-11">
+          <div class="alignLeft art-rego art-text artwork" id="section-2.5-9.1">
+<pre>=============== NOTE: '\' line wrapping per RFC 8792 ================
+
+validate_predicate(name, value) := true if {
+    name == "fulcio-issuer"
+    suffix := urlquery.decode(value)
+    concat("", ["https://", suffix]) == input.chain[0].extensions.\
+                                                        fulcio_issuer
+}
+</pre>
+</div>
+<figcaption><a href="#figure-11" class="selfRef">Figure 11</a>:
+<a href="#name-rego-function-validating-fu" class="selfRef">Rego Function Validating Fulcio-Issuer Predicate</a>
+          </figcaption></figure>
+</div>
+</section>
+</div>
+<div id="x509chain">
+<section id="section-2.6">
+        <h3 id="name-did-resolution-options">
+<a href="#section-2.6" class="section-number selfRef">2.6. </a><a href="#name-did-resolution-options" class="section-name selfRef">DID resolution options</a>
+        </h3>
+<p id="section-2.6-1">This DID method introduces a new DID resolution option called <code>x509chain</code>:<a href="#section-2.6-1" class="pilcrow">¶</a></p>
+<p id="section-2.6-2">Name: <code>x509chain</code><a href="#section-2.6-2" class="pilcrow">¶</a></p>
+<p id="section-2.6-3">Value type: string<a href="#section-2.6-3" class="pilcrow">¶</a></p>
+<p id="section-2.6-4">The value is constructed as follows:<a href="#section-2.6-4" class="pilcrow">¶</a></p>
+<ol start="1" type="1" class="normal type-1" id="section-2.6-5">
+<li id="section-2.6-5.1">
+            <p id="section-2.6-5.1.1">Encode each certificate <code>C</code> that is part of the chain as the string <code>b64url(DER(C))</code>, where <code>b64url</code> is base64url encoding (<span><a href="https://rfc-editor.org/rfc/rfc4648#section-5" class="relref">Section 5</a> of [<a href="#RFC4648" class="cite xref">RFC4648</a>]</span>).<a href="#section-2.6-5.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li id="section-2.6-5.2">
+            <p id="section-2.6-5.2.1">Concatenate the resulting strings in order, separated by comma <code>","</code>.<a href="#section-2.6-5.2.1" class="pilcrow">¶</a></p>
+</li>
+        </ol>
+<p id="section-2.6-6">The chain is ordered leaf first and root or trust anchor last:<a href="#section-2.6-6" class="pilcrow">¶</a></p>
+<span id="name-structure-of-the-x509chain-"></span><div id="fig-x509chain">
+<figure id="figure-12">
+          <div class="alignLeft art-text artwork" id="section-2.6-7.1">
+<pre>
+x509chain = b64url(DER(leaf)) ","
+            b64url(DER(intermediate)) ","
+            b64url(DER(root))
+</pre>
+</div>
+<figcaption><a href="#figure-12" class="selfRef">Figure 12</a>:
+<a href="#name-structure-of-the-x509chain-" class="selfRef">Structure of the x509chain Resolution Option Value</a>
+          </figcaption></figure>
+</div>
+<p id="section-2.6-8">Each comma-separated item is the DER encoding of one complete X.509 certificate, not a public key, fingerprint, or DER encoding of the whole chain.<a href="#section-2.6-8" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+<div id="verifiable-data-registry-and-trust-model">
+<section id="section-3">
+      <h2 id="name-verifiable-data-registry-an">
+<a href="#section-3" class="section-number selfRef">3. </a><a href="#name-verifiable-data-registry-an" class="section-name selfRef">Verifiable Data Registry and Trust Model</a>
+      </h2>
+<p id="section-3-1">did:x509 does not define a persistent registry of DID Documents.
+Resolution uses the DID string and the <code>x509chain</code> resolution option (<a href="#x509chain" class="auto internal xref">Section 2.6</a>).<a href="#section-3-1" class="pilcrow">¶</a></p>
+<p id="section-3-2">Trust is established by validating the certificate chain, matching the CA fingerprint, and validating the predicates against the leaf certificate.
+Applications can add revocation, certificate transparency, signing time, or endorsement checks.<a href="#section-3-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="did-document">
+<section id="section-4">
+      <h2 id="name-did-document">
+<a href="#section-4" class="section-number selfRef">4. </a><a href="#name-did-document" class="section-name selfRef">DID Document</a>
+      </h2>
+<p id="section-4-1">Resolving a did:x509 identifier produces a DID Document (<span>[<a href="#DID-DOCUMENT" class="cite xref">DID-DOCUMENT</a>]</span>) with a <code>JsonWebKey</code> verification method derived from the leaf certificate public key.<a href="#section-4-1" class="pilcrow">¶</a></p>
+<p id="section-4-2">The DID Document is self-controlled: verification methods use the DID itself as <code>controller</code>.<a href="#section-4-2" class="pilcrow">¶</a></p>
+<p id="section-4-3">If the leaf certificate has the key usage bit for <code>digitalSignature</code>, or is missing the key usage extension, the DID Document includes <code>authentication</code> and <code>assertionMethod</code>.
+If the leaf certificate has the key usage bit for <code>keyAgreement</code>, or is missing the key usage extension, the DID Document includes <code>keyAgreement</code>.
+If the leaf certificate includes the key usage extension but has neither <code>digitalSignature</code> nor <code>keyAgreement</code>, resolution fails.<a href="#section-4-3" class="pilcrow">¶</a></p>
+<p id="section-4-4">The registered media type for a DID Document is <code>application/did</code>.
+Resolvers may also support <code>application/did+ld+json</code> or <code>application/did+json</code> for compatibility with DID Core 1.0 tooling.
+The media type is selected by the resolution request, not by the DID string.<a href="#section-4-4" class="pilcrow">¶</a></p>
+<p id="section-4-5">The JSON-LD <code>@context</code> must define every term used.
+The example below uses the Controlled Identifiers v1 context <code>https://www.w3.org/ns/cid/v1</code> (<span>[<a href="#CID" class="cite xref">CID</a>]</span>).<a href="#section-4-5" class="pilcrow">¶</a></p>
+<p id="section-4-6">This illustrates what a typical DID document, describing the DID subject and the methods it can use to authenticate itself, can look like once resolved:<a href="#section-4-6" class="pilcrow">¶</a></p>
+<span id="name-example-did-document"></span><div id="fig-controller-placeholder">
+<figure id="figure-13">
+        <div class="alignLeft art-json art-text artwork" id="section-4-7.1">
+<pre>
+{
+  "@context": "https://www.w3.org/ns/cid/v1",
+  "id": "did:x509:0:sha256:hH..GE::subject:CN:Example",
+  "verificationMethod": [
+    {
+      "id": "did:x509:0:sha256:hH..GE::subject:CN:Example#0",
+      "type": "JsonWebKey",
+      "controller": "did:x509:0:sha256:hH..GE::subject:CN:Example",
+      "publicKeyJwk": {
+        "kty": "EC",
+        "crv": "P-256",
+        "x": "usNb0QXAk6R76GPFvKT5a46LC0_qRpxNoLn9WAX8K0I",
+        "y": "dTtI2j8aV0Mdk5fNWP9rCJvFIo6QfLjCm8V5v10J4Xg"
+      }
+    }
+  ],
+  "authentication": [
+    "did:x509:0:sha256:hH..GE::subject:CN:Example#0"
+  ],
+  "assertionMethod": [
+    "did:x509:0:sha256:hH..GE::subject:CN:Example#0"
+  ],
+  "keyAgreement": [
+    "did:x509:0:sha256:hH..GE::subject:CN:Example#0"
+  ]
+}
+</pre>
+</div>
+<figcaption><a href="#figure-13" class="selfRef">Figure 13</a>:
+<a href="#name-example-did-document" class="selfRef">Example DID Document</a>
+        </figcaption></figure>
+</div>
+</section>
+</div>
+<div id="json-model">
+<section id="section-5">
+      <h2 id="name-cddl-for-a-json-data-model-">
+<a href="#section-5" class="section-number selfRef">5. </a><a href="#name-cddl-for-a-json-data-model-" class="section-name selfRef">CDDL for a JSON Data Model for X.509 Certificate Chains</a>
+      </h2>
+<p id="section-5-1">For predicate evaluation, the resolver maps the certificate chain to a limited JSON (<span>[<a href="#STD90" class="cite xref">STD90</a>]</span>) data model.
+This model contains only the fields did:x509 matches on; it does not replace X.509 parsing or <span>[<a href="#RFC5280" class="cite xref">RFC5280</a>]</span> path validation.<a href="#section-5-1" class="pilcrow">¶</a></p>
+<p id="section-5-2">The model is a JSON array with at least two certificate objects.
+The leaf certificate is first, followed by issuer certificates, with the root or trust anchor last.<a href="#section-5-2" class="pilcrow">¶</a></p>
+<p id="section-5-3">The <code>fingerprint</code> member of a certificate object contains base64url-encoded (<span><a href="https://rfc-editor.org/rfc/rfc4648#section-5" class="relref">Section 5</a> of [<a href="#RFC4648" class="cite xref">RFC4648</a>]</span>) SHA-256, SHA-384, and SHA-512 (<span>[<a href="#FIPS180-4" class="cite xref">FIPS180-4</a>]</span>) hashes of the DER-encoded certificate.
+The <code>issuer</code> and <code>subject</code> members contain the X.509 issuer and subject names, each represented as an object of name attributes.
+Name objects use the <span>[<a href="#RFC4514" class="cite xref">RFC4514</a>]</span> labels <code>CN</code>, <code>L</code>, <code>ST</code>, <code>O</code>, <code>OU</code>, <code>C</code>, and <code>STREET</code> for common attributes.
+Other attributes use dotted OID strings as keys.
+Repeated attributes are not supported.
+Values are converted to UTF-8 strings.
+The <code>extensions</code> member can contain the Extended Key Usage OIDs (<span><a href="https://rfc-editor.org/rfc/rfc5280#section-4.2.1.12" class="relref">Section 4.2.1.12</a> of [<a href="#RFC5280" class="cite xref">RFC5280</a>]</span>), the Subject Alternative Name entries (<span><a href="https://rfc-editor.org/rfc/rfc5280#section-4.2.1.6" class="relref">Section 4.2.1.6</a> of [<a href="#RFC5280" class="cite xref">RFC5280</a>]</span>), and the Fulcio issuer extension value (<span>[<a href="#FULCIO" class="cite xref">FULCIO</a>]</span>).<a href="#section-5-3" class="pilcrow">¶</a></p>
+<span id="name-cddl-definition-of-didx509-"></span><div id="fig-cddl-placeholder">
+<figure id="figure-14">
+        <div class="alignLeft art-cddl art-text artwork" id="section-5-4.1">
+<pre>
+; leaf first, followed by issuer certificates,
+; with the root or trust anchor last
+CertificateChain = [2*Certificate]
+
+Certificate = {
+    fingerprint: {
+        ; base64url-encoded hashes of the DER-encoded certificate
+        sha256: base64url,     ; FIPS 180-4, SHA-256
+        sha384: base64url,     ; FIPS 180-4, SHA-384
+        sha512: base64url      ; FIPS 180-4, SHA-512
+    },
+    issuer: Name,              ; RFC 5280, Section 4.1.2.4
+    subject: Name,             ; RFC 5280, Section 4.1.2.6
+    extensions: {
+        ? eku: [+OID],         ; RFC 5280, Section 4.2.1.12
+        ? san: [+SAN],         ; RFC 5280, Section 4.2.1.6
+        ? fulcio_issuer: tstr  ; Fulcio issuer extension
+    }
+}
+
+; X.509 Name as an object of attributes
+; Repeated attribute types are not supported
+; Common attribute types have human-readable labels (see below)
+; Other attribute types use dotted OIDs
+; Values are converted to UTF-8
+Name = {
+    ; See RFC 4514, Section 3, for meaning of common attribute types
+    ? CN: tstr,
+    ? L: tstr,
+    ? ST: tstr,
+    ? O: tstr,
+    ? OU: tstr,
+    ? C: tstr,
+    ? STREET: tstr,
+    * OID =&gt; tstr
+}
+
+; base64url-encoded data, see RFC 4648, Section 5
+base64url = tstr
+
+; ASN.1 Object Identifier
+; Dotted string, for example "1.2.3"
+OID = tstr
+
+; X.509 Subject Alternative Name
+; Strings are converted to UTF-8
+SAN = rfc822Name / DNSName / URI / DirectoryName
+rfc822Name = ["email", tstr] ; Example: ["email", "user@example.com"]
+DNSName = ["dns", tstr]      ; Example: ["dns", "example.com"]
+URI = ["uri", tstr]          ; Example: ["uri", "https://example.com"]
+DirectoryName = ["dn", Name] ; Example: ["dn", {CN: "Example"}]
+</pre>
+</div>
+<figcaption><a href="#figure-14" class="selfRef">Figure 14</a>:
+<a href="#name-cddl-definition-of-didx509-" class="selfRef">CDDL Definition of did:x509 JSON Data Model</a>
+        </figcaption></figure>
+</div>
+<p id="section-5-5">Example certificate chain mapped to the JSON data model:<a href="#section-5-5" class="pilcrow">¶</a></p>
+<span id="name-example-certificate-chain-i"></span><div id="fig-chain-example">
+<figure id="figure-15">
+        <div class="alignLeft art-json art-text artwork" id="section-5-6.1">
+<pre>
+[
+  {
+    "fingerprint": {
+      "sha256": "leaf-sha256",
+      "sha384": "leaf-sha384",
+      "sha512": "leaf-sha512"
+    },
+    "issuer": {
+      "CN": "Example CA"
+    },
+    "subject": {
+      "CN": "Example"
+    },
+    "extensions": {
+      "eku": ["1.3.6.1.4.1.311.10.3.13"],
+      "san": [
+        ["email", "user@example.com"],
+        ["dns", "example.com"],
+        ["uri", "https://example.com"],
+        [
+          "dn",
+          {
+            "CN": "Example"
+          }
+        ]
+      ],
+      "fulcio_issuer": "https://issuer.example.com"
+    }
+  },
+  {
+    "fingerprint": {
+      "sha256": "ca-sha256",
+      "sha384": "ca-sha384",
+      "sha512": "ca-sha512"
+    },
+    "issuer": {
+      "CN": "Example Root CA"
+    },
+    "subject": {
+      "CN": "Example CA"
+    },
+    "extensions": {}
+  }
+]
+</pre>
+</div>
+<figcaption><a href="#figure-15" class="selfRef">Figure 15</a>:
+<a href="#name-example-certificate-chain-i" class="selfRef">Example Certificate Chain in the did:x509 JSON Data Model</a>
+        </figcaption></figure>
+</div>
+</section>
+</div>
+<div id="method-operations">
+<section id="section-6">
+      <h2 id="name-method-operations">
+<a href="#section-6" class="section-number selfRef">6. </a><a href="#name-method-operations" class="section-name selfRef">Method Operations</a>
+      </h2>
+<div id="create">
+<section id="section-6.1">
+        <h3 id="name-create">
+<a href="#section-6.1" class="section-number selfRef">6.1. </a><a href="#name-create" class="section-name selfRef">Create</a>
+        </h3>
+<p id="section-6.1-1">Creating a did:x509 identifier is a local operation.
+The DID must be constructed according to the syntax rules in this specification.
+No registration action is required, and no registry authorization is checked.<a href="#section-6.1-1" class="pilcrow">¶</a></p>
+<p id="section-6.1-2">When constructing a did:x509 identifier, determine what constitutes a logical identity within a given certificate authority.
+Concretely, determine which certificate fields the authority uses to uniquely represent an identity.
+After that, choose one or more matching predicates that express such an identity as faithfully as possible.<a href="#section-6.1-2" class="pilcrow">¶</a></p>
+<p id="section-6.1-3">As an example, a certificate authority may use email addresses as a way to separate identities and use the SAN extension to store the email address.
+In that case, the did:x509 identifier should be constructed using the <code>san</code> predicate, for example, <code>did:x509:0:sha256:&lt;ca-fingerprint&gt;::san:email:bob%40example.com</code>.<a href="#section-6.1-3" class="pilcrow">¶</a></p>
+<p id="section-6.1-4">In other cases, an authority may not include email addresses at all and instead rely on a specific set of subject fields to separate identities.
+In that case, the <code>subject</code> predicate should be used.<a href="#section-6.1-4" class="pilcrow">¶</a></p>
+<p id="section-6.1-5">In yet other cases, authorities may assign unique numbers or other types of stable identifiers to logical identities.
+Typically, this is done to have a stable reference even if a person changes their name or email address.<a href="#section-6.1-5" class="pilcrow">¶</a></p>
+<p id="section-6.1-6">In all cases, the goal is to craft a did:x509 identifier that is stable yet not too loose in its predicates.
+An example of a loose did:x509 identifier may be to use the <code>subject</code> predicate and only include the <code>O</code> field without location fields like country (<code>C</code>) or state/locality (<code>ST</code>).<a href="#section-6.1-6" class="pilcrow">¶</a></p>
+<p id="section-6.1-7">Whether a did:x509 identifier should pin to an intermediate CA instead of a root CA depends on whether there is value in distinguishing between them.
+Pinning to an intermediate CA typically means that the lifetime of the did:x509 identifier will be shorter, since intermediate CA certificates usually have a shorter validity period than root CA certificates.<a href="#section-6.1-7" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="read-resolve">
+<section id="section-6.2">
+        <h3 id="name-read-resolve">
+<a href="#section-6.2" class="section-number selfRef">6.2. </a><a href="#name-read-resolve" class="section-name selfRef">Read / Resolve</a>
+        </h3>
+<p id="section-6.2-1">The Read operation is DID resolution.
+The operation takes as input a DID to resolve, together with the <code>x509chain</code> DID resolution option (<a href="#x509chain" class="auto internal xref">Section 2.6</a>).<a href="#section-6.2-1" class="pilcrow">¶</a></p>
+<p id="section-6.2-2">The DID resolver uses the DID, the certificate chain, and the process in <a href="#resolution" class="auto internal xref">Section 7</a> to generate a DID Document.
+No caller authorization is required; authenticity is checked by certificate chain validation, CA fingerprint matching, and predicate validation.<a href="#section-6.2-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="update">
+<section id="section-6.3">
+        <h3 id="name-update">
+<a href="#section-6.3" class="section-number selfRef">6.3. </a><a href="#name-update" class="section-name selfRef">Update</a>
+        </h3>
+<p id="section-6.3-1">This DID method does not support updating the DID Document, assuming a fixed certificate chain.
+There is no update authorization operation.<a href="#section-6.3-1" class="pilcrow">¶</a></p>
+<p id="section-6.3-2">However, the public key included in the DID Document varies depending on the certificate chain that was used as input to the DID resolution process.
+Typically, multiple chains, in particular leaf certificates, are valid for a given did:x509 identifier.<a href="#section-6.3-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="deactivate">
+<section id="section-6.4">
+        <h3 id="name-deactivate">
+<a href="#section-6.4" class="section-number selfRef">6.4. </a><a href="#name-deactivate" class="section-name selfRef">Deactivate</a>
+        </h3>
+<p id="section-6.4-1">This DID method does not support deactivating the DID.
+There is no deactivation authorization operation.<a href="#section-6.4-1" class="pilcrow">¶</a></p>
+<p id="section-6.4-2">However, if the certificate authority revokes all certificates for the matching DID, or they expire, and does not issue new certificates matching the same DID, then this can be considered equivalent to deactivation of the DID.
+There is no technical guarantee in this case and the certificate authority can revert its decision.<a href="#section-6.4-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+<div id="resolution">
+<section id="section-7">
+      <h2 id="name-did-resolution">
+<a href="#section-7" class="section-number selfRef">7. </a><a href="#name-did-resolution" class="section-name selfRef">DID Resolution</a>
+      </h2>
+<p id="section-7-1">If the DID to resolve is given as a DID URL, its fragment, if any, is removed first, and <code>&lt;DID&gt;</code> below refers to the result.
+Resolution fails if the DID URL has a path or query component.<a href="#section-7-1" class="pilcrow">¶</a></p>
+<p id="section-7-2">The following steps must be used to generate a corresponding DID Document:<a href="#section-7-2" class="pilcrow">¶</a></p>
+<ol start="1" type="1" class="normal type-1" id="section-7-3">
+<li id="section-7-3.1">
+          <p id="section-7-3.1.1">Decode the <code>x509chain</code> resolution option value into individual certificates by splitting the string on <code>","</code> and base64url-decoding each resulting string.
+The result is a list of DER-encoded certificates that can be loaded in standard libraries.
+Fail if the list contains fewer than two certificates.<a href="#section-7-3.1.1" class="pilcrow">¶</a></p>
+</li>
+        <li id="section-7-3.2">
+          <p id="section-7-3.2.1">Check whether the list of certificates forms a valid certificate chain using certification path validation procedures (<span><a href="https://rfc-editor.org/rfc/rfc5280#section-6" class="relref">Section 6</a> of [<a href="#RFC5280" class="cite xref">RFC5280</a>]</span>) with the last certificate in the chain as trust anchor.
+Implementations <span class="bcp14">MUST</span> perform <span>[<a href="#RFC5280" class="cite xref">RFC5280</a>]</span> certification path validation.
+Additionally, fail if any certificate in the chain contains a critical extension that is neither (a) one of the extensions represented in the JSON data model (<code>eku</code>, <code>san</code>), nor (b) one of the following standard <span>[<a href="#RFC5280" class="cite xref">RFC5280</a>]</span> extensions: <code>basicConstraints</code>, <code>keyUsage</code>, <code>nameConstraints</code>, <code>policyConstraints</code>, <code>policyMappings</code>, <code>certificatePolicies</code>, <code>inhibitAnyPolicy</code>.<a href="#section-7-3.2.1" class="pilcrow">¶</a></p>
+<p id="section-7-3.2.2">
+The <code>fulcio_issuer</code> extension is deliberately not on that list.
+Fulcio does not mark it critical; for example, a dump of a Fulcio-issued certificate (<span>[<a href="#GITSIGN-TIMESTAMP" class="cite xref">GITSIGN-TIMESTAMP</a>]</span>) shows its <code>critical</code> field as <code>BOOL ABSENT</code>.
+Issuers <span class="bcp14">MUST NOT</span> mark it critical: it is an unrecognized extension for the purposes of <span>[<a href="#RFC5280" class="cite xref">RFC5280</a>]</span> certification path validation, so marking it critical may cause the chain to be rejected.<a href="#section-7-3.2.2" class="pilcrow">¶</a></p>
+<p id="section-7-3.2.3">
+Instead of using the current time as specified in <span><a href="https://rfc-editor.org/rfc/rfc5280#section-6.1.3" class="relref">Section 6.1.3</a> of [<a href="#RFC5280" class="cite xref">RFC5280</a>]</span> when validating the chain, applications may choose a context-relevant point in time.
+For example, applications handling signed documents may choose to use the signing time instead, which might come from a CWT <code>iat</code> claim (<span>[<a href="#RFC8392" class="cite xref">RFC8392</a>]</span>) or JWT <code>iat</code> claim (<span>[<a href="#RFC7519" class="cite xref">RFC7519</a>]</span>).
+Such a claim is not trusted time by itself and needs to be integrity protected and accepted by application policy.<a href="#section-7-3.2.3" class="pilcrow">¶</a></p>
+</li>
+        <li id="section-7-3.3">
+          <p id="section-7-3.3.1">If required by the application, check whether any certificate in the chain is revoked using CRL, OCSP, or other mechanisms.<a href="#section-7-3.3.1" class="pilcrow">¶</a></p>
+</li>
+        <li id="section-7-3.4">
+          <p id="section-7-3.4.1">Apply any further application-specific checks, for example disallowing insecure certificate signature algorithms.<a href="#section-7-3.4.1" class="pilcrow">¶</a></p>
+</li>
+        <li id="section-7-3.5">
+          <p id="section-7-3.5.1">Map the certificate chain to the JSON data model (<a href="#json-model" class="auto internal xref">Section 5</a>).<a href="#section-7-3.5.1" class="pilcrow">¶</a></p>
+</li>
+        <li id="section-7-3.6">
+          <p id="section-7-3.6.1">Check whether the DID is valid against the certificate chain in the JSON data model according to the Rego policy or equivalent rules defined in this document.<a href="#section-7-3.6.1" class="pilcrow">¶</a></p>
+</li>
+        <li id="section-7-3.7">
+          <p id="section-7-3.7.1">Extract the public key of the first certificate in the chain.<a href="#section-7-3.7.1" class="pilcrow">¶</a></p>
+</li>
+        <li id="section-7-3.8">
+          <p id="section-7-3.8.1">Convert the public key to a JSON Web Key.<a href="#section-7-3.8.1" class="pilcrow">¶</a></p>
+</li>
+        <li id="section-7-3.9">
+          <p id="section-7-3.9.1">Create the following partial DID Document:<a href="#section-7-3.9.1" class="pilcrow">¶</a></p>
+<div class="lang-json sourcecode" id="section-7-3.9.2">
+<pre>
+{
+  "@context": "https://www.w3.org/ns/cid/v1",
+  "id": "&lt;DID&gt;",
+  "verificationMethod": [{
+    "id": "&lt;DID&gt;#0",
+    "type": "JsonWebKey",
+    "controller": "&lt;DID&gt;",
+    "publicKeyJwk": {
+      "kty": "&lt;JWK key type&gt;"
+    }
+  }]
+}
+</pre><a href="#section-7-3.9.2" class="pilcrow">¶</a>
+</div>
+</li>
+        <li id="section-7-3.10">
+          <p id="section-7-3.10.1">If the first certificate in the chain has the key usage bit position for <code>digitalSignature</code> set or is missing the key usage extension, add the following to the DID Document:<a href="#section-7-3.10.1" class="pilcrow">¶</a></p>
+<div class="lang-json sourcecode" id="section-7-3.10.2">
+<pre>
+{
+  "authentication": ["&lt;DID&gt;#0"],
+  "assertionMethod": ["&lt;DID&gt;#0"]
+}
+</pre><a href="#section-7-3.10.2" class="pilcrow">¶</a>
+</div>
+</li>
+        <li id="section-7-3.11">
+          <p id="section-7-3.11.1">If the first certificate in the chain has the key usage bit position for <code>keyAgreement</code> set or is missing the key usage extension, add the following to the DID Document:<a href="#section-7-3.11.1" class="pilcrow">¶</a></p>
+<div class="lang-json sourcecode" id="section-7-3.11.2">
+<pre>
+{
+  "keyAgreement": ["&lt;DID&gt;#0"]
+}
+</pre><a href="#section-7-3.11.2" class="pilcrow">¶</a>
+</div>
+</li>
+        <li id="section-7-3.12">
+          <p id="section-7-3.12.1">If the first certificate in the chain includes the key usage extension but has neither <code>digitalSignature</code> nor <code>keyAgreement</code> set as key usage bits, fail.<a href="#section-7-3.12.1" class="pilcrow">¶</a></p>
+</li>
+        <li id="section-7-3.13">
+          <p id="section-7-3.13.1">Return the complete DID Document.<a href="#section-7-3.13.1" class="pilcrow">¶</a></p>
+</li>
+      </ol>
+</section>
+</div>
+<div id="secconsec">
+<section id="section-8">
+      <h2 id="name-security-considerations">
+<a href="#section-8" class="section-number selfRef">8. </a><a href="#name-security-considerations" class="section-name selfRef">Security Considerations</a>
+      </h2>
+<div id="identifier-ambiguity">
+<section id="section-8.1">
+        <h3 id="name-identifier-ambiguity">
+<a href="#section-8.1" class="section-number selfRef">8.1. </a><a href="#name-identifier-ambiguity" class="section-name selfRef">Identifier Ambiguity</a>
+        </h3>
+<p id="section-8.1-1">This DID method maps characteristics of X.509 certificate chains to identifiers. It allows a single identifier to map to multiple certificate chains, giving the identifier stability across the expiry of individual chains. However, if the predicates used in the identifier are chosen too loosely, the identifier may match too wide a set of certificate chains. This may have security implications as it may authorize an identity for actions it was not meant to be authorized for.<a href="#section-8.1-1" class="pilcrow">¶</a></p>
+<p id="section-8.1-2">To mitigate this issue, the certificate authority should publish their expected usage of certificate fields and indicate which ones constitute a unique identity, versus any additional fields that may be of an informational nature. This will help users create an appropriate did:x509 identifier as well as consumers of signed content to decide whether it is appropriate to trust a given did:x509 identifier.<a href="#section-8.1-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="x509-trust-stores">
+<section id="section-8.2">
+        <h3 id="name-x509-trust-stores">
+<a href="#section-8.2" class="section-number selfRef">8.2. </a><a href="#name-x509-trust-stores" class="section-name selfRef">X.509 Trust Stores</a>
+        </h3>
+<p id="section-8.2-1">Resolution validates the supplied certificate chain with the last certificate in <code>x509chain</code> as the path-validation trust anchor.
+This checks the chain and DID predicates, but does not decide whether the CA or DID is acceptable to a relying party.<a href="#section-8.2-1" class="pilcrow">¶</a></p>
+<p id="section-8.2-2">Relying parties make that trust decision by policy, for example through a CA trust store, an allowlist of DIDs or CA fingerprints, or other application-specific rules.<a href="#section-8.2-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="use-of-identifier-contents">
+<section id="section-8.3">
+        <h3 id="name-use-of-identifier-contents">
+<a href="#section-8.3" class="section-number selfRef">8.3. </a><a href="#name-use-of-identifier-contents" class="section-name selfRef">Use of Identifier Contents</a>
+        </h3>
+<p id="section-8.3-1">While it is acceptable to use a did:x509 identifier as an opaque handle to implement a relying-party policy, implementers <span class="bcp14">MUST NOT</span> parse or interpret individual components of the identifier string for authorization decisions unless the identifier has been resolved against a verified certificate chain.<a href="#section-8.3-1" class="pilcrow">¶</a></p>
+<p id="section-8.3-2">Specifically, extracting and relying upon subject names, organizational information, or other embedded values directly from the identifier string, without performing full resolution and chain validation, is insecure. An attacker could craft a syntactically valid did:x509 identifier containing arbitrary values that do not correspond to any legitimate certificate chain. Only after successful resolution, which includes verification of the CA fingerprint against the provided chain and validation of all predicates, can the identifier be considered authentic. Systems that bypass this resolution process and instead parse identifier components directly are vulnerable to impersonation and privilege escalation attacks.<a href="#section-8.3-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+<div id="privacy-considerations">
+<section id="section-9">
+      <h2 id="name-privacy-considerations">
+<a href="#section-9" class="section-number selfRef">9. </a><a href="#name-privacy-considerations" class="section-name selfRef">Privacy Considerations</a>
+      </h2>
+<p id="section-9-1">The did:x509 identifier can contain certificate subject names, subject alternative names, extended key usage values, Fulcio issuer values, and a certificate authority fingerprint.
+These values can reveal personal names, email addresses, domain names, organizational affiliations, credential issuers, or other identifying information.
+DID creators should choose predicates that are specific enough for relying-party policy but disclose no more certificate attributes than necessary.<a href="#section-9-1" class="pilcrow">¶</a></p>
+<p id="section-9-2">The <code>x509chain</code> resolution option carries the certificate chain used as resolution evidence.
+Certificates can contain additional metadata beyond the predicates encoded in the DID, including subject attributes, SAN entries, validity periods, certificate policies, and extension values.
+Resolvers and verifiers should treat certificate chains as potentially identifying data, avoid unnecessary logging or redistribution, and apply data minimization when retaining resolution inputs or outputs.<a href="#section-9-2" class="pilcrow">¶</a></p>
+<p id="section-9-3">Stable did:x509 identifiers can enable correlation across transactions, transparency logs, ledgers, and verifiable credentials (<span>[<a href="#VC" class="cite xref">VC</a>]</span>).
+If unlinkability is required, relying parties should avoid reusing the same did:x509 identifier across contexts, and issuers should prefer predicates based on role- or service-specific identifiers rather than human-identifying certificate fields.<a href="#section-9-3" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="iana-considerations">
+<section id="section-10">
+      <h2 id="name-iana-considerations">
+<a href="#section-10" class="section-number selfRef">10. </a><a href="#name-iana-considerations" class="section-name selfRef">IANA Considerations</a>
+      </h2>
+<p id="section-10-1"><span class="cref" id="rfced">RFC Editor:</span> Please replace "RFCthis" with the RFC number assigned to this document.<a href="#section-10-1" class="pilcrow">¶</a></p>
+<p id="section-10-2"><span class="cref" id="rfced_1">RFC Editor:</span> Some considerations<a href="#section-10-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="sec-combined-references">
+<section id="section-11">
+      <h2 id="name-references">
+<a href="#section-11" class="section-number selfRef">11. </a><a href="#name-references" class="section-name selfRef">References</a>
+      </h2>
+<div id="sec-normative-references">
+<section id="section-11.1">
+        <h3 id="name-normative-references">
+<a href="#section-11.1" class="section-number selfRef">11.1. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
+        </h3>
+<dl class="references">
+<dt id="DID">[DID]</dt>
+        <dd>
+<span class="refTitle">"W3C DID v1.0 specification"</span>, <span>n.d.</span>, <span>&lt;<a href="https://www.w3.org/TR/did-1.0/">https://www.w3.org/TR/did-1.0/</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="FIPS180-4">[FIPS180-4]</dt>
+        <dd>
+<span class="refAuthor">National Institute of Standards and Technology</span>, <span class="refTitle">"Secure Hash Standard (SHS)"</span>, <span class="seriesInfo">FIPS 180-4</span>, <time datetime="2015-08" class="refDate">August 2015</time>, <span>&lt;<a href="https://csrc.nist.gov/publications/detail/fips/180/4/final">https://csrc.nist.gov/publications/detail/fips/180/4/final</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC2119">[RFC2119]</dt>
+        <dd>
+<span class="refAuthor">Bradner, S.</span>, <span class="refTitle">"Key words for use in RFCs to Indicate Requirement Levels"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 2119</span>, <span class="seriesInfo">DOI 10.17487/RFC2119</span>, <time datetime="1997-03" class="refDate">March 1997</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc2119">https://www.rfc-editor.org/rfc/rfc2119</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC3986">[RFC3986]</dt>
+        <dd>
+<span class="refAuthor">Berners-Lee, T.</span>, <span class="refAuthor">Fielding, R.</span>, and <span class="refAuthor">L. Masinter</span>, <span class="refTitle">"Uniform Resource Identifier (URI): Generic Syntax"</span>, <span class="seriesInfo">STD 66</span>, <span class="seriesInfo">RFC 3986</span>, <span class="seriesInfo">DOI 10.17487/RFC3986</span>, <time datetime="2005-01" class="refDate">January 2005</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc3986">https://www.rfc-editor.org/rfc/rfc3986</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC4514">[RFC4514]</dt>
+        <dd>
+<span class="refAuthor">Zeilenga, K., Ed.</span>, <span class="refTitle">"Lightweight Directory Access Protocol (LDAP): String Representation of Distinguished Names"</span>, <span class="seriesInfo">RFC 4514</span>, <span class="seriesInfo">DOI 10.17487/RFC4514</span>, <time datetime="2006-06" class="refDate">June 2006</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc4514">https://www.rfc-editor.org/rfc/rfc4514</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC4648">[RFC4648]</dt>
+        <dd>
+<span class="refAuthor">Josefsson, S.</span>, <span class="refTitle">"The Base16, Base32, and Base64 Data Encodings"</span>, <span class="seriesInfo">RFC 4648</span>, <span class="seriesInfo">DOI 10.17487/RFC4648</span>, <time datetime="2006-10" class="refDate">October 2006</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc4648">https://www.rfc-editor.org/rfc/rfc4648</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC5234">[RFC5234]</dt>
+        <dd>
+<span class="refAuthor">Crocker, D., Ed.</span> and <span class="refAuthor">P. Overell</span>, <span class="refTitle">"Augmented BNF for Syntax Specifications: ABNF"</span>, <span class="seriesInfo">STD 68</span>, <span class="seriesInfo">RFC 5234</span>, <span class="seriesInfo">DOI 10.17487/RFC5234</span>, <time datetime="2008-01" class="refDate">January 2008</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc5234">https://www.rfc-editor.org/rfc/rfc5234</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC5280">[RFC5280]</dt>
+        <dd>
+<span class="refAuthor">Cooper, D.</span>, <span class="refAuthor">Santesson, S.</span>, <span class="refAuthor">Farrell, S.</span>, <span class="refAuthor">Boeyen, S.</span>, <span class="refAuthor">Housley, R.</span>, and <span class="refAuthor">W. Polk</span>, <span class="refTitle">"Internet X.509 Public Key Infrastructure Certificate and Certificate Revocation List (CRL) Profile"</span>, <span class="seriesInfo">RFC 5280</span>, <span class="seriesInfo">DOI 10.17487/RFC5280</span>, <time datetime="2008-05" class="refDate">May 2008</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc5280">https://www.rfc-editor.org/rfc/rfc5280</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC7405">[RFC7405]</dt>
+        <dd>
+<span class="refAuthor">Kyzivat, P.</span>, <span class="refTitle">"Case-Sensitive String Support in ABNF"</span>, <span class="seriesInfo">RFC 7405</span>, <span class="seriesInfo">DOI 10.17487/RFC7405</span>, <time datetime="2014-12" class="refDate">December 2014</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc7405">https://www.rfc-editor.org/rfc/rfc7405</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8174">[RFC8174]</dt>
+        <dd>
+<span class="refAuthor">Leiba, B.</span>, <span class="refTitle">"Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 8174</span>, <span class="seriesInfo">DOI 10.17487/RFC8174</span>, <time datetime="2017-05" class="refDate">May 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8174">https://www.rfc-editor.org/rfc/rfc8174</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8610">[RFC8610]</dt>
+        <dd>
+<span class="refAuthor">Birkholz, H.</span>, <span class="refAuthor">Vigano, C.</span>, and <span class="refAuthor">C. Bormann</span>, <span class="refTitle">"Concise Data Definition Language (CDDL): A Notational Convention to Express Concise Binary Object Representation (CBOR) and JSON Data Structures"</span>, <span class="seriesInfo">RFC 8610</span>, <span class="seriesInfo">DOI 10.17487/RFC8610</span>, <time datetime="2019-06" class="refDate">June 2019</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8610">https://www.rfc-editor.org/rfc/rfc8610</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC9165">[RFC9165]</dt>
+        <dd>
+<span class="refAuthor">Bormann, C.</span>, <span class="refTitle">"Additional Control Operators for the Concise Data Definition Language (CDDL)"</span>, <span class="seriesInfo">RFC 9165</span>, <span class="seriesInfo">DOI 10.17487/RFC9165</span>, <time datetime="2021-12" class="refDate">December 2021</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9165">https://www.rfc-editor.org/rfc/rfc9165</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="STD90">[STD90]</dt>
+      <dd>
+<span class="refAuthor">Bray, T., Ed.</span>, <span class="refTitle">"The JavaScript Object Notation (JSON) Data Interchange Format"</span>, <span class="seriesInfo">STD 90</span>, <span class="seriesInfo">RFC 8259</span>, <span class="seriesInfo">DOI 10.17487/RFC8259</span>, <time datetime="2017-12" class="refDate">December 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8259">https://www.rfc-editor.org/rfc/rfc8259</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+</dl>
+</section>
+</div>
+<div id="sec-informative-references">
+<section id="section-11.2">
+        <h3 id="name-informative-references">
+<a href="#section-11.2" class="section-number selfRef">11.2. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
+        </h3>
+<dl class="references">
+<dt id="CID">[CID]</dt>
+        <dd>
+<span class="refTitle">"Controlled Identifiers v1.0"</span>, <time datetime="2025-05-15" class="refDate">15 May 2025</time>, <span>&lt;<a href="https://www.w3.org/TR/cid-1.0/">https://www.w3.org/TR/cid-1.0/</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="DID-DOCUMENT">[DID-DOCUMENT]</dt>
+        <dd>
+<span class="refTitle">"DID Document Definition"</span>, <span>n.d.</span>, <span>&lt;<a href="https://www.w3.org/TR/did-1.0/#dfn-did-documents">https://www.w3.org/TR/did-1.0/#dfn-did-documents</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="FULCIO">[FULCIO]</dt>
+        <dd>
+<span class="refTitle">"Fulcio"</span>, <span>n.d.</span>, <span>&lt;<a href="https://github.com/sigstore/fulcio">https://github.com/sigstore/fulcio</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="GITSIGN-TIMESTAMP">[GITSIGN-TIMESTAMP]</dt>
+        <dd>
+<span class="refTitle">"Gitsign: Timestamping"</span>, <span>n.d.</span>, <span>&lt;<a href="https://github.com/sigstore/gitsign/blob/44f5e17fac6944fdde71c94d2e77ab075c9dca9f/docs/timestamp.md#L102-L107">https://github.com/sigstore/gitsign/blob/44f5e17fac6944fdde71c94d2e77ab075c9dca9f/docs/timestamp.md#L102-L107</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="I-D.ietf-scitt-architecture">[I-D.ietf-scitt-architecture]</dt>
+        <dd>
+<span class="refAuthor">Birkholz, H.</span>, <span class="refAuthor">Delignat-Lavaud, A.</span>, <span class="refAuthor">Fournet, C.</span>, <span class="refAuthor">Deshpande, Y.</span>, and <span class="refAuthor">S. Lasker</span>, <span class="refTitle">"An Architecture for Trustworthy and Transparent Digital Supply Chains"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-scitt-architecture-22</span>, <time datetime="2025-10-10" class="refDate">10 October 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-scitt-architecture-22">https://datatracker.ietf.org/doc/html/draft-ietf-scitt-architecture-22</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="REGO">[REGO]</dt>
+        <dd>
+<span class="refTitle">"Rego"</span>, <span>n.d.</span>, <span>&lt;<a href="https://www.openpolicyagent.org/docs/latest/policy-language/">https://www.openpolicyagent.org/docs/latest/policy-language/</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC7519">[RFC7519]</dt>
+        <dd>
+<span class="refAuthor">Jones, M.</span>, <span class="refAuthor">Bradley, J.</span>, and <span class="refAuthor">N. Sakimura</span>, <span class="refTitle">"JSON Web Token (JWT)"</span>, <span class="seriesInfo">RFC 7519</span>, <span class="seriesInfo">DOI 10.17487/RFC7519</span>, <time datetime="2015-05" class="refDate">May 2015</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc7519">https://www.rfc-editor.org/rfc/rfc7519</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8392">[RFC8392]</dt>
+        <dd>
+<span class="refAuthor">Jones, M.</span>, <span class="refAuthor">Wahlstroem, E.</span>, <span class="refAuthor">Erdtman, S.</span>, and <span class="refAuthor">H. Tschofenig</span>, <span class="refTitle">"CBOR Web Token (CWT)"</span>, <span class="seriesInfo">RFC 8392</span>, <span class="seriesInfo">DOI 10.17487/RFC8392</span>, <time datetime="2018-05" class="refDate">May 2018</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8392">https://www.rfc-editor.org/rfc/rfc8392</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8792">[RFC8792]</dt>
+        <dd>
+<span class="refAuthor">Watsen, K.</span>, <span class="refAuthor">Auerswald, E.</span>, <span class="refAuthor">Farrel, A.</span>, and <span class="refAuthor">Q. Wu</span>, <span class="refTitle">"Handling Long Lines in Content of Internet-Drafts and RFCs"</span>, <span class="seriesInfo">RFC 8792</span>, <span class="seriesInfo">DOI 10.17487/RFC8792</span>, <time datetime="2020-06" class="refDate">June 2020</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8792">https://www.rfc-editor.org/rfc/rfc8792</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC9360">[RFC9360]</dt>
+        <dd>
+<span class="refAuthor">Schaad, J.</span>, <span class="refTitle">"CBOR Object Signing and Encryption (COSE): Header Parameters for Carrying and Referencing X.509 Certificates"</span>, <span class="seriesInfo">RFC 9360</span>, <span class="seriesInfo">DOI 10.17487/RFC9360</span>, <time datetime="2023-02" class="refDate">February 2023</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9360">https://www.rfc-editor.org/rfc/rfc9360</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC9597">[RFC9597]</dt>
+        <dd>
+<span class="refAuthor">Looker, T.</span> and <span class="refAuthor">M.B. Jones</span>, <span class="refTitle">"CBOR Web Token (CWT) Claims in COSE Headers"</span>, <span class="seriesInfo">RFC 9597</span>, <span class="seriesInfo">DOI 10.17487/RFC9597</span>, <time datetime="2024-06" class="refDate">June 2024</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9597">https://www.rfc-editor.org/rfc/rfc9597</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RWOT11">[RWOT11]</dt>
+        <dd>
+<span class="refAuthor">Stoecker, C.</span> and <span class="refAuthor">C. Wirrig</span>, <span class="refTitle">"Analysis of hybrid wallet solutions - Implementation options for combining x509 certificates with DIDs and VCs"</span>, <time datetime="2022-07-20" class="refDate">20 July 2022</time>, <span>&lt;<a href="https://github.com/WebOfTrustInfo/rwot11-the-hague/blob/master/advance-readings/hybrid_wallet_solutions_x509_DIDs_VCs.md">https://github.com/WebOfTrustInfo/rwot11-the-hague/blob/master/advance-readings/hybrid_wallet_solutions_x509_DIDs_VCs.md</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="TEST-VECTORS">[TEST-VECTORS]</dt>
+        <dd>
+<span class="refTitle">"did:x509 Test Vectors"</span>, <span>n.d.</span>, <span>&lt;<a href="https://github.com/microsoft/did-x509/blob/main/test-vectors.json">https://github.com/microsoft/did-x509/blob/main/test-vectors.json</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="VC">[VC]</dt>
+      <dd>
+<span class="refTitle">"Verifiable Credentials Data Model v1.1"</span>, <time datetime="2022-03-03" class="refDate">3 March 2022</time>, <span>&lt;<a href="https://www.w3.org/TR/2022/REC-vc-data-model-20220303/">https://www.w3.org/TR/2022/REC-vc-data-model-20220303/</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+</dl>
+</section>
+</div>
+</section>
+</div>
+<div id="test-vectors">
+<section id="appendix-A">
+      <h2 id="name-test-vectors">
+<a href="#appendix-A" class="section-number selfRef">Appendix A. </a><a href="#name-test-vectors" class="section-name selfRef">Test Vectors</a>
+      </h2>
+<p id="appendix-A-1">The machine-readable certificate chains, DIDs, expected resolution outcomes, and expected DID Documents are maintained in <span>[<a href="#TEST-VECTORS" class="cite xref">TEST-VECTORS</a>]</span>.
+The file is an array of independent input/output test cases.
+Each input embeds its certificate chain as an array of unpadded base64url-encoded DER certificates in leaf-first order.
+Each output contains either the expected DID Document or an expected error pattern.
+Certificate validity periods are not checked by these vectors.<a href="#appendix-A-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="acknowledgments">
+<section id="appendix-B">
+      <h2 id="name-acknowledgments">
+<a href="#name-acknowledgments" class="section-name selfRef">Acknowledgments</a>
+      </h2>
+<p id="appendix-B-1">The authors would like to thank
+<em>list</em>
+for their reviews and suggestions.<a href="#appendix-B-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="authors-addresses">
+<section id="appendix-C">
+      <h2 id="name-authors-addresses">
+<a href="#name-authors-addresses" class="section-name selfRef">Authors' Addresses</a>
+      </h2>
+<address class="vcard">
+        <div dir="auto" class="left"><span class="fn nameRole">Maik Riechert</span></div>
+<div dir="auto" class="left"><span class="org">Microsoft</span></div>
+<div class="email">
+<span>Email:</span>
+<a href="mailto:Maik.Riechert@microsoft.com" class="email">Maik.Riechert@microsoft.com</a>
+</div>
+</address>
+<address class="vcard">
+        <div dir="auto" class="left"><span class="fn nameRole">Antoine Delignat-Lavaud</span></div>
+<div dir="auto" class="left"><span class="org">Microsoft</span></div>
+<div class="email">
+<span>Email:</span>
+<a href="mailto:antdl@microsoft.com" class="email">antdl@microsoft.com</a>
+</div>
+</address>
+<address class="vcard">
+        <div dir="auto" class="left"><span class="fn nameRole">Henk Birkholz</span></div>
+<div dir="auto" class="left"><span class="org">Fraunhofer SIT</span></div>
+<div class="email">
+<span>Email:</span>
+<a href="mailto:henk.birkholz@ietf.contact" class="email">henk.birkholz@ietf.contact</a>
+</div>
+</address>
+<address class="vcard">
+        <div dir="auto" class="left"><span class="fn nameRole">Amaury Chamayou</span></div>
+<div dir="auto" class="left"><span class="org">Microsoft</span></div>
+<div class="email">
+<span>Email:</span>
+<a href="mailto:Amaury.Chamayou@microsoft.com" class="email">Amaury.Chamayou@microsoft.com</a>
+</div>
+</address>
+</section>
+</div>
+<script>const toc = document.getElementById("toc");
+toc.querySelector("h2").addEventListener("click", e => {
+  toc.classList.toggle("active");
+});
+toc.querySelector("nav").addEventListener("click", e => {
+  toc.classList.remove("active");
+});
+</script>
+</body>
+</html>
