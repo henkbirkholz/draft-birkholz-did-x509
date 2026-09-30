@@ -177,7 +177,7 @@ The did:x509 method lets existing X.509 solutions and DID-based systems interope
 - X.509 keys work in DID-based protocols.
   The DID Document exposes the leaf certificate's public key as a verification method, with verification relationships that follow its key usage ({{did-document}}), so these protocols need not handle certificates.
 - X.509 trust is expressed as a DID.
-  The certification authority (CA) fingerprint and the predicates let DID-based policies name an X.509 identity rather than individual certificates.
+  The certification authority (CA) fingerprint and the predicates let DID-based policies capture an X.509 identity rather than individual certificates.
 
 A single signed message can therefore serve both kinds of relying party ({{fig-interop}}).
 An X.509-only verifier validates the certificate chain with its trust store and ignores the issuer, while a DID-aware verifier resolves the issuer against the same chain and applies its DID-based policy.
