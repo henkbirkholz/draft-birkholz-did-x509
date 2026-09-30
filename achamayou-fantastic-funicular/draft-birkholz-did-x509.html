@@ -10,7 +10,7 @@
 <meta content="Henk Birkholz" name="author">
 <meta content="Amaury Chamayou" name="author">
 <meta content="
-       This document defines the did:x509 decentralized identifier (DID) method, an interoperable and flexible issuer identifier format for messages that transport or refer to X.509 certificates, including CBOR Object Signing and Encryption (COSE) messages using RFC 9360. The did:x509 identifier format implements a direct, resolvable binding between a certificate chain and a compact issuer string (DID string). It combines the fingerprint of a certification authority (CA) certificate in the chain with one or more predicates on the leaf certificate's subject name, subject alternative names, extended key usage, or Fulcio issuer. The identifier can be conveyed as an issuer value in a COSE Header CBOR Web Token (CWT) Claims map as defined in RFC 9597, in JSON Object Signing and Encryption (JOSE) and JSON Web Token (JWT) messages, such as in the &quot;iss&quot; claim defined in RFC 7519, or through other protocol-specific mechanisms that associate the identifier with the certificate chain. This issuer identifier is convenient for references and policy evaluation, for example in the context of transparency ledgers. 
+       This document defines the did:x509 decentralized identifier (DID) method, an interoperable and flexible issuer identifier format for messages that transport or refer to X.509 certificates, including CBOR Object Signing and Encryption (COSE) messages using RFC 9360. The did:x509 identifier format implements a direct, resolvable binding between a certificate chain and a compact issuer string (DID string). It combines the fingerprint of a certification authority (CA) certificate in the chain with one or more predicates on the leaf certificate's subject name, subject alternative names, extended key usage, or Fulcio issuer. The identifier can be conveyed as an issuer value in a COSE Header CBOR Web Token (CWT) Claims map as defined in RFC 9597, in JSON Object Signing and Encryption (JOSE) and JSON Web Token (JWT) messages, such as in the &quot;iss&quot; claim defined in RFC 7519, or through other protocol-specific mechanisms that associate the identifier with the certificate chain. The did:x509 method lets existing X.509 solutions and DID-based systems interoperate where a full transition to DIDs is not achievable or desired. This issuer identifier is convenient for references and policy evaluation, for example in the context of transparency ledgers. 
        This Informational document is published as an Independent Submission to improve interoperability with Microsoft's architecture. It is neither a standard nor a product of the IETF. 
     " name="description">
 <meta content="xml2rfc 3.34.1" name="generator">
@@ -1093,7 +1093,7 @@ svg {
 <h1 id="title">The did:x509 Decentralized Identifier (DID) Method</h1>
 <section id="section-abstract">
       <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
-<p id="section-abstract-1">This document defines the did:x509 decentralized identifier (DID) method, an interoperable and flexible issuer identifier format for messages that transport or refer to X.509 certificates, including CBOR Object Signing and Encryption (COSE) messages using RFC 9360. The did:x509 identifier format implements a direct, resolvable binding between a certificate chain and a compact issuer string (DID string). It combines the fingerprint of a certification authority (CA) certificate in the chain with one or more predicates on the leaf certificate's subject name, subject alternative names, extended key usage, or Fulcio issuer. The identifier can be conveyed as an issuer value in a COSE Header CBOR Web Token (CWT) Claims map as defined in RFC 9597, in JSON Object Signing and Encryption (JOSE) and JSON Web Token (JWT) messages, such as in the "iss" claim defined in RFC 7519, or through other protocol-specific mechanisms that associate the identifier with the certificate chain. This issuer identifier is convenient for references and policy evaluation, for example in the context of transparency ledgers.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
+<p id="section-abstract-1">This document defines the did:x509 decentralized identifier (DID) method, an interoperable and flexible issuer identifier format for messages that transport or refer to X.509 certificates, including CBOR Object Signing and Encryption (COSE) messages using RFC 9360. The did:x509 identifier format implements a direct, resolvable binding between a certificate chain and a compact issuer string (DID string). It combines the fingerprint of a certification authority (CA) certificate in the chain with one or more predicates on the leaf certificate's subject name, subject alternative names, extended key usage, or Fulcio issuer. The identifier can be conveyed as an issuer value in a COSE Header CBOR Web Token (CWT) Claims map as defined in RFC 9597, in JSON Object Signing and Encryption (JOSE) and JSON Web Token (JWT) messages, such as in the "iss" claim defined in RFC 7519, or through other protocol-specific mechanisms that associate the identifier with the certificate chain. The did:x509 method lets existing X.509 solutions and DID-based systems interoperate where a full transition to DIDs is not achievable or desired. This issuer identifier is convenient for references and policy evaluation, for example in the context of transparency ledgers.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
 <p id="section-abstract-2">This Informational document is published as an Independent Submission to improve interoperability with Microsoft's architecture. It is neither a standard nor a product of the IETF.<a href="#section-abstract-2" class="pilcrow">¶</a></p>
 </section>
 <section class="note rfcEditorRemove" id="section-note.1">
@@ -1150,13 +1150,16 @@ svg {
         </h2>
 <nav class="toc"><ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1">
-            <p id="section-toc.1-1.1.1" class="keepWithNext"><a href="#section-1" class="auto internal xref">1</a>.  <a href="#name-introduction" class="internal xref">Introduction</a></p>
+            <p id="section-toc.1-1.1.1"><a href="#section-1" class="auto internal xref">1</a>.  <a href="#name-introduction" class="internal xref">Introduction</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1.2.1">
-                <p id="section-toc.1-1.1.2.1.1" class="keepWithNext"><a href="#section-1.1" class="auto internal xref">1.1</a>.  <a href="#name-relationship-to-the-didx509" class="internal xref">Relationship to the did:x509 Method Specification</a></p>
+                <p id="section-toc.1-1.1.2.1.1" class="keepWithNext"><a href="#section-1.1" class="auto internal xref">1.1</a>.  <a href="#name-interoperability-between-x5" class="internal xref">Interoperability Between X.509 and DIDs</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1.2.2">
-                <p id="section-toc.1-1.1.2.2.1" class="keepWithNext"><a href="#section-1.2" class="auto internal xref">1.2</a>.  <a href="#name-conventions-and-definitions" class="internal xref">Conventions and Definitions</a></p>
+                <p id="section-toc.1-1.1.2.2.1" class="keepWithNext"><a href="#section-1.2" class="auto internal xref">1.2</a>.  <a href="#name-relationship-to-the-didx509" class="internal xref">Relationship to the did:x509 Method Specification</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1.2.3">
+                <p id="section-toc.1-1.1.2.3.1" class="keepWithNext"><a href="#section-1.3" class="auto internal xref">1.3</a>.  <a href="#name-conventions-and-definitions" class="internal xref">Conventions and Definitions</a></p>
 </li>
             </ul>
 </li>
@@ -1324,37 +1327,92 @@ Relying on a partial certificate chain (e.g., a root certificate and some interm
 While stable, the level of granularity afforded by a partial certificate chain may not be sufficient to distinguish several identities that are not equivalent for the purpose of policy.<a href="#section-1-4" class="pilcrow">¶</a></p>
 <p id="section-1-5">Combining authority pinning with certificate predicates is a precise and stable way of capturing identities as a constrained set of certificates.
 Their representation as compact and durable identifier strings enables the formulation of readable policy (e.g., "request.issuer == 'did:x509...'"), for example, in the Registration Policies of Transparency Services <span>[<a href="#RFC9943" class="cite xref">RFC9943</a>]</span>.<a href="#section-1-5" class="pilcrow">¶</a></p>
-<div id="relationship">
+<div id="interoperability">
 <section id="section-1.1">
-        <h3 id="name-relationship-to-the-didx509">
-<a href="#section-1.1" class="section-number selfRef">1.1. </a><a href="#name-relationship-to-the-didx509" class="section-name selfRef">Relationship to the did:x509 Method Specification</a>
+        <h3 id="name-interoperability-between-x5">
+<a href="#section-1.1" class="section-number selfRef">1.1. </a><a href="#name-interoperability-between-x5" class="section-name selfRef">Interoperability Between X.509 and DIDs</a>
         </h3>
-<p id="section-1.1-1">The did:x509 method is registered in the W3C DID Methods registry (<span>[<a href="#DID-METHODS" class="cite xref">DID-METHODS</a>]</span>), whose entry points to the did:x509 Method Specification maintained in the microsoft/did-x509 repository (<span>[<a href="#DID-X509-SPEC" class="cite xref">DID-X509-SPEC</a>]</span>).
+<p id="section-1.1-1">The did:x509 method lets existing X.509 solutions and DID-based systems interoperate without changes to either:<a href="#section-1.1-1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-1.1-2.1">
+            <p id="section-1.1-2.1.1">The X.509 side is unchanged.
+Certification authorities, public or private, issue ordinary certificates, signers keep their keys, and did:x509 identifiers are created locally from certificate chains (<a href="#create" class="auto internal xref">Section 6.1</a>).<a href="#section-1.1-2.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-1.1-2.2">
+            <p id="section-1.1-2.2.1">The evidence travels with the message.
+Resolution needs only the DID and the certificate chain that signed messages already carry, for example in the <code>x5chain</code> header parameter (<span>[<a href="#RFC9360" class="cite xref">RFC9360</a>]</span>), so any resolver that accepts the chain derives the same DID Document, without a registry lookup (<a href="#resolution" class="auto internal xref">Section 7</a>).<a href="#section-1.1-2.2.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-1.1-2.3">
+            <p id="section-1.1-2.3.1">X.509 keys become DID material.
+The DID Document exposes the leaf certificate key as a verification method, with verification relationships that follow its key usage (<a href="#did-document" class="auto internal xref">Section 4</a>), so DID-based protocols can use X.509-certified keys without handling certificates.<a href="#section-1.1-2.3.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-1.1-2.4">
+            <p id="section-1.1-2.4.1">X.509 trust is expressed as a DID.
+The certification authority (CA) fingerprint and the predicates identify the certificates that represent an identity, in a string that DID-based policies can reference and that stays stable when leaf certificates are renewed.<a href="#section-1.1-2.4.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
+<p id="section-1.1-3">A single signed message can therefore serve both kinds of relying party (<a href="#fig-interop" class="auto internal xref">Figure 1</a>).
+An X.509-only verifier validates the certificate chain with its trust store and ignores the issuer, while a DID-aware verifier resolves the issuer against the same chain and applies its DID-based policy.
+Neither needs the other's infrastructure.<a href="#section-1.1-3" class="pilcrow">¶</a></p>
+<span id="name-one-signed-message-for-x509"></span><div id="fig-interop">
+<figure id="figure-1">
+          <div class="alignLeft art-text artwork" id="section-1.1-4.1">
+<pre>
++------+  issues   +--------+
+|  CA  |----------&gt;| Signer |
++------+           +--------+
+                        |
+                        | signed message with the certificate
+                        | chain and a did:x509 issuer
+                        |
+           +------------+------------+
+           |                         |
+           v                         v
++---------------------+   +----------------------+
+| X.509-only verifier |   | DID-aware verifier   |
+| validates the chain |   | resolves the issuer  |
+| with its trust      |   | against the chain,   |
+| store               |   | applies DID policy   |
++---------------------+   +----------------------+
+</pre>
+</div>
+<figcaption><a href="#figure-1" class="selfRef">Figure 1</a>:
+<a href="#name-one-signed-message-for-x509" class="selfRef">One Signed Message for X.509 and DID Verifiers</a>
+          </figcaption></figure>
+</div>
+</section>
+</div>
+<div id="relationship">
+<section id="section-1.2">
+        <h3 id="name-relationship-to-the-didx509">
+<a href="#section-1.2" class="section-number selfRef">1.2. </a><a href="#name-relationship-to-the-didx509" class="section-name selfRef">Relationship to the did:x509 Method Specification</a>
+        </h3>
+<p id="section-1.2-1">The did:x509 method is registered in the W3C DID Methods registry (<span>[<a href="#DID-METHODS" class="cite xref">DID-METHODS</a>]</span>), whose entry points to the did:x509 Method Specification maintained in the microsoft/did-x509 repository (<span>[<a href="#DID-X509-SPEC" class="cite xref">DID-X509-SPEC</a>]</span>).
 Microsoft has implemented did:x509 in a range of libraries and systems.
 This document is aligned with <span>[<a href="#DID-X509-SPEC" class="cite xref">DID-X509-SPEC</a>]</span>, and much of its text, including the ABNF, the Rego policy, and the DID resolution procedure, is adapted from it; the authors of <span>[<a href="#DID-X509-SPEC" class="cite xref">DID-X509-SPEC</a>]</span> are also authors of this document.
-The authors intend to keep this document and <span>[<a href="#DID-X509-SPEC" class="cite xref">DID-X509-SPEC</a>]</span> synchronized as both evolve.<a href="#section-1.1-1" class="pilcrow">¶</a></p>
+The authors intend to keep this document and <span>[<a href="#DID-X509-SPEC" class="cite xref">DID-X509-SPEC</a>]</span> synchronized as both evolve.<a href="#section-1.2-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="conventions-and-definitions">
-<section id="section-1.2">
+<section id="section-1.3">
         <h3 id="name-conventions-and-definitions">
-<a href="#section-1.2" class="section-number selfRef">1.2. </a><a href="#name-conventions-and-definitions" class="section-name selfRef">Conventions and Definitions</a>
+<a href="#section-1.3" class="section-number selfRef">1.3. </a><a href="#name-conventions-and-definitions" class="section-name selfRef">Conventions and Definitions</a>
         </h3>
-<p id="section-1.2-1">The key words "<span class="bcp14">MUST</span>", "<span class="bcp14">MUST NOT</span>", "<span class="bcp14">REQUIRED</span>", "<span class="bcp14">SHALL</span>", "<span class="bcp14">SHALL NOT</span>", "<span class="bcp14">SHOULD</span>", "<span class="bcp14">SHOULD NOT</span>", "<span class="bcp14">RECOMMENDED</span>", "<span class="bcp14">NOT RECOMMENDED</span>",
+<p id="section-1.3-1">The key words "<span class="bcp14">MUST</span>", "<span class="bcp14">MUST NOT</span>", "<span class="bcp14">REQUIRED</span>", "<span class="bcp14">SHALL</span>", "<span class="bcp14">SHALL NOT</span>", "<span class="bcp14">SHOULD</span>", "<span class="bcp14">SHOULD NOT</span>", "<span class="bcp14">RECOMMENDED</span>", "<span class="bcp14">NOT RECOMMENDED</span>",
 "<span class="bcp14">MAY</span>", and "<span class="bcp14">OPTIONAL</span>" in this document are to be interpreted as
 described in BCP 14 <span>[<a href="#RFC2119" class="cite xref">RFC2119</a>]</span> <span>[<a href="#RFC8174" class="cite xref">RFC8174</a>]</span> when, and only when, they
-appear in all capitals, as shown here.<a href="#section-1.2-1" class="pilcrow">¶</a></p>
-<p id="section-1.2-2">In this document, the Concise Data Definition Language (CDDL) <span>[<a href="#RFC8610" class="cite xref">RFC8610</a>]</span> is used to describe the
-data formats, and ABNF (<span>[<a href="#RFC5234" class="cite xref">RFC5234</a>]</span>, <span>[<a href="#RFC7405" class="cite xref">RFC7405</a>]</span>) to describe identifiers.<a href="#section-1.2-2" class="pilcrow">¶</a></p>
-<p id="section-1.2-3">This document uses the terms "DID", "DID URL", "DID Document", "DID subject", "DID resolution", "verification method", and "controller" as defined in <span>[<a href="#DID" class="cite xref">DID</a>]</span>, and the terms "certification path" and "trust anchor" as defined in <span>[<a href="#RFC5280" class="cite xref">RFC5280</a>]</span>.
-A "relying party" is an entity that relies on a resolved did:x509 identifier, for example, to authorize the signer of a message.<a href="#section-1.2-3" class="pilcrow">¶</a></p>
-<p id="section-1.2-4">Rego (<span>[<a href="#REGO" class="cite xref">REGO</a>]</span>) is a declarative policy language.
+appear in all capitals, as shown here.<a href="#section-1.3-1" class="pilcrow">¶</a></p>
+<p id="section-1.3-2">In this document, the Concise Data Definition Language (CDDL) <span>[<a href="#RFC8610" class="cite xref">RFC8610</a>]</span> is used to describe the
+data formats, and ABNF (<span>[<a href="#RFC5234" class="cite xref">RFC5234</a>]</span>, <span>[<a href="#RFC7405" class="cite xref">RFC7405</a>]</span>) to describe identifiers.<a href="#section-1.3-2" class="pilcrow">¶</a></p>
+<p id="section-1.3-3">This document uses the terms "DID", "DID URL", "DID Document", "DID subject", "DID resolution", "verification method", and "controller" as defined in <span>[<a href="#DID" class="cite xref">DID</a>]</span>, and the terms "certification path" and "trust anchor" as defined in <span>[<a href="#RFC5280" class="cite xref">RFC5280</a>]</span>.
+A "relying party" is an entity that relies on a resolved did:x509 identifier, for example, to authorize the signer of a message.<a href="#section-1.3-3" class="pilcrow">¶</a></p>
+<p id="section-1.3-4">Rego (<span>[<a href="#REGO" class="cite xref">REGO</a>]</span>) is a declarative policy language.
 This document uses Rego, rather than pseudo-code, to define DID syntax validation and predicate validation for did:x509 identifiers, so that the logic is precise and unambiguous and can be evaluated automatically.
-The Rego code snippets provided in this document can be evaluated using any Rego v1 runtime, but there is no expectation that implementations use the Rego language.<a href="#section-1.2-4" class="pilcrow">¶</a></p>
-<p id="section-1.2-5">Per <span>[<a href="#RFC8792" class="cite xref">RFC8792</a>]</span>, line breaks may be present in the figures of this document
-to stay within the line-length limits of this document's format.<a href="#section-1.2-5" class="pilcrow">¶</a></p>
-<p id="section-1.2-6">Examples in this document abbreviate long base64url values, such as certification authority (CA) fingerprints, to their first and last two characters with two dots in between (for example, <code>WE..jk</code>).
-Abbreviated values are not syntactically valid.<a href="#section-1.2-6" class="pilcrow">¶</a></p>
+The Rego code snippets provided in this document can be evaluated using any Rego v1 runtime, but there is no expectation that implementations use the Rego language.<a href="#section-1.3-4" class="pilcrow">¶</a></p>
+<p id="section-1.3-5">Per <span>[<a href="#RFC8792" class="cite xref">RFC8792</a>]</span>, line breaks may be present in the figures of this document
+to stay within the line-length limits of this document's format.<a href="#section-1.3-5" class="pilcrow">¶</a></p>
+<p id="section-1.3-6">Examples in this document abbreviate long base64url values, such as CA fingerprints, to their first and last two characters with two dots in between (for example, <code>WE..jk</code>).
+Abbreviated values are not syntactically valid.<a href="#section-1.3-6" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1375,7 +1433,7 @@ pct-encoded        = "%" HEXDIG HEXDIG
 </pre><a href="#section-2-3" class="pilcrow">¶</a>
 </div>
 <span id="name-abnf-definition-of-core-did"></span><div id="fig-core-def">
-<figure id="figure-1">
+<figure id="figure-2">
         <div class="lang-abnf sourcecode" id="section-2-4.1">
 <pre>
 did-x509           = %s"did:x509:" method-specific-id
@@ -1391,7 +1449,7 @@ predicate-value    = *(1*idchar ":") 1*idchar
 base64url          = 1*(ALPHA / DIGIT / "-" / "_")
 </pre>
 </div>
-<figcaption><a href="#figure-1" class="selfRef">Figure 1</a>:
+<figcaption><a href="#figure-2" class="selfRef">Figure 2</a>:
 <a href="#name-abnf-definition-of-core-did" class="selfRef">ABNF Definition of Core did:x509 Syntax</a>
         </figcaption></figure>
 </div>
@@ -1427,7 +1485,7 @@ This identifier will match certificate chains with matching leaf certificate sub
 To evaluate the reference Rego code shown below, the DID and certificate chain have to be passed to a Rego runtime as a JSON document: <code>{"did": "&lt;DID&gt;", "chain": &lt;CertificateChain&gt;}</code>, where <code>did</code> is the DID string and <code>chain</code> is the parsed representation of the certificate chain derived from the <code>x509chain</code> resolution option.<a href="#section-2-15" class="pilcrow">¶</a></p>
 <p id="section-2-16">Core Rego policy:<a href="#section-2-16" class="pilcrow">¶</a></p>
 <span id="name-core-rego-validation-rule"></span><div id="fig-validate-core">
-<figure id="figure-2">
+<figure id="figure-3">
         <div class="lang-rego sourcecode" id="section-2-17.1">
 <pre>
 package did_x509
@@ -1477,7 +1535,7 @@ valid if {
 }
 </pre>
 </div>
-<figcaption><a href="#figure-2" class="selfRef">Figure 2</a>:
+<figcaption><a href="#figure-3" class="selfRef">Figure 3</a>:
 <a href="#name-core-rego-validation-rule" class="selfRef">Core Rego Validation Rule</a>
         </figcaption></figure>
 </div>
@@ -1489,13 +1547,13 @@ valid if {
         </h3>
 <p id="section-2.1-1">Some of the predicates that are defined in subsequent sections require values to be percent-encoded. Percent-encoding is specified in <span><a href="https://rfc-editor.org/rfc/rfc3986#section-2.1" class="relref">Section 2.1</a> of [<a href="#RFC3986" class="cite xref">RFC3986</a>]</span>. Characters are encoded as UTF-8 (<span>[<a href="#RFC3629" class="cite xref">RFC3629</a>]</span>) before percent-encoding. All characters that are not in the allowed set defined below <span class="bcp14">MUST</span> be percent-encoded:<a href="#section-2.1-1" class="pilcrow">¶</a></p>
 <span id="name-abnf-definition-of-characte"></span><div id="fig-allowed-def">
-<figure id="figure-3">
+<figure id="figure-4">
           <div class="lang-abnf sourcecode" id="section-2.1-2.1">
 <pre>
 allowed = ALPHA / DIGIT / "-" / "." / "_"
 </pre>
 </div>
-<figcaption><a href="#figure-3" class="selfRef">Figure 3</a>:
+<figcaption><a href="#figure-4" class="selfRef">Figure 4</a>:
 <a href="#name-abnf-definition-of-characte" class="selfRef">ABNF Definition of Characters That Do Not Need to Be Percent-Encoded</a>
           </figcaption></figure>
 </div>
@@ -1509,7 +1567,7 @@ allowed = ALPHA / DIGIT / "-" / "." / "_"
 <a href="#section-2.2" class="section-number selfRef">2.2. </a><a href="#name-subject-predicate" class="section-name selfRef">"subject" Predicate</a>
         </h3>
 <span id="name-abnf-definition-of-the-subj"></span><div id="fig-subject-def">
-<figure id="figure-4">
+<figure id="figure-5">
           <div class="lang-abnf sourcecode" id="section-2.2-1.1">
 <pre>
 predicate-name  = %s"subject"
@@ -1521,7 +1579,7 @@ label           = %s"CN" / %s"L" / %s"ST" / %s"O" / %s"OU" /
 oid             = 1*DIGIT *("." 1*DIGIT)
 </pre>
 </div>
-<figcaption><a href="#figure-4" class="selfRef">Figure 4</a>:
+<figcaption><a href="#figure-5" class="selfRef">Figure 5</a>:
 <a href="#name-abnf-definition-of-the-subj" class="selfRef">ABNF Definition of the "subject" Predicate</a>
           </figcaption></figure>
 </div>
@@ -1530,7 +1588,7 @@ oid             = 1*DIGIT *("." 1*DIGIT)
 <p id="section-2.2-4"><code>did:x509:0:sha256:WE..jk::subject:C:US:ST:Texas:L:Austin:O:Example</code><a href="#section-2.2-4" class="pilcrow">¶</a></p>
 <p id="section-2.2-5">Rego policy:<a href="#section-2.2-5" class="pilcrow">¶</a></p>
 <span id="name-rego-function-validating-th"></span><div id="fig-validate-subject">
-<figure id="figure-5">
+<figure id="figure-6">
           <div class="lang-rego sourcecode" id="section-2.2-6.1">
 <pre>
 validate_predicate(name, value) := true if {
@@ -1550,7 +1608,7 @@ validate_predicate(name, value) := true if {
 }
 </pre>
 </div>
-<figcaption><a href="#figure-5" class="selfRef">Figure 5</a>:
+<figcaption><a href="#figure-6" class="selfRef">Figure 6</a>:
 <a href="#name-rego-function-validating-th" class="selfRef">Rego Function Validating the "subject" Predicate</a>
           </figcaption></figure>
 </div>
@@ -1562,7 +1620,7 @@ validate_predicate(name, value) := true if {
 <a href="#section-2.3" class="section-number selfRef">2.3. </a><a href="#name-san-predicate" class="section-name selfRef">"san" Predicate</a>
         </h3>
 <span id="name-abnf-definition-of-the-san-"></span><div id="fig-san-def">
-<figure id="figure-6">
+<figure id="figure-7">
           <div class="lang-abnf sourcecode" id="section-2.3-1.1">
 <pre>
 predicate-name  = %s"san"
@@ -1571,7 +1629,7 @@ san-type        = %s"email" / %s"dns" / %s"uri"
 san-value       = 1*idchar
 </pre>
 </div>
-<figcaption><a href="#figure-6" class="selfRef">Figure 6</a>:
+<figcaption><a href="#figure-7" class="selfRef">Figure 7</a>:
 <a href="#name-abnf-definition-of-the-san-" class="selfRef">ABNF Definition of the "san" Predicate</a>
           </figcaption></figure>
 </div>
@@ -1582,7 +1640,7 @@ san-value       = 1*idchar
 <p id="section-2.3-6"><code>did:x509:0:sha256:WE..jk::san:email:bob%40example.com</code><a href="#section-2.3-6" class="pilcrow">¶</a></p>
 <p id="section-2.3-7">Rego policy:<a href="#section-2.3-7" class="pilcrow">¶</a></p>
 <span id="name-rego-function-validating-the"></span><div id="fig-validate-san">
-<figure id="figure-7">
+<figure id="figure-8">
           <div class="lang-rego sourcecode" id="section-2.3-8.1">
 <pre>
 validate_predicate(name, value) := true if {
@@ -1593,7 +1651,7 @@ validate_predicate(name, value) := true if {
 }
 </pre>
 </div>
-<figcaption><a href="#figure-7" class="selfRef">Figure 7</a>:
+<figcaption><a href="#figure-8" class="selfRef">Figure 8</a>:
 <a href="#name-rego-function-validating-the" class="selfRef">Rego Function Validating the "san" Predicate</a>
           </figcaption></figure>
 </div>
@@ -1605,7 +1663,7 @@ validate_predicate(name, value) := true if {
 <a href="#section-2.4" class="section-number selfRef">2.4. </a><a href="#name-eku-predicate" class="section-name selfRef">"eku" Predicate</a>
         </h3>
 <span id="name-abnf-definition-of-the-eku-"></span><div id="fig-eku-def">
-<figure id="figure-8">
+<figure id="figure-9">
           <div class="lang-abnf sourcecode" id="section-2.4-1.1">
 <pre>
 predicate-name  = %s"eku"
@@ -1614,7 +1672,7 @@ eku             = oid
 oid             = 1*DIGIT *("." 1*DIGIT)
 </pre>
 </div>
-<figcaption><a href="#figure-8" class="selfRef">Figure 8</a>:
+<figcaption><a href="#figure-9" class="selfRef">Figure 9</a>:
 <a href="#name-abnf-definition-of-the-eku-" class="selfRef">ABNF Definition of the "eku" Predicate</a>
           </figcaption></figure>
 </div>
@@ -1623,7 +1681,7 @@ oid             = 1*DIGIT *("." 1*DIGIT)
 <p id="section-2.4-4"><code>did:x509:0:sha256:WE..jk::eku:1.3.6.1.4.1.311.10.3.13</code><a href="#section-2.4-4" class="pilcrow">¶</a></p>
 <p id="section-2.4-5">Rego policy:<a href="#section-2.4-5" class="pilcrow">¶</a></p>
 <span id="name-rego-function-validating-the-"></span><div id="fig-validate-eku">
-<figure id="figure-9">
+<figure id="figure-10">
           <div class="lang-rego sourcecode" id="section-2.4-6.1">
 <pre>
 validate_predicate(name, value) := true if {
@@ -1632,7 +1690,7 @@ validate_predicate(name, value) := true if {
 }
 </pre>
 </div>
-<figcaption><a href="#figure-9" class="selfRef">Figure 9</a>:
+<figcaption><a href="#figure-10" class="selfRef">Figure 10</a>:
 <a href="#name-rego-function-validating-the-" class="selfRef">Rego Function Validating the "eku" Predicate</a>
           </figcaption></figure>
 </div>
@@ -1644,7 +1702,7 @@ validate_predicate(name, value) := true if {
 <a href="#section-2.5" class="section-number selfRef">2.5. </a><a href="#name-fulcio-issuer-predicate" class="section-name selfRef">"fulcio-issuer" Predicate</a>
         </h3>
 <span id="name-abnf-definition-of-the-fulc"></span><div id="fig-fulcio-issuer-def">
-<figure id="figure-10">
+<figure id="figure-11">
           <div class="lang-abnf sourcecode" id="section-2.5-1.1">
 <pre>
 predicate-name   = %s"fulcio-issuer"
@@ -1652,7 +1710,7 @@ predicate-value  = fulcio-issuer
 fulcio-issuer    = 1*idchar
 </pre>
 </div>
-<figcaption><a href="#figure-10" class="selfRef">Figure 10</a>:
+<figcaption><a href="#figure-11" class="selfRef">Figure 11</a>:
 <a href="#name-abnf-definition-of-the-fulc" class="selfRef">ABNF Definition of the "fulcio-issuer" Predicate</a>
           </figcaption></figure>
 </div>
@@ -1665,7 +1723,7 @@ The extension <span class="bcp14">MUST NOT</span> be marked critical.<a href="#s
 <p id="section-2.5-7"><code>did:x509:0:sha256:WE..jk::fulcio-issuer:issuer.example.com::san:uri:https%3A%2F%2Fexample.com%2Focto-org%2Focto-automation%2Fworkflows%2Foidc.yml%40refs%2Fheads%2Fmain</code><a href="#section-2.5-7" class="pilcrow">¶</a></p>
 <p id="section-2.5-8">Rego policy:<a href="#section-2.5-8" class="pilcrow">¶</a></p>
 <span id="name-rego-function-validating-the-f"></span><div id="fig-validate-fulcio-issuer">
-<figure id="figure-11">
+<figure id="figure-12">
           <div class="lang-rego sourcecode" id="section-2.5-9.1">
 <pre>=============== NOTE: '\' line wrapping per RFC 8792 ================
 
@@ -1677,7 +1735,7 @@ validate_predicate(name, value) := true if {
 }
 </pre>
 </div>
-<figcaption><a href="#figure-11" class="selfRef">Figure 11</a>:
+<figcaption><a href="#figure-12" class="selfRef">Figure 12</a>:
 <a href="#name-rego-function-validating-the-f" class="selfRef">Rego Function Validating the "fulcio-issuer" Predicate</a>
           </figcaption></figure>
 </div>
@@ -1702,7 +1760,7 @@ validate_predicate(name, value) := true if {
         </ol>
 <p id="section-2.6-6">The chain is ordered leaf first and root or trust anchor last:<a href="#section-2.6-6" class="pilcrow">¶</a></p>
 <span id="name-structure-of-the-x509chain-"></span><div id="fig-x509chain">
-<figure id="figure-12">
+<figure id="figure-13">
           <div class="alignLeft art-text artwork" id="section-2.6-7.1">
 <pre>
 x509chain = b64url(DER(leaf)) ","
@@ -1710,7 +1768,7 @@ x509chain = b64url(DER(leaf)) ","
             b64url(DER(root))
 </pre>
 </div>
-<figcaption><a href="#figure-12" class="selfRef">Figure 12</a>:
+<figcaption><a href="#figure-13" class="selfRef">Figure 13</a>:
 <a href="#name-structure-of-the-x509chain-" class="selfRef">Structure of the x509chain Resolution Option Value</a>
           </figcaption></figure>
 </div>
@@ -1747,7 +1805,7 @@ The media type is selected by the resolution request, not by the DID string.<a h
 The example below uses the Controlled Identifiers v1 context <code>https://www.w3.org/ns/cid/v1</code> (<span>[<a href="#CID" class="cite xref">CID</a>]</span>).<a href="#section-4-5" class="pilcrow">¶</a></p>
 <p id="section-4-6">This illustrates what a typical DID Document, describing the DID subject and the methods it can use to authenticate itself, can look like once resolved:<a href="#section-4-6" class="pilcrow">¶</a></p>
 <span id="name-example-did-document"></span><div id="fig-did-document-example">
-<figure id="figure-13">
+<figure id="figure-14">
         <div class="lang-json sourcecode" id="section-4-7.1">
 <pre>
 {
@@ -1778,7 +1836,7 @@ The example below uses the Controlled Identifiers v1 context <code>https://www.w
 }
 </pre>
 </div>
-<figcaption><a href="#figure-13" class="selfRef">Figure 13</a>:
+<figcaption><a href="#figure-14" class="selfRef">Figure 14</a>:
 <a href="#name-example-did-document" class="selfRef">Example DID Document</a>
         </figcaption></figure>
 </div>
@@ -1801,7 +1859,7 @@ Repeated attributes are not supported.
 Values are converted to UTF-8 strings.
 The <code>extensions</code> member can contain the Extended Key Usage OIDs (<span><a href="https://rfc-editor.org/rfc/rfc5280#section-4.2.1.12" class="relref">Section 4.2.1.12</a> of [<a href="#RFC5280" class="cite xref">RFC5280</a>]</span>), the Subject Alternative Name entries (<span><a href="https://rfc-editor.org/rfc/rfc5280#section-4.2.1.6" class="relref">Section 4.2.1.6</a> of [<a href="#RFC5280" class="cite xref">RFC5280</a>]</span>), and the Fulcio issuer extension value (<span>[<a href="#FULCIO" class="cite xref">FULCIO</a>]</span>).<a href="#section-5-3" class="pilcrow">¶</a></p>
 <span id="name-cddl-definition-of-didx509-"></span><div id="fig-json-model-cddl">
-<figure id="figure-14">
+<figure id="figure-15">
         <div class="breakable lang-cddl sourcecode" id="section-5-4.1">
 <pre>
 ; leaf first, followed by issuer certificates,
@@ -1857,13 +1915,13 @@ URI = ["uri", tstr]          ; e.g., ["uri", "https://example.com"]
 DirectoryName = ["dn", Name] ; e.g., ["dn", {CN: "Example"}]
 </pre>
 </div>
-<figcaption><a href="#figure-14" class="selfRef">Figure 14</a>:
+<figcaption><a href="#figure-15" class="selfRef">Figure 15</a>:
 <a href="#name-cddl-definition-of-didx509-" class="selfRef">CDDL Definition of did:x509 JSON Data Model</a>
         </figcaption></figure>
 </div>
 <p id="section-5-5">Example certificate chain mapped to the JSON data model:<a href="#section-5-5" class="pilcrow">¶</a></p>
 <span id="name-example-certificate-chain-i"></span><div id="fig-chain-example">
-<figure id="figure-15">
+<figure id="figure-16">
         <div class="lang-json sourcecode" id="section-5-6.1">
 <pre>
 [
@@ -1912,7 +1970,7 @@ DirectoryName = ["dn", Name] ; e.g., ["dn", {CN: "Example"}]
 ]
 </pre>
 </div>
-<figcaption><a href="#figure-15" class="selfRef">Figure 15</a>:
+<figcaption><a href="#figure-16" class="selfRef">Figure 16</a>:
 <a href="#name-example-certificate-chain-i" class="selfRef">Example Certificate Chain in the did:x509 JSON Data Model</a>
         </figcaption></figure>
 </div>
@@ -2600,7 +2658,7 @@ If unlinkability is required, relying parties should avoid reusing the same did:
 <a href="#section-11" class="section-number selfRef">11. </a><a href="#name-iana-considerations" class="section-name selfRef">IANA Considerations</a>
       </h2>
 <p id="section-11-1">This document has no IANA actions.
-The did:x509 method is registered in the W3C DID Methods registry (<span>[<a href="#DID-METHODS" class="cite xref">DID-METHODS</a>]</span>), as described in <a href="#relationship" class="auto internal xref">Section 1.1</a>.<a href="#section-11-1" class="pilcrow">¶</a></p>
+The did:x509 method is registered in the W3C DID Methods registry (<span>[<a href="#DID-METHODS" class="cite xref">DID-METHODS</a>]</span>), as described in <a href="#relationship" class="auto internal xref">Section 1.2</a>.<a href="#section-11-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="sec-combined-references">
