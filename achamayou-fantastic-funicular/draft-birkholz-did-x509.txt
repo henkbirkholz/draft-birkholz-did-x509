@@ -96,15 +96,20 @@ Table of Contents
      6.4.  Deactivate
    7.  DID Resolution
    8.  Implementation Status
-     8.1.  did-x509
-     8.2.  didx509cpp
-     8.3.  didx509go
-     8.4.  cosesign1go
-     8.5.  CoseSignTool
-     8.6.  scitt-ccf-ledger
-     8.7.  CCF
-     8.8.  hcsshim
-     8.9.  Azure CLI confcom Extension
+     8.1.  Microsoft
+       8.1.1.  did-x509
+       8.1.2.  didx509cpp
+       8.1.3.  didx509go
+       8.1.4.  cosesign1go
+       8.1.5.  CoseSignTool
+       8.1.6.  scitt-ccf-ledger
+       8.1.7.  CCF
+       8.1.8.  hcsshim
+       8.1.9.  Azure CLI confcom Extension
+     8.2.  Nuts Foundation
+       8.2.1.  nuts-node
+       8.2.2.  go-didx509-toolkit
+       8.2.3.  uzi-did-x509-issuer-java
    9.  Security Considerations
      9.1.  Identifier Ambiguity
      9.2.  X.509 Trust Stores
@@ -924,13 +929,16 @@ Table of Contents
    It is up to the individual working groups to use this information as
    they see fit".
 
+   The information in this section was last updated in September 2026.
+
+8.1.  Microsoft
+
    The implementations below are the ones that Microsoft publishes as
    open source.  Microsoft also has internal implementations, which are
-   not listed here.  For every implementation below, the organization is
-   Microsoft, the contact is the authors of this document, and the
-   information was last updated in September 2026.
+   not listed here.  For all of them, the organization is Microsoft and
+   the contact is the authors of this document.
 
-8.1.  did-x509
+8.1.1.  did-x509
 
    Link:  https://github.com/microsoft/did-x509
 
@@ -946,7 +954,7 @@ Table of Contents
 
    Licensing:  MIT
 
-8.2.  didx509cpp
+8.1.2.  didx509cpp
 
    Link:  https://github.com/microsoft/didx509cpp
 
@@ -963,7 +971,7 @@ Table of Contents
 
    Used by:  CCF and scitt-ccf-ledger.
 
-8.3.  didx509go
+8.1.3.  didx509go
 
    Link:  https://github.com/microsoft/didx509go
 
@@ -978,7 +986,7 @@ Table of Contents
 
    Used by:  cosesign1go and hcsshim.
 
-8.4.  cosesign1go
+8.1.4.  cosesign1go
 
    Link:  https://github.com/microsoft/cosesign1go
 
@@ -995,7 +1003,7 @@ Table of Contents
 
    Used by:  hcsshim and the Azure CLI confcom extension.
 
-8.5.  CoseSignTool
+8.1.5.  CoseSignTool
 
    Link:  https://github.com/microsoft/CoseSignTool
 
@@ -1012,7 +1020,7 @@ Table of Contents
 
    Licensing:  MIT
 
-8.6.  scitt-ccf-ledger
+8.1.6.  scitt-ccf-ledger
 
    Link:  https://github.com/microsoft/scitt-ccf-ledger
 
@@ -1029,7 +1037,7 @@ Table of Contents
 
    Licensing:  MIT
 
-8.7.  CCF
+8.1.7.  CCF
 
    Link:  https://github.com/microsoft/CCF
 
@@ -1044,7 +1052,7 @@ Table of Contents
 
    Licensing:  Apache-2.0
 
-8.8.  hcsshim
+8.1.8.  hcsshim
 
    Link:  https://github.com/microsoft/hcsshim
 
@@ -1059,7 +1067,7 @@ Table of Contents
 
    Licensing:  MIT
 
-8.9.  Azure CLI confcom Extension
+8.1.9.  Azure CLI confcom Extension
 
    Link:  https://github.com/Azure/azure-cli-extensions, in the src/
       confcom directory
@@ -1073,6 +1081,63 @@ Table of Contents
       policy fragments, relying on cosesign1go.
 
    Maturity:  Released; latest version 2.2.0.
+
+   Licensing:  MIT
+
+8.2.  Nuts Foundation
+
+   The Nuts Foundation maintains open-source software for exchanging
+   healthcare data in the Netherlands.  For all of the implementations
+   below, both the organization and the contact are the Nuts Foundation
+   (https://nuts.nl).
+
+8.2.1.  nuts-node
+
+   Link:  https://github.com/nuts-foundation/nuts-node
+
+   Description:  The reference implementation of the Nuts specification,
+      a decentralized identity network based on W3C Verifiable
+      Credentials and DIDs.  It has its own did:x509 resolver, and its
+      DID Documents for did:x509 identifiers include the certificate
+      chain.
+
+   Coverage:  Resolution, except for the "eku" predicate.  It also
+      supports a "san" predicate with the otherName type, which this
+      document does not define.
+
+   Maturity:  Released; latest release v6.2.13 (September 2026).
+
+   Licensing:  GPL-3.0
+
+8.2.2.  go-didx509-toolkit
+
+   Link:  https://github.com/nuts-foundation/go-didx509-toolkit
+
+   Description:  A Go toolkit and command-line tool that creates
+      did:x509 identifiers from certificate chains, and issues
+      X509Credential Verifiable Credentials with them.  It follows the
+      did:x509 specification published by the Trust Over IP Foundation,
+      extended with a "san" predicate for the otherName type, which
+      certificates from the Dutch healthcare UZI register require.
+
+   Coverage:  Creation, including the otherName extension.
+
+   Maturity:  Released; latest release v1.3.0 (April 2026).
+
+   Licensing:  GPL-3.0
+
+8.2.3.  uzi-did-x509-issuer-java
+
+   Link:  https://github.com/nuts-foundation/uzi-did-x509-issuer-java
+
+   Description:  A Java library that issues
+      UziServerCertificateCredentials, which are Verifiable Credentials
+      for server certificates from the Dutch healthcare UZI register,
+      with a did:x509 issuer.
+
+   Coverage:  Creation.
+
+   Maturity:  No tagged releases.
 
    Licensing:  MIT
 
