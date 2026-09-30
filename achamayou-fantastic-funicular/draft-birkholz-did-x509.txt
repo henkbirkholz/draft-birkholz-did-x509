@@ -12,7 +12,7 @@ Expires: 3 April 2027                                        H. Birkholz
                                                        30 September 2026
 
 
-                     x509 Decentralized Identifier
+           The did:x509 Decentralized Identifier (DID) Method
                      draft-birkholz-did-x509-latest
 
 Abstract
@@ -121,9 +121,10 @@ Table of Contents
    The RWOT11 workshop outlined the need for hybrid solutions that
    combine X.509 certificates with DIDs ([RWOT11]).  The did:x509 method
    takes a simple approach that does not introduce additional
-   infrastructure.  Creating and resolving a did:x509 is a local
-   operation.  It relies on X.509 chain validation and matches elements
-   contained in the DID to certificate properties within the chain.
+   infrastructure.  Creating and resolving a did:x509 identifier is a
+   local operation.  It relies on X.509 chain validation and matches
+   elements contained in the DID to certificate properties within the
+   chain.
 
    The main difference to other DID methods is that did:x509 requires a
    certificate chain to be passed using a new DID resolution option
@@ -174,13 +175,13 @@ Table of Contents
    The reader is assumed to be familiar with the vocabulary and concepts
    defined in [RFC9943].
 
-   Rego ([REGO]) is a declarative query language used to define policies
-   in a precise and unambiguous way.  This document uses Rego, rather
-   than pseudo-code, to define DID syntax validation and predicate
-   validation for did:x509 identifiers, so that the logic is unambiguous
-   and can be evaluated automatically.  The Rego code snippets provided
-   in this document can be evaluated using any Rego v1 runtime, but
-   there is no expectation that implementations use the Rego language.
+   Rego ([REGO]) is a declarative policy language.  This document uses
+   Rego, rather than pseudo-code, to define DID syntax validation and
+   predicate validation for did:x509 identifiers, so that the logic is
+   precise and unambiguous and can be evaluated automatically.  The Rego
+   code snippets provided in this document can be evaluated using any
+   Rego v1 runtime, but there is no expectation that implementations use
+   the Rego language.
 
    Per [RFC8792], line breaks may be present in the figures of this
    document to stay within the line-length limits of this document's
@@ -457,7 +458,7 @@ Table of Contents
    Example:
 
    did:x509:0:sha256:WE..jk::fulcio-
-   issuer:accounts.google.com::san:email:bob%40example.com
+   issuer:accounts.example.com::san:email:bob%40example.com
 
    Example 2:
 
@@ -521,9 +522,9 @@ Table of Contents
 
 4.  DID Document
 
-   Resolving a did:x509 identifier produces a DID Document
-   ([DID-DOCUMENT]) with a JsonWebKey verification method derived from
-   the leaf certificate public key.
+   Resolving a did:x509 identifier produces a DID Document ([DID]) with
+   a JsonWebKey verification method derived from the leaf certificate
+   public key.
 
    The DID Document is self-controlled: verification methods use the DID
    itself as controller.
@@ -968,8 +969,10 @@ Table of Contents
 
 11.1.  Normative References
 
-   [DID]      "W3C DID v1.0 specification", n.d.,
-              <https://www.w3.org/TR/did-1.0/>.
+   [DID]      Sporny, M., Guy, A., Sabadello, M., and D. Reed,
+              "Decentralized Identifiers (DIDs) v1.0", W3C REC-did-core-
+              20220719, 19 July 2022,
+              <https://www.w3.org/TR/2022/REC-did-core-20220719/>.
 
    [FIPS180-4]
               National Institute of Standards and Technology, "Secure
@@ -1036,10 +1039,6 @@ Table of Contents
    [CID]      "Controlled Identifiers v1.0", 15 May 2025,
               <https://www.w3.org/TR/cid-1.0/>.
 
-   [DID-DOCUMENT]
-              "DID Document Definition", n.d.,
-              <https://www.w3.org/TR/did-1.0/#dfn-did-documents>.
-
    [DID-METHODS]
               "DID Methods", 26 September 2026,
               <https://www.w3.org/TR/2026/NOTE-did-extensions-methods-
@@ -1052,17 +1051,17 @@ Table of Contents
               x509/blob/d065856f18d7e1d426bf6b8e1f169132b7ed1891/
               specification.md>.
 
-   [FULCIO]   "Fulcio", n.d., <https://github.com/sigstore/fulcio>.
+   [FULCIO]   Sigstore, "Fulcio", n.d.,
+              <https://github.com/sigstore/fulcio>.
 
    [GITSIGN-TIMESTAMP]
-              "Gitsign: Timestamping", n.d.,
+              Sigstore, "Gitsign: Timestamping", 29 July 2026,
               <https://github.com/sigstore/gitsign/
               blob/44f5e17fac6944fdde71c94d2e77ab075c9dca9f/docs/
               timestamp.md#L102-L107>.
 
-   [REGO]     "Rego", n.d.,
-              <https://www.openpolicyagent.org/docs/latest/policy-
-              language/>.
+   [REGO]     Open Policy Agent, "Policy Language", n.d.,
+              <https://www.openpolicyagent.org/docs/policy-language>.
 
    [RFC7519]  Jones, M., Bradley, J., and N. Sakimura, "JSON Web Token
               (JWT)", RFC 7519, DOI 10.17487/RFC7519, May 2015,
@@ -1100,7 +1099,7 @@ Table of Contents
               hybrid_wallet_solutions_x509_DIDs_VCs.md>.
 
    [TEST-VECTORS]
-              "did:x509 Test Vectors", n.d.,
+              Microsoft, "did:x509 Test Vectors", 29 September 2026,
               <https://github.com/microsoft/did-
               x509/blob/d065856f18d7e1d426bf6b8e1f169132b7ed1891/test-
               vectors.json>.

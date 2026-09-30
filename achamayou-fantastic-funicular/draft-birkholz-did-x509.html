@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta content="Common,Latin" name="scripts">
 <meta content="initial-scale=1.0" name="viewport">
-<title>x509 Decentralized Identifier</title>
+<title>The did:x509 Decentralized Identifier (DID) Method</title>
 <meta content="Maik Riechert" name="author">
 <meta content="Antoine Delignat-Lavaud" name="author">
 <meta content="Henk Birkholz" name="author">
@@ -1090,7 +1090,7 @@ svg {
 </dd>
 </dl>
 </div>
-<h1 id="title">x509 Decentralized Identifier</h1>
+<h1 id="title">The did:x509 Decentralized Identifier (DID) Method</h1>
 <section id="section-abstract">
       <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
 <p id="section-abstract-1">This document defines the did:x509 decentralized identifier (DID) method, an interoperable and flexible issuer identifier format for messages that transport or refer to X.509 certificates, including COSE messages using RFC 9360. The did:x509 identifier format implements a direct, resolvable binding between a certificate chain and a compact issuer string (DID string). It combines the fingerprint of a certificate authority (CA) certificate in the chain with one or more predicates on the leaf certificate's subject name, subject alternative names, extended key usage, or Fulcio issuer. The identifier can be conveyed as an issuer value in a COSE Header CWT Claims map as defined in RFC 9597, in JOSE/JWT messages such as the "iss" claim defined in RFC 7519, or through other protocol-specific mechanisms that associate the identifier with the certificate chain. This issuer identifier is convenient for references and policy evaluation, for example in the context of transparency ledgers.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
@@ -1263,7 +1263,7 @@ The did:x509 identifier format implements a direct, resolvable binding between a
 It can be conveyed as an issuer value in a COSE Header CWT Claims map as defined in <span>[<a href="#RFC9597" class="cite xref">RFC9597</a>]</span>, in JOSE/JWT messages such as the <code>iss</code> claim defined in <span>[<a href="#RFC7519" class="cite xref">RFC7519</a>]</span>, or through other protocol-specific mechanisms that associate the identifier with the certificate chain.<a href="#section-1-1" class="pilcrow">¶</a></p>
 <p id="section-1-2">The RWOT11 workshop outlined the need for hybrid solutions that combine X.509 certificates with DIDs (<span>[<a href="#RWOT11" class="cite xref">RWOT11</a>]</span>).
 The did:x509 method takes a simple approach that does not introduce additional infrastructure.
-Creating and resolving a did:x509 is a local operation.
+Creating and resolving a did:x509 identifier is a local operation.
 It relies on X.509 chain validation and matches elements contained in the DID to certificate properties within the chain.<a href="#section-1-2" class="pilcrow">¶</a></p>
 <p id="section-1-3">The main difference to other DID methods is that did:x509 requires a certificate chain to be passed using a new DID resolution option (<span>[<a href="#DID" class="cite xref">DID</a>]</span>), <code>x509chain</code>, while resolving a DID.
 This certificate chain is typically embedded in the signing envelope, for example within the <code>x5c</code> header parameter of JWS/JWT documents.<a href="#section-1-3" class="pilcrow">¶</a></p>
@@ -1296,8 +1296,8 @@ appear in all capitals, as shown here.<a href="#section-1.2-1" class="pilcrow">�
 data formats, and ABNF (<span>[<a href="#RFC5234" class="cite xref">RFC5234</a>]</span>, <span>[<a href="#RFC7405" class="cite xref">RFC7405</a>]</span>) to describe identifiers.<a href="#section-1.2-2" class="pilcrow">¶</a></p>
 <p id="section-1.2-3">The reader is assumed to be familiar with the vocabulary and concepts
 defined in <span>[<a href="#RFC9943" class="cite xref">RFC9943</a>]</span>.<a href="#section-1.2-3" class="pilcrow">¶</a></p>
-<p id="section-1.2-4">Rego (<span>[<a href="#REGO" class="cite xref">REGO</a>]</span>) is a declarative query language used to define policies in a precise and unambiguous way.
-This document uses Rego, rather than pseudo-code, to define DID syntax validation and predicate validation for did:x509 identifiers, so that the logic is unambiguous and can be evaluated automatically.
+<p id="section-1.2-4">Rego (<span>[<a href="#REGO" class="cite xref">REGO</a>]</span>) is a declarative policy language.
+This document uses Rego, rather than pseudo-code, to define DID syntax validation and predicate validation for did:x509 identifiers, so that the logic is precise and unambiguous and can be evaluated automatically.
 The Rego code snippets provided in this document can be evaluated using any Rego v1 runtime, but there is no expectation that implementations use the Rego language.<a href="#section-1.2-4" class="pilcrow">¶</a></p>
 <p id="section-1.2-5">Per <span>[<a href="#RFC8792" class="cite xref">RFC8792</a>]</span>, line breaks may be present in the figures of this document
 to stay within the line-length limits of this document's format.<a href="#section-1.2-5" class="pilcrow">¶</a></p>
@@ -1608,7 +1608,7 @@ fulcio-issuer    = 1*idchar
 <p id="section-2.5-3">The <code>fulcio_issuer</code> extension <span class="bcp14">MUST</span> be present on <code>chain[0]</code> when this predicate is used; resolution fails if it is absent.
 The extension <span class="bcp14">MUST NOT</span> be marked critical.<a href="#section-2.5-3" class="pilcrow">¶</a></p>
 <p id="section-2.5-4">Example:<a href="#section-2.5-4" class="pilcrow">¶</a></p>
-<p id="section-2.5-5"><code>did:x509:0:sha256:WE..jk::fulcio-issuer:accounts.google.com::san:email:bob%40example.com</code><a href="#section-2.5-5" class="pilcrow">¶</a></p>
+<p id="section-2.5-5"><code>did:x509:0:sha256:WE..jk::fulcio-issuer:accounts.example.com::san:email:bob%40example.com</code><a href="#section-2.5-5" class="pilcrow">¶</a></p>
 <p id="section-2.5-6">Example 2:<a href="#section-2.5-6" class="pilcrow">¶</a></p>
 <p id="section-2.5-7"><code>did:x509:0:sha256:WE..jk::fulcio-issuer:issuer.example.com::san:uri:https%3A%2F%2Fexample.com%2Focto-org%2Focto-automation%2Fworkflows%2Foidc.yml%40refs%2Fheads%2Fmain</code><a href="#section-2.5-7" class="pilcrow">¶</a></p>
 <p id="section-2.5-8">Rego policy:<a href="#section-2.5-8" class="pilcrow">¶</a></p>
@@ -1683,7 +1683,7 @@ Applications can add revocation, certificate transparency, signing time, or endo
       <h2 id="name-did-document">
 <a href="#section-4" class="section-number selfRef">4. </a><a href="#name-did-document" class="section-name selfRef">DID Document</a>
       </h2>
-<p id="section-4-1">Resolving a did:x509 identifier produces a DID Document (<span>[<a href="#DID-DOCUMENT" class="cite xref">DID-DOCUMENT</a>]</span>) with a <code>JsonWebKey</code> verification method derived from the leaf certificate public key.<a href="#section-4-1" class="pilcrow">¶</a></p>
+<p id="section-4-1">Resolving a did:x509 identifier produces a DID Document (<span>[<a href="#DID" class="cite xref">DID</a>]</span>) with a <code>JsonWebKey</code> verification method derived from the leaf certificate public key.<a href="#section-4-1" class="pilcrow">¶</a></p>
 <p id="section-4-2">The DID Document is self-controlled: verification methods use the DID itself as <code>controller</code>.<a href="#section-4-2" class="pilcrow">¶</a></p>
 <p id="section-4-3">If the leaf certificate has the key usage bit for <code>digitalSignature</code>, or is missing the key usage extension, the DID Document includes <code>authentication</code> and <code>assertionMethod</code>.
 If the leaf certificate has the key usage bit for <code>keyAgreement</code>, or is missing the key usage extension, the DID Document includes <code>keyAgreement</code>.
@@ -2095,7 +2095,7 @@ The did:x509 method is registered in the W3C DID Methods registry (<span>[<a hre
 <dl class="references">
 <dt id="DID">[DID]</dt>
         <dd>
-<span class="refTitle">"W3C DID v1.0 specification"</span>, <span>n.d.</span>, <span>&lt;<a href="https://www.w3.org/TR/did-1.0/">https://www.w3.org/TR/did-1.0/</a>&gt;</span>. </dd>
+<span class="refAuthor">Sporny, M.</span>, <span class="refAuthor">Guy, A.</span>, <span class="refAuthor">Sabadello, M.</span>, and <span class="refAuthor">D. Reed</span>, <span class="refTitle">"Decentralized Identifiers (DIDs) v1.0"</span>, <span class="seriesInfo">W3C REC-did-core-20220719</span>, <time datetime="2022-07-19" class="refDate">19 July 2022</time>, <span>&lt;<a href="https://www.w3.org/TR/2022/REC-did-core-20220719/">https://www.w3.org/TR/2022/REC-did-core-20220719/</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="FIPS180-4">[FIPS180-4]</dt>
         <dd>
@@ -2158,10 +2158,6 @@ The did:x509 method is registered in the W3C DID Methods registry (<span>[<a hre
         <dd>
 <span class="refTitle">"Controlled Identifiers v1.0"</span>, <time datetime="2025-05-15" class="refDate">15 May 2025</time>, <span>&lt;<a href="https://www.w3.org/TR/cid-1.0/">https://www.w3.org/TR/cid-1.0/</a>&gt;</span>. </dd>
 <dd class="break"></dd>
-<dt id="DID-DOCUMENT">[DID-DOCUMENT]</dt>
-        <dd>
-<span class="refTitle">"DID Document Definition"</span>, <span>n.d.</span>, <span>&lt;<a href="https://www.w3.org/TR/did-1.0/#dfn-did-documents">https://www.w3.org/TR/did-1.0/#dfn-did-documents</a>&gt;</span>. </dd>
-<dd class="break"></dd>
 <dt id="DID-METHODS">[DID-METHODS]</dt>
         <dd>
 <span class="refTitle">"DID Methods"</span>, <time datetime="2026-09-26" class="refDate">26 September 2026</time>, <span>&lt;<a href="https://www.w3.org/TR/2026/NOTE-did-extensions-methods-20260926/">https://www.w3.org/TR/2026/NOTE-did-extensions-methods-20260926/</a>&gt;</span>. </dd>
@@ -2172,15 +2168,15 @@ The did:x509 method is registered in the W3C DID Methods registry (<span>[<a hre
 <dd class="break"></dd>
 <dt id="FULCIO">[FULCIO]</dt>
         <dd>
-<span class="refTitle">"Fulcio"</span>, <span>n.d.</span>, <span>&lt;<a href="https://github.com/sigstore/fulcio">https://github.com/sigstore/fulcio</a>&gt;</span>. </dd>
+<span class="refAuthor">Sigstore</span>, <span class="refTitle">"Fulcio"</span>, <span>n.d.</span>, <span>&lt;<a href="https://github.com/sigstore/fulcio">https://github.com/sigstore/fulcio</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="GITSIGN-TIMESTAMP">[GITSIGN-TIMESTAMP]</dt>
         <dd>
-<span class="refTitle">"Gitsign: Timestamping"</span>, <span>n.d.</span>, <span>&lt;<a href="https://github.com/sigstore/gitsign/blob/44f5e17fac6944fdde71c94d2e77ab075c9dca9f/docs/timestamp.md#L102-L107">https://github.com/sigstore/gitsign/blob/44f5e17fac6944fdde71c94d2e77ab075c9dca9f/docs/timestamp.md#L102-L107</a>&gt;</span>. </dd>
+<span class="refAuthor">Sigstore</span>, <span class="refTitle">"Gitsign: Timestamping"</span>, <time datetime="2026-07-29" class="refDate">29 July 2026</time>, <span>&lt;<a href="https://github.com/sigstore/gitsign/blob/44f5e17fac6944fdde71c94d2e77ab075c9dca9f/docs/timestamp.md#L102-L107">https://github.com/sigstore/gitsign/blob/44f5e17fac6944fdde71c94d2e77ab075c9dca9f/docs/timestamp.md#L102-L107</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="REGO">[REGO]</dt>
         <dd>
-<span class="refTitle">"Rego"</span>, <span>n.d.</span>, <span>&lt;<a href="https://www.openpolicyagent.org/docs/latest/policy-language/">https://www.openpolicyagent.org/docs/latest/policy-language/</a>&gt;</span>. </dd>
+<span class="refAuthor">Open Policy Agent</span>, <span class="refTitle">"Policy Language"</span>, <span>n.d.</span>, <span>&lt;<a href="https://www.openpolicyagent.org/docs/policy-language">https://www.openpolicyagent.org/docs/policy-language</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC7519">[RFC7519]</dt>
         <dd>
@@ -2212,7 +2208,7 @@ The did:x509 method is registered in the W3C DID Methods registry (<span>[<a hre
 <dd class="break"></dd>
 <dt id="TEST-VECTORS">[TEST-VECTORS]</dt>
         <dd>
-<span class="refTitle">"did:x509 Test Vectors"</span>, <span>n.d.</span>, <span>&lt;<a href="https://github.com/microsoft/did-x509/blob/d065856f18d7e1d426bf6b8e1f169132b7ed1891/test-vectors.json">https://github.com/microsoft/did-x509/blob/d065856f18d7e1d426bf6b8e1f169132b7ed1891/test-vectors.json</a>&gt;</span>. </dd>
+<span class="refAuthor">Microsoft</span>, <span class="refTitle">"did:x509 Test Vectors"</span>, <time datetime="2026-09-29" class="refDate">29 September 2026</time>, <span>&lt;<a href="https://github.com/microsoft/did-x509/blob/d065856f18d7e1d426bf6b8e1f169132b7ed1891/test-vectors.json">https://github.com/microsoft/did-x509/blob/d065856f18d7e1d426bf6b8e1f169132b7ed1891/test-vectors.json</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="VC">[VC]</dt>
       <dd>
