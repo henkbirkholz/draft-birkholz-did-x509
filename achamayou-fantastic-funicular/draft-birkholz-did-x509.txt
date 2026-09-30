@@ -188,8 +188,8 @@ Table of Contents
       so these protocols need not handle certificates.
 
    *  X.509 trust is expressed as a DID.  The certification authority
-      (CA) fingerprint and the predicates let DID-based policies name an
-      X.509 identity rather than individual certificates.
+      (CA) fingerprint and the predicates let DID-based policies capture
+      an X.509 identity rather than individual certificates.
 
    A single signed message can therefore serve both kinds of relying
    party (Figure 1).  An X.509-only verifier validates the certificate
