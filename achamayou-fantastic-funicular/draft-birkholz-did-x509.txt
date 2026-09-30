@@ -95,15 +95,26 @@ Table of Contents
      6.3.  Update
      6.4.  Deactivate
    7.  DID Resolution
-   8.  Security Considerations
-     8.1.  Identifier Ambiguity
-     8.2.  X.509 Trust Stores
-     8.3.  Use of Identifier Contents
-   9.  Privacy Considerations
-   10. IANA Considerations
-   11. References
-     11.1.  Normative References
-     11.2.  Informative References
+   8.  Implementation Status
+     8.1.  did-x509
+     8.2.  didx509cpp
+     8.3.  didx509go
+     8.4.  cosesign1go
+     8.5.  CoseSignTool
+     8.6.  scitt-verifier
+     8.7.  scitt-ccf-ledger
+     8.8.  CCF
+     8.9.  hcsshim
+     8.10. Azure CLI confcom Extension
+   9.  Security Considerations
+     9.1.  Identifier Ambiguity
+     9.2.  X.509 Trust Stores
+     9.3.  Use of Identifier Contents
+   10. Privacy Considerations
+   11. IANA Considerations
+   12. References
+     12.1.  Normative References
+     12.2.  Informative References
    Appendix A.  Test Vectors
    Authors' Addresses
 
@@ -158,12 +169,13 @@ Table of Contents
    The did:x509 method is registered in the W3C DID Methods registry
    ([DID-METHODS]), whose entry points to the did:x509 Method
    Specification maintained in the microsoft/did-x509 repository
-   ([DID-X509-SPEC]).  This document is aligned with [DID-X509-SPEC],
-   and much of its text, including the ABNF, the Rego policy, and the
-   DID resolution procedure, is adapted from it; the authors of
-   [DID-X509-SPEC] are also authors of this document.  The authors
-   intend to keep this document and [DID-X509-SPEC] synchronized as both
-   evolve.
+   ([DID-X509-SPEC]).  Microsoft has implemented did:x509 in a range of
+   libraries and systems.  This document is aligned with
+   [DID-X509-SPEC], and much of its text, including the ABNF, the Rego
+   policy, and the DID resolution procedure, is adapted from it; the
+   authors of [DID-X509-SPEC] are also authors of this document.  The
+   authors intend to keep this document and [DID-X509-SPEC] synchronized
+   as both evolve.
 
 1.2.  Conventions and Definitions
 
@@ -889,9 +901,201 @@ Table of Contents
 
    13.  Return the complete DID Document.
 
-8.  Security Considerations
+8.  Implementation Status
 
-8.1.  Identifier Ambiguity
+   This section is to be removed before publishing as an RFC.
+
+   This section records the status of known implementations of the
+   protocol defined by this specification at the time of posting of this
+   Internet-Draft, and is based on a proposal described in [RFC7942].
+   The description of implementations in this section is intended to
+   assist the IETF in its decision processes in progressing drafts to
+   RFCs.  Please note that the listing of any individual implementation
+   here does not imply endorsement by the IETF.  Furthermore, no effort
+   has been spent to verify the information presented here that was
+   supplied by IETF contributors.  This is not intended as, and must not
+   be construed to be, a catalog of available implementations or their
+   features.  Readers are advised to note that other implementations may
+   exist.
+
+   According to [RFC7942], "this will allow reviewers and working groups
+   to assign due consideration to documents that have the benefit of
+   running code, which may serve as evidence of valuable experimentation
+   and feedback that have made the implemented protocols more mature.
+   It is up to the individual working groups to use this information as
+   they see fit".
+
+   The implementations below are the ones that Microsoft publishes as
+   open source.  Microsoft also has internal implementations, which are
+   not listed here.  For every implementation below, the organization is
+   Microsoft, the contact is the authors of this document, and the
+   information was last updated in September 2026.
+
+8.1.  did-x509
+
+   Link:  https://github.com/microsoft/did-x509
+
+   Description:  The repository of the upstream specification
+      ([DID-X509-SPEC]), with a Python reference resolver and the test
+      vectors ([TEST-VECTORS]).
+
+   Coverage:  DID resolution as specified in this document, including
+      certification path validation, all four predicates, and DID
+      Document creation.
+
+   Maturity:  Reference implementation; no tagged releases.
+
+   Licensing:  MIT
+
+8.2.  didx509cpp
+
+   Link:  https://github.com/microsoft/didx509cpp
+
+   Description:  A header-only C++ library that resolves did:x509
+      identifiers against PEM-encoded certificate chains and returns the
+      DID Document.
+
+   Coverage:  All four predicates and certification path validation with
+      OpenSSL.  Certificate validity periods can optionally be ignored.
+
+   Maturity:  Released; latest release 0.99.0 (June 2026).
+
+   Licensing:  MIT
+
+   Used by:  CCF and scitt-ccf-ledger.
+
+8.3.  didx509go
+
+   Link:  https://github.com/microsoft/didx509go
+
+   Description:  A Go library that resolves did:x509 identifiers against
+      certificate chains.
+
+   Coverage:  All four predicates and certification path validation.
+
+   Maturity:  Tagged versions up to v0.0.3.
+
+   Licensing:  MIT
+
+   Used by:  cosesign1go and hcsshim.
+
+8.4.  cosesign1go
+
+   Link:  https://github.com/microsoft/cosesign1go
+
+   Description:  A Go library and command-line tool (sign1util) for
+      COSE_Sign1 documents.  It creates did:x509 identifiers from a
+      certificate chain, and checks that the did:x509 issuer of a
+      document matches the certificate chain that signed it.
+
+   Coverage:  Creation, and resolution using didx509go.
+
+   Maturity:  Released; latest release v1.7.0 (September 2026).
+
+   Licensing:  MIT
+
+   Used by:  hcsshim and the Azure CLI confcom extension.
+
+8.5.  CoseSignTool
+
+   Link:  https://github.com/microsoft/CoseSignTool
+
+   Description:  A C# command-line tool and set of libraries for signing
+      and validating COSE_Sign1 messages.  When signing with a
+      certificate, it derives a did:x509 issuer for the CWT Claims from
+      the certificate chain.
+
+   Coverage:  Creation, with the "subject" predicate by default, or with
+      the "eku" predicate when the leaf certificate has a Microsoft-
+      specific EKU.
+
+   Maturity:  Released; latest release v1.8.1 (September 2026).
+
+   Licensing:  MIT
+
+8.6.  scitt-verifier
+
+   Link:  https://github.com/microsoft/scitt-verifier
+
+   Description:  A Rust command-line tool that verifies SCITT
+      transparent statements and receipts offline.  It includes a
+      did:x509 parser and resolver library.
+
+   Coverage:  Partial.  The library parses did:x509 identifiers and
+      checks the CA fingerprint, and one adapter also enforces the "eku"
+      predicate.  The resolver is not used when verifying statements.
+
+   Maturity:  Released; latest release v0.4.0 (September 2026).
+
+   Licensing:  MIT
+
+8.7.  scitt-ccf-ledger
+
+   Link:  https://github.com/microsoft/scitt-ccf-ledger
+
+   Description:  A SCITT Transparency Service application built on CCF.
+      It registers signed statements whose CWT issuer is a did:x509
+      identifier, resolving the identifier against the statement's
+      certificate chain, and its Registration Policies can match on the
+      issuer.  Its Python command-line tool creates signed statements
+      with did:x509 issuers.
+
+   Coverage:  Creation, and resolution using didx509cpp.
+
+   Maturity:  Released; latest release 0.20.1 (September 2026).
+
+   Licensing:  MIT
+
+8.8.  CCF
+
+   Link:  https://github.com/microsoft/CCF
+
+   Description:  The Confidential Consortium Framework.  It resolves the
+      did:x509 issuers of COSE-signed endorsements, such as utility VM
+      endorsements for confidential containers, against their
+      certificate chains.
+
+   Coverage:  Resolution using didx509cpp.
+
+   Maturity:  Released; latest release 7.0.17 (September 2026).
+
+   Licensing:  Apache-2.0
+
+8.9.  hcsshim
+
+   Link:  https://github.com/microsoft/hcsshim
+
+   Description:  The Host Compute Service shim.  Its security policy
+      enforcement for confidential containers checks that the did:x509
+      issuer of a signed policy fragment matches the fragment's
+      certificate chain.
+
+   Coverage:  Resolution using cosesign1go and didx509go.
+
+   Maturity:  Released; latest release v0.14.1 (April 2026).
+
+   Licensing:  MIT
+
+8.10.  Azure CLI confcom Extension
+
+   Link:  https://github.com/Azure/azure-cli-extensions, in the src/
+      confcom directory
+
+   Description:  A command-line extension that generates security
+      policies for confidential containers.  The policies name the
+      did:x509 issuers of trusted policy fragments, and the extension
+      signs fragments with the sign1util tool from cosesign1go.
+
+   Coverage:  Use of did:x509 identifiers as the issuers of signed
+      policy fragments, relying on cosesign1go.
+
+   Maturity:  Released; latest version 2.2.0.
+
+   Licensing:  MIT
+
+9.  Security Considerations
+
+9.1.  Identifier Ambiguity
 
    This DID method maps characteristics of X.509 certificate chains to
    identifiers.  It allows a single identifier to map to multiple
@@ -910,7 +1114,7 @@ Table of Contents
    content to decide whether it is appropriate to trust a given did:x509
    identifier.
 
-8.2.  X.509 Trust Stores
+9.2.  X.509 Trust Stores
 
    Resolution validates the supplied certificate chain with the last
    certificate in x509chain as the path-validation trust anchor.  This
@@ -921,7 +1125,7 @@ Table of Contents
    through a CA trust store, an allowlist of DIDs or CA fingerprints, or
    other application-specific rules.
 
-8.3.  Use of Identifier Contents
+9.3.  Use of Identifier Contents
 
    While it is acceptable to use a did:x509 identifier as an opaque
    handle to implement a relying-party policy, implementers MUST NOT
@@ -942,7 +1146,7 @@ Table of Contents
    components directly are vulnerable to impersonation and privilege
    escalation attacks.
 
-9.  Privacy Considerations
+10.  Privacy Considerations
 
    The did:x509 identifier can contain certificate subject names,
    subject alternative names, extended key usage values, Fulcio issuer
@@ -969,15 +1173,15 @@ Table of Contents
    should prefer predicates based on role- or service-specific
    identifiers rather than human-identifying certificate fields.
 
-10.  IANA Considerations
+11.  IANA Considerations
 
    This document has no IANA actions.  The did:x509 method is registered
    in the W3C DID Methods registry ([DID-METHODS]), as described in
    Section 1.1.
 
-11.  References
+12.  References
 
-11.1.  Normative References
+12.1.  Normative References
 
    [CID]      "Controlled Identifiers v1.0", 15 May 2025,
               <https://www.w3.org/TR/cid-1.0/>.
@@ -1064,7 +1268,7 @@ Table of Contents
               (DER)", ITU-T Recommendation X.690, February 2021,
               <https://www.itu.int/rec/T-REC-X.690>.
 
-11.2.  Informative References
+12.2.  Informative References
 
    [DID-METHODS]
               "DID Methods", 26 September 2026,
@@ -1100,6 +1304,11 @@ Table of Contents
    [RFC7519]  Jones, M., Bradley, J., and N. Sakimura, "JSON Web Token
               (JWT)", RFC 7519, DOI 10.17487/RFC7519, May 2015,
               <https://www.rfc-editor.org/rfc/rfc7519>.
+
+   [RFC7942]  Sheffer, Y. and A. Farrel, "Improving Awareness of Running
+              Code: The Implementation Status Section", BCP 205,
+              RFC 7942, DOI 10.17487/RFC7942, July 2016,
+              <https://www.rfc-editor.org/rfc/rfc7942>.
 
    [RFC8392]  Jones, M., Wahlstroem, E., Erdtman, S., and H. Tschofenig,
               "CBOR Web Token (CWT)", RFC 8392, DOI 10.17487/RFC8392,
