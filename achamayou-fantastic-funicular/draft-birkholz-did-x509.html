@@ -1385,9 +1385,11 @@ Neither needs the other's infrastructure.<a href="#section-1.1-3" class="pilcrow
 <a href="#section-1.2" class="section-number selfRef">1.2. </a><a href="#name-relationship-to-the-didx509" class="section-name selfRef">Relationship to the did:x509 Method Specification</a>
         </h3>
 <p id="section-1.2-1">The did:x509 method is registered in the W3C DID Methods registry (<span>[<a href="#DID-METHODS" class="cite xref">DID-METHODS</a>]</span>), whose entry points to the did:x509 Method Specification maintained in the microsoft/did-x509 repository (<span>[<a href="#DID-X509-SPEC" class="cite xref">DID-X509-SPEC</a>]</span>).
-Microsoft has implemented did:x509 in a range of libraries and systems.
 This document is aligned with <span>[<a href="#DID-X509-SPEC" class="cite xref">DID-X509-SPEC</a>]</span>, and much of its text, including the ABNF, the Rego policy, and the DID resolution procedure, is adapted from it; the authors of <span>[<a href="#DID-X509-SPEC" class="cite xref">DID-X509-SPEC</a>]</span> are also authors of this document.
 The authors intend to keep this document and <span>[<a href="#DID-X509-SPEC" class="cite xref">DID-X509-SPEC</a>]</span> synchronized as both evolve.<a href="#section-1.2-1" class="pilcrow">¶</a></p>
+<p id="section-1.2-2">Microsoft has implemented did:x509 in a range of libraries and systems.
+Its internal and external signing services, such as Artifact Signing, derive did:x509 identifiers from their existing issuing CAs and extended key usages (EKUs), and use them as the issuer of the COSE envelopes they produce, which include Supply Chain Integrity, Transparency, and Trust (SCITT) Signed Statements <span>[<a href="#RFC9943" class="cite xref">RFC9943</a>]</span>.
+Relying parties' policies pin the accepted did:x509 issuers, together with subjects, to decide which Transparent Statements to accept, and for which purpose.<a href="#section-1.2-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="conventions-and-definitions">

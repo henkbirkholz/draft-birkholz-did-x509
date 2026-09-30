@@ -221,13 +221,22 @@ Table of Contents
    The did:x509 method is registered in the W3C DID Methods registry
    ([DID-METHODS]), whose entry points to the did:x509 Method
    Specification maintained in the microsoft/did-x509 repository
-   ([DID-X509-SPEC]).  Microsoft has implemented did:x509 in a range of
-   libraries and systems.  This document is aligned with
-   [DID-X509-SPEC], and much of its text, including the ABNF, the Rego
-   policy, and the DID resolution procedure, is adapted from it; the
-   authors of [DID-X509-SPEC] are also authors of this document.  The
-   authors intend to keep this document and [DID-X509-SPEC] synchronized
-   as both evolve.
+   ([DID-X509-SPEC]).  This document is aligned with [DID-X509-SPEC],
+   and much of its text, including the ABNF, the Rego policy, and the
+   DID resolution procedure, is adapted from it; the authors of
+   [DID-X509-SPEC] are also authors of this document.  The authors
+   intend to keep this document and [DID-X509-SPEC] synchronized as both
+   evolve.
+
+   Microsoft has implemented did:x509 in a range of libraries and
+   systems.  Its internal and external signing services, such as
+   Artifact Signing, derive did:x509 identifiers from their existing
+   issuing CAs and extended key usages (EKUs), and use them as the
+   issuer of the COSE envelopes they produce, which include Supply Chain
+   Integrity, Transparency, and Trust (SCITT) Signed Statements
+   [RFC9943].  Relying parties' policies pin the accepted did:x509
+   issuers, together with subjects, to decide which Transparent
+   Statements to accept, and for which purpose.
 
 1.3.  Conventions and Definitions
 
