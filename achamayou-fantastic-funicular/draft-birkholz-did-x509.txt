@@ -20,18 +20,20 @@ Abstract
    This document defines the did:x509 decentralized identifier (DID)
    method, an interoperable and flexible issuer identifier format for
    messages that transport or refer to X.509 certificates, including
-   COSE messages using RFC 9360.  The did:x509 identifier format
-   implements a direct, resolvable binding between a certificate chain
-   and a compact issuer string (DID string).  It combines the
-   fingerprint of a certificate authority (CA) certificate in the chain
-   with one or more predicates on the leaf certificate's subject name,
-   subject alternative names, extended key usage, or Fulcio issuer.  The
-   identifier can be conveyed as an issuer value in a COSE Header CWT
-   Claims map as defined in RFC 9597, in JOSE/JWT messages such as the
-   "iss" claim defined in RFC 7519, or through other protocol-specific
-   mechanisms that associate the identifier with the certificate chain.
-   This issuer identifier is convenient for references and policy
-   evaluation, for example in the context of transparency ledgers.
+   CBOR Object Signing and Encryption (COSE) messages using RFC 9360.
+   The did:x509 identifier format implements a direct, resolvable
+   binding between a certificate chain and a compact issuer string (DID
+   string).  It combines the fingerprint of a certification authority
+   (CA) certificate in the chain with one or more predicates on the leaf
+   certificate's subject name, subject alternative names, extended key
+   usage, or Fulcio issuer.  The identifier can be conveyed as an issuer
+   value in a COSE Header CBOR Web Token (CWT) Claims map as defined in
+   RFC 9597, in JSON Object Signing and Encryption (JOSE) and JSON Web
+   Token (JWT) messages, such as in the "iss" claim defined in RFC 7519,
+   or through other protocol-specific mechanisms that associate the
+   identifier with the certificate chain.  This issuer identifier is
+   convenient for references and policy evaluation, for example in the
+   context of transparency ledgers.
 
    This Informational document is published as an Independent Submission
    to improve interoperability with Microsoft's architecture.  It is
@@ -108,15 +110,17 @@ Table of Contents
 1.  Introduction
 
    This document aims to define an interoperable and flexible issuer
-   identifier format, based on decentralized identifiers ([DID]), for
-   messages that transport or refer to X.509 certificates ([RFC5280]),
-   including COSE messages using [RFC9360].  The did:x509 identifier
-   format implements a direct, resolvable binding between a certificate
-   chain and a compact issuer string.  It can be conveyed as an issuer
-   value in a COSE Header CWT Claims map as defined in [RFC9597], in
-   JOSE/JWT messages such as the iss claim defined in [RFC7519], or
-   through other protocol-specific mechanisms that associate the
-   identifier with the certificate chain.
+   identifier format, based on decentralized identifiers (DIDs) [DID],
+   for messages that transport or refer to X.509 certificates
+   ([RFC5280]), including CBOR Object Signing and Encryption (COSE)
+   messages using [RFC9360].  The did:x509 identifier format implements
+   a direct, resolvable binding between a certificate chain and a
+   compact issuer string.  It can be conveyed as an issuer value in a
+   COSE Header CBOR Web Token (CWT) Claims map as defined in [RFC9597],
+   in JSON Object Signing and Encryption (JOSE) and JSON Web Token (JWT)
+   messages, such as in the iss claim defined in [RFC7519], or through
+   other protocol-specific mechanisms that associate the identifier with
+   the certificate chain.
 
    The RWOT11 workshop outlined the need for hybrid solutions that
    combine X.509 certificates with DIDs ([RWOT11]).  The did:x509 method
@@ -130,7 +134,8 @@ Table of Contents
    certificate chain to be passed using a new DID resolution option
    ([DID]), x509chain, while resolving a DID.  This certificate chain is
    typically embedded in the signing envelope, for example within the
-   x5c header parameter of JWS/JWT documents.
+   x5c header parameter (Section 4.1.6 of [RFC7515]) of JSON Web
+   Signature (JWS) and JWT documents.
 
    Including a certificate chain directly in configuration or in policy
    is often impractical.  This is due to its size, and to the frequency
@@ -144,9 +149,9 @@ Table of Contents
    Combining authority pinning with certificate predicates is a precise
    and stable way of capturing identities as a constrained set of
    certificates.  Their representation as compact and durable identifier
-   strings enables the formulation of readable policy (e.g.
-   "request.issuer == 'did:x509...'"), for example in the context of
-   transparency ledger registration.
+   strings enables the formulation of readable policy (e.g.,
+   "request.issuer == 'did:x509...'"), for example, in the Registration
+   Policies of Transparency Services [RFC9943].
 
 1.1.  Relationship to the did:x509 Method Specification
 
@@ -168,12 +173,16 @@ Table of Contents
    BCP 14 [RFC2119] [RFC8174] when, and only when, they appear in all
    capitals, as shown here.
 
-   In this document, CDDL ([RFC8610], [RFC9165]) is used to describe the
-   data formats, and ABNF ([RFC5234], [RFC7405]) to describe
-   identifiers.
+   In this document, the Concise Data Definition Language (CDDL)
+   [RFC8610] is used to describe the data formats, and ABNF ([RFC5234],
+   [RFC7405]) to describe identifiers.
 
-   The reader is assumed to be familiar with the vocabulary and concepts
-   defined in [RFC9943].
+   This document uses the terms "DID", "DID URL", "DID Document", "DID
+   subject", "DID resolution", "verification method", and "controller"
+   as defined in [DID], and the terms "certification path" and "trust
+   anchor" as defined in [RFC5280].  A "relying party" is an entity that
+   relies on a resolved did:x509 identifier, for example, to authorize
+   the signer of a message.
 
    Rego ([REGO]) is a declarative policy language.  This document uses
    Rego, rather than pseudo-code, to define DID syntax validation and
@@ -188,9 +197,9 @@ Table of Contents
    format.
 
    Examples in this document abbreviate long base64url values, such as
-   CA fingerprints, to their first and last two characters with two dots
-   in between (for example, WE..jk).  Abbreviated values are not
-   syntactically valid.
+   certification authority (CA) fingerprints, to their first and last
+   two characters with two dots in between (for example, WE..jk).
+   Abbreviated values are not syntactically valid.
 
 2.  Identifier Syntax
 
@@ -206,11 +215,10 @@ Table of Contents
    idchar             = ALPHA / DIGIT / "." / "-" / "_" / pct-encoded
    pct-encoded        = "%" HEXDIG HEXDIG
 
-   =============== NOTE: '\' line wrapping per RFC 8792 ================
-
    did-x509           = %s"did:x509:" method-specific-id
-   method-specific-id = version ":" ca-fingerprint-alg ":" ca-\
-                 fingerprint 1*("::" predicate-name ":" predicate-value)
+   method-specific-id = version ":" ca-fingerprint-alg ":"
+                        ca-fingerprint
+                        1*("::" predicate-name ":" predicate-value)
    version            = 1*DIGIT
    ca-fingerprint-alg = %s"sha256" / %s"sha384" / %s"sha512"
    ca-fingerprint     = base64url
@@ -236,7 +244,7 @@ Table of Contents
 
    1.  A version number.
 
-   2.  A certificate authority fingerprint algorithm and value.
+   2.  A certification authority fingerprint algorithm and value.
 
    3.  One or more predicates that match fields in the leaf certificate.
 
@@ -253,9 +261,9 @@ Table of Contents
 
    did:x509:0:sha256:WE..jk::subject:C:US:ST:Texas:L:Austin:O:Example
 
-   In this example, the identifier pins to a certificate authority using
-   a SHA-256 certificate hash and uses the subject predicate to express
-   criteria that a leaf certificate subject must fulfil.  This
+   In this example, the identifier pins to a certification authority
+   using a SHA-256 certificate hash and uses the subject predicate to
+   express criteria that a leaf certificate subject must fulfil.  This
    identifier will match certificate chains with matching leaf
    certificate subject fields and a matching intermediate or root CA
    certificate.
@@ -330,9 +338,9 @@ Table of Contents
 
    Some of the predicates that are defined in subsequent sections
    require values to be percent-encoded.  Percent-encoding is specified
-   in Section 2.1 of [RFC3986].  Characters are encoded as UTF-8 before
-   percent-encoding.  All characters that are not in the allowed set
-   defined below MUST be percent-encoded:
+   in Section 2.1 of [RFC3986].  Characters are encoded as UTF-8
+   ([RFC3629]) before percent-encoding.  All characters that are not in
+   the allowed set defined below MUST be percent-encoded:
 
    allowed = ALPHA / DIGIT / "-" / "." / "_"
 
@@ -354,7 +362,7 @@ Table of Contents
                      %s"C" / %s"STREET"
    oid             = 1*DIGIT *("." 1*DIGIT)
 
-               Figure 4: ABNF Definition of Subject Predicate
+            Figure 4: ABNF Definition of the "subject" Predicate
 
    <key>:<value> are the subject name fields in chain[0].subject in any
    order.  Key repetitions are not allowed.  Values MUST be percent-
@@ -382,7 +390,7 @@ Table of Contents
        object.subset(input.chain[0].subject, subject) == true
    }
 
-            Figure 5: Rego Function Validating Subject Predicate
+         Figure 5: Rego Function Validating the "subject" Predicate
 
 2.3.  "san" Predicate
 
@@ -391,10 +399,10 @@ Table of Contents
    san-type        = %s"email" / %s"dns" / %s"uri"
    san-value       = 1*idchar
 
-                 Figure 6: ABNF Definition of SAN Predicate
+              Figure 6: ABNF Definition of the "san" Predicate
 
-   san-type is the SAN type and MUST be one of email, dns, or uri.  Note
-   that dn is not supported.
+   san-type is the subject alternative name (SAN) type and MUST be one
+   of email, dns, or uri.  Note that dn is not supported.
 
    san-value is the SAN value, percent-encoded.
 
@@ -414,7 +422,7 @@ Table of Contents
        [san_type, san_value] == input.chain[0].extensions.san[_]
    }
 
-              Figure 7: Rego Function Validating SAN Predicate
+           Figure 7: Rego Function Validating the "san" Predicate
 
 2.4.  "eku" Predicate
 
@@ -423,7 +431,7 @@ Table of Contents
    eku             = oid
    oid             = 1*DIGIT *("." 1*DIGIT)
 
-                 Figure 8: ABNF Definition of EKU Predicate
+              Figure 8: ABNF Definition of the "eku" Predicate
 
    eku is one of the OIDs within chain[0].extensions.eku.
 
@@ -438,7 +446,7 @@ Table of Contents
        value == input.chain[0].extensions.eku[_]
    }
 
-              Figure 9: Rego Function Validating EKU Predicate
+           Figure 9: Rego Function Validating the "eku" Predicate
 
 2.5.  "fulcio-issuer" Predicate
 
@@ -446,7 +454,7 @@ Table of Contents
    predicate-value  = fulcio-issuer
    fulcio-issuer    = 1*idchar
 
-           Figure 10: ABNF Definition of Fulcio-Issuer Predicate
+        Figure 10: ABNF Definition of the "fulcio-issuer" Predicate
 
    fulcio-issuer is chain[0].extensions.fulcio_issuer, without leading
    https://, percent-encoded.
@@ -477,7 +485,7 @@ Table of Contents
                                                            fulcio_issuer
    }
 
-        Figure 11: Rego Function Validating Fulcio-Issuer Predicate
+     Figure 11: Rego Function Validating the "fulcio-issuer" Predicate
 
 2.6.  DID Resolution Options
 
@@ -491,8 +499,8 @@ Table of Contents
    The value is constructed as follows:
 
    1.  Encode each certificate C that is part of the chain as the string
-       b64url(DER(C)), where b64url is base64url encoding (Section 5 of
-       [RFC4648]).
+       b64url(DER(C)), where DER(C) is the DER encoding ([X.690]) of C
+       and b64url is base64url encoding (Section 5 of [RFC4648]).
 
    2.  Concatenate the resulting strings in order, separated by comma
        ",".
@@ -542,9 +550,9 @@ Table of Contents
    did+json for compatibility with DID Core 1.0 tooling.  The media type
    is selected by the resolution request, not by the DID string.
 
-   The JSON-LD @context MUST define every term used.  The example below
-   uses the Controlled Identifiers v1 context https://www.w3.org/ns/cid/
-   v1 ([CID]).
+   The JSON for Linking Data (JSON-LD) [JSON-LD] @context MUST define
+   every term used.  The example below uses the Controlled Identifiers
+   v1 context https://www.w3.org/ns/cid/v1 ([CID]).
 
    This illustrates what a typical DID Document, describing the DID
    subject and the methods it can use to authenticate itself, can look
@@ -603,59 +611,59 @@ Table of Contents
    entries (Section 4.2.1.6 of [RFC5280]), and the Fulcio issuer
    extension value ([FULCIO]).
 
-  ; leaf first, followed by issuer certificates,
-  ; with the root or trust anchor last
-  CertificateChain = [2*Certificate]
+   ; leaf first, followed by issuer certificates,
+   ; with the root or trust anchor last
+   CertificateChain = [2*Certificate]
 
-  Certificate = {
-      fingerprint: {
-          ; base64url-encoded hashes of the DER-encoded certificate
-          sha256: base64url,     ; FIPS 180-4, SHA-256
-          sha384: base64url,     ; FIPS 180-4, SHA-384
-          sha512: base64url      ; FIPS 180-4, SHA-512
-      },
-      issuer: Name,              ; RFC 5280, Section 4.1.2.4
-      subject: Name,             ; RFC 5280, Section 4.1.2.6
-      extensions: {
-          ? eku: [+OID],         ; RFC 5280, Section 4.2.1.12
-          ? san: [+SAN],         ; RFC 5280, Section 4.2.1.6
-          ? fulcio_issuer: tstr  ; Fulcio issuer extension
-      }
-  }
+   Certificate = {
+       fingerprint: {
+           ; base64url-encoded hashes of the DER-encoded certificate
+           sha256: base64url,     ; FIPS 180-4, SHA-256
+           sha384: base64url,     ; FIPS 180-4, SHA-384
+           sha512: base64url      ; FIPS 180-4, SHA-512
+       },
+       issuer: Name,              ; RFC 5280, Section 4.1.2.4
+       subject: Name,             ; RFC 5280, Section 4.1.2.6
+       extensions: {
+           ? eku: [+OID],         ; RFC 5280, Section 4.2.1.12
+           ? san: [+SAN],         ; RFC 5280, Section 4.2.1.6
+           ? fulcio_issuer: tstr  ; Fulcio issuer extension
+       }
+   }
 
-  ; X.509 Name as an object of attributes
-  ; Repeated attribute types are not supported
-  ; Common attribute types have human-readable labels (see below)
-  ; Other attribute types use dotted OIDs
-  ; Values are converted to UTF-8
-  Name = {
-      ; See RFC 4514, Section 3, for meaning of common attribute types
-      ? CN: tstr,
-      ? L: tstr,
-      ? ST: tstr,
-      ? O: tstr,
-      ? OU: tstr,
-      ? C: tstr,
-      ? STREET: tstr,
-      * OID => tstr
-  }
+   ; X.509 Name as an object of attributes
+   ; Repeated attribute types are not supported
+   ; Common attribute types have human-readable labels (see below)
+   ; Other attribute types use dotted OIDs
+   ; Values are converted to UTF-8
+   Name = {
+       ; See RFC 4514, Section 3, for meaning of common attribute types
+       ? CN: tstr,
+       ? L: tstr,
+       ? ST: tstr,
+       ? O: tstr,
+       ? OU: tstr,
+       ? C: tstr,
+       ? STREET: tstr,
+       * OID => tstr
+   }
 
-  ; base64url-encoded data, see RFC 4648, Section 5
-  base64url = tstr
+   ; base64url-encoded data, see RFC 4648, Section 5
+   base64url = tstr
 
-  ; ASN.1 Object Identifier
-  ; Dotted string, for example "1.2.3"
-  OID = tstr
+   ; ASN.1 Object Identifier
+   ; Dotted string, for example "1.2.3"
+   OID = tstr
 
-  ; X.509 Subject Alternative Name
-  ; Strings are converted to UTF-8
-  SAN = rfc822Name / DNSName / URI / DirectoryName
-  rfc822Name = ["email", tstr] ; Example: ["email", "user@example.com"]
-  DNSName = ["dns", tstr]      ; Example: ["dns", "example.com"]
-  URI = ["uri", tstr]          ; Example: ["uri", "https://example.com"]
-  DirectoryName = ["dn", Name] ; Example: ["dn", {CN: "Example"}]
+   ; X.509 Subject Alternative Name
+   ; Strings are converted to UTF-8
+   SAN = rfc822Name / DNSName / URI / DirectoryName
+   rfc822Name = ["email", tstr] ; e.g., ["email", "user@example.com"]
+   DNSName = ["dns", tstr]      ; e.g., ["dns", "example.com"]
+   URI = ["uri", tstr]          ; e.g., ["uri", "https://example.com"]
+   DirectoryName = ["dn", Name] ; e.g., ["dn", {CN: "Example"}]
 
-          Figure 14: CDDL Definition of did:x509 JSON Data Model
+           Figure 14: CDDL Definition of did:x509 JSON Data Model
 
    Example certificate chain mapped to the JSON data model:
 
@@ -716,12 +724,12 @@ Table of Contents
    checked.
 
    When constructing a did:x509 identifier, determine what constitutes a
-   logical identity within a given certificate authority.  Concretely,
+   logical identity within a given certification authority.  Concretely,
    determine which certificate fields the authority uses to uniquely
    represent an identity.  After that, choose one or more matching
    predicates that express such an identity as faithfully as possible.
 
-   As an example, a certificate authority may use email addresses as a
+   As an example, a certification authority may use email addresses as a
    way to separate identities and use the SAN extension to store the
    email address.  In that case, the did:x509 identifier should be
    constructed using the san predicate, for example,
@@ -776,11 +784,11 @@ Table of Contents
    This DID method does not support deactivating the DID.  There is no
    deactivation authorization operation.
 
-   However, if the certificate authority revokes all certificates for
+   However, if the certification authority revokes all certificates for
    the matching DID, or they expire, and does not issue new certificates
    matching the same DID, then this can be considered equivalent to
    deactivation of the DID.  There is no technical guarantee in this
-   case and the certificate authority can revert its decision.
+   case and the certification authority can revert its decision.
 
 7.  DID Resolution
 
@@ -826,7 +834,9 @@ Table of Contents
         application policy.
 
    3.   If required by the application, check whether any certificate in
-        the chain is revoked using CRL, OCSP, or other mechanisms.
+        the chain is revoked using certificate revocation lists (CRLs)
+        [RFC5280], the Online Certificate Status Protocol (OCSP)
+        [RFC6960], or other mechanisms.
 
    4.   Apply any further application-specific checks, for example
         disallowing insecure certificate signature algorithms.
@@ -839,7 +849,7 @@ Table of Contents
 
    7.   Extract the public key of the first certificate in the chain.
 
-   8.   Convert the public key to a JSON Web Key.
+   8.   Convert the public key to a JSON Web Key (JWK) [RFC7517].
 
    9.   Create the following partial DID Document:
 
@@ -892,7 +902,7 @@ Table of Contents
    it may authorize an identity for actions it was not meant to be
    authorized for.
 
-   To mitigate this issue, the certificate authority should publish
+   To mitigate this issue, the certification authority should publish
    their expected usage of certificate fields and indicate which ones
    constitute a unique identity, versus any additional fields that may
    be of an informational nature.  This will help users create an
@@ -936,7 +946,7 @@ Table of Contents
 
    The did:x509 identifier can contain certificate subject names,
    subject alternative names, extended key usage values, Fulcio issuer
-   values, and a certificate authority fingerprint.  These values can
+   values, and a certification authority fingerprint.  These values can
    reveal personal names, email addresses, domain names, organizational
    affiliations, credential issuers, or other identifying information.
    DID creators should choose predicates that are specific enough for
@@ -969,6 +979,9 @@ Table of Contents
 
 11.1.  Normative References
 
+   [CID]      "Controlled Identifiers v1.0", 15 May 2025,
+              <https://www.w3.org/TR/cid-1.0/>.
+
    [DID]      Sporny, M., Guy, A., Sabadello, M., and D. Reed,
               "Decentralized Identifiers (DIDs) v1.0", W3C REC-did-core-
               20220719, 19 July 2022,
@@ -980,10 +993,22 @@ Table of Contents
               <https://csrc.nist.gov/publications/detail/fips/180/4/
               final>.
 
+   [JSON-LD]  Kellogg, G., Champin, P.-A., and D. Longley, "JSON-LD 1.1:
+              A JSON-based Serialization for Linked Data", W3C REC-json-
+              ld11-20200716, 16 July 2020,
+              <https://www.w3.org/TR/2020/REC-json-ld11-20200716/>.
+
+   [REGO]     Open Policy Agent, "Policy Language", n.d.,
+              <https://www.openpolicyagent.org/docs/policy-language>.
+
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
               DOI 10.17487/RFC2119, March 1997,
               <https://www.rfc-editor.org/rfc/rfc2119>.
+
+   [RFC3629]  Yergeau, F., "UTF-8, a transformation format of ISO
+              10646", STD 63, RFC 3629, DOI 10.17487/RFC3629, November
+              2003, <https://www.rfc-editor.org/rfc/rfc3629>.
 
    [RFC3986]  Berners-Lee, T., Fielding, R., and L. Masinter, "Uniform
               Resource Identifier (URI): Generic Syntax", STD 66,
@@ -1014,6 +1039,10 @@ Table of Contents
               RFC 7405, DOI 10.17487/RFC7405, December 2014,
               <https://www.rfc-editor.org/rfc/rfc7405>.
 
+   [RFC7517]  Jones, M., "JSON Web Key (JWK)", RFC 7517,
+              DOI 10.17487/RFC7517, May 2015,
+              <https://www.rfc-editor.org/rfc/rfc7517>.
+
    [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
               May 2017, <https://www.rfc-editor.org/rfc/rfc8174>.
@@ -1024,20 +1053,18 @@ Table of Contents
               JSON Data Structures", RFC 8610, DOI 10.17487/RFC8610,
               June 2019, <https://www.rfc-editor.org/rfc/rfc8610>.
 
-   [RFC9165]  Bormann, C., "Additional Control Operators for the Concise
-              Data Definition Language (CDDL)", RFC 9165,
-              DOI 10.17487/RFC9165, December 2021,
-              <https://www.rfc-editor.org/rfc/rfc9165>.
-
    [STD90]    Bray, T., Ed., "The JavaScript Object Notation (JSON) Data
               Interchange Format", STD 90, RFC 8259,
               DOI 10.17487/RFC8259, December 2017,
               <https://www.rfc-editor.org/rfc/rfc8259>.
 
-11.2.  Informative References
+   [X.690]    ITU-T, "Information technology - ASN.1 encoding rules:
+              Specification of Basic Encoding Rules (BER), Canonical
+              Encoding Rules (CER) and Distinguished Encoding Rules
+              (DER)", ITU-T Recommendation X.690, February 2021,
+              <https://www.itu.int/rec/T-REC-X.690>.
 
-   [CID]      "Controlled Identifiers v1.0", 15 May 2025,
-              <https://www.w3.org/TR/cid-1.0/>.
+11.2.  Informative References
 
    [DID-METHODS]
               "DID Methods", 26 September 2026,
@@ -1060,8 +1087,15 @@ Table of Contents
               blob/44f5e17fac6944fdde71c94d2e77ab075c9dca9f/docs/
               timestamp.md#L102-L107>.
 
-   [REGO]     Open Policy Agent, "Policy Language", n.d.,
-              <https://www.openpolicyagent.org/docs/policy-language>.
+   [RFC6960]  Santesson, S., Myers, M., Ankney, R., Malpani, A.,
+              Galperin, S., and C. Adams, "X.509 Internet Public Key
+              Infrastructure Online Certificate Status Protocol - OCSP",
+              RFC 6960, DOI 10.17487/RFC6960, June 2013,
+              <https://www.rfc-editor.org/rfc/rfc6960>.
+
+   [RFC7515]  Jones, M., Bradley, J., and N. Sakimura, "JSON Web
+              Signature (JWS)", RFC 7515, DOI 10.17487/RFC7515, May
+              2015, <https://www.rfc-editor.org/rfc/rfc7515>.
 
    [RFC7519]  Jones, M., Bradley, J., and N. Sakimura, "JSON Web Token
               (JWT)", RFC 7519, DOI 10.17487/RFC7519, May 2015,
