@@ -4,12 +4,12 @@
 
 Network Working Group                                        M. Riechert
 Internet-Draft                                        A. Delignat-Lavaud
-Intended status: Standards Track                               Microsoft
-Expires: 2 April 2027                                        H. Birkholz
+Intended status: Informational                                 Microsoft
+Expires: 3 April 2027                                        H. Birkholz
                                                           Fraunhofer SIT
                                                              A. Chamayou
                                                                Microsoft
-                                                       29 September 2026
+                                                       30 September 2026
 
 
                      x509 Decentralized Identifier
@@ -59,7 +59,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 2 April 2027.
+   This Internet-Draft will expire on 3 April 2027.
 
 Copyright Notice
 
@@ -70,10 +70,7 @@ Copyright Notice
    Provisions Relating to IETF Documents (https://trustee.ietf.org/
    license-info) in effect on the date of publication of this document.
    Please review these documents carefully, as they describe your rights
-   and restrictions with respect to this document.  Code Components
-   extracted from this document must include Revised BSD License text as
-   described in Section 4.e of the Trust Legal Provisions and are
-   provided without warranty as described in the Revised BSD License.
+   and restrictions with respect to this document.
 
 Table of Contents
 
@@ -176,7 +173,7 @@ Table of Contents
    identifiers.
 
    The reader is assumed to be familiar with the vocabulary and concepts
-   defined in [I-D.ietf-scitt-architecture].
+   defined in [RFC9943].
 
    Rego is a descriptive query language used to define policies in a
    precise and unambiguous way.  This document uses Rego ([REGO]) to
@@ -964,12 +961,9 @@ Table of Contents
 
 10.  IANA Considerations
 
-
-   // RFC Editor: Please replace "RFCthis" with the RFC number assigned
-   to this document.
-
-
-   // RFC Editor: Some considerations
+   This document has no IANA actions.  The did:x509 method is registered
+   in the W3C DID Methods registry ([DID-METHODS]), as described in
+   Section 1.1.
 
 11.  References
 
@@ -1067,14 +1061,6 @@ Table of Contents
               blob/44f5e17fac6944fdde71c94d2e77ab075c9dca9f/docs/
               timestamp.md#L102-L107>.
 
-   [I-D.ietf-scitt-architecture]
-              Birkholz, H., Delignat-Lavaud, A., Fournet, C., Deshpande,
-              Y., and S. Lasker, "An Architecture for Trustworthy and
-              Transparent Digital Supply Chains", Work in Progress,
-              Internet-Draft, draft-ietf-scitt-architecture-22, 10
-              October 2025, <https://datatracker.ietf.org/doc/html/
-              draft-ietf-scitt-architecture-22>.
-
    [REGO]     "Rego", n.d.,
               <https://www.openpolicyagent.org/docs/latest/policy-
               language/>.
@@ -1100,6 +1086,12 @@ Table of Contents
    [RFC9597]  Looker, T. and M.B. Jones, "CBOR Web Token (CWT) Claims in
               COSE Headers", RFC 9597, DOI 10.17487/RFC9597, June 2024,
               <https://www.rfc-editor.org/rfc/rfc9597>.
+
+   [RFC9943]  Birkholz, H., Delignat-Lavaud, A., Fournet, C., Deshpande,
+              Y., and S. Lasker, "An Architecture for Trustworthy and
+              Transparent Digital Supply Chains", RFC 9943,
+              DOI 10.17487/RFC9943, June 2026,
+              <https://www.rfc-editor.org/rfc/rfc9943>.
 
    [RWOT11]   Stoecker, C. and C. Wirrig, "Analysis of hybrid wallet
               solutions - Implementation options for combining x509

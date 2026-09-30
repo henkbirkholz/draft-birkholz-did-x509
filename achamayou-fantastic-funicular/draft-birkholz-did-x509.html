@@ -1050,7 +1050,7 @@ svg {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Riechert, et al.</td>
-<td class="center">Expires 2 April 2027</td>
+<td class="center">Expires 3 April 2027</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1063,12 +1063,12 @@ svg {
 <dd class="internet-draft">draft-birkholz-did-x509-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2026-09-29" class="published">29 September 2026</time>
+<time datetime="2026-09-30" class="published">30 September 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
-<dd class="intended-status">Standards Track</dd>
+<dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2027-04-02">2 April 2027</time></dd>
+<dd class="expires"><time datetime="2027-04-03">3 April 2027</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1123,7 +1123,7 @@ svg {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 2 April 2027.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 3 April 2027.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1140,10 +1140,7 @@ svg {
             (<span><a href="https://trustee.ietf.org/license-info">https://trustee.ietf.org/license-info</a></span>) in effect on the date of
             publication of this document. Please review these documents
             carefully, as they describe your rights and restrictions with
-            respect to this document. Code Components extracted from this
-            document must include Revised BSD License text as described in
-            Section 4.e of the Trust Legal Provisions and are provided without
-            warranty as described in the Revised BSD License.<a href="#section-boilerplate.2-2" class="pilcrow">¶</a></p>
+            respect to this document.<a href="#section-boilerplate.2-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="toc">
@@ -1279,7 +1276,7 @@ Relying on a partial certificate chain (e.g., a root certificate and some interm
 While stable, the level of granularity afforded by a partial certificate chain may not be sufficient to distinguish several identities that are not equivalent for the purpose of policy.<a href="#section-1-4" class="pilcrow">¶</a></p>
 <p id="section-1-5">Combining authority pinning with certificate predicates is a precise and stable way of capturing identities as a constrained set of certificates.
 Their representation as compact and durable identifier strings enables the formulation of readable policy (e.g. "request.issuer == 'did:x509...'"), for example in the context of transparency ledger registration.<a href="#section-1-5" class="pilcrow">¶</a></p>
-<div id="relationship-to-the-didx509-method-specification">
+<div id="relationship">
 <section id="section-1.1">
         <h3 id="name-relationship-to-the-didx509">
 <a href="#section-1.1" class="section-number selfRef">1.1. </a><a href="#name-relationship-to-the-didx509" class="section-name selfRef">Relationship to the did:x509 Method Specification</a>
@@ -1301,7 +1298,7 @@ appear in all capitals, as shown here.<a href="#section-1.2-1" class="pilcrow">�
 <p id="section-1.2-2">In this document, CDDL (<span>[<a href="#RFC8610" class="cite xref">RFC8610</a>]</span>, <span>[<a href="#RFC9165" class="cite xref">RFC9165</a>]</span>) is used to describe the
 data formats, and ABNF (<span>[<a href="#RFC5234" class="cite xref">RFC5234</a>]</span>, <span>[<a href="#RFC7405" class="cite xref">RFC7405</a>]</span>) to describe identifiers.<a href="#section-1.2-2" class="pilcrow">¶</a></p>
 <p id="section-1.2-3">The reader is assumed to be familiar with the vocabulary and concepts
-defined in <span>[<a href="#I-D.ietf-scitt-architecture" class="cite xref">I-D.ietf-scitt-architecture</a>]</span>.<a href="#section-1.2-3" class="pilcrow">¶</a></p>
+defined in <span>[<a href="#RFC9943" class="cite xref">RFC9943</a>]</span>.<a href="#section-1.2-3" class="pilcrow">¶</a></p>
 <p id="section-1.2-4">Rego is a descriptive query language used to define policies in a precise and unambiguous way.
 This document uses Rego (<span>[<a href="#REGO" class="cite xref">REGO</a>]</span>) to define the parsing and validation logic for did:x509 identifiers.
 The Rego code snippets provided in this document can be evaluated using any Rego v1 runtime, but there is no expectation that implementations use the Rego language.<a href="#section-1.2-4" class="pilcrow">¶</a></p>
@@ -2084,8 +2081,8 @@ If unlinkability is required, relying parties should avoid reusing the same did:
       <h2 id="name-iana-considerations">
 <a href="#section-10" class="section-number selfRef">10. </a><a href="#name-iana-considerations" class="section-name selfRef">IANA Considerations</a>
       </h2>
-<p id="section-10-1"><span class="cref" id="rfced">RFC Editor:</span> Please replace "RFCthis" with the RFC number assigned to this document.<a href="#section-10-1" class="pilcrow">¶</a></p>
-<p id="section-10-2"><span class="cref" id="rfced_1">RFC Editor:</span> Some considerations<a href="#section-10-2" class="pilcrow">¶</a></p>
+<p id="section-10-1">This document has no IANA actions.
+The did:x509 method is registered in the W3C DID Methods registry (<span>[<a href="#DID-METHODS" class="cite xref">DID-METHODS</a>]</span>), as described in <a href="#relationship" class="auto internal xref">Section 1.1</a>.<a href="#section-10-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="sec-combined-references">
@@ -2184,10 +2181,6 @@ If unlinkability is required, relying parties should avoid reusing the same did:
         <dd>
 <span class="refTitle">"Gitsign: Timestamping"</span>, <span>n.d.</span>, <span>&lt;<a href="https://github.com/sigstore/gitsign/blob/44f5e17fac6944fdde71c94d2e77ab075c9dca9f/docs/timestamp.md#L102-L107">https://github.com/sigstore/gitsign/blob/44f5e17fac6944fdde71c94d2e77ab075c9dca9f/docs/timestamp.md#L102-L107</a>&gt;</span>. </dd>
 <dd class="break"></dd>
-<dt id="I-D.ietf-scitt-architecture">[I-D.ietf-scitt-architecture]</dt>
-        <dd>
-<span class="refAuthor">Birkholz, H.</span>, <span class="refAuthor">Delignat-Lavaud, A.</span>, <span class="refAuthor">Fournet, C.</span>, <span class="refAuthor">Deshpande, Y.</span>, and <span class="refAuthor">S. Lasker</span>, <span class="refTitle">"An Architecture for Trustworthy and Transparent Digital Supply Chains"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-scitt-architecture-22</span>, <time datetime="2025-10-10" class="refDate">10 October 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-scitt-architecture-22">https://datatracker.ietf.org/doc/html/draft-ietf-scitt-architecture-22</a>&gt;</span>. </dd>
-<dd class="break"></dd>
 <dt id="REGO">[REGO]</dt>
         <dd>
 <span class="refTitle">"Rego"</span>, <span>n.d.</span>, <span>&lt;<a href="https://www.openpolicyagent.org/docs/latest/policy-language/">https://www.openpolicyagent.org/docs/latest/policy-language/</a>&gt;</span>. </dd>
@@ -2211,6 +2204,10 @@ If unlinkability is required, relying parties should avoid reusing the same did:
 <dt id="RFC9597">[RFC9597]</dt>
         <dd>
 <span class="refAuthor">Looker, T.</span> and <span class="refAuthor">M.B. Jones</span>, <span class="refTitle">"CBOR Web Token (CWT) Claims in COSE Headers"</span>, <span class="seriesInfo">RFC 9597</span>, <span class="seriesInfo">DOI 10.17487/RFC9597</span>, <time datetime="2024-06" class="refDate">June 2024</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9597">https://www.rfc-editor.org/rfc/rfc9597</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC9943">[RFC9943]</dt>
+        <dd>
+<span class="refAuthor">Birkholz, H.</span>, <span class="refAuthor">Delignat-Lavaud, A.</span>, <span class="refAuthor">Fournet, C.</span>, <span class="refAuthor">Deshpande, Y.</span>, and <span class="refAuthor">S. Lasker</span>, <span class="refTitle">"An Architecture for Trustworthy and Transparent Digital Supply Chains"</span>, <span class="seriesInfo">RFC 9943</span>, <span class="seriesInfo">DOI 10.17487/RFC9943</span>, <time datetime="2026-06" class="refDate">June 2026</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9943">https://www.rfc-editor.org/rfc/rfc9943</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RWOT11">[RWOT11]</dt>
         <dd>
