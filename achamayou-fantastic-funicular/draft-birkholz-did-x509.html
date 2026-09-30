@@ -1231,19 +1231,16 @@ svg {
                 <p id="section-toc.1-1.8.2.5.1"><a href="#section-8.5" class="auto internal xref">8.5</a>.  <a href="#name-cosesigntool" class="internal xref">CoseSignTool</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.6">
-                <p id="section-toc.1-1.8.2.6.1"><a href="#section-8.6" class="auto internal xref">8.6</a>.  <a href="#name-scitt-verifier" class="internal xref">scitt-verifier</a></p>
+                <p id="section-toc.1-1.8.2.6.1"><a href="#section-8.6" class="auto internal xref">8.6</a>.  <a href="#name-scitt-ccf-ledger" class="internal xref">scitt-ccf-ledger</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.7">
-                <p id="section-toc.1-1.8.2.7.1"><a href="#section-8.7" class="auto internal xref">8.7</a>.  <a href="#name-scitt-ccf-ledger" class="internal xref">scitt-ccf-ledger</a></p>
+                <p id="section-toc.1-1.8.2.7.1"><a href="#section-8.7" class="auto internal xref">8.7</a>.  <a href="#name-ccf" class="internal xref">CCF</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.8">
-                <p id="section-toc.1-1.8.2.8.1"><a href="#section-8.8" class="auto internal xref">8.8</a>.  <a href="#name-ccf" class="internal xref">CCF</a></p>
+                <p id="section-toc.1-1.8.2.8.1"><a href="#section-8.8" class="auto internal xref">8.8</a>.  <a href="#name-hcsshim" class="internal xref">hcsshim</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.9">
-                <p id="section-toc.1-1.8.2.9.1"><a href="#section-8.9" class="auto internal xref">8.9</a>.  <a href="#name-hcsshim" class="internal xref">hcsshim</a></p>
-</li>
-              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.10">
-                <p id="section-toc.1-1.8.2.10.1"><a href="#section-8.10" class="auto internal xref">8.10</a>. <a href="#name-azure-cli-confcom-extension" class="internal xref">Azure CLI confcom Extension</a></p>
+                <p id="section-toc.1-1.8.2.9.1"><a href="#section-8.9" class="auto internal xref">8.9</a>.  <a href="#name-azure-cli-confcom-extension" class="internal xref">Azure CLI confcom Extension</a></p>
 </li>
             </ul>
 </li>
@@ -2271,30 +2268,30 @@ For every implementation below, the organization is Microsoft, the contact is th
 </dl>
 </section>
 </div>
-<div id="scitt-verifier">
+<div id="scitt-ccf-ledger">
 <section id="section-8.6">
-        <h3 id="name-scitt-verifier">
-<a href="#section-8.6" class="section-number selfRef">8.6. </a><a href="#name-scitt-verifier" class="section-name selfRef">scitt-verifier</a>
+        <h3 id="name-scitt-ccf-ledger">
+<a href="#section-8.6" class="section-number selfRef">8.6. </a><a href="#name-scitt-ccf-ledger" class="section-name selfRef">scitt-ccf-ledger</a>
         </h3>
 <span class="break"></span><dl class="dlParallel" id="section-8.6-1">
           <dt id="section-8.6-1.1">Link:</dt>
           <dd style="margin-left: 1.5em" id="section-8.6-1.2">
-            <p id="section-8.6-1.2.1"><span><a href="https://github.com/microsoft/scitt-verifier">https://github.com/microsoft/scitt-verifier</a></span><a href="#section-8.6-1.2.1" class="pilcrow">¶</a></p>
+            <p id="section-8.6-1.2.1"><span><a href="https://github.com/microsoft/scitt-ccf-ledger">https://github.com/microsoft/scitt-ccf-ledger</a></span><a href="#section-8.6-1.2.1" class="pilcrow">¶</a></p>
 </dd>
           <dd class="break"></dd>
 <dt id="section-8.6-1.3">Description:</dt>
           <dd style="margin-left: 1.5em" id="section-8.6-1.4">
-            <p id="section-8.6-1.4.1">A Rust command-line tool that verifies SCITT transparent statements and receipts offline. It includes a did:x509 parser and resolver library.<a href="#section-8.6-1.4.1" class="pilcrow">¶</a></p>
+            <p id="section-8.6-1.4.1">A SCITT Transparency Service application built on CCF. It registers signed statements whose CWT issuer is a did:x509 identifier, resolving the identifier against the statement's certificate chain, and its Registration Policies can match on the issuer. Its Python command-line tool creates signed statements with did:x509 issuers.<a href="#section-8.6-1.4.1" class="pilcrow">¶</a></p>
 </dd>
           <dd class="break"></dd>
 <dt id="section-8.6-1.5">Coverage:</dt>
           <dd style="margin-left: 1.5em" id="section-8.6-1.6">
-            <p id="section-8.6-1.6.1">Partial. The library parses did:x509 identifiers and checks the CA fingerprint, and one adapter also enforces the "eku" predicate. The resolver is not used when verifying statements.<a href="#section-8.6-1.6.1" class="pilcrow">¶</a></p>
+            <p id="section-8.6-1.6.1">Creation, and resolution using didx509cpp.<a href="#section-8.6-1.6.1" class="pilcrow">¶</a></p>
 </dd>
           <dd class="break"></dd>
 <dt id="section-8.6-1.7">Maturity:</dt>
           <dd style="margin-left: 1.5em" id="section-8.6-1.8">
-            <p id="section-8.6-1.8.1">Released; latest release v0.4.0 (September 2026).<a href="#section-8.6-1.8.1" class="pilcrow">¶</a></p>
+            <p id="section-8.6-1.8.1">Released; latest release 0.20.1 (September 2026).<a href="#section-8.6-1.8.1" class="pilcrow">¶</a></p>
 </dd>
           <dd class="break"></dd>
 <dt id="section-8.6-1.9">Licensing:</dt>
@@ -2305,137 +2302,103 @@ For every implementation below, the organization is Microsoft, the contact is th
 </dl>
 </section>
 </div>
-<div id="scitt-ccf-ledger">
+<div id="ccf">
 <section id="section-8.7">
-        <h3 id="name-scitt-ccf-ledger">
-<a href="#section-8.7" class="section-number selfRef">8.7. </a><a href="#name-scitt-ccf-ledger" class="section-name selfRef">scitt-ccf-ledger</a>
+        <h3 id="name-ccf">
+<a href="#section-8.7" class="section-number selfRef">8.7. </a><a href="#name-ccf" class="section-name selfRef">CCF</a>
         </h3>
 <span class="break"></span><dl class="dlParallel" id="section-8.7-1">
           <dt id="section-8.7-1.1">Link:</dt>
           <dd style="margin-left: 1.5em" id="section-8.7-1.2">
-            <p id="section-8.7-1.2.1"><span><a href="https://github.com/microsoft/scitt-ccf-ledger">https://github.com/microsoft/scitt-ccf-ledger</a></span><a href="#section-8.7-1.2.1" class="pilcrow">¶</a></p>
+            <p id="section-8.7-1.2.1"><span><a href="https://github.com/microsoft/CCF">https://github.com/microsoft/CCF</a></span><a href="#section-8.7-1.2.1" class="pilcrow">¶</a></p>
 </dd>
           <dd class="break"></dd>
 <dt id="section-8.7-1.3">Description:</dt>
           <dd style="margin-left: 1.5em" id="section-8.7-1.4">
-            <p id="section-8.7-1.4.1">A SCITT Transparency Service application built on CCF. It registers signed statements whose CWT issuer is a did:x509 identifier, resolving the identifier against the statement's certificate chain, and its Registration Policies can match on the issuer. Its Python command-line tool creates signed statements with did:x509 issuers.<a href="#section-8.7-1.4.1" class="pilcrow">¶</a></p>
+            <p id="section-8.7-1.4.1">The Confidential Consortium Framework. It resolves the did:x509 issuers of COSE-signed endorsements, such as utility VM endorsements for confidential containers, against their certificate chains.<a href="#section-8.7-1.4.1" class="pilcrow">¶</a></p>
 </dd>
           <dd class="break"></dd>
 <dt id="section-8.7-1.5">Coverage:</dt>
           <dd style="margin-left: 1.5em" id="section-8.7-1.6">
-            <p id="section-8.7-1.6.1">Creation, and resolution using didx509cpp.<a href="#section-8.7-1.6.1" class="pilcrow">¶</a></p>
+            <p id="section-8.7-1.6.1">Resolution using didx509cpp.<a href="#section-8.7-1.6.1" class="pilcrow">¶</a></p>
 </dd>
           <dd class="break"></dd>
 <dt id="section-8.7-1.7">Maturity:</dt>
           <dd style="margin-left: 1.5em" id="section-8.7-1.8">
-            <p id="section-8.7-1.8.1">Released; latest release 0.20.1 (September 2026).<a href="#section-8.7-1.8.1" class="pilcrow">¶</a></p>
+            <p id="section-8.7-1.8.1">Released; latest release 7.0.17 (September 2026).<a href="#section-8.7-1.8.1" class="pilcrow">¶</a></p>
 </dd>
           <dd class="break"></dd>
 <dt id="section-8.7-1.9">Licensing:</dt>
           <dd style="margin-left: 1.5em" id="section-8.7-1.10">
-            <p id="section-8.7-1.10.1">MIT<a href="#section-8.7-1.10.1" class="pilcrow">¶</a></p>
-</dd>
-        <dd class="break"></dd>
-</dl>
-</section>
-</div>
-<div id="ccf">
-<section id="section-8.8">
-        <h3 id="name-ccf">
-<a href="#section-8.8" class="section-number selfRef">8.8. </a><a href="#name-ccf" class="section-name selfRef">CCF</a>
-        </h3>
-<span class="break"></span><dl class="dlParallel" id="section-8.8-1">
-          <dt id="section-8.8-1.1">Link:</dt>
-          <dd style="margin-left: 1.5em" id="section-8.8-1.2">
-            <p id="section-8.8-1.2.1"><span><a href="https://github.com/microsoft/CCF">https://github.com/microsoft/CCF</a></span><a href="#section-8.8-1.2.1" class="pilcrow">¶</a></p>
-</dd>
-          <dd class="break"></dd>
-<dt id="section-8.8-1.3">Description:</dt>
-          <dd style="margin-left: 1.5em" id="section-8.8-1.4">
-            <p id="section-8.8-1.4.1">The Confidential Consortium Framework. It resolves the did:x509 issuers of COSE-signed endorsements, such as utility VM endorsements for confidential containers, against their certificate chains.<a href="#section-8.8-1.4.1" class="pilcrow">¶</a></p>
-</dd>
-          <dd class="break"></dd>
-<dt id="section-8.8-1.5">Coverage:</dt>
-          <dd style="margin-left: 1.5em" id="section-8.8-1.6">
-            <p id="section-8.8-1.6.1">Resolution using didx509cpp.<a href="#section-8.8-1.6.1" class="pilcrow">¶</a></p>
-</dd>
-          <dd class="break"></dd>
-<dt id="section-8.8-1.7">Maturity:</dt>
-          <dd style="margin-left: 1.5em" id="section-8.8-1.8">
-            <p id="section-8.8-1.8.1">Released; latest release 7.0.17 (September 2026).<a href="#section-8.8-1.8.1" class="pilcrow">¶</a></p>
-</dd>
-          <dd class="break"></dd>
-<dt id="section-8.8-1.9">Licensing:</dt>
-          <dd style="margin-left: 1.5em" id="section-8.8-1.10">
-            <p id="section-8.8-1.10.1">Apache-2.0<a href="#section-8.8-1.10.1" class="pilcrow">¶</a></p>
+            <p id="section-8.7-1.10.1">Apache-2.0<a href="#section-8.7-1.10.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
 </dl>
 </section>
 </div>
 <div id="hcsshim">
-<section id="section-8.9">
+<section id="section-8.8">
         <h3 id="name-hcsshim">
-<a href="#section-8.9" class="section-number selfRef">8.9. </a><a href="#name-hcsshim" class="section-name selfRef">hcsshim</a>
+<a href="#section-8.8" class="section-number selfRef">8.8. </a><a href="#name-hcsshim" class="section-name selfRef">hcsshim</a>
         </h3>
-<span class="break"></span><dl class="dlParallel" id="section-8.9-1">
-          <dt id="section-8.9-1.1">Link:</dt>
-          <dd style="margin-left: 1.5em" id="section-8.9-1.2">
-            <p id="section-8.9-1.2.1"><span><a href="https://github.com/microsoft/hcsshim">https://github.com/microsoft/hcsshim</a></span><a href="#section-8.9-1.2.1" class="pilcrow">¶</a></p>
+<span class="break"></span><dl class="dlParallel" id="section-8.8-1">
+          <dt id="section-8.8-1.1">Link:</dt>
+          <dd style="margin-left: 1.5em" id="section-8.8-1.2">
+            <p id="section-8.8-1.2.1"><span><a href="https://github.com/microsoft/hcsshim">https://github.com/microsoft/hcsshim</a></span><a href="#section-8.8-1.2.1" class="pilcrow">¶</a></p>
 </dd>
           <dd class="break"></dd>
-<dt id="section-8.9-1.3">Description:</dt>
-          <dd style="margin-left: 1.5em" id="section-8.9-1.4">
-            <p id="section-8.9-1.4.1">The Host Compute Service shim. Its security policy enforcement for confidential containers checks that the did:x509 issuer of a signed policy fragment matches the fragment's certificate chain.<a href="#section-8.9-1.4.1" class="pilcrow">¶</a></p>
+<dt id="section-8.8-1.3">Description:</dt>
+          <dd style="margin-left: 1.5em" id="section-8.8-1.4">
+            <p id="section-8.8-1.4.1">The Host Compute Service shim. Its security policy enforcement for confidential containers checks that the did:x509 issuer of a signed policy fragment matches the fragment's certificate chain.<a href="#section-8.8-1.4.1" class="pilcrow">¶</a></p>
 </dd>
           <dd class="break"></dd>
-<dt id="section-8.9-1.5">Coverage:</dt>
-          <dd style="margin-left: 1.5em" id="section-8.9-1.6">
-            <p id="section-8.9-1.6.1">Resolution using cosesign1go and didx509go.<a href="#section-8.9-1.6.1" class="pilcrow">¶</a></p>
+<dt id="section-8.8-1.5">Coverage:</dt>
+          <dd style="margin-left: 1.5em" id="section-8.8-1.6">
+            <p id="section-8.8-1.6.1">Resolution using cosesign1go and didx509go.<a href="#section-8.8-1.6.1" class="pilcrow">¶</a></p>
 </dd>
           <dd class="break"></dd>
-<dt id="section-8.9-1.7">Maturity:</dt>
-          <dd style="margin-left: 1.5em" id="section-8.9-1.8">
-            <p id="section-8.9-1.8.1">Released; latest release v0.14.1 (April 2026).<a href="#section-8.9-1.8.1" class="pilcrow">¶</a></p>
+<dt id="section-8.8-1.7">Maturity:</dt>
+          <dd style="margin-left: 1.5em" id="section-8.8-1.8">
+            <p id="section-8.8-1.8.1">Released; latest release v0.14.1 (April 2026).<a href="#section-8.8-1.8.1" class="pilcrow">¶</a></p>
 </dd>
           <dd class="break"></dd>
-<dt id="section-8.9-1.9">Licensing:</dt>
-          <dd style="margin-left: 1.5em" id="section-8.9-1.10">
-            <p id="section-8.9-1.10.1">MIT<a href="#section-8.9-1.10.1" class="pilcrow">¶</a></p>
+<dt id="section-8.8-1.9">Licensing:</dt>
+          <dd style="margin-left: 1.5em" id="section-8.8-1.10">
+            <p id="section-8.8-1.10.1">MIT<a href="#section-8.8-1.10.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
 </dl>
 </section>
 </div>
 <div id="azure-cli-confcom-extension">
-<section id="section-8.10">
+<section id="section-8.9">
         <h3 id="name-azure-cli-confcom-extension">
-<a href="#section-8.10" class="section-number selfRef">8.10. </a><a href="#name-azure-cli-confcom-extension" class="section-name selfRef">Azure CLI confcom Extension</a>
+<a href="#section-8.9" class="section-number selfRef">8.9. </a><a href="#name-azure-cli-confcom-extension" class="section-name selfRef">Azure CLI confcom Extension</a>
         </h3>
-<span class="break"></span><dl class="dlParallel" id="section-8.10-1">
-          <dt id="section-8.10-1.1">Link:</dt>
-          <dd style="margin-left: 1.5em" id="section-8.10-1.2">
-            <p id="section-8.10-1.2.1"><span><a href="https://github.com/Azure/azure-cli-extensions">https://github.com/Azure/azure-cli-extensions</a></span>, in the src/confcom directory<a href="#section-8.10-1.2.1" class="pilcrow">¶</a></p>
+<span class="break"></span><dl class="dlParallel" id="section-8.9-1">
+          <dt id="section-8.9-1.1">Link:</dt>
+          <dd style="margin-left: 1.5em" id="section-8.9-1.2">
+            <p id="section-8.9-1.2.1"><span><a href="https://github.com/Azure/azure-cli-extensions">https://github.com/Azure/azure-cli-extensions</a></span>, in the src/confcom directory<a href="#section-8.9-1.2.1" class="pilcrow">¶</a></p>
 </dd>
           <dd class="break"></dd>
-<dt id="section-8.10-1.3">Description:</dt>
-          <dd style="margin-left: 1.5em" id="section-8.10-1.4">
-            <p id="section-8.10-1.4.1">A command-line extension that generates security policies for confidential containers. The policies name the did:x509 issuers of trusted policy fragments, and the extension signs fragments with the sign1util tool from cosesign1go.<a href="#section-8.10-1.4.1" class="pilcrow">¶</a></p>
+<dt id="section-8.9-1.3">Description:</dt>
+          <dd style="margin-left: 1.5em" id="section-8.9-1.4">
+            <p id="section-8.9-1.4.1">A command-line extension that generates security policies for confidential containers. The policies name the did:x509 issuers of trusted policy fragments, and the extension signs fragments with the sign1util tool from cosesign1go.<a href="#section-8.9-1.4.1" class="pilcrow">¶</a></p>
 </dd>
           <dd class="break"></dd>
-<dt id="section-8.10-1.5">Coverage:</dt>
-          <dd style="margin-left: 1.5em" id="section-8.10-1.6">
-            <p id="section-8.10-1.6.1">Use of did:x509 identifiers as the issuers of signed policy fragments, relying on cosesign1go.<a href="#section-8.10-1.6.1" class="pilcrow">¶</a></p>
+<dt id="section-8.9-1.5">Coverage:</dt>
+          <dd style="margin-left: 1.5em" id="section-8.9-1.6">
+            <p id="section-8.9-1.6.1">Use of did:x509 identifiers as the issuers of signed policy fragments, relying on cosesign1go.<a href="#section-8.9-1.6.1" class="pilcrow">¶</a></p>
 </dd>
           <dd class="break"></dd>
-<dt id="section-8.10-1.7">Maturity:</dt>
-          <dd style="margin-left: 1.5em" id="section-8.10-1.8">
-            <p id="section-8.10-1.8.1">Released; latest version 2.2.0.<a href="#section-8.10-1.8.1" class="pilcrow">¶</a></p>
+<dt id="section-8.9-1.7">Maturity:</dt>
+          <dd style="margin-left: 1.5em" id="section-8.9-1.8">
+            <p id="section-8.9-1.8.1">Released; latest version 2.2.0.<a href="#section-8.9-1.8.1" class="pilcrow">¶</a></p>
 </dd>
           <dd class="break"></dd>
-<dt id="section-8.10-1.9">Licensing:</dt>
-          <dd style="margin-left: 1.5em" id="section-8.10-1.10">
-            <p id="section-8.10-1.10.1">MIT<a href="#section-8.10-1.10.1" class="pilcrow">¶</a></p>
+<dt id="section-8.9-1.9">Licensing:</dt>
+          <dd style="margin-left: 1.5em" id="section-8.9-1.10">
+            <p id="section-8.9-1.10.1">MIT<a href="#section-8.9-1.10.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
 </dl>

@@ -101,11 +101,10 @@ Table of Contents
      8.3.  didx509go
      8.4.  cosesign1go
      8.5.  CoseSignTool
-     8.6.  scitt-verifier
-     8.7.  scitt-ccf-ledger
-     8.8.  CCF
-     8.9.  hcsshim
-     8.10. Azure CLI confcom Extension
+     8.6.  scitt-ccf-ledger
+     8.7.  CCF
+     8.8.  hcsshim
+     8.9.  Azure CLI confcom Extension
    9.  Security Considerations
      9.1.  Identifier Ambiguity
      9.2.  X.509 Trust Stores
@@ -1013,23 +1012,7 @@ Table of Contents
 
    Licensing:  MIT
 
-8.6.  scitt-verifier
-
-   Link:  https://github.com/microsoft/scitt-verifier
-
-   Description:  A Rust command-line tool that verifies SCITT
-      transparent statements and receipts offline.  It includes a
-      did:x509 parser and resolver library.
-
-   Coverage:  Partial.  The library parses did:x509 identifiers and
-      checks the CA fingerprint, and one adapter also enforces the "eku"
-      predicate.  The resolver is not used when verifying statements.
-
-   Maturity:  Released; latest release v0.4.0 (September 2026).
-
-   Licensing:  MIT
-
-8.7.  scitt-ccf-ledger
+8.6.  scitt-ccf-ledger
 
    Link:  https://github.com/microsoft/scitt-ccf-ledger
 
@@ -1046,7 +1029,7 @@ Table of Contents
 
    Licensing:  MIT
 
-8.8.  CCF
+8.7.  CCF
 
    Link:  https://github.com/microsoft/CCF
 
@@ -1061,7 +1044,7 @@ Table of Contents
 
    Licensing:  Apache-2.0
 
-8.9.  hcsshim
+8.8.  hcsshim
 
    Link:  https://github.com/microsoft/hcsshim
 
@@ -1076,7 +1059,7 @@ Table of Contents
 
    Licensing:  MIT
 
-8.10.  Azure CLI confcom Extension
+8.9.  Azure CLI confcom Extension
 
    Link:  https://github.com/Azure/azure-cli-extensions, in the src/
       confcom directory
