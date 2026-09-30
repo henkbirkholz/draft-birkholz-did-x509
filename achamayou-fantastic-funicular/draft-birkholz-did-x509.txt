@@ -34,8 +34,8 @@ Abstract
    evaluation, for example in the context of transparency ledgers.
 
    This Informational document is published as an Independent Submission
-   to improve interoperability with Microsoft's architecture.  It is not
-   a standard nor a product of the IETF.
+   to improve interoperability with Microsoft's architecture.  It is
+   neither a standard nor a product of the IETF.
 
 Discussion Venues
 
@@ -78,12 +78,12 @@ Table of Contents
      1.1.  Relationship to the did:x509 Method Specification
      1.2.  Conventions and Definitions
    2.  Identifier Syntax
-     2.1.  Percent-encoding
-     2.2.  "subject" predicate
-     2.3.  "san" predicate
-     2.4.  "eku" predicate
-     2.5.  "fulcio-issuer" predicate
-     2.6.  DID resolution options
+     2.1.  Percent-Encoding
+     2.2.  "subject" Predicate
+     2.3.  "san" Predicate
+     2.4.  "eku" Predicate
+     2.5.  "fulcio-issuer" Predicate
+     2.6.  DID Resolution Options
    3.  Verifiable Data Registry and Trust Model
    4.  DID Document
    5.  CDDL for a JSON Data Model for X.509 Certificate Chains
@@ -103,7 +103,6 @@ Table of Contents
      11.1.  Normative References
      11.2.  Informative References
    Appendix A.  Test Vectors
-   Acknowledgments
    Authors' Addresses
 
 1.  Introduction
@@ -175,27 +174,33 @@ Table of Contents
    The reader is assumed to be familiar with the vocabulary and concepts
    defined in [RFC9943].
 
-   Rego is a descriptive query language used to define policies in a
-   precise and unambiguous way.  This document uses Rego ([REGO]) to
-   define the parsing and validation logic for did:x509 identifiers.
-   The Rego code snippets provided in this document can be evaluated
-   using any Rego v1 runtime, but there is no expectation that
-   implementations use the Rego language.
+   Rego ([REGO]) is a declarative query language used to define policies
+   in a precise and unambiguous way.  This document uses Rego, rather
+   than pseudo-code, to define DID syntax validation and predicate
+   validation for did:x509 identifiers, so that the logic is unambiguous
+   and can be evaluated automatically.  The Rego code snippets provided
+   in this document can be evaluated using any Rego v1 runtime, but
+   there is no expectation that implementations use the Rego language.
 
    Per [RFC8792], line breaks may be present in the figures of this
    document to stay within the line-length limits of this document's
    format.
+
+   Examples in this document abbreviate long base64url values, such as
+   CA fingerprints, to their first and last two characters with two dots
+   in between (for example, WE..jk).  Abbreviated values are not
+   syntactically valid.
 
 2.  Identifier Syntax
 
    The DID method name is x509.  A did:x509 DID starts with did:x509:
    and binds a CA fingerprint to one or more certificate predicates.
 
-   The did:x509 ABNF definition defined below uses the syntax defined in
-   [RFC5234], with case-sensitive string literals written as %s"..." per
-   [RFC7405], and the corresponding definitions for ALPHA and DIGIT.
-   [DID] contains the definitions for idchar and pct-encoded in
-   Section 3.1.
+   The did:x509 ABNF below uses the syntax defined in [RFC5234], with
+   case-sensitive string literals written as %s"..." per [RFC7405], and
+   the core rules ALPHA, DIGIT, and HEXDIG from Appendix B.1 of
+   [RFC5234].  [DID] contains the definitions for idchar and pct-encoded
+   in Section 3.1.
 
    idchar             = ALPHA / DIGIT / "." / "-" / "_" / pct-encoded
    pct-encoded        = "%" HEXDIG HEXDIG
@@ -213,10 +218,9 @@ Table of Contents
    predicate-value    = *(1*idchar ":") 1*idchar
    base64url          = 1*(ALPHA / DIGIT / "-" / "_")
 
-             Figure 1: ABNF Definition of Core did-x509 Syntax
+             Figure 1: ABNF Definition of Core did:x509 Syntax
 
-   Implementations of this specification MUST indicate a version value
-   of 0.
+   The version value MUST be 0.
 
    ca-fingerprint-alg is one of sha256, sha384, or sha512. ca-
    fingerprint is a base64url-encoded digest of a non-leaf certificate
@@ -242,7 +246,7 @@ Table of Contents
    did:x509 does not define any DID URL path or query semantics.  A
    did:x509 DID URL MUST NOT include a path or query component.
    Fragment identifiers remain valid for identifying resources within a
-   resolved DID document, for example <DID>#0.
+   resolved DID Document, for example <DID>#0.
 
    Example:
 
@@ -257,11 +261,6 @@ Table of Contents
 
    The following sections define the predicates and their predicate-
    specific syntax.
-
-   DID syntax validation and predicate validation are defined using
-   policies written in the Rego language ([REGO]), rather than pseudo-
-   code.  This is to avoid ambiguity and to make it possible for a
-   reader to evaluate the logic automatically.
 
    The inputs to the resolution process are the DID string itself and
    the x509chain DID resolution option, which carries a comma-separated
@@ -326,13 +325,13 @@ Table of Contents
    policy with the Rego policy fragments in the following sections, each
    one defining a validate_predicate function.
 
-2.1.  Percent-encoding
+2.1.  Percent-Encoding
 
    Some of the predicates that are defined in subsequent sections
    require values to be percent-encoded.  Percent-encoding is specified
    in Section 2.1 of [RFC3986].  Characters are encoded as UTF-8 before
    percent-encoding.  All characters that are not in the allowed set
-   defined below must be percent-encoded:
+   defined below MUST be percent-encoded:
 
    allowed = ALPHA / DIGIT / "-" / "." / "_"
 
@@ -340,11 +339,11 @@ Table of Contents
                               Percent-Encoded
 
    Note that most libraries implement percent-encoding in the context of
-   URLs and do NOT encode ~ (%7E).
+   URLs and do not encode ~ (%7E).
 
    Resolution fails if a percent-decoded value is not valid UTF-8.
 
-2.2.  "subject" predicate
+2.2.  "subject" Predicate
 
    predicate-name  = %s"subject"
    predicate-value = key ":" value *(":" key ":" value)
@@ -357,7 +356,7 @@ Table of Contents
                Figure 4: ABNF Definition of Subject Predicate
 
    <key>:<value> are the subject name fields in chain[0].subject in any
-   order.  Key repetitions are not allowed.  Values must be percent-
+   order.  Key repetitions are not allowed.  Values MUST be percent-
    encoded.
 
    Example:
@@ -384,7 +383,7 @@ Table of Contents
 
             Figure 5: Rego Function Validating Subject Predicate
 
-2.3.  "san" predicate
+2.3.  "san" Predicate
 
    predicate-name  = %s"san"
    predicate-value = san-type ":" san-value
@@ -393,7 +392,7 @@ Table of Contents
 
                  Figure 6: ABNF Definition of SAN Predicate
 
-   san-type is the SAN type and must be one of email, dns, or uri.  Note
+   san-type is the SAN type and MUST be one of email, dns, or uri.  Note
    that dn is not supported.
 
    san-value is the SAN value, percent-encoded.
@@ -416,7 +415,7 @@ Table of Contents
 
               Figure 7: Rego Function Validating SAN Predicate
 
-2.4.  "eku" predicate
+2.4.  "eku" Predicate
 
    predicate-name  = %s"eku"
    predicate-value = eku
@@ -440,7 +439,7 @@ Table of Contents
 
               Figure 9: Rego Function Validating EKU Predicate
 
-2.5.  "fulcio-issuer" predicate
+2.5.  "fulcio-issuer" Predicate
 
    predicate-name   = %s"fulcio-issuer"
    predicate-value  = fulcio-issuer
@@ -479,7 +478,7 @@ Table of Contents
 
         Figure 11: Rego Function Validating Fulcio-Issuer Predicate
 
-2.6.  DID resolution options
+2.6.  DID Resolution Options
 
    This DID method introduces a new DID resolution option called
    x509chain:
@@ -542,11 +541,11 @@ Table of Contents
    did+json for compatibility with DID Core 1.0 tooling.  The media type
    is selected by the resolution request, not by the DID string.
 
-   The JSON-LD @context must define every term used.  The example below
+   The JSON-LD @context MUST define every term used.  The example below
    uses the Controlled Identifiers v1 context https://www.w3.org/ns/cid/
    v1 ([CID]).
 
-   This illustrates what a typical DID document, describing the DID
+   This illustrates what a typical DID Document, describing the DID
    subject and the methods it can use to authenticate itself, can look
    like once resolved:
 
@@ -710,7 +709,7 @@ Table of Contents
 
 6.1.  Create
 
-   Creating a did:x509 identifier is a local operation.  The DID must be
+   Creating a did:x509 identifier is a local operation.  The DID MUST be
    constructed according to the syntax rules in this specification.  No
    registration action is required, and no registry authorization is
    checked.
@@ -788,7 +787,7 @@ Table of Contents
    removed first, and <DID> below refers to the result.  Resolution
    fails if the DID URL has a path or query component.
 
-   The following steps must be used to generate a corresponding DID
+   The following steps MUST be used to generate a corresponding DID
    Document:
 
    1.   Decode the x509chain resolution option value into individual
@@ -1119,11 +1118,6 @@ Appendix A.  Test Vectors
    Each output contains either the expected DID Document or an expected
    error pattern.  Certificate validity periods are not checked by these
    vectors.
-
-Acknowledgments
-
-   The authors would like to thank _list_ for their reviews and
-   suggestions.
 
 Authors' Addresses
 

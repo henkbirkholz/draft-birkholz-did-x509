@@ -11,7 +11,7 @@
 <meta content="Amaury Chamayou" name="author">
 <meta content="
        This document defines the did:x509 decentralized identifier (DID) method, an interoperable and flexible issuer identifier format for messages that transport or refer to X.509 certificates, including COSE messages using RFC 9360. The did:x509 identifier format implements a direct, resolvable binding between a certificate chain and a compact issuer string (DID string). It combines the fingerprint of a certificate authority (CA) certificate in the chain with one or more predicates on the leaf certificate's subject name, subject alternative names, extended key usage, or Fulcio issuer. The identifier can be conveyed as an issuer value in a COSE Header CWT Claims map as defined in RFC 9597, in JOSE/JWT messages such as the &quot;iss&quot; claim defined in RFC 7519, or through other protocol-specific mechanisms that associate the identifier with the certificate chain. This issuer identifier is convenient for references and policy evaluation, for example in the context of transparency ledgers. 
-       This Informational document is published as an Independent Submission to improve interoperability with Microsoft's architecture. It is not a standard nor a product of the IETF. 
+       This Informational document is published as an Independent Submission to improve interoperability with Microsoft's architecture. It is neither a standard nor a product of the IETF. 
     " name="description">
 <meta content="xml2rfc 3.34.1" name="generator">
 <meta content="DID" name="keyword">
@@ -1094,7 +1094,7 @@ svg {
 <section id="section-abstract">
       <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
 <p id="section-abstract-1">This document defines the did:x509 decentralized identifier (DID) method, an interoperable and flexible issuer identifier format for messages that transport or refer to X.509 certificates, including COSE messages using RFC 9360. The did:x509 identifier format implements a direct, resolvable binding between a certificate chain and a compact issuer string (DID string). It combines the fingerprint of a certificate authority (CA) certificate in the chain with one or more predicates on the leaf certificate's subject name, subject alternative names, extended key usage, or Fulcio issuer. The identifier can be conveyed as an issuer value in a COSE Header CWT Claims map as defined in RFC 9597, in JOSE/JWT messages such as the "iss" claim defined in RFC 7519, or through other protocol-specific mechanisms that associate the identifier with the certificate chain. This issuer identifier is convenient for references and policy evaluation, for example in the context of transparency ledgers.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
-<p id="section-abstract-2">This Informational document is published as an Independent Submission to improve interoperability with Microsoft's architecture. It is not a standard nor a product of the IETF.<a href="#section-abstract-2" class="pilcrow">¶</a></p>
+<p id="section-abstract-2">This Informational document is published as an Independent Submission to improve interoperability with Microsoft's architecture. It is neither a standard nor a product of the IETF.<a href="#section-abstract-2" class="pilcrow">¶</a></p>
 </section>
 <section class="note rfcEditorRemove" id="section-note.1">
       <h2 id="name-discussion-venues">
@@ -1164,22 +1164,22 @@ svg {
             <p id="section-toc.1-1.2.1"><a href="#section-2" class="auto internal xref">2</a>.  <a href="#name-identifier-syntax" class="internal xref">Identifier Syntax</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.1">
-                <p id="section-toc.1-1.2.2.1.1"><a href="#section-2.1" class="auto internal xref">2.1</a>.  <a href="#name-percent-encoding" class="internal xref">Percent-encoding</a></p>
+                <p id="section-toc.1-1.2.2.1.1"><a href="#section-2.1" class="auto internal xref">2.1</a>.  <a href="#name-percent-encoding" class="internal xref">Percent-Encoding</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.2">
-                <p id="section-toc.1-1.2.2.2.1"><a href="#section-2.2" class="auto internal xref">2.2</a>.  <a href="#name-subject-predicate" class="internal xref">"subject" predicate</a></p>
+                <p id="section-toc.1-1.2.2.2.1"><a href="#section-2.2" class="auto internal xref">2.2</a>.  <a href="#name-subject-predicate" class="internal xref">"subject" Predicate</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.3">
-                <p id="section-toc.1-1.2.2.3.1"><a href="#section-2.3" class="auto internal xref">2.3</a>.  <a href="#name-san-predicate" class="internal xref">"san" predicate</a></p>
+                <p id="section-toc.1-1.2.2.3.1"><a href="#section-2.3" class="auto internal xref">2.3</a>.  <a href="#name-san-predicate" class="internal xref">"san" Predicate</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.4">
-                <p id="section-toc.1-1.2.2.4.1"><a href="#section-2.4" class="auto internal xref">2.4</a>.  <a href="#name-eku-predicate" class="internal xref">"eku" predicate</a></p>
+                <p id="section-toc.1-1.2.2.4.1"><a href="#section-2.4" class="auto internal xref">2.4</a>.  <a href="#name-eku-predicate" class="internal xref">"eku" Predicate</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.5">
-                <p id="section-toc.1-1.2.2.5.1"><a href="#section-2.5" class="auto internal xref">2.5</a>.  <a href="#name-fulcio-issuer-predicate" class="internal xref">"fulcio-issuer" predicate</a></p>
+                <p id="section-toc.1-1.2.2.5.1"><a href="#section-2.5" class="auto internal xref">2.5</a>.  <a href="#name-fulcio-issuer-predicate" class="internal xref">"fulcio-issuer" Predicate</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.6">
-                <p id="section-toc.1-1.2.2.6.1"><a href="#section-2.6" class="auto internal xref">2.6</a>.  <a href="#name-did-resolution-options" class="internal xref">DID resolution options</a></p>
+                <p id="section-toc.1-1.2.2.6.1"><a href="#section-2.6" class="auto internal xref">2.6</a>.  <a href="#name-did-resolution-options" class="internal xref">DID Resolution Options</a></p>
 </li>
             </ul>
 </li>
@@ -1247,10 +1247,7 @@ svg {
             <p id="section-toc.1-1.12.1"><a href="#appendix-A" class="auto internal xref">Appendix A</a>.  <a href="#name-test-vectors" class="internal xref">Test Vectors</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.13">
-            <p id="section-toc.1-1.13.1"><a href="#appendix-B" class="auto internal xref"></a><a href="#name-acknowledgments" class="internal xref">Acknowledgments</a></p>
-</li>
-          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.14">
-            <p id="section-toc.1-1.14.1"><a href="#appendix-C" class="auto internal xref"></a><a href="#name-authors-addresses" class="internal xref">Authors' Addresses</a></p>
+            <p id="section-toc.1-1.13.1"><a href="#appendix-B" class="auto internal xref"></a><a href="#name-authors-addresses" class="internal xref">Authors' Addresses</a></p>
 </li>
         </ul>
 </nav>
@@ -1299,11 +1296,13 @@ appear in all capitals, as shown here.<a href="#section-1.2-1" class="pilcrow">�
 data formats, and ABNF (<span>[<a href="#RFC5234" class="cite xref">RFC5234</a>]</span>, <span>[<a href="#RFC7405" class="cite xref">RFC7405</a>]</span>) to describe identifiers.<a href="#section-1.2-2" class="pilcrow">¶</a></p>
 <p id="section-1.2-3">The reader is assumed to be familiar with the vocabulary and concepts
 defined in <span>[<a href="#RFC9943" class="cite xref">RFC9943</a>]</span>.<a href="#section-1.2-3" class="pilcrow">¶</a></p>
-<p id="section-1.2-4">Rego is a descriptive query language used to define policies in a precise and unambiguous way.
-This document uses Rego (<span>[<a href="#REGO" class="cite xref">REGO</a>]</span>) to define the parsing and validation logic for did:x509 identifiers.
+<p id="section-1.2-4">Rego (<span>[<a href="#REGO" class="cite xref">REGO</a>]</span>) is a declarative query language used to define policies in a precise and unambiguous way.
+This document uses Rego, rather than pseudo-code, to define DID syntax validation and predicate validation for did:x509 identifiers, so that the logic is unambiguous and can be evaluated automatically.
 The Rego code snippets provided in this document can be evaluated using any Rego v1 runtime, but there is no expectation that implementations use the Rego language.<a href="#section-1.2-4" class="pilcrow">¶</a></p>
 <p id="section-1.2-5">Per <span>[<a href="#RFC8792" class="cite xref">RFC8792</a>]</span>, line breaks may be present in the figures of this document
 to stay within the line-length limits of this document's format.<a href="#section-1.2-5" class="pilcrow">¶</a></p>
+<p id="section-1.2-6">Examples in this document abbreviate long base64url values, such as CA fingerprints, to their first and last two characters with two dots in between (for example, <code>WE..jk</code>).
+Abbreviated values are not syntactically valid.<a href="#section-1.2-6" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1315,7 +1314,7 @@ to stay within the line-length limits of this document's format.<a href="#sectio
       </h2>
 <p id="section-2-1">The DID method name is <code>x509</code>.
 A did:x509 DID starts with <code>did:x509:</code> and binds a CA fingerprint to one or more certificate predicates.<a href="#section-2-1" class="pilcrow">¶</a></p>
-<p id="section-2-2">The did:x509 ABNF definition defined below uses the syntax defined in <span>[<a href="#RFC5234" class="cite xref">RFC5234</a>]</span>, with case-sensitive string literals written as <code>%s"..."</code> per <span>[<a href="#RFC7405" class="cite xref">RFC7405</a>]</span>, and the corresponding definitions for <code>ALPHA</code> and <code>DIGIT</code>.
+<p id="section-2-2">The did:x509 ABNF below uses the syntax defined in <span>[<a href="#RFC5234" class="cite xref">RFC5234</a>]</span>, with case-sensitive string literals written as <code>%s"..."</code> per <span>[<a href="#RFC7405" class="cite xref">RFC7405</a>]</span>, and the core rules <code>ALPHA</code>, <code>DIGIT</code>, and <code>HEXDIG</code> from <span><a href="https://rfc-editor.org/rfc/rfc5234#appendix-B.1" class="relref">Appendix B.1</a> of [<a href="#RFC5234" class="cite xref">RFC5234</a>]</span>.
 <span>[<a href="#DID" class="cite xref">DID</a>]</span> contains the definitions for <code>idchar</code> and <code>pct-encoded</code> in Section 3.1.<a href="#section-2-2" class="pilcrow">¶</a></p>
 <div class="lang-abnf sourcecode" id="section-2-3">
 <pre>
@@ -1341,10 +1340,10 @@ base64url          = 1*(ALPHA / DIGIT / "-" / "_")
 </pre>
 </div>
 <figcaption><a href="#figure-1" class="selfRef">Figure 1</a>:
-<a href="#name-abnf-definition-of-core-did" class="selfRef">ABNF Definition of Core did-x509 Syntax</a>
+<a href="#name-abnf-definition-of-core-did" class="selfRef">ABNF Definition of Core did:x509 Syntax</a>
         </figcaption></figure>
 </div>
-<p id="section-2-5">Implementations of this specification <span class="bcp14">MUST</span> indicate a version value of <code>0</code>.<a href="#section-2-5" class="pilcrow">¶</a></p>
+<p id="section-2-5">The <code>version</code> value <span class="bcp14">MUST</span> be <code>0</code>.<a href="#section-2-5" class="pilcrow">¶</a></p>
 <p id="section-2-6"><code>ca-fingerprint-alg</code> is one of <code>sha256</code>, <code>sha384</code>, or <code>sha512</code>.
 <code>ca-fingerprint</code> is a base64url-encoded digest of a non-leaf certificate in the certificate chain, that is, <code>chain[i].fingerprint[ca-fingerprint-alg]</code> with i &gt; 0: either an intermediate or root CA certificate.
 In this document, <code>chain</code> refers to the certificate chain mapped to the JSON data model defined in <a href="#json-model" class="auto internal xref">Section 5</a>.
@@ -1366,20 +1365,18 @@ Each predicate has a <code>predicate-name</code> and a predicate-specific <code>
 It is not necessarily the X.509 subject name; <code>subject</code> is only one predicate type.<a href="#section-2-9" class="pilcrow">¶</a></p>
 <p id="section-2-10">did:x509 does not define any DID URL path or query semantics.
 A did:x509 DID URL <span class="bcp14">MUST NOT</span> include a path or query component.
-Fragment identifiers remain valid for identifying resources within a resolved DID document, for example <code>&lt;DID&gt;#0</code>.<a href="#section-2-10" class="pilcrow">¶</a></p>
+Fragment identifiers remain valid for identifying resources within a resolved DID Document, for example <code>&lt;DID&gt;#0</code>.<a href="#section-2-10" class="pilcrow">¶</a></p>
 <p id="section-2-11">Example:<a href="#section-2-11" class="pilcrow">¶</a></p>
 <p id="section-2-12"><code>did:x509:0:sha256:WE..jk::subject:C:US:ST:Texas:L:Austin:O:Example</code><a href="#section-2-12" class="pilcrow">¶</a></p>
 <p id="section-2-13">In this example, the identifier pins to a certificate authority using a SHA-256 certificate hash and uses the <code>subject</code> predicate to express criteria that a leaf certificate subject must fulfil.
 This identifier will match certificate chains with matching leaf certificate subject fields and a matching intermediate or root CA certificate.<a href="#section-2-13" class="pilcrow">¶</a></p>
 <p id="section-2-14">The following sections define the predicates and their predicate-specific syntax.<a href="#section-2-14" class="pilcrow">¶</a></p>
-<p id="section-2-15">DID syntax validation and predicate validation are defined using policies written in the Rego language (<span>[<a href="#REGO" class="cite xref">REGO</a>]</span>), rather than pseudo-code.
-This is to avoid ambiguity and to make it possible for a reader to evaluate the logic automatically.<a href="#section-2-15" class="pilcrow">¶</a></p>
-<p id="section-2-16">The inputs to the resolution process are the DID string itself and the <code>x509chain</code> DID resolution option, which carries a comma-separated base64url-encoded X.509 certificate chain.
-To evaluate the reference Rego code shown below, the DID and certificate chain have to be passed to a Rego runtime as a JSON document: <code>{"did": "&lt;DID&gt;", "chain": &lt;CertificateChain&gt;}</code>, where <code>did</code> is the DID string and <code>chain</code> is the parsed representation of the certificate chain derived from the <code>x509chain</code> resolution option.<a href="#section-2-16" class="pilcrow">¶</a></p>
-<p id="section-2-17">Core Rego policy:<a href="#section-2-17" class="pilcrow">¶</a></p>
+<p id="section-2-15">The inputs to the resolution process are the DID string itself and the <code>x509chain</code> DID resolution option, which carries a comma-separated base64url-encoded X.509 certificate chain.
+To evaluate the reference Rego code shown below, the DID and certificate chain have to be passed to a Rego runtime as a JSON document: <code>{"did": "&lt;DID&gt;", "chain": &lt;CertificateChain&gt;}</code>, where <code>did</code> is the DID string and <code>chain</code> is the parsed representation of the certificate chain derived from the <code>x509chain</code> resolution option.<a href="#section-2-15" class="pilcrow">¶</a></p>
+<p id="section-2-16">Core Rego policy:<a href="#section-2-16" class="pilcrow">¶</a></p>
 <span id="name-core-rego-validation-rule"></span><div id="fig-validate-core">
 <figure id="figure-2">
-        <div class="alignLeft art-rego art-text artwork" id="section-2-18.1">
+        <div class="alignLeft art-rego art-text artwork" id="section-2-17.1">
 <pre>
 package did_x509
 
@@ -1432,13 +1429,13 @@ valid if {
 <a href="#name-core-rego-validation-rule" class="selfRef">Core Rego Validation Rule</a>
         </figcaption></figure>
 </div>
-<p id="section-2-19">The overall Rego policy is assembled by concatenating the core Rego policy with the Rego policy fragments in the following sections, each one defining a <code>validate_predicate</code> function.<a href="#section-2-19" class="pilcrow">¶</a></p>
+<p id="section-2-18">The overall Rego policy is assembled by concatenating the core Rego policy with the Rego policy fragments in the following sections, each one defining a <code>validate_predicate</code> function.<a href="#section-2-18" class="pilcrow">¶</a></p>
 <div id="percent-encoding">
 <section id="section-2.1">
         <h3 id="name-percent-encoding">
-<a href="#section-2.1" class="section-number selfRef">2.1. </a><a href="#name-percent-encoding" class="section-name selfRef">Percent-encoding</a>
+<a href="#section-2.1" class="section-number selfRef">2.1. </a><a href="#name-percent-encoding" class="section-name selfRef">Percent-Encoding</a>
         </h3>
-<p id="section-2.1-1">Some of the predicates that are defined in subsequent sections require values to be percent-encoded. Percent-encoding is specified in <span><a href="https://rfc-editor.org/rfc/rfc3986#section-2.1" class="relref">Section 2.1</a> of [<a href="#RFC3986" class="cite xref">RFC3986</a>]</span>. Characters are encoded as UTF-8 before percent-encoding. All characters that are not in the allowed set defined below must be percent-encoded:<a href="#section-2.1-1" class="pilcrow">¶</a></p>
+<p id="section-2.1-1">Some of the predicates that are defined in subsequent sections require values to be percent-encoded. Percent-encoding is specified in <span><a href="https://rfc-editor.org/rfc/rfc3986#section-2.1" class="relref">Section 2.1</a> of [<a href="#RFC3986" class="cite xref">RFC3986</a>]</span>. Characters are encoded as UTF-8 before percent-encoding. All characters that are not in the allowed set defined below <span class="bcp14">MUST</span> be percent-encoded:<a href="#section-2.1-1" class="pilcrow">¶</a></p>
 <span id="name-abnf-definition-of-characte"></span><div id="fig-allowed-def">
 <figure id="figure-3">
           <div class="alignLeft art-abnf art-text artwork" id="section-2.1-2.1">
@@ -1450,14 +1447,14 @@ allowed = ALPHA / DIGIT / "-" / "." / "_"
 <a href="#name-abnf-definition-of-characte" class="selfRef">ABNF Definition of Characters That Do Not Need to Be Percent-Encoded</a>
           </figcaption></figure>
 </div>
-<p id="section-2.1-3">Note that most libraries implement percent-encoding in the context of URLs and do NOT encode <code>~</code> (<code>%7E</code>).<a href="#section-2.1-3" class="pilcrow">¶</a></p>
+<p id="section-2.1-3">Note that most libraries implement percent-encoding in the context of URLs and do not encode <code>~</code> (<code>%7E</code>).<a href="#section-2.1-3" class="pilcrow">¶</a></p>
 <p id="section-2.1-4">Resolution fails if a percent-decoded value is not valid UTF-8.<a href="#section-2.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="subject-predicate">
 <section id="section-2.2">
         <h3 id="name-subject-predicate">
-<a href="#section-2.2" class="section-number selfRef">2.2. </a><a href="#name-subject-predicate" class="section-name selfRef">"subject" predicate</a>
+<a href="#section-2.2" class="section-number selfRef">2.2. </a><a href="#name-subject-predicate" class="section-name selfRef">"subject" Predicate</a>
         </h3>
 <span id="name-abnf-definition-of-subject-"></span><div id="fig-subject-def">
 <figure id="figure-4">
@@ -1476,7 +1473,7 @@ oid             = 1*DIGIT *("." 1*DIGIT)
 <a href="#name-abnf-definition-of-subject-" class="selfRef">ABNF Definition of Subject Predicate</a>
           </figcaption></figure>
 </div>
-<p id="section-2.2-2"><code>&lt;key&gt;:&lt;value&gt;</code> are the subject name fields in <code>chain[0].subject</code> in any order. Key repetitions are not allowed. Values must be percent-encoded.<a href="#section-2.2-2" class="pilcrow">¶</a></p>
+<p id="section-2.2-2"><code>&lt;key&gt;:&lt;value&gt;</code> are the subject name fields in <code>chain[0].subject</code> in any order. Key repetitions are not allowed. Values <span class="bcp14">MUST</span> be percent-encoded.<a href="#section-2.2-2" class="pilcrow">¶</a></p>
 <p id="section-2.2-3">Example:<a href="#section-2.2-3" class="pilcrow">¶</a></p>
 <p id="section-2.2-4"><code>did:x509:0:sha256:WE..jk::subject:C:US:ST:Texas:L:Austin:O:Example</code><a href="#section-2.2-4" class="pilcrow">¶</a></p>
 <p id="section-2.2-5">Rego policy:<a href="#section-2.2-5" class="pilcrow">¶</a></p>
@@ -1510,7 +1507,7 @@ validate_predicate(name, value) := true if {
 <div id="san-predicate">
 <section id="section-2.3">
         <h3 id="name-san-predicate">
-<a href="#section-2.3" class="section-number selfRef">2.3. </a><a href="#name-san-predicate" class="section-name selfRef">"san" predicate</a>
+<a href="#section-2.3" class="section-number selfRef">2.3. </a><a href="#name-san-predicate" class="section-name selfRef">"san" Predicate</a>
         </h3>
 <span id="name-abnf-definition-of-san-pred"></span><div id="fig-san-def">
 <figure id="figure-6">
@@ -1526,7 +1523,7 @@ san-value       = 1*idchar
 <a href="#name-abnf-definition-of-san-pred" class="selfRef">ABNF Definition of SAN Predicate</a>
           </figcaption></figure>
 </div>
-<p id="section-2.3-2"><code>san-type</code> is the SAN type and must be one of <code>email</code>, <code>dns</code>, or <code>uri</code>. Note that <code>dn</code> is not supported.<a href="#section-2.3-2" class="pilcrow">¶</a></p>
+<p id="section-2.3-2"><code>san-type</code> is the SAN type and <span class="bcp14">MUST</span> be one of <code>email</code>, <code>dns</code>, or <code>uri</code>. Note that <code>dn</code> is not supported.<a href="#section-2.3-2" class="pilcrow">¶</a></p>
 <p id="section-2.3-3"><code>san-value</code> is the SAN value, percent-encoded.<a href="#section-2.3-3" class="pilcrow">¶</a></p>
 <p id="section-2.3-4">The pair <code>[&lt;san_type&gt;, &lt;san_value&gt;]</code> is one of the items in <code>chain[0].extensions.san</code>.<a href="#section-2.3-4" class="pilcrow">¶</a></p>
 <p id="section-2.3-5">Example:<a href="#section-2.3-5" class="pilcrow">¶</a></p>
@@ -1553,7 +1550,7 @@ validate_predicate(name, value) := true if {
 <div id="eku-predicate">
 <section id="section-2.4">
         <h3 id="name-eku-predicate">
-<a href="#section-2.4" class="section-number selfRef">2.4. </a><a href="#name-eku-predicate" class="section-name selfRef">"eku" predicate</a>
+<a href="#section-2.4" class="section-number selfRef">2.4. </a><a href="#name-eku-predicate" class="section-name selfRef">"eku" Predicate</a>
         </h3>
 <span id="name-abnf-definition-of-eku-pred"></span><div id="fig-eku-def">
 <figure id="figure-8">
@@ -1592,7 +1589,7 @@ validate_predicate(name, value) := true if {
 <div id="fulcio-issuer-predicate">
 <section id="section-2.5">
         <h3 id="name-fulcio-issuer-predicate">
-<a href="#section-2.5" class="section-number selfRef">2.5. </a><a href="#name-fulcio-issuer-predicate" class="section-name selfRef">"fulcio-issuer" predicate</a>
+<a href="#section-2.5" class="section-number selfRef">2.5. </a><a href="#name-fulcio-issuer-predicate" class="section-name selfRef">"fulcio-issuer" Predicate</a>
         </h3>
 <span id="name-abnf-definition-of-fulcio-i"></span><div id="fig-fulcio-issuer-def">
 <figure id="figure-10">
@@ -1637,7 +1634,7 @@ validate_predicate(name, value) := true if {
 <div id="x509chain">
 <section id="section-2.6">
         <h3 id="name-did-resolution-options">
-<a href="#section-2.6" class="section-number selfRef">2.6. </a><a href="#name-did-resolution-options" class="section-name selfRef">DID resolution options</a>
+<a href="#section-2.6" class="section-number selfRef">2.6. </a><a href="#name-did-resolution-options" class="section-name selfRef">DID Resolution Options</a>
         </h3>
 <p id="section-2.6-1">This DID method introduces a new DID resolution option called <code>x509chain</code>:<a href="#section-2.6-1" class="pilcrow">¶</a></p>
 <p id="section-2.6-2">Name: <code>x509chain</code><a href="#section-2.6-2" class="pilcrow">¶</a></p>
@@ -1694,10 +1691,10 @@ If the leaf certificate includes the key usage extension but has neither <code>d
 <p id="section-4-4">The registered media type for a DID Document is <code>application/did</code>.
 Resolvers may also support <code>application/did+ld+json</code> or <code>application/did+json</code> for compatibility with DID Core 1.0 tooling.
 The media type is selected by the resolution request, not by the DID string.<a href="#section-4-4" class="pilcrow">¶</a></p>
-<p id="section-4-5">The JSON-LD <code>@context</code> must define every term used.
+<p id="section-4-5">The JSON-LD <code>@context</code> <span class="bcp14">MUST</span> define every term used.
 The example below uses the Controlled Identifiers v1 context <code>https://www.w3.org/ns/cid/v1</code> (<span>[<a href="#CID" class="cite xref">CID</a>]</span>).<a href="#section-4-5" class="pilcrow">¶</a></p>
-<p id="section-4-6">This illustrates what a typical DID document, describing the DID subject and the methods it can use to authenticate itself, can look like once resolved:<a href="#section-4-6" class="pilcrow">¶</a></p>
-<span id="name-example-did-document"></span><div id="fig-controller-placeholder">
+<p id="section-4-6">This illustrates what a typical DID Document, describing the DID subject and the methods it can use to authenticate itself, can look like once resolved:<a href="#section-4-6" class="pilcrow">¶</a></p>
+<span id="name-example-did-document"></span><div id="fig-did-document-example">
 <figure id="figure-13">
         <div class="alignLeft art-json art-text artwork" id="section-4-7.1">
 <pre>
@@ -1751,7 +1748,7 @@ Other attributes use dotted OID strings as keys.
 Repeated attributes are not supported.
 Values are converted to UTF-8 strings.
 The <code>extensions</code> member can contain the Extended Key Usage OIDs (<span><a href="https://rfc-editor.org/rfc/rfc5280#section-4.2.1.12" class="relref">Section 4.2.1.12</a> of [<a href="#RFC5280" class="cite xref">RFC5280</a>]</span>), the Subject Alternative Name entries (<span><a href="https://rfc-editor.org/rfc/rfc5280#section-4.2.1.6" class="relref">Section 4.2.1.6</a> of [<a href="#RFC5280" class="cite xref">RFC5280</a>]</span>), and the Fulcio issuer extension value (<span>[<a href="#FULCIO" class="cite xref">FULCIO</a>]</span>).<a href="#section-5-3" class="pilcrow">¶</a></p>
-<span id="name-cddl-definition-of-didx509-"></span><div id="fig-cddl-placeholder">
+<span id="name-cddl-definition-of-didx509-"></span><div id="fig-json-model-cddl">
 <figure id="figure-14">
         <div class="alignLeft art-cddl art-text artwork" id="section-5-4.1">
 <pre>
@@ -1880,7 +1877,7 @@ DirectoryName = ["dn", Name] ; Example: ["dn", {CN: "Example"}]
 <a href="#section-6.1" class="section-number selfRef">6.1. </a><a href="#name-create" class="section-name selfRef">Create</a>
         </h3>
 <p id="section-6.1-1">Creating a did:x509 identifier is a local operation.
-The DID must be constructed according to the syntax rules in this specification.
+The DID <span class="bcp14">MUST</span> be constructed according to the syntax rules in this specification.
 No registration action is required, and no registry authorization is checked.<a href="#section-6.1-1" class="pilcrow">¶</a></p>
 <p id="section-6.1-2">When constructing a did:x509 identifier, determine what constitutes a logical identity within a given certificate authority.
 Concretely, determine which certificate fields the authority uses to uniquely represent an identity.
@@ -1939,7 +1936,7 @@ There is no technical guarantee in this case and the certificate authority can r
       </h2>
 <p id="section-7-1">If the DID to resolve is given as a DID URL, its fragment, if any, is removed first, and <code>&lt;DID&gt;</code> below refers to the result.
 Resolution fails if the DID URL has a path or query component.<a href="#section-7-1" class="pilcrow">¶</a></p>
-<p id="section-7-2">The following steps must be used to generate a corresponding DID Document:<a href="#section-7-2" class="pilcrow">¶</a></p>
+<p id="section-7-2">The following steps <span class="bcp14">MUST</span> be used to generate a corresponding DID Document:<a href="#section-7-2" class="pilcrow">¶</a></p>
 <ol start="1" type="1" class="normal type-1" id="section-7-3">
 <li id="section-7-3.1">
           <p id="section-7-3.1.1">Decode the <code>x509chain</code> resolution option value into individual certificates by splitting the string on <code>","</code> and base64url-decoding each resulting string.
@@ -2238,18 +2235,8 @@ Each output contains either the expected DID Document or an expected error patte
 Certificate validity periods are not checked by these vectors.<a href="#appendix-A-1" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="acknowledgments">
-<section id="appendix-B">
-      <h2 id="name-acknowledgments">
-<a href="#name-acknowledgments" class="section-name selfRef">Acknowledgments</a>
-      </h2>
-<p id="appendix-B-1">The authors would like to thank
-<em>list</em>
-for their reviews and suggestions.<a href="#appendix-B-1" class="pilcrow">¶</a></p>
-</section>
-</div>
 <div id="authors-addresses">
-<section id="appendix-C">
+<section id="appendix-B">
       <h2 id="name-authors-addresses">
 <a href="#name-authors-addresses" class="section-name selfRef">Authors' Addresses</a>
       </h2>
