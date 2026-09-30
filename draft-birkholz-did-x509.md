@@ -1,15 +1,13 @@
 ---
 v: 3
 
-title: "x509 Decentralized Identifier"
+title: "The did:x509 Decentralized Identifier (DID) Method"
 abbrev: "did:x509"
 docname: draft-birkholz-did-x509-latest
-category: std
-consensus: true
-submissionType: IETF
+category: info
+submissionType: independent
 
 ipr: trust200902
-area: "Security"
 keyword: [ DID, X.509,]
 
 stand_alone: yes
@@ -36,79 +34,211 @@ normative:
     -: json
     =: RFC8259
   RFC8610: cddl
-  RFC9165: cddlplus
-  STD94:
-    -: cbor
-    =: RFC8949
-  BCP26:
-    -: ianacons
-    =: RFC8126
   RFC5234: abnf
+  RFC7405:
   DID:
-    target: https://www.w3.org/TR/did-1.0/
-    title: W3C DID v1.0 specification
+    target: https://www.w3.org/TR/2022/REC-did-core-20220719/
+    title: Decentralized Identifiers (DIDs) v1.0
+    author:
+      - name: Manu Sporny
+      - name: Amy Guy
+      - name: Markus Sabadello
+      - name: Drummond Reed
+    seriesinfo:
+      W3C: REC-did-core-20220719
+    date: 2022-07-19
+  RFC4514:
+  RFC4648:
   RFC5280:
-  VC:
-    target: https://www.w3.org/TR/vc-data-model/
-    title: W3C Verifiable Credentials
+  FIPS180-4:
+    target: https://csrc.nist.gov/publications/detail/fips/180/4/final
+    title: Secure Hash Standard (SHS)
+    author:
+      org: National Institute of Standards and Technology
+    seriesinfo:
+      FIPS: 180-4
+    date: 2015-08
+  RFC3629:
+  RFC7517:
+  X.690:
+    target: https://www.itu.int/rec/T-REC-X.690
+    title: "Information technology - ASN.1 encoding rules: Specification of Basic Encoding Rules (BER), Canonical Encoding Rules (CER) and Distinguished Encoding Rules (DER)"
+    author:
+      org: ITU-T
+    seriesinfo:
+      ITU-T Recommendation: X.690
+    date: 2021-02
+  JSON-LD:
+    target: https://www.w3.org/TR/2020/REC-json-ld11-20200716/
+    title: "JSON-LD 1.1: A JSON-based Serialization for Linked Data"
+    author:
+      - name: Gregg Kellogg
+      - name: Pierre-Antoine Champin
+      - name: Dave Longley
+    seriesinfo:
+      W3C: REC-json-ld11-20200716
+    date: 2020-07-16
+  CID:
+    target: https://www.w3.org/TR/cid-1.0/
+    title: Controlled Identifiers v1.0
+    date: 2025-05-15
+  REGO:
+    target: https://www.openpolicyagent.org/docs/policy-language
+    title: Policy Language
+    author:
+      org: Open Policy Agent
 
 informative:
-  I-D.ietf-scitt-architecture: scitt-arch
-  REGO:
-    target: https://www.openpolicyagent.org/docs/latest/policy-language/
-    title: Rego
+  RFC9943: scitt-arch
+  RFC6960:
+  RFC7515:
+  RFC7519:
+  RFC8392:
   RFC8792:
   RFC9360:
   RFC9597:
-  DID-DOCUMENT:
-    target: https://www.w3.org/TR/did-1.0/#dfn-did-documents
-    title: DID Document Definition
-
-entity:
-  SELF: "RFCthis"
+  DID-METHODS:
+    target: https://www.w3.org/TR/2026/NOTE-did-extensions-methods-20260926/
+    title: DID Methods
+    date: 2026-09-26
+  DID-X509-SPEC:
+    target: https://github.com/microsoft/did-x509/blob/d065856f18d7e1d426bf6b8e1f169132b7ed1891/specification.md
+    title: "did:x509 Method Specification"
+    author:
+      - name: Maik Riechert
+        org: Microsoft
+      - name: Antoine Delignat-Lavaud
+        org: Microsoft
+    date: 2026-09-29
+  VC:
+    target: https://www.w3.org/TR/2022/REC-vc-data-model-20220303/
+    title: Verifiable Credentials Data Model v1.1
+    date: 2022-03-03
+  RWOT11:
+    target: https://github.com/WebOfTrustInfo/rwot11-the-hague/blob/master/advance-readings/hybrid_wallet_solutions_x509_DIDs_VCs.md
+    title: "Analysis of hybrid wallet solutions - Implementation options for combining x509 certificates with DIDs and VCs"
+    author:
+      - name: Carsten Stoecker
+      - name: Christiane Wirrig
+    date: 2022-07-20
+  FULCIO:
+    target: https://github.com/sigstore/fulcio
+    title: Fulcio
+    author:
+      org: Sigstore
+  GITSIGN-TIMESTAMP:
+    target: https://github.com/sigstore/gitsign/blob/44f5e17fac6944fdde71c94d2e77ab075c9dca9f/docs/timestamp.md#L102-L107
+    title: "Gitsign: Timestamping"
+    author:
+      org: Sigstore
+    date: 2026-07-29
+  TEST-VECTORS:
+    target: https://github.com/microsoft/did-x509/blob/d065856f18d7e1d426bf6b8e1f169132b7ed1891/test-vectors.json
+    title: did:x509 Test Vectors
+    author:
+      org: Microsoft
+    date: 2026-09-29
 
 --- abstract
 
-This document defines the did:x509 decentralized identifier method, which enables a direct, resolvable binding between X.509 certificate chains and compact issuer identifiers (DID string). In particular, the did:x509 identifier format in this documents comes with a CWT Claims definition. In general, this identifier is a compact and interoperable mechanism for certificate-based identification by combining a certificate fingerprint with optional policies for subject names, subject alternative names, extended key usage, and issuer information. It is especially useful for policy evaluation and reference in transparency services and similar systems requiring cryptographic binding to certificate material.
+This document defines the did:x509 decentralized identifier (DID) method, a flexible issuer identifier format for messages that transport or refer to X.509 certificates, including CBOR Object Signing and Encryption (COSE) messages using RFC 9360. The did:x509 identifier format implements a direct, resolvable binding between a certificate chain and a compact issuer string (DID string). It combines the fingerprint of a certification authority (CA) certificate in the chain with one or more predicates on the leaf certificate's subject name, subject alternative names, extended key usage, or Fulcio issuer. The identifier can be conveyed as an issuer value in a COSE Header CBOR Web Token (CWT) Claims map as defined in RFC 9597, in JSON Object Signing and Encryption (JOSE) and JSON Web Token (JWT) messages, such as in the "iss" claim defined in RFC 7519, or through other protocol-specific mechanisms that associate the identifier with the certificate chain. The did:x509 method lets existing X.509 solutions and DID-based systems interoperate where a full transition to DIDs is not achievable or desired. This issuer identifier is convenient for references and policy evaluation, for example in the context of transparency ledgers.
 
-This Informational document is published as an Independent Submission to improve interoperability with Microsoft's architecture. It is not a standard nor a product of the IETF.
+This Informational document is published as an Independent Submission to describe the method as implemented by Microsoft. It is neither a standard nor a product of the IETF.
 
 --- middle
 
 # Introduction
 
-This document aims to define an interoperable and flexible decentralized identifier ({{DID}}) format for COSE messages that transport or refer to X.509 certificates using {{RFC9360}}.
+This document aims to define an interoperable and flexible issuer identifier format, based on decentralized identifiers (DIDs) {{DID}}, for messages that transport or refer to X.509 certificates ({{RFC5280}}), including CBOR Object Signing and Encryption (COSE) messages using {{RFC9360}}.
 The did:x509 identifier format implements a direct, resolvable binding between a certificate chain and a compact issuer string.
-It can be used in a COSE Header CWT Claims map as defined in {{RFC9597}}.
+It can be conveyed as an issuer value in a COSE Header CBOR Web Token (CWT) Claims map as defined in {{RFC9597}}, in JSON Object Signing and Encryption (JOSE) and JSON Web Token (JWT) messages, such as in the `iss` claim defined in {{RFC7519}}, or through other protocol-specific mechanisms that associate the identifier with the certificate chain.
+
+The RWOT11 workshop outlined the need for hybrid solutions that combine X.509 certificates with DIDs ({{RWOT11}}).
+The did:x509 method relies on X.509 chain validation and matches elements contained in the DID to certificate properties within the chain.
+
+The main difference from other DID methods is that did:x509 requires a certificate chain to be passed using a new DID resolution option ({{DID}}), `x509chain`, while resolving a DID.
 
 Including a certificate chain directly in configuration or in policy is often impractical.
 This is due to its size, and to the frequency at which some elements, particularly the leaf, are refreshed.
-Relying on a partial certificate chain (e.g., a root certificate and some intermediary certificates) is similarly unwieldy.
+Relying on a partial certificate chain (e.g., a root certificate and some intermediate certificates) is similarly unwieldy.
 While stable, the level of granularity afforded by a partial certificate chain may not be sufficient to distinguish several identities that are not equivalent for the purpose of policy.
 
-Combining authority pinning with attribute assertions is a precise and stable way of capturing identities as a constrained set of certificates.
-Their representation as compact and durable identifier strings enables the formulation of readable policy (e.g. "request.issuer == 'did:x509...'"), for example in the context of transparency ledger registration.
+Combining authority pinning with certificate predicates is a precise and stable way of capturing identities as a constrained set of certificates.
+Their representation as compact and durable identifier strings enables the formulation of readable policy (e.g., "request.issuer == 'did:x509...'"), for example, in the Registration Policies of Transparency Services {{-scitt-arch}}.
+
+## Interoperability Between X.509 and DIDs {#interoperability}
+
+The did:x509 method lets existing X.509 solutions and DID-based systems interoperate without changes to either:
+
+- The X.509 side is unchanged.
+  Certification authorities, public or private, issue ordinary certificates, signers keep their keys, and did:x509 identifiers are created locally from certificate chains ({{create}}).
+- The evidence travels with the message.
+  Resolution needs only the DID and the certificate chain that signed messages already carry, for example in the `x5chain` ({{RFC9360}}) or `x5c` ({{Section 4.1.6 of RFC7515}}) header parameters, so any resolver that accepts the chain derives the same DID Document, without a registry lookup ({{resolution}}).
+- X.509 keys work in DID-based protocols.
+  The DID Document exposes the leaf certificate's public key as a verification method, with verification relationships that follow its key usage ({{did-document}}), so these protocols need not handle certificates.
+- X.509 trust is expressed as a DID.
+  The certification authority (CA) fingerprint and the predicates let DID-based policies capture an X.509 identity rather than individual certificates.
+
+A single signed message can therefore serve both kinds of relying party ({{fig-interop}}).
+An X.509-only verifier validates the certificate chain with its trust store and ignores the issuer, while a DID-aware verifier resolves the issuer against the same chain and applies its DID-based policy.
+Neither needs the other's infrastructure.
+
+~~~
++------+  issues   +--------+
+|  CA  |---------->| Signer |
++------+           +--------+
+                        |
+                        | signed message with the certificate
+                        | chain and a did:x509 issuer
+                        |
+           +------------+------------+
+           |                         |
+           v                         v
++---------------------+   +----------------------+
+| X.509-only verifier |   | DID-aware verifier   |
+| validates the chain |   | resolves the issuer  |
+| with its trust      |   | against the chain,   |
+| store               |   | applies DID policy   |
++---------------------+   +----------------------+
+~~~
+{: #fig-interop title="One Signed Message for X.509 and DID Verifiers"}
+
+## Relationship to the did:x509 Method Specification {#relationship}
+
+The did:x509 method is registered in the W3C DID Methods registry ({{DID-METHODS}}), whose entry points to the did:x509 Method Specification maintained in the microsoft/did-x509 repository ({{DID-X509-SPEC}}).
+This document is aligned with {{DID-X509-SPEC}}, and much of its text, including the ABNF, the Rego policy, and the DID resolution procedure, is adapted from it; the authors of {{DID-X509-SPEC}} are also authors of this document.
+The authors intend to keep this document and {{DID-X509-SPEC}} synchronized as both evolve.
+
+Microsoft has implemented did:x509 in a range of libraries and systems.
+Its internal and external signing services, such as Artifact Signing, derive did:x509 identifiers from their existing issuing CAs and extended key usages (EKUs), and use them as the issuer of the COSE envelopes they produce, which include Supply Chain Integrity, Transparency, and Trust (SCITT) Signed Statements {{-scitt-arch}}.
+Relying parties' policies pin the accepted did:x509 issuers, together with subjects, to decide which Transparent Statements to accept, and for which purpose.
 
 ## Conventions and Definitions
 
 {::boilerplate bcp14-tagged}
 
-In this document, CDDL ({{-cddl}}, {{-cddlplus}}) is used to describe the
-data formats, and ABNF (defined in {{-abnf}}) to describe identifiers.
+In this document, the Concise Data Definition Language (CDDL) {{-cddl}} is used to describe the
+data formats, and ABNF ({{-abnf}}, {{RFC7405}}) to describe identifiers.
 
-The reader is assumed to be familiar with the vocabulary and concepts
-defined in {{-scitt-arch}}.
+This document uses the terms "DID", "DID URL", "DID Document", "DID subject", "DID resolution", "verification method", and "controller" as defined in {{DID}}, and the terms "certification path" and "trust anchor" as defined in {{RFC5280}}.
+A "relying party" is an entity that relies on a resolved did:x509 identifier, for example, to authorize the signer of a message.
 
-Rego is a descriptive query language used to define policies in a precise and unambiguous way.
-This document uses Rego ({{REGO}}) to define the parsing and validation logic for did:x509 identifiers.
+Rego ({{REGO}}) is a declarative policy language.
+This document uses Rego, rather than pseudo-code, to define DID syntax validation and predicate validation for did:x509 identifiers, so that the logic is precise and unambiguous and can be evaluated automatically.
 The Rego code snippets provided in this document can be evaluated using any Rego v1 runtime, but there is no expectation that implementations use the Rego language.
 
 Per {{RFC8792}}, line breaks may be present in the figures of this document
 to stay within the line-length limits of this document's format.
 
+Examples in this document abbreviate long base64url values, such as CA fingerprints, to their first and last two characters with two dots in between (for example, `WE..jk`) to avoid visual clutter otherwise caused by line size restrictions.
+Abbreviated values are not syntactically valid.
+
 # Identifier Syntax
 
-The did:x509 ABNF definition defined below uses the syntax defined in {{-abnf}} and the corresponding definitions for `ALPHA` and `DIGIT`.
+The DID method name is `x509`.
+A did:x509 DID starts with `did:x509:` and binds a CA fingerprint to one or more certificate predicates.
+
+The did:x509 ABNF below uses the syntax defined in {{-abnf}}, with case-sensitive string literals written as `%s"..."` per {{RFC7405}}, and the core rules `ALPHA`, `DIGIT`, and `HEXDIG` from {{Appendix B.1 of RFC5234}}.
 {{DID}} contains the definitions for `idchar` and `pct-encoded` in Section 3.1.
 
 ~~~abnf
@@ -117,30 +247,50 @@ pct-encoded        = "%" HEXDIG HEXDIG
 ~~~
 
 ~~~abnf
-did-x509           = "did:x509:" method-specific-id
-method-specific-id = version ":" ca-fingerprint-alg ":" ca-fingerprint 1*("::" predicate-name ":" predicate-value)
+did-x509           = %s"did:x509:" method-specific-id
+method-specific-id = version ":" ca-fingerprint-alg ":"
+                     ca-fingerprint
+                     1*("::" predicate-name ":" predicate-value)
 version            = 1*DIGIT
-ca-fingerprint-alg = "sha256" / "sha384" / "sha512"
+ca-fingerprint-alg = %s"sha256" / %s"sha384" / %s"sha512"
 ca-fingerprint     = base64url
-predicate-name     = 1*ALPHA
+predicate-name     = %s"subject" / %s"san" / %s"eku" /
+                     %s"fulcio-issuer"
 predicate-value    = *(1*idchar ":") 1*idchar
 base64url          = 1*(ALPHA / DIGIT / "-" / "_")
 ~~~
-{: #fig-core-def artwork-align="left"
-   pre="fold"
-   title="ABNF Definition of Core did-x509 Syntax"}
+{: #fig-core-def
+   title="ABNF Definition of Core did:x509 Syntax"}
 
-Implementations of this specification MUST indicate a version value of `0`.
+The `version` value MUST be `0`.
 
 `ca-fingerprint-alg` is one of `sha256`, `sha384`, or `sha512`.
-`ca-fingerprint` is `chain[i].fingerprint[ca-fingerprint-alg]` with i > 0, that is, either an intermediate or root CA certificate.
-`predicate-name` is a predicate name and `predicate-value` is a predicate-specific value.
-`::` is used to separate multiple predicates from each other.
+`ca-fingerprint` is a base64url-encoded digest of a non-leaf certificate in the certificate chain, that is, `chain[i].fingerprint[ca-fingerprint-alg]` with i > 0: either an intermediate or root CA certificate.
+In this document, `chain` refers to the certificate chain mapped to the JSON data model defined in {{json-model}}.
+The `::` separator introduces each predicate.
+Each predicate has a `predicate-name` and a predicate-specific `predicate-value`.
+
+The method-specific identifier has three parts:
+
+1. A version number.
+2. A certification authority fingerprint algorithm and value.
+3. One or more predicates that match fields in the leaf certificate.
+
+The DID subject is the logical identity selected by the CA fingerprint and sequence of predicates.
+It is not necessarily the X.509 subject name; `subject` is only one predicate type.
+
+did:x509 does not define any DID URL path or query semantics.
+A did:x509 DID URL MUST NOT include a path or query component.
+Fragment identifiers remain valid for identifying resources within a resolved DID Document, for example `<DID>#0`.
+
+Example:
+
+`did:x509:0:sha256:WE..jk::subject:C:US:ST:Texas:L:Austin:O:Example`
+
+In this example, the identifier pins to a certification authority using a SHA-256 certificate hash and uses the `subject` predicate to express criteria that a leaf certificate subject must fulfil.
+This identifier will match certificate chains with matching leaf certificate subject fields and a matching intermediate or root CA certificate.
 
 The following sections define the predicates and their predicate-specific syntax.
-
-Validation of predicates is defined using policies written in the Rego language ({{REGO}}), rather than pseudo-code.
-This is to avoid ambiguity and to make it possible for a reader to evaluate the logic automatically.
 
 The inputs to the resolution process are the DID string itself and the `x509chain` DID resolution option, which carries a comma-separated base64url-encoded X.509 certificate chain.
 To evaluate the reference Rego code shown below, the DID and certificate chain have to be passed to a Rego runtime as a JSON document: `{"did": "<DID>", "chain": <CertificateChain>}`, where `did` is the DID string and `chain` is the parsed representation of the certificate chain derived from the `x509chain` resolution option.
@@ -148,10 +298,25 @@ To evaluate the reference Rego code shown below, the DID and certificate chain h
 Core Rego policy:
 
 ~~~rego
+package did_x509
+
+import future.keywords.if
+import future.keywords.in
+
+idchars := `([A-Za-z0-9._-]|%[0-9A-Fa-f]{2})+`
+
+predicate_pattern := sprintf(
+    `::(subject|san|eku|fulcio-issuer):%s(:%s)*`,
+    [idchars, idchars])
+
+did_pattern := sprintf(
+    `^did:x509:0:(sha256|sha384|sha512):[A-Za-z0-9_-]+(%s)+$`,
+    [predicate_pattern])
+
 parse_did(did) :=
   [ca_fingerprint_alg, ca_fingerprint, predicates] if {
     prefix := "did:x509:0:"
-    startswith(did, prefix) == true
+    regex.match(did_pattern, did)
     rest := trim_prefix(did, prefix)
     parts := split(rest, "::")
     [ca_fingerprint_alg, ca_fingerprint] := split(parts[0], ":")
@@ -168,6 +333,7 @@ valid if {
     [ca_fingerprint_alg,
      ca_fingerprint,
      predicates] := parse_did(input.did)
+    count(predicates) > 0
     ca := [c | some i; i != 0; c := input.chain[i]]
     ca[_].fingerprint[ca_fingerprint_alg] == ca_fingerprint
     valid_predicates := [i |
@@ -178,37 +344,41 @@ valid if {
     count(valid_predicates) == count(predicates)
 }
 ~~~
-{: #fig-validate-core artwork-align="left"
+{: #fig-validate-core
+   artwork-name="core-validation.rego"
    title="Core Rego Validation Rule"}
 
 The overall Rego policy is assembled by concatenating the core Rego policy with the Rego policy fragments in the following sections, each one defining a `validate_predicate` function.
 
-## Percent-encoding
+## Percent-Encoding
 
-Some of the predicates that are defined in subsequent sections require values to be percent-encoded. Percent-encoding is specified in {{Section 2.1 of RFC3986}}. All characters that are not in the allowed set defined below must be percent-encoded:
+Some of the predicates that are defined in subsequent sections require values to be percent-encoded. Percent-encoding is specified in {{Section 2.1 of RFC3986}}. Characters are encoded as UTF-8 ({{RFC3629}}) before percent-encoding. All characters that are not in the allowed set defined below MUST be percent-encoded:
 
 ~~~abnf
 allowed = ALPHA / DIGIT / "-" / "." / "_"
 ~~~
-{: #fig-allowed-def artwork-align="left"
+{: #fig-allowed-def
    title="ABNF Definition of Characters That Do Not Need to Be Percent-Encoded"}
 
-Note that most libraries implement percent-encoding in the context of URLs and do NOT encode `~` (`%7E`).
+Note that most libraries implement percent-encoding in the context of URLs and do not encode `~` (`%7E`).
 
-## "subject" predicate
+Resolution fails if a percent-decoded value is not valid UTF-8.
+
+## "subject" Predicate
 
 ~~~abnf
-predicate-name  = "subject"
+predicate-name  = %s"subject"
 predicate-value = key ":" value *(":" key ":" value)
 key             = label / oid
 value           = 1*idchar
-label           = "CN" / "L" / "ST" / "O" / "OU" / "C" / "STREET"
+label           = %s"CN" / %s"L" / %s"ST" / %s"O" / %s"OU" /
+                  %s"C" / %s"STREET"
 oid             = 1*DIGIT *("." 1*DIGIT)
 ~~~
-{: #fig-subject-def artwork-align="left"
-   title="ABNF Definition of Subject Policy"}
+{: #fig-subject-def
+   title='ABNF Definition of the "subject" Predicate'}
 
-`<key>:<value>` are the subject name fields in `chain[0].subject` in any order. Key repetitions are not allowed. Values must be percent-encoded.
+`<key>:<value>` are the subject name fields in `chain[0].subject` in any order. Key repetitions are not allowed. Values MUST be percent-encoded.
 
 Example:
 
@@ -221,6 +391,8 @@ validate_predicate(name, value) := true if {
     name == "subject"
     items := split(value, ":")
     count(items) % 2 == 0
+    keys := {k | some i; i % 2 == 0; k := items[i]}
+    count(keys) == count(items) / 2
     subject := {k: v |
         some i
         i % 2 == 0
@@ -231,21 +403,22 @@ validate_predicate(name, value) := true if {
     object.subset(input.chain[0].subject, subject) == true
 }
 ~~~
-{: #fig-validate-subject artwork-align="left"
-   title="Rego Function Validating Subject Policy"}
+{: #fig-validate-subject
+   artwork-name="subject-predicate.rego"
+   title='Rego Function Validating the "subject" Predicate'}
 
-## "san" predicate
+## "san" Predicate
 
 ~~~abnf
-predicate-name  = "san"
+predicate-name  = %s"san"
 predicate-value = san-type ":" san-value
-san-type        = "email" / "dns" / "uri"
+san-type        = %s"email" / %s"dns" / %s"uri"
 san-value       = 1*idchar
 ~~~
-{: #fig-san-def artwork-align="left"
-   title="ABNF Definition of SAN Policy"}
+{: #fig-san-def
+   title='ABNF Definition of the "san" Predicate'}
 
-`san-type` is the SAN type and must be one of `email`, `dns`, or `uri`. Note that `dn` is not supported.
+`san-type` is the subject alternative name (SAN) type and MUST be one of `email`, `dns`, or `uri`. Note that `dn` is not supported.
 
 `san-value` is the SAN value, percent-encoded.
 
@@ -265,19 +438,20 @@ validate_predicate(name, value) := true if {
     [san_type, san_value] == input.chain[0].extensions.san[_]
 }
 ~~~
-{: #fig-validate-san artwork-align="left"
-   title="Rego Function Validating SAN Policy"}
+{: #fig-validate-san
+   artwork-name="san-predicate.rego"
+   title='Rego Function Validating the "san" Predicate'}
 
-## "eku" predicate
+## "eku" Predicate
 
 ~~~abnf
-predicate-name  = "eku"
+predicate-name  = %s"eku"
 predicate-value = eku
 eku             = oid
 oid             = 1*DIGIT *("." 1*DIGIT)
 ~~~
-{: #fig-eku-def artwork-align="left"
-   title="ABNF Definition of EKU Policy"}
+{: #fig-eku-def
+   title='ABNF Definition of the "eku" Predicate'}
 
 `eku` is one of the OIDs within `chain[0].extensions.eku`.
 
@@ -293,24 +467,28 @@ validate_predicate(name, value) := true if {
     value == input.chain[0].extensions.eku[_]
 }
 ~~~
-{: #fig-validate-eku artwork-align="left"
-   title="Rego Function Validating EKU Policy"}
+{: #fig-validate-eku
+   artwork-name="eku-predicate.rego"
+   title='Rego Function Validating the "eku" Predicate'}
 
-## "fulcio-issuer" predicate
+## "fulcio-issuer" Predicate
 
 ~~~abnf
-predicate-name   = "fulcio-issuer"
+predicate-name   = %s"fulcio-issuer"
 predicate-value  = fulcio-issuer
 fulcio-issuer    = 1*idchar
 ~~~
-{: #fig-fulcio-issuer-def artwork-align="left"
-   title="ABNF Definition of Fulcio-Issuer Policy"}
+{: #fig-fulcio-issuer-def
+   title='ABNF Definition of the "fulcio-issuer" Predicate'}
 
 `fulcio-issuer` is `chain[0].extensions.fulcio_issuer`, without leading `https://`, percent-encoded.
 
+The `fulcio_issuer` extension MUST be present on `chain[0]` when this predicate is used; resolution fails if it is absent.
+The extension MUST NOT be marked critical.
+
 Example:
 
-`did:x509:0:sha256:WE..jk::fulcio-issuer:accounts.google.com::san:email:bob%40example.com`
+`did:x509:0:sha256:WE..jk::fulcio-issuer:accounts.example.com::san:email:bob%40example.com`
 
 Example 2:
 
@@ -325,11 +503,12 @@ validate_predicate(name, value) := true if {
     concat("", ["https://", suffix]) == input.chain[0].extensions.fulcio_issuer
 }
 ~~~
-{: #fig-validate-fulcio-issuer artwork-align="left"
+{: #fig-validate-fulcio-issuer
+   artwork-name="fulcio-issuer-predicate.rego"
    pre="fold"
-   title="Rego Function Validating Fulcio-Issuer Policy"}
+   title='Rego Function Validating the "fulcio-issuer" Predicate'}
 
-## DID resolution options
+## DID Resolution Options {#x509chain}
 
 This DID method introduces a new DID resolution option called `x509chain`:
 
@@ -339,43 +518,98 @@ Value type: string
 
 The value is constructed as follows:
 
-1. Encode each certificate `C` that is part of the chain as the string `b64url(DER(C))`.
+1. Encode each certificate `C` that is part of the chain as the string `b64url(DER(C))`, where `DER(C)` is the DER encoding ({{X.690}}) of `C` and `b64url` is base64url encoding ({{Section 5 of RFC4648}}).
 2. Concatenate the resulting strings in order, separated by comma `","`.
 
-# Example DID Document
+The chain is ordered leaf first and root or trust anchor last:
 
-This illustrates what a typical DID document ({{DID-DOCUMENT}}), describing the DID subject and the methods it can use to authenticate itself, can look like once resolved:
+~~~
+x509chain = b64url(DER(leaf)) ","
+            b64url(DER(intermediate)) ","
+            b64url(DER(root))
+~~~
+{: #fig-x509chain
+   title="Structure of the x509chain Resolution Option Value"}
+
+Each comma-separated item is the DER encoding of one complete X.509 certificate, not a public key, fingerprint, or DER encoding of the whole chain.
+
+# Verifiable Data Registry and Trust Model
+
+did:x509 does not define a persistent registry of DID Documents.
+Resolution uses the DID string and the `x509chain` resolution option ({{x509chain}}).
+
+Trust is established by validating the certificate chain, matching the CA fingerprint, and validating the predicates against the leaf certificate.
+Applications can add revocation, certificate transparency, signing time, or endorsement checks.
+
+# DID Document {#did-document}
+
+Resolving a did:x509 identifier produces a DID Document ({{DID}}) with a `JsonWebKey` verification method derived from the leaf certificate public key.
+
+The DID Document is self-controlled: verification methods use the DID itself as `controller`.
+
+If the leaf certificate has the key usage bit for `digitalSignature`, or is missing the key usage extension, the DID Document includes `authentication` and `assertionMethod`.
+If the leaf certificate has the key usage bit for `keyAgreement`, or is missing the key usage extension, the DID Document includes `keyAgreement`.
+If the leaf certificate includes the key usage extension but has neither `digitalSignature` nor `keyAgreement`, resolution fails.
+
+The registered media type for a DID Document is `application/did`.
+Resolvers may also support `application/did+ld+json` or `application/did+json` for compatibility with DID Core 1.0 tooling.
+The media type is selected by the resolution request, not by the DID string.
+
+The JSON for Linking Data (JSON-LD) {{JSON-LD}} `@context` MUST define every term used.
+The example below uses the Controlled Identifiers v1 context `https://www.w3.org/ns/cid/v1` ({{CID}}).
+
+This illustrates what a typical DID Document, describing the DID subject and the methods it can use to authenticate itself, can look like once resolved:
 
 ~~~json
 {
-  "@context": "https://www.w3.org/ns/did/v1",
+  "@context": "https://www.w3.org/ns/cid/v1",
   "id": "did:x509:0:sha256:hH..GE::subject:CN:Example",
   "verificationMethod": [
     {
-      "id": "did:x509:0:sha256:hH..GE::subject:CN:Example#key-1",
-      "type": "JsonWebKey2020",
+      "id": "did:x509:0:sha256:hH..GE::subject:CN:Example#0",
+      "type": "JsonWebKey",
       "controller": "did:x509:0:sha256:hH..GE::subject:CN:Example",
       "publicKeyJwk": {
-        "kty": "RSA",
-        "n": "s9..WQ",
-        "e": "AQAB"
+        "kty": "EC",
+        "crv": "P-256",
+        "x": "usNb0QXAk6R76GPFvKT5a46LC0_qRpxNoLn9WAX8K0I",
+        "y": "dTtI2j8aV0Mdk5fNWP9rCJvFIo6QfLjCm8V5v10J4Xg"
       }
     }
   ],
+  "authentication": [
+    "did:x509:0:sha256:hH..GE::subject:CN:Example#0"
+  ],
   "assertionMethod": [
-    "did:x509:0:sha256:hH..GE::subject:CN:Example#key-1"
+    "did:x509:0:sha256:hH..GE::subject:CN:Example#0"
   ],
   "keyAgreement": [
-    "did:x509:0:sha256:hH..GE::subject:CN:Example#key-1"
+    "did:x509:0:sha256:hH..GE::subject:CN:Example#0"
   ]
 }
 ~~~
-{: #fig-controller-placeholder artwork-align="left" title="JSON Controller Document Example"}
+{: #fig-did-document-example title="Example DID Document"}
 
-# CDDL for a JSON Data Model for X.509 Certificate Chains
+# CDDL for a JSON Data Model for X.509 Certificate Chains {#json-model}
+
+For predicate evaluation, the resolver maps the certificate chain to a limited JSON ({{-json}}) data model.
+This model contains only the fields did:x509 matches on; it does not replace X.509 parsing or {{RFC5280}} path validation.
+
+The model is a JSON array with at least two certificate objects.
+The leaf certificate is first, followed by issuer certificates, with the root or trust anchor last.
+
+The `fingerprint` member of a certificate object contains base64url-encoded ({{Section 5 of RFC4648}}) SHA-256, SHA-384, and SHA-512 ({{FIPS180-4}}) hashes of the DER-encoded certificate.
+The `issuer` and `subject` members contain the X.509 issuer and subject names, each represented as an object of name attributes.
+Name objects use the {{RFC4514}} labels `CN`, `L`, `ST`, `O`, `OU`, `C`, and `STREET` for common attributes.
+Other attributes use dotted OID strings as keys.
+Repeated attributes are not supported.
+Values are converted to UTF-8 strings.
+The `extensions` member can contain the Extended Key Usage OIDs ({{Section 4.2.1.12 of RFC5280}}), the Subject Alternative Name entries ({{Section 4.2.1.6 of RFC5280}}), and the Fulcio issuer extension value ({{FULCIO}}).
 
 ~~~ cddl
-CertificateChain = [2*Certificate]  ; leaf is first
+; leaf first, followed by issuer certificates,
+; with the root or trust anchor last
+CertificateChain = [2*Certificate]
 
 Certificate = {
     fingerprint: {
@@ -389,8 +623,7 @@ Certificate = {
     extensions: {
         ? eku: [+OID],         ; RFC 5280, Section 4.2.1.12
         ? san: [+SAN],         ; RFC 5280, Section 4.2.1.6
-        ? fulcio_issuer: tstr
-        ; http://oid-info.com/get/1.3.6.1.4.1.57264.1.1
+        ? fulcio_issuer: tstr  ; Fulcio issuer extension
     }
 }
 
@@ -421,49 +654,465 @@ OID = tstr
 ; X.509 Subject Alternative Name
 ; Strings are converted to UTF-8
 SAN = rfc822Name / DNSName / URI / DirectoryName
-rfc822Name = ["email", tstr] ; Example: ["email", "user@example.com"]
-DNSName = ["dns", tstr]      ; Example: ["dns", "example.com"]
-URI = ["uri", tstr]          ; Example: ["uri", "https://example.com"]
-DirectoryName = ["dn", Name] ; Example: ["dn", {CN: "Example"}]
+rfc822Name = ["email", tstr] ; e.g., ["email", "user@example.com"]
+DNSName = ["dns", tstr]      ; e.g., ["dns", "example.com"]
+URI = ["uri", tstr]          ; e.g., ["uri", "https://example.com"]
+DirectoryName = ["dn", Name] ; e.g., ["dn", {CN: "Example"}]
 ~~~
-{: #fig-cddl-placeholder artwork-align="left"
+{: #fig-json-model-cddl
   title="CDDL Definition of did:x509 JSON Data Model"}
 
-# Security Consideration {#secconsec}
+Example certificate chain mapped to the JSON data model:
+
+~~~ json
+[
+  {
+    "fingerprint": {
+      "sha256": "leaf-sha256",
+      "sha384": "leaf-sha384",
+      "sha512": "leaf-sha512"
+    },
+    "issuer": {
+      "CN": "Example CA"
+    },
+    "subject": {
+      "CN": "Example"
+    },
+    "extensions": {
+      "eku": ["1.3.6.1.4.1.311.10.3.13"],
+      "san": [
+        ["email", "user@example.com"],
+        ["dns", "example.com"],
+        ["uri", "https://example.com"],
+        [
+          "dn",
+          {
+            "CN": "Example"
+          }
+        ]
+      ],
+      "fulcio_issuer": "https://issuer.example.com"
+    }
+  },
+  {
+    "fingerprint": {
+      "sha256": "ca-sha256",
+      "sha384": "ca-sha384",
+      "sha512": "ca-sha512"
+    },
+    "issuer": {
+      "CN": "Example Root CA"
+    },
+    "subject": {
+      "CN": "Example CA"
+    },
+    "extensions": {}
+  }
+]
+~~~
+{: #fig-chain-example
+  title="Example Certificate Chain in the did:x509 JSON Data Model"}
+
+# Method Operations
+
+## Create {#create}
+
+Creating a did:x509 identifier is a local operation.
+The DID MUST be constructed according to the syntax rules in this specification.
+No registration action is required, and no registry authorization is checked.
+
+When constructing a did:x509 identifier, determine what constitutes a logical identity within a given certification authority.
+Concretely, determine which certificate fields the authority uses to uniquely represent an identity.
+After that, choose one or more matching predicates that express such an identity as faithfully as possible.
+
+As an example, a certification authority may use email addresses as a way to separate identities and use the SAN extension to store the email address.
+In that case, the did:x509 identifier should be constructed using the `san` predicate, for example, `did:x509:0:sha256:<ca-fingerprint>::san:email:bob%40example.com`.
+
+In other cases, an authority may not include email addresses at all and instead rely on a specific set of subject fields to separate identities.
+In that case, the `subject` predicate should be used.
+
+In yet other cases, authorities may assign unique numbers or other types of stable identifiers to logical identities.
+Typically, this is done to have a stable reference even if a person changes their name or email address.
+
+In all cases, the goal is to craft a did:x509 identifier that is stable yet not too loose in its predicates.
+An example of a loose did:x509 identifier may be to use the `subject` predicate and only include the `O` field without location fields like country (`C`) or state/locality (`ST`).
+
+Whether a did:x509 identifier should pin to an intermediate CA instead of a root CA depends on whether there is value in distinguishing between them.
+Pinning to an intermediate CA typically means that the lifetime of the did:x509 identifier will be shorter, since intermediate CA certificates usually have a shorter validity period than root CA certificates.
+
+## Read / Resolve
+
+The Read operation is DID resolution.
+The operation takes as input a DID to resolve, together with the `x509chain` DID resolution option ({{x509chain}}).
+
+The DID resolver uses the DID, the certificate chain, and the process in {{resolution}} to generate a DID Document.
+No caller authorization is required; authenticity is checked by certificate chain validation, CA fingerprint matching, and predicate validation.
+
+## Update
+
+This DID method does not support updating the DID Document, assuming a fixed certificate chain.
+There is no update authorization operation.
+
+However, the public key included in the DID Document varies depending on the certificate chain that was used as input to the DID resolution process.
+Typically, multiple chains, in particular leaf certificates, are valid for a given did:x509 identifier.
+
+## Deactivate
+
+This DID method does not support deactivating the DID.
+There is no deactivation authorization operation.
+
+However, if the certification authority revokes all certificates for the matching DID, or they expire, and does not issue new certificates matching the same DID, then this can be considered equivalent to deactivation of the DID.
+There is no technical guarantee in this case and the certification authority can revert its decision.
+
+# DID Resolution {#resolution}
+
+If the DID to resolve is given as a DID URL, its fragment, if any, is removed first, and `<DID>` below refers to the result.
+Resolution fails if the DID URL has a path or query component.
+
+The following steps MUST be used to generate a corresponding DID Document:
+
+1. Decode the `x509chain` resolution option value into individual certificates by splitting the string on `","` and base64url-decoding each resulting string.
+   The result is a list of DER-encoded certificates that can be loaded in standard libraries.
+   Fail if the list contains fewer than two certificates.
+
+2. Check whether the list of certificates forms a valid certificate chain using certification path validation procedures ({{Section 6 of RFC5280}}) with the last certificate in the chain as trust anchor.
+   Implementations MUST perform {{RFC5280}} certification path validation.
+   Additionally, fail if any certificate in the chain contains a critical extension that is neither (a) one of the extensions represented in the JSON data model (`eku`, `san`), nor (b) one of the following standard {{RFC5280}} extensions: `basicConstraints`, `keyUsage`, `nameConstraints`, `policyConstraints`, `policyMappings`, `certificatePolicies`, `inhibitAnyPolicy`.
+
+   The `fulcio_issuer` extension is deliberately not on that list.
+   Fulcio does not mark it critical; for example, a dump of a Fulcio-issued certificate ({{GITSIGN-TIMESTAMP}}) shows its `critical` field as `BOOL ABSENT`.
+   Issuers MUST NOT mark it critical: it is an unrecognized extension for the purposes of {{RFC5280}} certification path validation, so marking it critical may cause the chain to be rejected.
+
+   Instead of using the current time as specified in {{Section 6.1.3 of RFC5280}} when validating the chain, applications may choose a context-relevant point in time.
+   For example, applications handling signed documents may choose to use the signing time instead, which might come from a CWT `iat` claim ({{RFC8392}}) or JWT `iat` claim ({{RFC7519}}).
+   Such a claim is not trusted time by itself and needs to be integrity protected and accepted by application policy.
+
+3. If required by the application, check whether any certificate in the chain is revoked using certificate revocation lists (CRLs) {{RFC5280}}, the Online Certificate Status Protocol (OCSP) {{RFC6960}}, or other mechanisms.
+
+4. Apply any further application-specific checks, for example disallowing insecure certificate signature algorithms.
+
+5. Map the certificate chain to the JSON data model ({{json-model}}).
+
+6. Check whether the DID is valid against the certificate chain in the JSON data model according to the Rego policy or equivalent rules defined in this document.
+
+7. Extract the public key of the first certificate in the chain.
+
+8. Convert the public key to a JSON Web Key (JWK) {{RFC7517}}.
+
+9. Create the following partial DID Document:
+
+   ~~~ json
+   {
+     "@context": "https://www.w3.org/ns/cid/v1",
+     "id": "<DID>",
+     "verificationMethod": [{
+       "id": "<DID>#0",
+       "type": "JsonWebKey",
+       "controller": "<DID>",
+       "publicKeyJwk": {
+         "kty": "<JWK key type>"
+       }
+     }]
+   }
+   ~~~
+
+10. If the first certificate in the chain has the key usage bit position for `digitalSignature` set or is missing the key usage extension, add the following to the DID Document:
+
+    ~~~ json
+    {
+      "authentication": ["<DID>#0"],
+      "assertionMethod": ["<DID>#0"]
+    }
+    ~~~
+
+11. If the first certificate in the chain has the key usage bit position for `keyAgreement` set or is missing the key usage extension, add the following to the DID Document:
+
+    ~~~ json
+    {
+      "keyAgreement": ["<DID>#0"]
+    }
+    ~~~
+
+12. If the first certificate in the chain includes the key usage extension but has neither `digitalSignature` nor `keyAgreement` set as key usage bits, fail.
+
+13. Return the complete DID Document.
+
+# Implementation Status
+{: removeInRFC="true"}
+
+{::boilerplate rfc7942info}
+
+The information in this section was last updated in September 2026.
+
+## Microsoft
+
+The implementations below are the ones that Microsoft publishes as open source.
+Microsoft also has internal implementations, which are not listed here.
+For all of them, the organization is Microsoft and the contact is the authors of this document.
+
+### did-x509
+
+Link:
+: [](https://github.com/microsoft/did-x509)
+
+Description:
+: The repository of the upstream specification ({{DID-X509-SPEC}}), with a Python reference resolver and the test vectors ({{TEST-VECTORS}}).
+
+Coverage:
+: DID resolution as specified in this document, including certification path validation, all four predicates, and DID Document creation.
+
+Maturity:
+: Reference implementation; no tagged releases.
+
+Licensing:
+: MIT
+
+### didx509cpp
+
+Link:
+: [](https://github.com/microsoft/didx509cpp)
+
+Description:
+: A header-only C++ library that resolves did:x509 identifiers against PEM-encoded certificate chains and returns the DID Document.
+
+Coverage:
+: All four predicates and certification path validation with OpenSSL. Certificate validity periods can optionally be ignored.
+
+Maturity:
+: Released; latest release 0.99.0 (June 2026).
+
+Licensing:
+: MIT
+
+Used by:
+: CCF and scitt-ccf-ledger.
+
+### didx509go
+
+Link:
+: [](https://github.com/microsoft/didx509go)
+
+Description:
+: A Go library that resolves did:x509 identifiers against certificate chains.
+
+Coverage:
+: All four predicates and certification path validation.
+
+Maturity:
+: Tagged versions; latest v0.0.3 (February 2024).
+
+Licensing:
+: MIT
+
+Used by:
+: cosesign1go and hcsshim.
+
+### cosesign1go
+
+Link:
+: [](https://github.com/microsoft/cosesign1go)
+
+Description:
+: A Go library and command-line tool (sign1util) for COSE_Sign1 documents. It creates did:x509 identifiers from a certificate chain, and checks that the did:x509 issuer of a document matches the certificate chain that signed it.
+
+Coverage:
+: Creation, and resolution using didx509go.
+
+Maturity:
+: Released; latest release v1.7.0 (September 2026).
+
+Licensing:
+: MIT
+
+Used by:
+: hcsshim and the Azure CLI confcom extension.
+
+### CoseSignTool
+
+Link:
+: [](https://github.com/microsoft/CoseSignTool)
+
+Description:
+: A C# command-line tool and set of libraries for signing and validating COSE_Sign1 messages. When signing with a certificate, it derives a did:x509 issuer for the CWT Claims from the certificate chain.
+
+Coverage:
+: Creation, with the "subject" predicate by default, or with the "eku" predicate when the leaf certificate has a Microsoft-specific EKU.
+
+Maturity:
+: Released; latest release v1.8.1 (September 2026).
+
+Licensing:
+: MIT
+
+### scitt-ccf-ledger
+
+Link:
+: [](https://github.com/microsoft/scitt-ccf-ledger)
+
+Description:
+: A SCITT Transparency Service application built on CCF. It registers signed statements whose CWT issuer is a did:x509 identifier, resolving the identifier against the statement's certificate chain, and its Registration Policies can match on the issuer. Its Python command-line tool creates signed statements with did:x509 issuers.
+
+Coverage:
+: Creation, and resolution using didx509cpp.
+
+Maturity:
+: Released; latest release 0.20.1 (September 2026).
+
+Licensing:
+: MIT
+
+### CCF
+
+Link:
+: [](https://github.com/microsoft/CCF)
+
+Description:
+: The Confidential Consortium Framework. It resolves the did:x509 issuers of COSE-signed endorsements, such as utility VM endorsements for confidential containers, against their certificate chains.
+
+Coverage:
+: Resolution using didx509cpp.
+
+Maturity:
+: Released; latest release 7.0.17 (September 2026).
+
+Licensing:
+: Apache-2.0
+
+### hcsshim
+
+Link:
+: [](https://github.com/microsoft/hcsshim)
+
+Description:
+: The Host Compute Service shim. Its security policy enforcement for confidential containers checks that the did:x509 issuer of a signed policy fragment matches the fragment's certificate chain.
+
+Coverage:
+: Resolution using cosesign1go and didx509go.
+
+Maturity:
+: Released; latest release v0.14.1 (April 2026).
+
+Licensing:
+: MIT
+
+### Azure CLI confcom Extension
+
+Link:
+: [](https://github.com/Azure/azure-cli-extensions)
+
+Description:
+: An extension, in the src/confcom directory, that generates security policies for confidential containers. The policies name the did:x509 issuers of trusted policy fragments, and the extension signs fragments with the sign1util tool from cosesign1go.
+
+Coverage:
+: Use of did:x509 identifiers as the issuers of signed policy fragments, relying on cosesign1go.
+
+Maturity:
+: Released; latest release 2.2.0 (September 2026).
+
+Licensing:
+: MIT
+
+## Nuts Foundation
+
+The Nuts Foundation maintains open-source software for exchanging healthcare data in the Netherlands.
+For all of the implementations below, both the organization and the contact are the Nuts Foundation ([](https://nuts.nl)).
+
+### nuts-node
+
+Link:
+: [](https://github.com/nuts-foundation/nuts-node)
+
+Description:
+: The reference implementation of the Nuts specification, a decentralized identity network based on W3C Verifiable Credentials and DIDs. It has its own did:x509 resolver, and its DID Documents for did:x509 identifiers include the certificate chain.
+
+Coverage:
+: Resolution, except for the "eku" predicate. It also supports a "san" predicate with the otherName type, which this document does not define.
+
+Maturity:
+: Released; latest release v6.2.13 (September 2026).
+
+Licensing:
+: GPL-3.0
+
+### go-didx509-toolkit
+
+Link:
+: [](https://github.com/nuts-foundation/go-didx509-toolkit)
+
+Description:
+: A Go toolkit and command-line tool that creates did:x509 identifiers from certificate chains, and issues X509Credential Verifiable Credentials with them. It follows the did:x509 specification published by the Trust Over IP Foundation, extended with a "san" predicate for the otherName type, which certificates from the Dutch healthcare UZI register require.
+
+Coverage:
+: Creation, including the otherName extension.
+
+Maturity:
+: Released; latest release v1.3.0 (April 2026).
+
+Licensing:
+: GPL-3.0
+
+### uzi-did-x509-issuer-java
+
+Link:
+: [](https://github.com/nuts-foundation/uzi-did-x509-issuer-java)
+
+Description:
+: A Java library that issues UziServerCertificateCredentials, which are Verifiable Credentials for server certificates from the Dutch healthcare UZI register, with a did:x509 issuer.
+
+Coverage:
+: Creation.
+
+Maturity:
+: No tagged releases.
+
+Licensing:
+: MIT
+
+# Security Considerations {#secconsec}
 
 ## Identifier Ambiguity
 
-This DID method maps characteristics of X.509 certificate chains to identifiers. It allows a single identifier to map to multiple certificate chains, giving the identifier stability across the expiry of individual chains. However, if the policies used in the identifier are chosen too loosely, the identifier may match too wide a set of certificate chains. This may have security implications as it may authorize an identity for actions it was not meant to be authorized for.
+This DID method maps characteristics of X.509 certificate chains to identifiers. It allows a single identifier to map to multiple certificate chains, giving the identifier stability across the expiry of individual chains. However, if the predicates used in the identifier are chosen too loosely, the identifier may match too wide a set of certificate chains. This may have security implications as it may authorize an identity for actions it was not meant to be authorized for.
 
-To mitigate this issue, the certificate authority should publish their expected usage of certificate fields and indicate which ones constitute a unique identity, versus any additional fields that may be of an informational nature. This will help users create an appropriate did:x509 as well as consumers of signed content to decide whether it is appropriate to trust a given did:x509.
+To mitigate this issue, the certification authority should publish its expected usage of certificate fields and indicate which ones constitute a unique identity, versus any additional fields that may be of an informational nature. This will help users create an appropriate did:x509 identifier as well as consumers of signed content to decide whether it is appropriate to trust a given did:x509 identifier.
 
 ## X.509 Trust Stores
 
-Typically, a verifier trusts an X.509 certificate by applying chain validation defined in {{Section 6 of RFC5280}} using a set of certificate authority (CA) certificates as trust store, together with additional application-specific policies.
+Resolution validates the supplied certificate chain with the last certificate in `x509chain` as the path-validation trust anchor.
+This checks the chain and DID predicates, but does not decide whether the CA or DID is acceptable to a relying party.
 
-This DID method does not require an X.509 trust anchor store but rather relies on verifiers either trusting an individual DID directly or using third-party endorsements for a given DID, like {{VC}}, to establish trust.
-
-By layering this DID method on top of X.509, verifiers are free to use traditional chain validation (for example, verifiers unaware of DID), or rely on DID as an ecosystem to establish trust.
+Relying parties make that trust decision by policy, for example through a CA trust store, an allowlist of DIDs or CA fingerprints, or other application-specific rules.
 
 ## Use of Identifier Contents
 
-While it is acceptable to use a did:x509 identifier as an opaque handle when it has been endorsed through an external trust mechanism, such as a verifiable credential or a trusted registry, implementers MUST NOT parse or interpret individual components of the identifier string for authorization decisions unless the identifier has been resolved against a verified certificate chain.
+While it is acceptable to use a did:x509 identifier as an opaque handle to implement a relying-party policy, implementers MUST NOT parse or interpret individual components of the identifier string for authorization decisions unless the identifier has been resolved against a verified certificate chain.
 
-Specifically, extracting and relying upon subject names, organizational information, or other embedded values directly from the identifier string, without performing full resolution and chain validation, is insecure. An attacker could craft a syntactically valid did:x509 identifier containing arbitrary values that do not correspond to any legitimate certificate chain. Only after successful resolution, which includes verification of the CA fingerprint against the provided chain and validation of all policy predicates, can the identifier be considered authentic. Systems that bypass this resolution process and instead parse identifier components directly are vulnerable to impersonation and privilege escalation attacks.
+Specifically, extracting and relying upon subject names, organizational information, or other embedded values directly from the identifier string, without performing full resolution and chain validation, is insecure. An attacker could craft a syntactically valid did:x509 identifier containing arbitrary values that do not correspond to any legitimate certificate chain. Only after successful resolution, which includes verification of the CA fingerprint against the provided chain and validation of all predicates, can the identifier be considered authentic. Systems that bypass this resolution process and instead parse identifier components directly are vulnerable to impersonation and privilege escalation attacks.
+
+# Privacy Considerations
+
+The did:x509 identifier can contain certificate subject names, subject alternative names, extended key usage values, Fulcio issuer values, and a certification authority fingerprint.
+These values can reveal personal names, email addresses, domain names, organizational affiliations, credential issuers, or other identifying information.
+DID creators should choose predicates that are specific enough for relying-party policy but disclose no more certificate attributes than necessary.
+
+The `x509chain` resolution option carries the certificate chain used as resolution evidence.
+Certificates can contain additional metadata beyond the predicates encoded in the DID, including subject attributes, SAN entries, validity periods, certificate policies, and extension values.
+Resolvers and verifiers should treat certificate chains as potentially identifying data, avoid unnecessary logging or redistribution, and apply data minimization when retaining resolution inputs or outputs.
+
+Stable did:x509 identifiers can enable correlation across transactions, transparency logs, ledgers, and verifiable credentials ({{VC}}).
+If unlinkability is required, relying parties should avoid reusing the same did:x509 identifier across contexts, and issuers should prefer predicates based on role- or service-specific identifiers rather than human-identifying certificate fields.
 
 # IANA Considerations
 
-[^rfced] Please replace "{{&SELF}}" with the RFC number assigned to this document.
-
-[^rfced] Some considerations
+This document has no IANA actions.
+The did:x509 method is registered in the W3C DID Methods registry ({{DID-METHODS}}), as described in {{relationship}}.
 
 --- back
 
-# Acknowledgments
-{:numbered="false"}
+# Test Vectors
 
-The authors would like to thank
-_list_
-for their reviews and suggestions.
-
-[^rfced]: RFC Editor:
+The machine-readable certificate chains, DIDs, expected resolution outcomes, and expected DID Documents are maintained in {{TEST-VECTORS}}.
+The file is an array of independent input/output test cases.
+Each input embeds its certificate chain as an array of unpadded base64url-encoded DER certificates in leaf-first order.
+Each output contains either the expected DID Document or an expected error pattern.
+Certificate validity periods are not checked by these vectors.
