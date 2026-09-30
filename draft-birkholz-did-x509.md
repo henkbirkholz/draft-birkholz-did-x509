@@ -230,7 +230,7 @@ The Rego code snippets provided in this document can be evaluated using any Rego
 Per {{RFC8792}}, line breaks may be present in the figures of this document
 to stay within the line-length limits of this document's format.
 
-Examples in this document abbreviate long base64url values, such as CA fingerprints, to their first and last two characters with two dots in between (for example, `WE..jk`).
+Examples in this document abbreviate long base64url values, such as CA fingerprints, to their first and last two characters with two dots in between (for example, `WE..jk`) to avoid visual clutter otherwise caused by line size restrictions.
 Abbreviated values are not syntactically valid.
 
 # Identifier Syntax
