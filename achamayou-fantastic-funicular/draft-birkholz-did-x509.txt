@@ -18,13 +18,13 @@ Expires: 3 April 2027                                        H. Birkholz
 Abstract
 
    This document defines the did:x509 decentralized identifier (DID)
-   method, an interoperable and flexible issuer identifier format for
-   messages that transport or refer to X.509 certificates, including
-   CBOR Object Signing and Encryption (COSE) messages using RFC 9360.
-   The did:x509 identifier format implements a direct, resolvable
-   binding between a certificate chain and a compact issuer string (DID
-   string).  It combines the fingerprint of a certification authority
-   (CA) certificate in the chain with one or more predicates on the leaf
+   method, a flexible issuer identifier format for messages that
+   transport or refer to X.509 certificates, including CBOR Object
+   Signing and Encryption (COSE) messages using RFC 9360.  The did:x509
+   identifier format implements a direct, resolvable binding between a
+   certificate chain and a compact issuer string (DID string).  It
+   combines the fingerprint of a certification authority (CA)
+   certificate in the chain with one or more predicates on the leaf
    certificate's subject name, subject alternative names, extended key
    usage, or Fulcio issuer.  The identifier can be conveyed as an issuer
    value in a COSE Header CBOR Web Token (CWT) Claims map as defined in
@@ -38,8 +38,8 @@ Abstract
    example in the context of transparency ledgers.
 
    This Informational document is published as an Independent Submission
-   to improve interoperability with Microsoft's architecture.  It is
-   neither a standard nor a product of the IETF.
+   to describe the method as implemented by Microsoft.  It is neither a
+   standard nor a product of the IETF.
 
 Discussion Venues
 
@@ -142,24 +142,18 @@ Table of Contents
 
    The RWOT11 workshop outlined the need for hybrid solutions that
    combine X.509 certificates with DIDs ([RWOT11]).  The did:x509 method
-   takes a simple approach that does not introduce additional
-   infrastructure.  Creating and resolving a did:x509 identifier is a
-   local operation.  It relies on X.509 chain validation and matches
-   elements contained in the DID to certificate properties within the
-   chain.
+   relies on X.509 chain validation and matches elements contained in
+   the DID to certificate properties within the chain.
 
-   The main difference to other DID methods is that did:x509 requires a
-   certificate chain to be passed using a new DID resolution option
-   ([DID]), x509chain, while resolving a DID.  This certificate chain is
-   typically embedded in the signing envelope, for example within the
-   x5c header parameter (Section 4.1.6 of [RFC7515]) of JSON Web
-   Signature (JWS) and JWT documents.
+   The main difference from other DID methods is that did:x509 requires
+   a certificate chain to be passed using a new DID resolution option
+   ([DID]), x509chain, while resolving a DID.
 
    Including a certificate chain directly in configuration or in policy
    is often impractical.  This is due to its size, and to the frequency
    at which some elements, particularly the leaf, are refreshed.
    Relying on a partial certificate chain (e.g., a root certificate and
-   some intermediary certificates) is similarly unwieldy.  While stable,
+   some intermediate certificates) is similarly unwieldy.  While stable,
    the level of granularity afforded by a partial certificate chain may
    not be sufficient to distinguish several identities that are not
    equivalent for the purpose of policy.
@@ -183,21 +177,19 @@ Table of Contents
 
    *  The evidence travels with the message.  Resolution needs only the
       DID and the certificate chain that signed messages already carry,
-      for example in the x5chain header parameter ([RFC9360]), so any
-      resolver that accepts the chain derives the same DID Document,
-      without a registry lookup (Section 7).
+      for example in the x5chain ([RFC9360]) or x5c (Section 4.1.6 of
+      [RFC7515]) header parameters, so any resolver that accepts the
+      chain derives the same DID Document, without a registry lookup
+      (Section 7).
 
-   *  X.509 keys become DID material.  The DID Document exposes the leaf
-      certificate key as a verification method, with verification
-      relationships that follow its key usage (Section 4), so DID-based
-      protocols can use X.509-certified keys without handling
-      certificates.
+   *  X.509 keys work in DID-based protocols.  The DID Document exposes
+      the leaf certificate's public key as a verification method, with
+      verification relationships that follow its key usage (Section 4),
+      so these protocols need not handle certificates.
 
    *  X.509 trust is expressed as a DID.  The certification authority
-      (CA) fingerprint and the predicates identify the certificates that
-      represent an identity, in a string that DID-based policies can
-      reference and that stays stable when leaf certificates are
-      renewed.
+      (CA) fingerprint and the predicates let DID-based policies name an
+      X.509 identity rather than individual certificates.
 
    A single signed message can therefore serve both kinds of relying
    party (Figure 1).  An X.509-only verifier validates the certificate
@@ -965,6 +957,8 @@ Table of Contents
 
    This section is to be removed before publishing as an RFC.
 
+   (Boilerplate as per Section 2.1 of [RFC7942]:)
+
    This section records the status of known implementations of the
    protocol defined by this specification at the time of posting of this
    Internet-Draft, and is based on a proposal described in [RFC7942].
@@ -1036,7 +1030,7 @@ Table of Contents
 
    Coverage:  All four predicates and certification path validation.
 
-   Maturity:  Tagged versions up to v0.0.3.
+   Maturity:  Tagged versions; latest v0.0.3 (February 2024).
 
    Licensing:  MIT
 
@@ -1125,18 +1119,18 @@ Table of Contents
 
 8.1.9.  Azure CLI confcom Extension
 
-   Link:  https://github.com/Azure/azure-cli-extensions, in the src/
-      confcom directory
+   Link:  https://github.com/Azure/azure-cli-extensions
 
-   Description:  A command-line extension that generates security
-      policies for confidential containers.  The policies name the
-      did:x509 issuers of trusted policy fragments, and the extension
-      signs fragments with the sign1util tool from cosesign1go.
+   Description:  An extension, in the src/confcom directory, that
+      generates security policies for confidential containers.  The
+      policies name the did:x509 issuers of trusted policy fragments,
+      and the extension signs fragments with the sign1util tool from
+      cosesign1go.
 
    Coverage:  Use of did:x509 identifiers as the issuers of signed
       policy fragments, relying on cosesign1go.
 
-   Maturity:  Released; latest version 2.2.0.
+   Maturity:  Released; latest release 2.2.0 (September 2026).
 
    Licensing:  MIT
 
@@ -1211,7 +1205,7 @@ Table of Contents
    authorized for.
 
    To mitigate this issue, the certification authority should publish
-   their expected usage of certificate fields and indicate which ones
+   its expected usage of certificate fields and indicate which ones
    constitute a unique identity, versus any additional fields that may
    be of an informational nature.  This will help users create an
    appropriate did:x509 identifier as well as consumers of signed
